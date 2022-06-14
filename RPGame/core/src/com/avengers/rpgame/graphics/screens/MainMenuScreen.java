@@ -1,16 +1,16 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.MyInputProcessor;
-import com.avengers.rpgame.graphics.text.FontFactory;
+import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
@@ -18,88 +18,76 @@ import java.util.ArrayList;
 import static com.avengers.rpgame.utils.Resources.*;
 
 public class MainMenuScreen implements Screen {
-
     final RPGame game;
     private final GameConfig config;
     private final Music backgroundMusic;
     private final Texture backgroundImage;
-    private final ArrayList<String> menuStrings;
-    private final BitmapFont gameFont;
-    private final float menuPosX;
-    private final float menuPosY;
-    private MyInputProcessor input;
-    private int selected;
 
-    OrthographicCamera camera;
+    private final float ScreenWidth;
+    private final float ScreenHeight;
+
+    private final ArrayList<Text> menuOptions;
+    private int actualSelection =0;
+    private final ArrayList<Text> gameTitle;
+//    private final BitmapFont gameFont;
+
+    private MyInputProcessor input;
+
+    ShapeRenderer _Border;
 
     public MainMenuScreen(final RPGame game) {
         this.game = game;
         input = new MyInputProcessor();
         config = GameConfig.getInstance();
 
-        menuPosX = config.getResolutionHorizontal()/10;
-        menuPosY = config.getResolutionHorizontal()/10;
+        ScreenWidth = config.getResolutionHorizontal();
+        ScreenHeight = config.getResolutionVertical();
 
         backgroundImage = new Texture(Gdx.files.internal(resourceMainScreenBackground));
 
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(resourceThemeMusic));
         backgroundMusic.setLooping(true);
-        gameFont = FontFactory.createBitMapFont(Gdx.files.internal(resourcePixelFont), 100, Color.GREEN, true, Color.BLACK);
+//        gameFont = FontFactory.createBitMapFont(Gdx.files.internal(resourceMainFont), 100, Color.GREEN, true, Color.BLACK);
 
-        menuStrings = new ArrayList<String>();
-        menuStrings.add("EXIT");
-        menuStrings.add("SETTINGS");
-        menuStrings.add("NEW GAME");
+        menuOptions = new ArrayList<Text>();
+        gameTitle = new ArrayList<Text>();
 
     }
 
     @Override
     public void show() {
+        generateGameTitle();
+        generateMenu();
+
         backgroundMusic.play();
-//        MyInputProcessor inputProcessor = new MyInputProcessor();
         Gdx.input.setInputProcessor(input);
-
-//        Gdx.input.setInputProcessor(new InputAdapter() {
-////            @Override
-//            public boolean touchDown (int x, int y, int pointer, int button) {
-//                // your touch down code here
-//                return true; // return true to indicate the event was handled
-//            }
-//
-////            @Override
-//            public boolean touchUp (int x, int y, int pointer, int button) {
-//                // your touch up code here
-//                return true; // return true to indicate the event was handled
-//            }
-//        });
-
     }
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 1, 0, 1);
+        ScreenUtils.clear(0, 0, 0, 1);
 
         game.batch.begin();
         game.batch.draw(backgroundImage, 0, 0);
-        for( int i = 0; i < menuStrings.size(); i++){
-            gameFont.draw(game.batch, menuStrings.get(i), menuPosX, menuPosY+ +100*i);
+//        for( int i = 0; i < menuOptions.size(); i++){
+//            gameFont.draw(game.batch, menuOptions.get(i), menuPosX, menuPosY+ +100*i);
+//        }
+
+        for(Text tTemp : this.gameTitle){
+            tTemp.draw();
         }
+
+        for(Text mTemp : this.menuOptions){
+            mTemp.draw();
+        }
+
         game.batch.end();
 
-        if(input.isClickTouch()){
-            System.out.println("CLICK");
-        }
+        validateKeys();
+
 //        if(input.isEnter()){
-//            System.out.println("ENTER");
-//            game.setScreen(new GameScreenEasterEgg(game));
-//            dispose();
-//        }
-        if(input.isEnter()){
-            System.out.println("Let the game begin");
-            game.setScreen(new OverworldScreen(game));
-            dispose();
-        }
-//        if (Gdx.input.scur) {
+//            System.out.println("Let the game begin");
+//            game.setScreen(new Overworldv2(game));
 //            dispose();
 //        }
     }
@@ -128,7 +116,95 @@ public class MainMenuScreen implements Screen {
     public void dispose() {
         backgroundMusic.dispose();
         backgroundImage.dispose();
-        gameFont.dispose();
-        //TODO-EDUARDO
+//        gameFont.dispose();
+    }
+
+    private void generateGameTitle(){
+        float mNextY2 = 0;
+        int mRest2 = Resources.screenTitleFontSize+50;
+
+        this.gameTitle.add(new Text(Resources.resourceMainFont,Resources.mainTitleFontSize, "Element Dungeon",true));
+        this.gameTitle.add(new Text(Resources.resourceMainFont,Resources.screenTitleFontSize, "The Awakening",true));
+
+        this.gameTitle.get(0).customPositionTextScreen(ScreenWidth-this.gameTitle.get(0).getWidth()-50, ScreenHeight-50);
+        mNextY2 = this.gameTitle.get(0).getY();
+
+        for(Text tTemp : this.gameTitle){
+            tTemp.customPositionTextScreen(ScreenWidth-this.gameTitle.get(0).getWidth()-50, ScreenHeight-50);
+            mNextY2 -=mRest2;
+            tTemp.setY(mNextY2);
+        }
+    }
+
+    private void generateMenu(){
+        int mFontSize = Resources.emphasisFontSize;
+        float mNextY = 0;
+        int mRest = Resources.emphasisFontSize;
+
+        this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Nuevo Juego",true));
+        this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Cargar Juego",true));
+        this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Opciones",true));
+        this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Salir",true));
+
+        this.menuOptions.get(0).customPositionTextScreen(ScreenWidth/10, ScreenHeight/3+this.gameTitle.get(0).getHeight());
+        mNextY = this.menuOptions.get(0).getY();
+
+        for(Text mTemp : this.menuOptions){
+            mTemp.customPositionTextScreen(ScreenWidth/10, ScreenHeight/3+this.gameTitle.get(0).getHeight());
+            mNextY -=mRest;
+            mTemp.setY(mNextY);
+        }
+
+        changeOptionColor(0);
+    }
+
+
+    private void changeOptionColor(int pId){
+        for (Text mTemp: this.menuOptions)
+            mTemp.setColor(Color.WHITE);
+        if(pId>=0)
+            this.menuOptions.get(pId).setColor(Color.FIREBRICK);
+        this.actualSelection = pId;
+    }
+
+    private void validateKeys() {
+        try{
+            int mTime = 300;
+            if(this.input.isMoveDown()){
+                this.actualSelection++;
+                if(this.actualSelection >3)
+                    this.actualSelection =0;
+                Thread.sleep(mTime);
+                changeOptionColor(this.actualSelection);
+            }
+            if(this.input.isMoveUp()){
+                this.actualSelection--;
+                if(this.actualSelection <0)
+                    this.actualSelection =3;
+                Thread.sleep(mTime);
+                changeOptionColor(this.actualSelection);
+            }
+            if(this.input.isEnter()){
+                executeAction();
+            }
+        } catch (InterruptedException e){
+            game.print(e.toString());
+        }
+    }
+
+    private void executeAction() {
+        switch (this.actualSelection){
+            case 0:
+                game.setScreen(new OverworldScreen(game));
+                dispose();
+                break;
+            case 1:
+                game.setScreen(new LoadGameScreen(game));
+                dispose();
+                break;
+            case 3:
+                game.close();
+                break;
+        }
     }
 }

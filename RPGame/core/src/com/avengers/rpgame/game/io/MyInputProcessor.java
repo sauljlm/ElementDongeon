@@ -46,16 +46,16 @@ public class MyInputProcessor implements InputProcessor {
     }
 
     public boolean keyDown (int keycode) {
-        if(keycode == Input.Keys.W){
+        if(keycode == Input.Keys.W || keycode == Input.Keys.UP){
             moveUp = true;
         }
-        if(keycode == Input.Keys.S){
+        if(keycode == Input.Keys.S || keycode == Input.Keys.DOWN){
             moveDown = true;
         }
-        if(keycode == Input.Keys.A){
+        if(keycode == Input.Keys.A || keycode == Input.Keys.LEFT){
             moveLeft = true;
         }
-        if(keycode == Input.Keys.D){
+        if(keycode == Input.Keys.D || keycode == Input.Keys.RIGHT){
             moveRight = true;
         }
         if(keycode == Input.Keys.SPACE){
@@ -68,16 +68,16 @@ public class MyInputProcessor implements InputProcessor {
     }
 
     public boolean keyUp (int keycode) {
-        if(keycode == Input.Keys.W){
+        if(keycode == Input.Keys.W || keycode == Input.Keys.UP){
             moveUp = false;
         }
-        if(keycode == Input.Keys.S){
+        if(keycode == Input.Keys.S || keycode == Input.Keys.DOWN){
             moveDown = false;
         }
-        if(keycode == Input.Keys.A){
+        if(keycode == Input.Keys.A || keycode == Input.Keys.LEFT){
             moveLeft = false;
         }
-        if(keycode == Input.Keys.D){
+        if(keycode == Input.Keys.D || keycode == Input.Keys.RIGHT){
             moveRight = false;
         }
         if(keycode == Input.Keys.SPACE){

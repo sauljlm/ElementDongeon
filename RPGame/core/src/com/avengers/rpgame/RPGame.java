@@ -3,11 +3,13 @@ import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.screens.LoadScreen;
 import com.avengers.rpgame.graphics.screens.MainMenuScreen;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public class RPGame extends Game {
-    public SpriteBatch batch;
+    public static SpriteBatch batch;
     private GameConfig gameConfig;
 
     public void create() {
@@ -30,4 +32,11 @@ public class RPGame extends Game {
         batch.dispose();
     }
 
+    public static void print(String pMes){
+        System.out.println(pMes);
+    }
+
+    public static void close(){
+        Gdx.app.exit();
+    }
 }

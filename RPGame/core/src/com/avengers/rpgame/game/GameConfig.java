@@ -4,8 +4,8 @@ import com.avengers.rpgame.game.io.InputControl;
 
 public class GameConfig {
     private static GameConfig instance;
-    private int resolutionVertical;
-    private int resolutionHorizontal;
+    private static int resolutionVertical;
+    private static int resolutionHorizontal;
     private int frameRate;
     private boolean vSync;
     private boolean fullScreen;

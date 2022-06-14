@@ -1,7 +1,11 @@
 package com.avengers.rpgame.utils;
 
+import com.avengers.rpgame.game.GameConfig;
+
+
 public class Resources {
-    //Genral game data
+
+    //GENERAL
     public static final String resourceGameTitle = "RPGame";
     public static final String resourceCompanyLogo = "graphics/textures/companyLogo.png";
 
@@ -13,10 +17,8 @@ public class Resources {
 
     //Backgrounds
     public static final String resourceMainScreenBackground = "graphics/backgrounds/mainScreen1.jpg";
-
-
-    //Fonts
-    public static final String resourcePixelFont = "graphics/fonts/pixelFont.ttf";
+    public static final String resourceLoadScreenBackground = "graphics/backgrounds/loadScreen.jpg";
+    public static final String resourceSettingsScreenBackground = "graphics/backgrounds/settingsScreen.jpg";
 
     //Textures
     public static final String resourceGameIcon = "graphics/icons/swordGameIcon.png";
@@ -31,5 +33,13 @@ public class Resources {
     public static final String resourceThemeMusic = "audio/music/theme.mp3";
     public static final String resourceFightMusic = "audio/music/DecisiveBattle.wav";
     public static final String resourceAndTheJourneyBeginsMusic = "audio/music/AndTheJourneyBegins.wav";
+
+    //FONTS
+    public static final String resourcePixelFont = "graphics/fonts/pixelFont.ttf";
+    public static final String resourceMainFont = "graphics/fonts/superstar_memesbruh03.ttf";
+    public static final int mainTitleFontSize = 170;
+    public static final int screenTitleFontSize = 100;
+    public static final int emphasisFontSize = 70;
+    public static final int storyFontSize = 40;
 
 }
