@@ -1,31 +1,33 @@
 package com.avengers.rpgame;
-
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
+import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.graphics.screens.LoadScreen;
+import com.avengers.rpgame.graphics.screens.MainMenuScreen;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
 
-public class RPGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-	}
 
-	@Override
-	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
-	}
+public class RPGame extends Game {
+    public SpriteBatch batch;
+    private GameConfig gameConfig;
+
+    public void create() {
+        batch = new SpriteBatch();
+
+        gameConfig = GameConfig.getInstance();
+        if(gameConfig.isSkipIntro()){
+            this.setScreen(new MainMenuScreen(this));
+        } else{
+            this.setScreen(new LoadScreen(this));
+        }
+    }
+
+    public void render() {
+        super.render(); // important!
+    }
+
+    //Clean memory
+    public void dispose() {
+        batch.dispose();
+    }
+
 }
