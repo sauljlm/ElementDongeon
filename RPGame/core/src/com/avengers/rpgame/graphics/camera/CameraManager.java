@@ -4,6 +4,7 @@ import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.logic.entities.Character;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 
 public class CameraManager {
@@ -36,6 +37,12 @@ public class CameraManager {
         position = new Vector3(character.getPlayer().getPosition().x * gameConfig.getPPM(), character.getPlayer().getPosition().y * gameConfig.getPPM(), 0);
         cameraUpdate(delta);
         rpGame.batch.setProjectionMatrix(camera.combined);
+    }
+
+    public void changeProjectionMatrix(){
+        Matrix4 uiMatrix = camera.combined.cpy();
+        uiMatrix.setToOrtho2D(0, 0, gameConfig.getResolutionHorizontal(), gameConfig.getResolutionVertical());
+        rpGame.batch.setProjectionMatrix(uiMatrix);
     }
 
     public void  dispose(){

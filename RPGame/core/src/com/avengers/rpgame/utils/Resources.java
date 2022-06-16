@@ -42,4 +42,19 @@ public class Resources {
     public static final int emphasisFontSize = 70;
     public static final int storyFontSize = 40;
 
+    // HUD assets
+    public static final String HUDHeart = "graphics/sprites/actors/HUD/heart.png";
+    public static final String HUDPotion = "graphics/sprites/actors/HUD/MP.png";
+    public static final String HUDShield = "graphics/sprites/actors/HUD/shield.png";
+    // HUD Weapons
+    public static final String HUDDefaultWeapon = "graphics/sprites/actors/HUD/weapons/hand.png";
+    public static final String HUDSword = "graphics/sprites/actors/HUD/weapons/swords/sword.png";
+    public static final String HUDSilverSword = "graphics/sprites/actors/HUD/weapons/swords/silverSword.png";
+    public static final String HUDDoubleHandSword = "graphics/sprites/actors/HUD/weapons/swords/doubleHandSword.png";
+    public static final String HUDAxes = "graphics/sprites/actors/HUD/weapons/swords/axes.png";
+    public static final String HUDArrow = "graphics/sprites/actors/HUD/weapons/arrows/arrow.png";
+    public static final String HUDDoubleArrow = "graphics/sprites/actors/HUD/weapons/arrows/doubleArrow.png";
+    public static final String HUDTripleArrow = "graphics/sprites/actors/HUD/weapons/arrows/tripleArrow.png";
+    public static final String HUDBombArrow = "graphics/sprites/actors/HUD/weapons/arrows/bombArrow.png";
+
 }

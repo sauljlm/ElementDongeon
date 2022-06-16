@@ -4,6 +4,7 @@ import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.IOManager;
 import com.avengers.rpgame.graphics.camera.CameraManager;
+import com.avengers.rpgame.graphics.hud.HUD;
 import com.avengers.rpgame.graphics.map.MapManager;
 import com.avengers.rpgame.graphics.physics.PhysicsManager;
 import com.avengers.rpgame.logic.entities.Character;
@@ -24,6 +25,15 @@ public class OverworldScreen implements Screen {
     private CameraManager cameraManager;
     private IOManager ioManager;
 
+    //HUD default values
+    private int userHealth = 100;
+    private int playerLevel = 34;
+    private int magicLevel = 12;
+    private int experiencePoints = 0;
+    private int characterClass = 2;
+    // End HUD values
+    private HUD hudElements;
+
     public OverworldScreen(final RPGame game) {
         this.game = game;
         config = GameConfig.getInstance();
@@ -35,6 +45,7 @@ public class OverworldScreen implements Screen {
         mapManager = new MapManager(resourceOverworldMap, cameraManager.getCamera(), game);
         physicsManager = new PhysicsManager(new Vector2(0, 0f), mapManager, cameraManager.getCamera(), true);
         character = new Character("graphics/sprites/actors/player/tile000.png", physicsManager.getWorld(), game);
+        hudElements = new HUD(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);
     }
 
     @Override
@@ -63,7 +74,15 @@ public class OverworldScreen implements Screen {
 
         game.batch.begin();//Never add game logic inside render begin, end
         character.draw(delta);
+//        hudElements.draw(game.batch, cameraManager);
         game.batch.end();
+
+        hudElements.update(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);
+        cameraManager.changeProjectionMatrix();
+        game.batch.begin();//We can stop render, do something and start again
+        hudElements.draw(game.batch);
+        game.batch.end();
+
     }
 
     @Override
