@@ -11,6 +11,7 @@ public class GameConfig {
     private boolean fullScreen;
     private boolean skipIntro;
     private boolean godMode;
+    private boolean debugPhysics;
     private InputControl inputControls;
     private float PPM; //Pixels per meter for Box2D
     private float scale; //Scale for for BOX2D (performance reasons)
@@ -25,6 +26,14 @@ public class GameConfig {
 
     public static void setInstance(GameConfig instance) {
         GameConfig.instance = instance;
+    }
+
+    public boolean isDebugPhysics() {
+        return debugPhysics;
+    }
+
+    public void setDebugPhysics(boolean debugPhysics) {
+        this.debugPhysics = debugPhysics;
     }
 
     public float getFrameTime() {

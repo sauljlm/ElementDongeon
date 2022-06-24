@@ -23,6 +23,18 @@ public class Resources {
     //Textures
     public static final String resourceGameIcon = "graphics/icons/swordGameIcon.png";
     public static final String resourceBlack = "Resources/black.png";
+    public static final String resourceMageTextureUp = "graphics/sprites/actors/mage/TexturePackage/up.png";
+    public static final String resourceMageTextureDown = "graphics/sprites/actors/mage/TexturePackage/down.png";
+    public static final String resourceMageTextureLeft = "graphics/sprites/actors/mage/TexturePackage/left.png";
+    public static final String resourceMageTextureRight = "graphics/sprites/actors/mage/TexturePackage/right.png";
+
+
+    //TextureMaps
+    public static final String resourceMageTextureMapUp = "graphics/sprites/actors/mage/TexturePackage/up.atlas";
+    public static final String resourceMageTextureMapDown = "graphics/sprites/actors/mage/TexturePackage/down.atlas";
+    public static final String resourceMageTextureMapLeft = "graphics/sprites/actors/mage/TexturePackage/left.atlas";
+    public static final String resourceMageTextureMapRight = "graphics/sprites/actors/mage/TexturePackage/right.atlas";
+
 
 
     //SoundEffects

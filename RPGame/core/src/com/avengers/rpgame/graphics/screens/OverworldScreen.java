@@ -7,7 +7,9 @@ import com.avengers.rpgame.graphics.camera.CameraManager;
 import com.avengers.rpgame.graphics.hud.HUD;
 import com.avengers.rpgame.graphics.map.MapManager;
 import com.avengers.rpgame.graphics.physics.PhysicsManager;
-import com.avengers.rpgame.logic.entities.Character;
+import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
+import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
+import com.avengers.rpgame.logic.entities.EntitiesBuilderDirector;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Vector2;
@@ -21,7 +23,9 @@ public class OverworldScreen implements Screen {
     private Music backgroundMusic;
     private MapManager mapManager;
     private PhysicsManager physicsManager;
-    private Character character;
+    private EntitiesBuilderDirector director;
+    private CharacterBuilder characterBuilder;
+    private AbstractCharacter character;
     private CameraManager cameraManager;
     private IOManager ioManager;
 
@@ -39,12 +43,16 @@ public class OverworldScreen implements Screen {
         config = GameConfig.getInstance();
 
         backgroundMusic = loadMusic(resourceAndTheJourneyBeginsMusic);
+        director = new EntitiesBuilderDirector();
+        characterBuilder = new CharacterBuilder();
 
         ioManager = new IOManager();
         cameraManager = new CameraManager(game);
         mapManager = new MapManager(resourceOverworldMap, cameraManager.getCamera(), game);
         physicsManager = new PhysicsManager(new Vector2(0, 0f), mapManager, cameraManager.getCamera(), true);
-        character = new Character("graphics/sprites/actors/player/tile000.png", physicsManager.getWorld(), game);
+        director.buildDummyPlayer(characterBuilder, physicsManager.getWorld(), game);
+        character = characterBuilder.getResult();
+//        character = new AnimatedCharacter("graphics/sprites/actors/player/tile000.png", physicsManager.getWorld(), game);
         hudElements = new HUD(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);
     }
 
@@ -73,8 +81,7 @@ public class OverworldScreen implements Screen {
         cameraManager.action(delta, character);
 
         game.batch.begin();//Never add game logic inside render begin, end
-        character.draw(delta);
-//        hudElements.draw(game.batch, cameraManager);
+        character.getAnimatedCharacter().draw(delta);
         game.batch.end();
 
         hudElements.update(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);

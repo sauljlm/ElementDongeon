@@ -3,6 +3,7 @@ package com.avengers.rpgame.graphics.screens;
 import com.badlogic.gdx.Screen;
 
 public class NewGameScreen implements Screen {
+
     @Override
     public void show() {
 

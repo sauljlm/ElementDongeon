@@ -1,6 +1,6 @@
 package com.avengers.rpgame.game.io;
 
-import com.avengers.rpgame.logic.entities.Character;
+import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
@@ -15,7 +15,7 @@ public class IOManager {
     }
 
     //the idea for this method is to process different request of IO processInput differently acording to the screen
-    public void processInput(String type, float delta, Character character){
+    public void processInput(String type, float delta, AbstractCharacter character){
         if(type.equals("overworld")){
             inputUpdate(delta, character);
         }
@@ -27,29 +27,37 @@ public class IOManager {
         }
     }
 
-    private void inputUpdate(float delta, Character character) {
+    private void inputUpdate(float delta, AbstractCharacter character) {
         int horizontalForce = 0;
         int verticalForce = 0;
         Vector2 velocity = new Vector2();
         if(inputProcessor.isMoveLeft()){
+            character.getAnimatedCharacter().setAction("runningLeft");
             System.out.println("LEFT!");
             horizontalForce = -2;
+            verticalForce = 0;
         }
         if(inputProcessor.isMoveRight()){
+            character.getAnimatedCharacter().setAction("runningRight");
             horizontalForce = 2;
+            verticalForce = 0;
             System.out.println("RIGHT!");
         }
         if(inputProcessor.isMoveUp()){
+            character.getAnimatedCharacter().setAction("runningUp");
             verticalForce = 2;
+            horizontalForce = 0;
             System.out.println("UP!");
         }
         if(inputProcessor.isMoveDown()){
+            character.getAnimatedCharacter().setAction("runningDown");
             verticalForce = -2;
+            horizontalForce = 0;
             System.out.println("DOWN!");
         }
         if(inputProcessor.isAction1()){
-            if(character.getPlayer().getLinearVelocity().y == 0){
-                character.getPlayer().applyLinearImpulse(0, 6, 0, 6, false);
+            if(character.getAnimatedCharacter().getPlayer().getLinearVelocity().y == 0){
+                character.getAnimatedCharacter().getPlayer().applyLinearImpulse(0, 6, 0, 6, false);
             }
             System.out.println("RIGHT!");
             System.out.println("Jump!");
@@ -57,7 +65,7 @@ public class IOManager {
         velocity.x = horizontalForce * 5;
         velocity.y = verticalForce * 5;
 
-        character.getPlayer().setLinearVelocity(velocity.x,velocity.y);
+        character.getAnimatedCharacter().getPlayer().setLinearVelocity(velocity.x,velocity.y);
 
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
 

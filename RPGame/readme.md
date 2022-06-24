@@ -20,3 +20,6 @@ Music by Marllon Silva (xDeviruchi)|
 
 Map tileset: OpenRPG Fantasy Tileset |
 [Download](https://finalbossblues.itch.io/openrtp-tiles)
+
+Characters Sprites:
+https://opengameart.org/content/lpc-medieval-fantasy-character-sprites

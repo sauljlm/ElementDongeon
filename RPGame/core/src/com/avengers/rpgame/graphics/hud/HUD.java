@@ -1,9 +1,7 @@
 package com.avengers.rpgame.graphics.hud;
 
 import com.avengers.rpgame.game.GameConfig;
-import com.avengers.rpgame.graphics.camera.CameraManager;
 import com.avengers.rpgame.graphics.text.FontFactory;
-import com.avengers.rpgame.logic.entities.Character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;

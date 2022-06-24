@@ -41,6 +41,7 @@ public class DesktopLauncher {
 		gameConfig.setMusicVolume(0.1f);
 		gameConfig.setSoundEffectsVolume(0.1f);
 		gameConfig.setFrameTime(1 / 15f);//Value based on docs
+		gameConfig.setDebugPhysics(true);
 		return gameConfig;
 	}
 }

@@ -22,7 +22,7 @@ public class PhysicsManager {
         this.world = new World(gravity, false);
         this.debugRenderer = new Box2DDebugRenderer();
         this.gameConfig = GameConfig.getInstance();
-        this.debug = debug;
+        this.debug = gameConfig.isDebugPhysics();
         this.camera = camera;
         this.mapManager = mapManager;
 

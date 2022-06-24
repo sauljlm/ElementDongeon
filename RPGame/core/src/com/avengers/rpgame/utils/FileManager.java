@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 
 //Patron facade?
@@ -25,5 +26,7 @@ public class FileManager {
     public static Texture loadTexture(String fileLocation){
         return new Texture(Gdx.files.internal(fileLocation));
     }
+
+    public static TextureAtlas loadTextureAtlas(String fileLocation){ return new TextureAtlas(loadFile(fileLocation));}
 
 }
