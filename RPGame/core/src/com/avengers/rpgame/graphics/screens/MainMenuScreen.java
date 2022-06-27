@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
+import static com.avengers.rpgame.utils.FileManager.loadMusic;
 import static com.avengers.rpgame.utils.Resources.*;
 
 public class MainMenuScreen implements Screen {
@@ -41,8 +42,11 @@ public class MainMenuScreen implements Screen {
 
         backgroundImage = new Texture(Gdx.files.internal(resourceMainScreenBackground));
 
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(resourceThemeMusic));
+        backgroundMusic = loadMusic(resourceThemeMusic);
         backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(config.getMusicVolume());
+
+//        gameFont = FontFactory.createBitMapFont(Gdx.files.internal(resourceMainFont), 100, Color.GREEN, true, Color.BLACK);
 
         menuOptions = new ArrayList<Text>();
         gameTitle = new ArrayList<Text>();
@@ -202,6 +206,10 @@ public class MainMenuScreen implements Screen {
                 break;
             case 1:
                 game.setScreen(new LoadGameScreen(game));
+                dispose();
+                break;
+            case 2:
+                game.setScreen(new OptionsScreen(game));
                 dispose();
                 break;
             case 3:

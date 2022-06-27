@@ -34,6 +34,7 @@ public class LoadScreen implements Screen {
 
         introSound = loadSound((resourceIntroSound));
 
+
         companyLogo = new Sprite();
         companyLogo.setTexture(loadTexture(resourceCompanyLogo));
         companyLogo.setSize(407, 504);

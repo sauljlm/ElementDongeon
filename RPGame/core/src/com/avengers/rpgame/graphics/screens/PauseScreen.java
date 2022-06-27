@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import static com.avengers.rpgame.utils.FileManager.loadMusic;
 import static com.avengers.rpgame.utils.Resources.resourceFightMusic;
 
 public class PauseScreen implements Screen {
@@ -17,9 +18,10 @@ public class PauseScreen implements Screen {
 
     public PauseScreen(final RPGame game) {
         this.game = game;
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(resourceFightMusic));;
+        backgroundMusic = loadMusic(resourceFightMusic);
         backgroundMusic.setLooping(true);
         this.config = GameConfig.getInstance();
+        backgroundMusic.setVolume(config.getMusicVolume());
 
     }
 

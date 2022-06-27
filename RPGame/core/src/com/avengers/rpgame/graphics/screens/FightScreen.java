@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.ScreenUtils;
 
+import static com.avengers.rpgame.utils.FileManager.loadMusic;
 import static com.avengers.rpgame.utils.Resources.*;
 
 public class FightScreen implements Screen {
@@ -20,9 +21,11 @@ public class FightScreen implements Screen {
 
     public FightScreen(final RPGame game) {
         this.game = game;
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(resourceFightMusic));;
-        backgroundMusic.setLooping(true);
         this.config = GameConfig.getInstance();
+
+        backgroundMusic = loadMusic(resourceFightMusic);;
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(config.getMusicVolume());
 
     }
 

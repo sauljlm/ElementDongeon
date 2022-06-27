@@ -32,7 +32,7 @@ public class DesktopLauncher {
 		gameConfig.setPPM(16); //Sets the size of items for box2D physics simulation
 		gameConfig.setScale(2.0f); //Sets the scale of items for box2D physics simulation
 		gameConfig.setvSync(false);
-		gameConfig.setFullScreen(true);
+		gameConfig.setFullScreen(false);
 		gameConfig.setResolutionHorizontal(1920); //If full screen is true resolution is got automatically from monitor/openGl stuff
 		gameConfig.setResolutionVertical(1080);
 		gameConfig.setGodMode(true);

@@ -23,11 +23,18 @@ public class Resources {
     public static final String resourceMainScreenBackground = "graphics/backgrounds/mainScreen1.jpg";
     public static final String resourceLoadScreenBackground = "graphics/backgrounds/loadScreen.jpg";
     public static final String resourceSettingsScreenBackground = "graphics/backgrounds/settingsScreen.jpg";
+    public static final String resourceOptionsScreenBackground = "graphics/backgrounds/optionsScreenbackground.png";
     public static final String resourceNewGameBackground = "graphics/backgrounds/newGameScreen.jpg";
 
     //Textures
     public static final String resourceGameIcon = "graphics/icons/swordGameIcon.png";
     public static final String resourceBlack = "Resources/black.png";
+    public static final String resourceSkin = "graphics/textures/skin/glassy-ui.json";
+    public static final String resourceSkin2 = "graphics/textures/skin2/pixthulhu-ui.json";
+    public static final String resourceMageTextureUp = "graphics/sprites/actors/mage/TexturePackage/up.png";
+    public static final String resourceMageTextureDown = "graphics/sprites/actors/mage/TexturePackage/down.png";
+    public static final String resourceMageTextureLeft = "graphics/sprites/actors/mage/TexturePackage/left.png";
+    public static final String resourceMageTextureRight = "graphics/sprites/actors/mage/TexturePackage/right.png";
 
 //    public static final String resourceMageTextureUp = "graphics/sprites/actors/skeleton/TexturePackage/up.png";
 //    public static final String resourceMageTextureDown = "graphics/sprites/actors/skeleton/TexturePackage/down.png";
@@ -89,6 +96,7 @@ public class Resources {
     public static final int screenTitleFontSize = 100;
     public static final int emphasisFontSize = 70;
     public static final int storyFontSize = 40;
+    public static final int emphasisFontSize2 = 80;
 
     // HUD assets
     public static final String HUDHeart = "graphics/sprites/actors/HUD/heart.png";

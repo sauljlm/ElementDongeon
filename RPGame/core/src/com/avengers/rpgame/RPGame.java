@@ -23,6 +23,7 @@ public class RPGame extends Game {
         }
     }
 
+
     public void render() {
         super.render(); // important!
     }

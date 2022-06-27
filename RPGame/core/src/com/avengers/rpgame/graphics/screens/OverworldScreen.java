@@ -46,6 +46,7 @@ public class OverworldScreen implements Screen {
         config = GameConfig.getInstance();
 
         backgroundMusic = loadMusic(resourceAndTheJourneyBeginsMusic);
+        backgroundMusic.setVolume(config.getMusicVolume());
         director = new EntitiesBuilderDirector();
         characterBuilder = new CharacterBuilder();
 
@@ -103,7 +104,6 @@ public class OverworldScreen implements Screen {
         game.batch.begin();//We can stop render, do something and start again
         hudElements.draw(game.batch);
         game.batch.end();
-
     }
 
     @Override

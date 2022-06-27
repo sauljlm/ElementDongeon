@@ -3,6 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/PatronesDeProgramacionProject.iml" filepath="$PROJECT_DIR$/.idea/PatronesDeProgramacionProject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RPGame.iml" filepath="$PROJECT_DIR$/.idea/modules/RPGame.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/RPGame.core.iml" filepath="$PROJECT_DIR$/.idea/modules/core/RPGame.core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/RPGame.core.main.iml" filepath="$PROJECT_DIR$/.idea/modules/core/RPGame.core.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/RPGame.core.test.iml" filepath="$PROJECT_DIR$/.idea/modules/core/RPGame.core.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktop/RPGame.desktop.iml" filepath="$PROJECT_DIR$/.idea/modules/desktop/RPGame.desktop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktop/RPGame.desktop.main.iml" filepath="$PROJECT_DIR$/.idea/modules/desktop/RPGame.desktop.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/desktop/RPGame.desktop.test.iml" filepath="$PROJECT_DIR$/.idea/modules/desktop/RPGame.desktop.test.iml" />
     </modules>
   </component>
 </project>
