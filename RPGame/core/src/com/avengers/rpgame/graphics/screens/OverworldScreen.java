@@ -7,6 +7,7 @@ import com.avengers.rpgame.graphics.camera.CameraManager;
 import com.avengers.rpgame.graphics.hud.HUD;
 import com.avengers.rpgame.graphics.map.MapManager;
 import com.avengers.rpgame.graphics.physics.PhysicsManager;
+import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
 import com.avengers.rpgame.logic.entities.EntitiesBuilderDirector;
@@ -19,6 +20,7 @@ import static com.avengers.rpgame.utils.Resources.*;
 
 public class OverworldScreen implements Screen {
     final RPGame game;
+    private GameInformation gameInfo;
     private GameConfig config;
     private Music backgroundMusic;
     private MapManager mapManager;
@@ -38,8 +40,9 @@ public class OverworldScreen implements Screen {
     // End HUD values
     private HUD hudElements;
 
-    public OverworldScreen(final RPGame game) {
+    public OverworldScreen(final RPGame game, GameInformation information) {
         this.game = game;
+        this.gameInfo = information;
         config = GameConfig.getInstance();
 
         backgroundMusic = loadMusic(resourceAndTheJourneyBeginsMusic);
@@ -50,7 +53,18 @@ public class OverworldScreen implements Screen {
         cameraManager = new CameraManager(game);
         mapManager = new MapManager(resourceOverworldMap, cameraManager.getCamera(), game);
         physicsManager = new PhysicsManager(new Vector2(0, 0f), mapManager, cameraManager.getCamera(), true);
-        director.buildDummyPlayer(characterBuilder, physicsManager.getWorld(), game);
+
+        //director.buildDummyPlayer(characterBuilder, physicsManager.getWorld(), game);
+        if(information.getIdCharacterClass()==1){
+            director.buildKnight(characterBuilder, physicsManager.getWorld(), game);
+        }
+        if(information.getIdCharacterClass()==2){
+            director.buildArcher(characterBuilder, physicsManager.getWorld(), game);
+        }
+        if(information.getIdCharacterClass()==3){
+            director.buildMage(characterBuilder, physicsManager.getWorld(), game);
+        }
+
         character = characterBuilder.getResult();
 //        character = new AnimatedCharacter("graphics/sprites/actors/player/tile000.png", physicsManager.getWorld(), game);
         hudElements = new HUD(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);

@@ -10,7 +10,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
@@ -29,11 +28,8 @@ public class MainMenuScreen implements Screen {
     private final ArrayList<Text> menuOptions;
     private int actualSelection =0;
     private final ArrayList<Text> gameTitle;
-//    private final BitmapFont gameFont;
 
     private MyInputProcessor input;
-
-    ShapeRenderer _Border;
 
     public MainMenuScreen(final RPGame game) {
         this.game = game;
@@ -47,7 +43,6 @@ public class MainMenuScreen implements Screen {
 
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(resourceThemeMusic));
         backgroundMusic.setLooping(true);
-//        gameFont = FontFactory.createBitMapFont(Gdx.files.internal(resourceMainFont), 100, Color.GREEN, true, Color.BLACK);
 
         menuOptions = new ArrayList<Text>();
         gameTitle = new ArrayList<Text>();
@@ -59,19 +54,16 @@ public class MainMenuScreen implements Screen {
         generateGameTitle();
         generateMenu();
 
-        backgroundMusic.play();
+        //backgroundMusic.play();
         Gdx.input.setInputProcessor(input);
     }
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0, 1);
+        ScreenUtils.clear(0, 0, 0, 0);
 
         game.batch.begin();
         game.batch.draw(backgroundImage, 0, 0);
-//        for( int i = 0; i < menuOptions.size(); i++){
-//            gameFont.draw(game.batch, menuOptions.get(i), menuPosX, menuPosY+ +100*i);
-//        }
 
         for(Text tTemp : this.gameTitle){
             tTemp.draw();
@@ -83,13 +75,8 @@ public class MainMenuScreen implements Screen {
 
         game.batch.end();
 
+        validateMouse();
         validateKeys();
-
-//        if(input.isEnter()){
-//            System.out.println("Let the game begin");
-//            game.setScreen(new Overworldv2(game));
-//            dispose();
-//        }
     }
 
     @Override
@@ -116,8 +103,9 @@ public class MainMenuScreen implements Screen {
     public void dispose() {
         backgroundMusic.dispose();
         backgroundImage.dispose();
-//        gameFont.dispose();
+
     }
+
 
     private void generateGameTitle(){
         float mNextY2 = 0;
@@ -169,7 +157,8 @@ public class MainMenuScreen implements Screen {
 
     private void validateKeys() {
         try{
-            int mTime = 300;
+            int mTime = (int) (config.getFrameRate()*3.5);
+            //int mTime = 180;
             if(this.input.isMoveDown()){
                 this.actualSelection++;
                 if(this.actualSelection >3)
@@ -192,10 +181,23 @@ public class MainMenuScreen implements Screen {
         }
     }
 
+    private void validateMouse() {
+        for (int i = 0; i < this.menuOptions.size(); i++) {
+            float mX = this.input.getMouseX(), mY = this.input.getMouseY();
+            Text mTemp = this.menuOptions.get(i);
+            if (mX >= mTemp.getX() && mX <= (mTemp.getX() + mTemp.getWidth()))
+                if (mY >= (mTemp.getY() - mTemp.getHeight()) && mY <= mTemp.getY()){
+                    changeOptionColor(i);
+                    if(this.input.isClickTouch())
+                        executeAction();
+                }
+        }
+    }
+
     private void executeAction() {
         switch (this.actualSelection){
             case 0:
-                game.setScreen(new OverworldScreen(game));
+                game.setScreen(new CharacterSelectionScreen(game));
                 dispose();
                 break;
             case 1:

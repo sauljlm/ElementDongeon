@@ -184,6 +184,6 @@ public class AnimatedCharacter extends Sprite {
         currentFrame = currentAnimation.getKeyFrame(elapsedTime, true);
         //The factor used to divide the texture size is related to the dimension of the full sprite (number of images in each sprite), this might be an issue if we use sprites of different sizes
         //If the sizes of sprites are different or the factor is wrong the texture will not be on the expected possition.
-        rpGame.batch.draw(currentFrame, player.getPosition().x * gameConfig.getPPM() - currentTexture.getWidth()/8.3f, player.getPosition().y*gameConfig.getPPM()- currentTexture.getHeight()/30f);
+        rpGame.batch.draw(currentFrame, player.getPosition().x * gameConfig.getPPM() - currentTexture.getWidth()/22f, player.getPosition().y*gameConfig.getPPM()- currentTexture.getHeight()/15);
     }
 }

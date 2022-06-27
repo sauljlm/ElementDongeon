@@ -30,6 +30,13 @@ public class Text {
         this.setText("");
     }
 
+    public Text(String pText) {
+        initLayout();
+        generateText(Resources.resourceMainFont,this._FontSize,FONT_COLOR,false);
+        this.setCoordinates(100,100f);
+        this.setText(pText);
+    }
+
     public Text(int pFontSize, String pText, Boolean pShadow) {
         initLayout();
         generateText(Resources.resourceMainFont,pFontSize,this.FONT_COLOR,pShadow);
@@ -45,6 +52,13 @@ public class Text {
         this.setText(pText);
     }
 
+    public Text(String pFontSource, int pFontSize, Color pFontColor, String pText, Boolean pShadow) {
+        gameConfig = GameConfig.getInstance();
+        initLayout();
+        generateText(pFontSource,pFontSize,pFontColor,pShadow);
+        this.setCoordinates(1f,1f);
+        this.setText(pText);
+    }
 
     public Text(String pFontPath, Float pX, Float pY, int pFontSize, String pText) {
         initLayout();

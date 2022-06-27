@@ -1,5 +1,6 @@
 package com.avengers.rpgame.game.io;
 
+import com.avengers.rpgame.game.GameConfig;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 //PATRON OBSERVER PATTERN This is a listener interface
@@ -12,6 +13,13 @@ public class MyInputProcessor implements InputProcessor {
     private boolean pause;
     private boolean action1;
     private boolean enter;
+    private boolean moveUpMenu;
+    private boolean moveDownMenu;
+    private boolean moveLeftMenu;
+    private boolean moveRightMenu;
+
+    private int _MouseX, _MouseY;
+    private final GameConfig config = GameConfig.getInstance();
 
     public boolean isMoveUp() {
         return moveUp;
@@ -45,6 +53,39 @@ public class MyInputProcessor implements InputProcessor {
         return enter;
     }
 
+    public boolean isMoveUpMenu() {
+        return moveUpMenu;
+    }
+
+    public boolean isMoveDownMenu() {
+        return moveDownMenu;
+    }
+
+    public boolean isMoveLeftMenu() {
+        return moveLeftMenu;
+    }
+
+    public boolean isMoveRightMenu() {
+        return moveRightMenu;
+    }
+
+    public int getMouseX() {
+        return _MouseX;
+    }
+
+    public int getMouseY() {
+        return _MouseY;
+    }
+
+    private void setMouseX(int pMouseX) {
+        this._MouseX = pMouseX;
+    }
+
+    private void setMouseY(int pMouseY) {
+        this._MouseY = config.getResolutionVertical()-pMouseY;
+    }
+
+
     public boolean keyDown (int keycode) {
         if(keycode == Input.Keys.W || keycode == Input.Keys.UP){
             moveUp = true;
@@ -63,6 +104,18 @@ public class MyInputProcessor implements InputProcessor {
         }
         if(keycode == Input.Keys.ENTER){
             enter = true;
+        }
+        if(keycode == Input.Keys.UP){
+            moveUpMenu = true;
+        }
+        if(keycode == Input.Keys.DOWN){
+            moveDownMenu = true;
+        }
+        if(keycode == Input.Keys.LEFT){
+            moveLeftMenu = true;
+        }
+        if(keycode == Input.Keys.RIGHT){
+            moveRightMenu = true;
         }
         return false;
     }
@@ -86,6 +139,18 @@ public class MyInputProcessor implements InputProcessor {
         if(keycode == Input.Keys.ENTER){
             enter = false;
         }
+        if(keycode == Input.Keys.UP){
+            moveUpMenu = false;
+        }
+        if(keycode == Input.Keys.DOWN){
+            moveDownMenu = false;
+        }
+        if(keycode == Input.Keys.LEFT){
+            moveLeftMenu = false;
+        }
+        if(keycode == Input.Keys.RIGHT){
+            moveRightMenu = false;
+        }
         return false;
     }
 
@@ -108,10 +173,13 @@ public class MyInputProcessor implements InputProcessor {
     }
 
     public boolean mouseMoved (int x, int y) {
+        this.setMouseX(x);
+        this.setMouseY(y);
         return false;
     }
 
     public boolean scrolled (float amountX, float amountY) {
         return false;
     }
+
 }

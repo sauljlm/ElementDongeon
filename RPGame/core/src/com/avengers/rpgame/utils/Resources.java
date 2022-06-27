@@ -9,6 +9,10 @@ public class Resources {
     public static final String resourceGameTitle = "RPGame";
     public static final String resourceCompanyLogo = "graphics/textures/companyLogo.png";
 
+    public static final String knightImage = "graphics/textures/knight1.png";
+    public static final String archerImage = "graphics/textures/archer1.png";
+    public static final String mageImage = "graphics/textures/mage1.png";
+
 
     //Maps
     public static final String resourceOverworldMap = "graphics/maps/overworld.tmx";
@@ -19,23 +23,55 @@ public class Resources {
     public static final String resourceMainScreenBackground = "graphics/backgrounds/mainScreen1.jpg";
     public static final String resourceLoadScreenBackground = "graphics/backgrounds/loadScreen.jpg";
     public static final String resourceSettingsScreenBackground = "graphics/backgrounds/settingsScreen.jpg";
+    public static final String resourceNewGameBackground = "graphics/backgrounds/newGameScreen.jpg";
 
     //Textures
     public static final String resourceGameIcon = "graphics/icons/swordGameIcon.png";
     public static final String resourceBlack = "Resources/black.png";
-    public static final String resourceMageTextureUp = "graphics/sprites/actors/mage/TexturePackage/up.png";
-    public static final String resourceMageTextureDown = "graphics/sprites/actors/mage/TexturePackage/down.png";
-    public static final String resourceMageTextureLeft = "graphics/sprites/actors/mage/TexturePackage/left.png";
-    public static final String resourceMageTextureRight = "graphics/sprites/actors/mage/TexturePackage/right.png";
 
+//    public static final String resourceMageTextureUp = "graphics/sprites/actors/skeleton/TexturePackage/up.png";
+//    public static final String resourceMageTextureDown = "graphics/sprites/actors/skeleton/TexturePackage/down.png";
+//    public static final String resourceMageTextureLeft = "graphics/sprites/actors/skeleton/TexturePackage/left.png";
+//    public static final String resourceMageTextureRight = "graphics/sprites/actors/skeleton/TexturePackage/right.png";
+
+    public static final String resourceMageTextureUp = "graphics/sprites/actors/mage2/TexturePackage/mageUp.png";
+    public static final String resourceMageTextureDown = "graphics/sprites/actors/mage2/TexturePackage/mageDown.png";
+    public static final String resourceMageTextureLeft = "graphics/sprites/actors/mage2/TexturePackage/mageLeft.png";
+    public static final String resourceMageTextureRight = "graphics/sprites/actors/mage2/TexturePackage/mageRight.png";
+
+
+    public static final String resourceKnightTextureUp = "graphics/sprites/actors/knight3/TexturePackage/knightUp.png";
+    public static final String resourceKnightTextureDown = "graphics/sprites/actors/knight3/TexturePackage/knightDown.png";
+    public static final String resourceKnightTextureLeft = "graphics/sprites/actors/knight3/TexturePackage/knightLeft.png";
+    public static final String resourceKnightTextureRight = "graphics/sprites/actors/knight3/TexturePackage/knightRight.png";
+
+    public static final String resourceArcherTextureUp = "graphics/sprites/actors/archer2/TexturePackage/archerUp.png";
+    public static final String resourceArcherTextureDown = "graphics/sprites/actors/archer2/TexturePackage/archerDown.png";
+    public static final String resourceArcherTextureLeft = "graphics/sprites/actors/archer2/TexturePackage/archerLeft.png";
+    public static final String resourceArcherTextureRight = "graphics/sprites/actors/archer2/TexturePackage/archerRight.png";
 
     //TextureMaps
-    public static final String resourceMageTextureMapUp = "graphics/sprites/actors/mage/TexturePackage/up.atlas";
-    public static final String resourceMageTextureMapDown = "graphics/sprites/actors/mage/TexturePackage/down.atlas";
-    public static final String resourceMageTextureMapLeft = "graphics/sprites/actors/mage/TexturePackage/left.atlas";
-    public static final String resourceMageTextureMapRight = "graphics/sprites/actors/mage/TexturePackage/right.atlas";
+
+//    public static final String resourceMageTextureMapUp = "graphics/sprites/actors/skeleton/TexturePackage/up.atlas";
+//    public static final String resourceMageTextureMapDown = "graphics/sprites/actors/skeleton/TexturePackage/down.atlas";
+//    public static final String resourceMageTextureMapLeft = "graphics/sprites/actors/skeleton/TexturePackage/left.atlas";
+//    public static final String resourceMageTextureMapRight = "graphics/sprites/actors/skeleton/TexturePackage/right.atlas";
 
 
+    public static final String resourceMageTextureMapUp = "graphics/sprites/actors/mage2/TexturePackage/mageUp.atlas";
+    public static final String resourceMageTextureMapDown = "graphics/sprites/actors/mage2/TexturePackage/mageDown.atlas";
+    public static final String resourceMageTextureMapLeft = "graphics/sprites/actors/mage2/TexturePackage/mageLeft.atlas";
+    public static final String resourceMageTextureMapRight = "graphics/sprites/actors/mage2/TexturePackage/mageRight.atlas";
+
+    public static final String resourceKnightTextureMapUp = "graphics/sprites/actors/knight4/TexturePackage/knightUp.atlas";
+    public static final String resourceKnightTextureMapDown = "graphics/sprites/actors/knight4/TexturePackage/knightDown.atlas";
+    public static final String resourceKnightTextureMapLeft = "graphics/sprites/actors/knight4/TexturePackage/knightLeft.atlas";
+    public static final String resourceKnightTextureMapRight = "graphics/sprites/actors/knight4/TexturePackage/knightRight.atlas";
+
+    public static final String resourceArcherTextureMapUp = "graphics/sprites/actors/archer2/TexturePackage/archerUp.atlas";
+    public static final String resourceArcherTextureMapDown = "graphics/sprites/actors/archer2/TexturePackage/archerDown.atlas";
+    public static final String resourceArcherTextureMapLeft = "graphics/sprites/actors/archer2/TexturePackage/archerLeft.atlas";
+    public static final String resourceArcherTextureMapRight = "graphics/sprites/actors/archer2/TexturePackage/archerRight.atlas";
 
     //SoundEffects
     public static final String resourceIntroSound = "audio/soundEffects/intro.wav";
@@ -58,6 +94,7 @@ public class Resources {
     public static final String HUDHeart = "graphics/sprites/actors/HUD/heart.png";
     public static final String HUDPotion = "graphics/sprites/actors/HUD/MP.png";
     public static final String HUDShield = "graphics/sprites/actors/HUD/shield.png";
+
     // HUD Weapons
     public static final String HUDDefaultWeapon = "graphics/sprites/actors/HUD/weapons/hand.png";
     public static final String HUDSword = "graphics/sprites/actors/HUD/weapons/swords/sword.png";
@@ -68,5 +105,13 @@ public class Resources {
     public static final String HUDDoubleArrow = "graphics/sprites/actors/HUD/weapons/arrows/doubleArrow.png";
     public static final String HUDTripleArrow = "graphics/sprites/actors/HUD/weapons/arrows/tripleArrow.png";
     public static final String HUDBombArrow = "graphics/sprites/actors/HUD/weapons/arrows/bombArrow.png";
+
+    // Skins
+    public static final String skinTextfield3 = "graphics/skins/cloud-form/skin/cloud-form-ui.json";
+    public static final String skinTextfield2 = "graphics/skins/craftacular/skin/craftacular-ui.json";
+    public static final String skinTextfield = "graphics/skins/commodore64/skin/uiskin.json";
+
+
+
 
 }

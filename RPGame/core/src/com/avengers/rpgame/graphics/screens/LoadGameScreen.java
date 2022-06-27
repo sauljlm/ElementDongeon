@@ -1,6 +1,7 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.MyInputProcessor;
@@ -19,6 +20,7 @@ import static com.avengers.rpgame.utils.Resources.resourceThemeMusic;
 
 public class LoadGameScreen implements Screen {
     final RPGame game;
+    private GameInformation gameInfo;
     private final GameConfig config;
     private final Music backgroundMusic;
     private final Texture backgroundImage;
@@ -128,7 +130,7 @@ public class LoadGameScreen implements Screen {
 
     private void validateKeys() {
         try{
-            int mTime = 300;
+            int mTime = (int) (config.getFrameRate()*3.5);
             if(this.input.isMoveDown()){
                 this.actualSelection++;
                 if(this.actualSelection >3)
@@ -155,15 +157,15 @@ public class LoadGameScreen implements Screen {
     private void executeAction() {
         switch (this.actualSelection){
             case 0:
-                game.setScreen(new OverworldScreen(game));
+                game.setScreen(new OverworldScreen(game, gameInfo));
                 dispose();
                 break;
             case 1:
-                game.setScreen(new OverworldScreen(game));
+                game.setScreen(new OverworldScreen(game, gameInfo));
                 dispose();
                 break;
             case 2:
-                game.setScreen(new OverworldScreen(game));
+                game.setScreen(new OverworldScreen(game, gameInfo));
                 dispose();
                 break;
             case 3:
