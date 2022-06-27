@@ -31,10 +31,6 @@ public class Resources {
     public static final String resourceBlack = "Resources/black.png";
     public static final String resourceSkin = "graphics/textures/skin/glassy-ui.json";
     public static final String resourceSkin2 = "graphics/textures/skin2/pixthulhu-ui.json";
-    public static final String resourceMageTextureUp = "graphics/sprites/actors/mage/TexturePackage/up.png";
-    public static final String resourceMageTextureDown = "graphics/sprites/actors/mage/TexturePackage/down.png";
-    public static final String resourceMageTextureLeft = "graphics/sprites/actors/mage/TexturePackage/left.png";
-    public static final String resourceMageTextureRight = "graphics/sprites/actors/mage/TexturePackage/right.png";
 
 //    public static final String resourceMageTextureUp = "graphics/sprites/actors/skeleton/TexturePackage/up.png";
 //    public static final String resourceMageTextureDown = "graphics/sprites/actors/skeleton/TexturePackage/down.png";
