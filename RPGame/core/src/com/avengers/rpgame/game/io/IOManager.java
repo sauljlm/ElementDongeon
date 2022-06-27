@@ -1,5 +1,6 @@
 package com.avengers.rpgame.game.io;
 
+import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -7,11 +8,13 @@ import com.badlogic.gdx.math.Vector2;
 //TODO Improve this and create different controls for different screens
 public class IOManager {
     private MyInputProcessor inputProcessor;
+    private GameConfig config;
 
 
     public IOManager() {
         inputProcessor = new MyInputProcessor();
         Gdx.input.setInputProcessor(inputProcessor);
+        config = GameConfig.getInstance();
     }
 
     //the idea for this method is to process different request of IO processInput differently acording to the screen
@@ -28,33 +31,40 @@ public class IOManager {
     }
 
     private void inputUpdate(float delta, AbstractCharacter character) {
-        int horizontalForce = 0;
-        int verticalForce = 0;
+        float horizontalForce = 0;
+        float verticalForce = 0;
+        float movementSpeed = 1.5f;
         Vector2 velocity = new Vector2();
-        if(inputProcessor.isMoveLeft()){
+        if(config.isGodMode()){
+            movementSpeed = 4;
+        }
+        if(inputProcessor.isMoveLeft()) {
             character.getAnimatedCharacter().setAction("runningLeft");
             System.out.println("LEFT!");
-            horizontalForce = -2;
+            horizontalForce = -movementSpeed;
             verticalForce = 0;
         }
         if(inputProcessor.isMoveRight()){
             character.getAnimatedCharacter().setAction("runningRight");
-            horizontalForce = 2;
+            horizontalForce = movementSpeed;
             verticalForce = 0;
             System.out.println("RIGHT!");
         }
-        if(inputProcessor.isMoveUp()){
+        if(inputProcessor.isMoveUp()) {
             character.getAnimatedCharacter().setAction("runningUp");
-            verticalForce = 2;
             horizontalForce = 0;
+            verticalForce = movementSpeed;
             System.out.println("UP!");
         }
         if(inputProcessor.isMoveDown()){
             character.getAnimatedCharacter().setAction("runningDown");
-            verticalForce = -2;
+            verticalForce = -movementSpeed;
             horizontalForce = 0;
             System.out.println("DOWN!");
         }
+
+
+
         if(inputProcessor.isAction1()){
             if(character.getAnimatedCharacter().getPlayer().getLinearVelocity().y == 0){
                 character.getAnimatedCharacter().getPlayer().applyLinearImpulse(0, 6, 0, 6, false);
