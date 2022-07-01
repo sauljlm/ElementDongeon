@@ -1,6 +1,7 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.ai.AIManager;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.IOManager;
 import com.avengers.rpgame.graphics.camera.CameraManager;
@@ -27,9 +28,12 @@ public class OverworldScreen implements Screen {
     private PhysicsManager physicsManager;
     private EntitiesBuilderDirector director;
     private CharacterBuilder characterBuilder;
-    private AbstractCharacter character;
+    private AbstractCharacter playerCharacter;
+    private AbstractCharacter ally1Character;
+    private AbstractCharacter ally2Character;
     private CameraManager cameraManager;
     private IOManager ioManager;
+    private AIManager aiManager;
 
     //HUD default values
     private int userHealth = 100;
@@ -54,20 +58,34 @@ public class OverworldScreen implements Screen {
         cameraManager = new CameraManager(game);
         mapManager = new MapManager(resourceOverworldMap, cameraManager.getCamera(), game);
         physicsManager = new PhysicsManager(new Vector2(0, 0f), mapManager, cameraManager.getCamera(), true);
+        aiManager = new AIManager();
 
-        //director.buildDummyPlayer(characterBuilder, physicsManager.getWorld(), game);
+        //TODO encapsulate this into an external class that takes care of creating the characters
         if(information.getIdCharacterClass()==1){
             director.buildKnight(characterBuilder, physicsManager.getWorld(), game);
+            playerCharacter = characterBuilder.getResult();
+            director.buildMage(characterBuilder, physicsManager.getWorld(), game);
+            ally1Character = characterBuilder.getResult();
+            director.buildArcher(characterBuilder, physicsManager.getWorld(), game);
+            ally2Character = characterBuilder.getResult();
         }
         if(information.getIdCharacterClass()==2){
             director.buildArcher(characterBuilder, physicsManager.getWorld(), game);
+            playerCharacter = characterBuilder.getResult();
+            director.buildKnight(characterBuilder, physicsManager.getWorld(), game);
+            ally1Character = characterBuilder.getResult();
+            director.buildMage(characterBuilder, physicsManager.getWorld(), game);
+            ally2Character = characterBuilder.getResult();
         }
         if(information.getIdCharacterClass()==3){
             director.buildMage(characterBuilder, physicsManager.getWorld(), game);
+            playerCharacter = characterBuilder.getResult();
+            director.buildKnight(characterBuilder, physicsManager.getWorld(), game);
+            ally1Character = characterBuilder.getResult();
+            director.buildArcher(characterBuilder, physicsManager.getWorld(), game);
+            ally2Character = characterBuilder.getResult();
         }
 
-        character = characterBuilder.getResult();
-//        character = new AnimatedCharacter("graphics/sprites/actors/player/tile000.png", physicsManager.getWorld(), game);
         hudElements = new HUD(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);
     }
 
@@ -79,7 +97,8 @@ public class OverworldScreen implements Screen {
 
     //This method holds the game logic
     public void  logic(float delta){
-
+        aiManager.moveAllies(playerCharacter, ally1Character, 1);
+        aiManager.moveAllies(ally1Character, ally2Character, 1);
     }
 
 
@@ -92,11 +111,13 @@ public class OverworldScreen implements Screen {
 
         mapManager.render();//Render the map first!
         physicsManager.simulate();
-        ioManager.processInput("overworld", delta, character);
-        cameraManager.action(delta, character);
+        ioManager.processInput("overworld", delta, playerCharacter, ally1Character, ally2Character);
+        cameraManager.action(delta, playerCharacter);
 
         game.batch.begin();//Never add game logic inside render begin, end
-        character.getAnimatedCharacter().draw(delta);
+        ally2Character.getAnimatedCharacter().draw(delta);
+        ally1Character.getAnimatedCharacter().draw(delta);
+        playerCharacter.getAnimatedCharacter().draw(delta);
         game.batch.end();
 
         hudElements.update(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);

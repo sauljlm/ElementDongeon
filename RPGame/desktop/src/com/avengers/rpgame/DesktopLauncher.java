@@ -35,13 +35,13 @@ public class DesktopLauncher {
 		gameConfig.setFullScreen(false);
 		gameConfig.setResolutionHorizontal(1920); //If full screen is true resolution is got automatically from monitor/openGl stuff
 		gameConfig.setResolutionVertical(1080);
-		gameConfig.setGodMode(true);
+		gameConfig.setGodMode(false);
 		gameConfig.setSkipIntro(true);
 		gameConfig.setMapTileSize(16);
 		gameConfig.setMusicVolume(0.1f);
 		gameConfig.setSoundEffectsVolume(0.1f);
 		gameConfig.setFrameTime(1 / 15f);//Value based on docs
-		gameConfig.setDebugPhysics(true);
+		gameConfig.setDebugPhysics(false);
 		return gameConfig;
 	}
 }

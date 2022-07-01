@@ -5,10 +5,7 @@ import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.logic.entities.character.components.skin.Skin;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 
 import static com.avengers.rpgame.utils.FileManager.loadFile;
 import static com.avengers.rpgame.utils.FileManager.loadTexture;
@@ -43,7 +40,7 @@ public class AnimatedCharacter extends Sprite {
         this.currentTexture = skin.getUp().getTexture();
         this.currentAnimation = new Animation<>(gameConfig.getFrameTime(), currentAnimationAtlas.findRegions(skin.getUp().getAnimationName()));
         this.currentAnimation.setFrameDuration(gameConfig.getFrameTime());
-        this.player = createBox((int)gameConfig.getResolutionHorizontal()*8/5, (int) gameConfig.getResolutionVertical() /5, 16, 16, false, true);
+        this.player = createBox((int)gameConfig.getResolutionHorizontal()*12/5, (int) gameConfig.getResolutionVertical() /5, 12, 12, false, false);
     }
 
     public AnimatedCharacter(String textureFileLocation,String textureAtlas) {
@@ -52,7 +49,7 @@ public class AnimatedCharacter extends Sprite {
         this.currentTexture = loadTexture(textureFileLocation);
         this.currentAnimation = new Animation<>(gameConfig.getFrameTime(), currentAnimationAtlas.findRegions("run"));
         this.currentAnimation.setFrameDuration(gameConfig.getFrameTime());
-        this.player = createBox((int)gameConfig.getResolutionHorizontal()/2, (int) gameConfig.getResolutionVertical() /2, 16, 16, false, true);
+        this.player = createBox((int)gameConfig.getResolutionHorizontal()/2, (int) gameConfig.getResolutionVertical() /2, 12, 12, false, true);
     }
 
     public String getAction() {
@@ -147,6 +144,9 @@ public class AnimatedCharacter extends Sprite {
         bodyDef.position.set(posX/gameConfig.getPPM(),posY/gameConfig.getPPM());
         bodyDef.fixedRotation = isFixedRotation; //this stops the player from rotating
         body = world.createBody(bodyDef); //this initializes the player body using the def and puts it inside the world
+
+//        CircleShape shape = new CircleShape();
+//        shape.setRadius(width / 1.5f / gameConfig.getPPM());
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2f / gameConfig.getPPM(), height / 2f / gameConfig.getPPM()); // /2 cause box2D counts stuff from center, so 32 x 32 would be 64, /PPM to scale down into box2D units
