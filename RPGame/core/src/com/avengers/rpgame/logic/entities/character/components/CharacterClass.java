@@ -128,4 +128,22 @@ package com.avengers.rpgame.logic.entities.character.components;
     public void setInitialLuck(int initialLuck) {
        this.initialLuck = initialLuck;
     }
- }
+
+   @Override
+   public String toString() {
+      return "CharacterClass{" +
+              "idCharacterClass=" + idCharacterClass +
+              ", name='" + name + '\'' +
+              ", description='" + description + '\'' +
+              ", initialHealthPoints=" + initialHealthPoints +
+              ", initialMagicPoints=" + initialMagicPoints +
+              ", initialHPRecoveryRate=" + initialHPRecoveryRate +
+              ", initialMPRecoveryRate=" + initialMPRecoveryRate +
+              ", initialStrength=" + initialStrength +
+              ", initialSpeed=" + initialSpeed +
+              ", initialMagic=" + initialMagic +
+              ", initialResistance=" + initialResistance +
+              ", initialLuck=" + initialLuck +
+              '}';
+   }
+}

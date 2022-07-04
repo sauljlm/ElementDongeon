@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import static com.avengers.rpgame.utils.FileManager.loadMusic;
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
 import static com.avengers.rpgame.utils.Resources.*;
 
 public class FightScreen implements Screen {
@@ -18,6 +19,7 @@ public class FightScreen implements Screen {
 
     private final GameConfig config;
     private final Music backgroundMusic;
+    private Texture backgroundImage;
 
     public FightScreen(final RPGame game) {
         this.game = game;
@@ -25,8 +27,7 @@ public class FightScreen implements Screen {
 
         backgroundMusic = loadMusic(resourceFightMusic);;
         backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(config.getMusicVolume());
-
+        backgroundImage = loadTexture(resourceFightBackgroundForest);
     }
 
     @Override
@@ -37,9 +38,8 @@ public class FightScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
-
         game.batch.begin();
-
+        game.batch.draw(backgroundImage, 0, 0);
         game.batch.end();
     }
 

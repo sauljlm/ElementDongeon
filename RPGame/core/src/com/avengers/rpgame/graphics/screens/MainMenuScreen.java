@@ -44,9 +44,6 @@ public class MainMenuScreen implements Screen {
 
         backgroundMusic = loadMusic(resourceThemeMusic);
         backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(config.getMusicVolume());
-
-//        gameFont = FontFactory.createBitMapFont(Gdx.files.internal(resourceMainFont), 100, Color.GREEN, true, Color.BLACK);
 
         menuOptions = new ArrayList<Text>();
         gameTitle = new ArrayList<Text>();
@@ -58,7 +55,7 @@ public class MainMenuScreen implements Screen {
         generateGameTitle();
         generateMenu();
 
-        //backgroundMusic.play();
+        backgroundMusic.play();
         Gdx.input.setInputProcessor(input);
     }
 

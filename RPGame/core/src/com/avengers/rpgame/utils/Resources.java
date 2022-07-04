@@ -1,8 +1,5 @@
 package com.avengers.rpgame.utils;
 
-import com.avengers.rpgame.game.GameConfig;
-
-
 public class Resources {
 
     //GENERAL
@@ -25,17 +22,13 @@ public class Resources {
     public static final String resourceSettingsScreenBackground = "graphics/backgrounds/settingsScreen.jpg";
     public static final String resourceOptionsScreenBackground = "graphics/backgrounds/optionsScreenbackground.png";
     public static final String resourceNewGameBackground = "graphics/backgrounds/newGameScreen.jpg";
+    public static final String resourceFightBackgroundForest = "graphics/backgrounds/FightForestBackground.jpg";
 
     //Textures
     public static final String resourceGameIcon = "graphics/icons/swordGameIcon.png";
     public static final String resourceBlack = "Resources/black.png";
     public static final String resourceSkin = "graphics/textures/skin/glassy-ui.json";
     public static final String resourceSkin2 = "graphics/textures/skin2/pixthulhu-ui.json";
-
-//    public static final String resourceMageTextureUp = "graphics/sprites/actors/skeleton/TexturePackage/up.png";
-//    public static final String resourceMageTextureDown = "graphics/sprites/actors/skeleton/TexturePackage/down.png";
-//    public static final String resourceMageTextureLeft = "graphics/sprites/actors/skeleton/TexturePackage/left.png";
-//    public static final String resourceMageTextureRight = "graphics/sprites/actors/skeleton/TexturePackage/right.png";
 
     public static final String resourceMageTextureUp = "graphics/sprites/actors/mage2/TexturePackage/mageUp.png";
     public static final String resourceMageTextureDown = "graphics/sprites/actors/mage2/TexturePackage/mageDown.png";
@@ -54,13 +47,6 @@ public class Resources {
     public static final String resourceArcherTextureRight = "graphics/sprites/actors/archer2/TexturePackage/archerRight.png";
 
     //TextureMaps
-
-//    public static final String resourceMageTextureMapUp = "graphics/sprites/actors/skeleton/TexturePackage/up.atlas";
-//    public static final String resourceMageTextureMapDown = "graphics/sprites/actors/skeleton/TexturePackage/down.atlas";
-//    public static final String resourceMageTextureMapLeft = "graphics/sprites/actors/skeleton/TexturePackage/left.atlas";
-//    public static final String resourceMageTextureMapRight = "graphics/sprites/actors/skeleton/TexturePackage/right.atlas";
-
-
     public static final String resourceMageTextureMapUp = "graphics/sprites/actors/mage2/TexturePackage/mageUp.atlas";
     public static final String resourceMageTextureMapDown = "graphics/sprites/actors/mage2/TexturePackage/mageDown.atlas";
     public static final String resourceMageTextureMapLeft = "graphics/sprites/actors/mage2/TexturePackage/mageLeft.atlas";
@@ -114,7 +100,6 @@ public class Resources {
     public static final String skinTextfield3 = "graphics/skins/cloud-form/skin/cloud-form-ui.json";
     public static final String skinTextfield2 = "graphics/skins/craftacular/skin/craftacular-ui.json";
     public static final String skinTextfield = "graphics/skins/commodore64/skin/uiskin.json";
-
 
 
 

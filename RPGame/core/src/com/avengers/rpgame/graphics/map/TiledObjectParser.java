@@ -22,7 +22,7 @@ public class TiledObjectParser {
             } else
                 if (object instanceof PolygonMapObject) {
                     shape = createPolygon((PolygonMapObject) object);
-                    System.out.println("Polygon!");
+//                    System.out.println("Polygon!");
                 } else
                     if (object instanceof EllipseMapObject) {
                         shape = createCircle((EllipseMapObject) object);

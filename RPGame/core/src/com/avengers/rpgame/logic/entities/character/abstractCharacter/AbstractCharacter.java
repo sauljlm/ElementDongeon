@@ -3,13 +3,14 @@ package com.avengers.rpgame.logic.entities.character.abstractCharacter;
 import com.avengers.rpgame.logic.entities.Attack;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.Skill;
+import com.avengers.rpgame.logic.entities.character.behaviour.BattleActions;
 import com.avengers.rpgame.logic.entities.character.components.AnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
 import com.badlogic.gdx.math.Vector2;
-
 import java.util.ArrayList;
+
 //Abstract Father class for all types of characters
-public abstract class AbstractCharacter {
+public abstract class AbstractCharacter implements BattleActions {
     private int idCharacter;
     private String name; //Example: King Jorge 9th
     private String description; //Example: King Jorge 9th was the saved princess Leia when he was 20yo.....
@@ -185,5 +186,83 @@ public abstract class AbstractCharacter {
 
     public void setSkills(ArrayList<Skill> skills) {
         this.skills = skills;
+    }
+
+
+    //BattleSystem
+    //Attack other character
+    public void attackOther(Attack attack, AbstractCharacter targetCharacter) {
+        //TODO manage insufficient MP to return feedback
+        if(this.getMagicPoints() >= attack.getmPCost()){
+            this.setMagicPoints(this.getMagicPoints()-attack.getmPCost());
+            targetCharacter.receiveAttack(attack);
+        }
+        System.out.println("Not enough MP!");
+    }
+
+    //Receive attack
+    public void receiveAttack(Attack attack) {
+        this.setHealthPoints(this.getHealthPoints()-attack.getHPEffect());
+    }
+
+    //Use skill on other character
+    public void skillOther(Skill skill, AbstractCharacter targetCharacter) {
+        //TODO manage insufficient MP to return feedback
+        if(this.getMagicPoints() >= skill.getmPCost()){
+            this.setMagicPoints(this.getMagicPoints()-skill.getmPCost());
+            targetCharacter.receiveSkill(skill);
+        }
+        System.out.println("Not enough MP!");
+    }
+
+    //Use/receive skill on oneself
+    public void receiveSkill(Skill skill) {
+        this.setStrength(this.getStrength()+this.getStrength()*skill.getStrengthEffect());
+        this.setSpeed(this.getSpeed()+this.getSpeed()*skill.getSpeedEffect());
+        this.setMagic(this.getMagic()+this.getMagic()*skill.getMagicEffect());
+        this.setResistance(this.getResistance()+this.getResistance()*skill.getResistanceEffect());
+        this.setLuck(this.getLuck()+this.getLuck()* skill.getLuckEffect());
+        this.setMagicPoints(this.getMagicPoints()+this.getMagicPoints()*skill.getmPEffect());
+        this.setHealthPoints(this.getHealthPoints()+this.getHealthPoints()*skill.gethPEffect());
+    }
+
+    //Use item on other character
+    public void itemOther(Item item, AbstractCharacter targetCharacter) {
+        targetCharacter.receiveItem(item);
+    }
+
+    //Use/receive item on oneself
+    //This assumes the effects are % like 0.1. So the effect on strength for 0.1 is to increase base strength in 10%
+    public void receiveItem(Item item) {
+        this.setStrength(this.getStrength()+this.getStrength()*item.getStrengthEffect());
+        this.setSpeed(this.getSpeed()+this.getSpeed()*item.getSpeedEffect());
+        this.setMagic(this.getMagic()+this.getMagic()*item.getMagicEffect());
+        this.setResistance(this.getResistance()+this.getResistance()*item.getResistanceEffect());
+        this.setLuck(this.getLuck()+this.getLuck()* item.getLuckEffect());
+        this.setMagicPoints(this.getMagicPoints()+this.getMagicPoints()*item.getmPEffect());
+        this.setHealthPoints(this.getHealthPoints()+this.getHealthPoints()*item.gethPEffect());
+    }
+
+    @Override
+    public String toString() {
+        return "AbstractCharacter{" +
+                "idCharacter=" + idCharacter +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", position=" + position +
+                ", level=" + level +
+                ", healthPoints=" + healthPoints +
+                ", magicPoints=" + magicPoints +
+                ", strength=" + strength +
+                ", speed=" + speed +
+                ", magic=" + magic +
+                ", resistance=" + resistance +
+                ", luck=" + luck +
+                ", characterClass=" + characterClass +
+                ", animatedCharacter=" + animatedCharacter +
+                ", items=" + items +
+                ", attacks=" + attacks +
+                ", skills=" + skills +
+                '}';
     }
 }

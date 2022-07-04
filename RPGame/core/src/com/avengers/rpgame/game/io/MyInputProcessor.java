@@ -17,9 +17,14 @@ public class MyInputProcessor implements InputProcessor {
     private boolean moveDownMenu;
     private boolean moveLeftMenu;
     private boolean moveRightMenu;
+    private boolean enterFightMode; //debug/dev only
 
     private int _MouseX, _MouseY;
     private final GameConfig config = GameConfig.getInstance();
+
+    public boolean isEnterFightMode() {
+        return enterFightMode;
+    }
 
     public boolean isMoveUp() {
         return moveUp;
@@ -117,6 +122,9 @@ public class MyInputProcessor implements InputProcessor {
         if(keycode == Input.Keys.RIGHT){
             moveRightMenu = true;
         }
+        if(keycode == Input.Keys.P){
+            enterFightMode = true;
+        }
         return false;
     }
 
@@ -150,6 +158,9 @@ public class MyInputProcessor implements InputProcessor {
         }
         if(keycode == Input.Keys.RIGHT){
             moveRightMenu = false;
+        }
+        if(keycode == Input.Keys.P){
+            enterFightMode = false;
         }
         return false;
     }

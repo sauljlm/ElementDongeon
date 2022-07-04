@@ -3,10 +3,10 @@ package com.avengers.rpgame.ai;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 
 public class AIManager {
-    private AlliesMovement allysMovement;
+    private AlliesMovementAI allysMovement;
 
     public AIManager() {
-        allysMovement = new AlliesMovement();
+        allysMovement = new AlliesMovementAI();
     }
 
 

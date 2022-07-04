@@ -1,6 +1,8 @@
 package com.avengers.rpgame.game.io;
 
+import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.graphics.screens.FightScreen;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -14,12 +16,13 @@ import java.util.Queue;
 public class IOManager {
     private MyInputProcessor inputProcessor;
     private GameConfig config;
+    private RPGame game;
 
-
-    public IOManager() {
+    public IOManager(RPGame game) {
         inputProcessor = new MyInputProcessor();
         Gdx.input.setInputProcessor(inputProcessor);
         config = GameConfig.getInstance();
+        this.game = game;
     }
 
     //the idea for this method is to process different request of IO processInput differently acording to the screen
@@ -78,6 +81,11 @@ public class IOManager {
         playerCharacter.getAnimatedCharacter().getPlayer().setLinearVelocity(velocity.x,velocity.y);
 
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
+
+        if(inputProcessor.isEnterFightMode()){
+            game.setScreen(new FightScreen(game));
+            System.out.println("FIGHT !");
+        }
     }
 
     public void dispose(){

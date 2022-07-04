@@ -320,7 +320,7 @@ public class CharacterSelectionScreen implements Screen {
                     }
 
                     if(txtUsername.getText().isEmpty()){
-                        gameInfo.setUsername("Unknown");
+                        gameInfo.setUsername("ElementPlayer");
                     }else{
                         gameInfo.setUsername(txtUsername.getText());
                     }
@@ -336,7 +336,7 @@ public class CharacterSelectionScreen implements Screen {
         }
     }
 
-    //Esto es temporal
+    //TODO: Esto es temporal, pendiente extraer de JSON
     private void createDummyCharacters() {
         this.dummyKnight = new CharacterClass(1, "Knight", "Caballero", 60, 61, 62, 63, 64, 65, 66, 67, 68);
         this.dummyArcher = new CharacterClass(2, "Archer", "Arquero", 70, 71, 72, 73, 74, 75, 76, 77, 78);

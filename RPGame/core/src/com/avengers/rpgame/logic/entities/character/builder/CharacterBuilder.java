@@ -6,6 +6,7 @@ import com.avengers.rpgame.logic.entities.Skill;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.components.AnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
+import com.avengers.rpgame.logic.entities.character.concrete.PlayableCharacter;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -77,7 +78,6 @@ public class CharacterBuilder implements ICharacterBuilder {
     }
 
     public AbstractCharacter getResult(){
-        return new AbstractCharacter(idCharacter, name, description, position, level, healthPoints, magicPoints, strength, speed, magic, resistance, luck, characterClass, animatedCharacter, items, attacks, skills) {
-        };
+        return new PlayableCharacter(idCharacter, name, description, position, level, healthPoints, magicPoints, strength, speed, magic, resistance, luck, characterClass, animatedCharacter, items, attacks, skills);
     }
 }

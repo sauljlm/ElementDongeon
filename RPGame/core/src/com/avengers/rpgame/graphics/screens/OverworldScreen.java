@@ -50,11 +50,10 @@ public class OverworldScreen implements Screen {
         config = GameConfig.getInstance();
 
         backgroundMusic = loadMusic(resourceAndTheJourneyBeginsMusic);
-        backgroundMusic.setVolume(config.getMusicVolume());
         director = new EntitiesBuilderDirector();
         characterBuilder = new CharacterBuilder();
 
-        ioManager = new IOManager();
+        ioManager = new IOManager(game);
         cameraManager = new CameraManager(game);
         mapManager = new MapManager(resourceOverworldMap, cameraManager.getCamera(), game);
         physicsManager = new PhysicsManager(new Vector2(0, 0f), mapManager, cameraManager.getCamera(), true);
@@ -62,31 +61,34 @@ public class OverworldScreen implements Screen {
 
         //TODO encapsulate this into an external class that takes care of creating the characters
         if(information.getIdCharacterClass()==1){
-            director.buildKnight(characterBuilder, physicsManager.getWorld(), game);
+            director.buildKnight(characterBuilder, physicsManager.getWorld(), game, information.getUsername());
             playerCharacter = characterBuilder.getResult();
-            director.buildMage(characterBuilder, physicsManager.getWorld(), game);
+            director.buildMage(characterBuilder, physicsManager.getWorld(), game, "Merlin");
             ally1Character = characterBuilder.getResult();
-            director.buildArcher(characterBuilder, physicsManager.getWorld(), game);
+            director.buildArcher(characterBuilder, physicsManager.getWorld(), game, "Robin");
             ally2Character = characterBuilder.getResult();
         }
         if(information.getIdCharacterClass()==2){
-            director.buildArcher(characterBuilder, physicsManager.getWorld(), game);
+            director.buildArcher(characterBuilder, physicsManager.getWorld(), game, information.getUsername());
             playerCharacter = characterBuilder.getResult();
-            director.buildKnight(characterBuilder, physicsManager.getWorld(), game);
+            director.buildKnight(characterBuilder, physicsManager.getWorld(), game, "Lancelot");
             ally1Character = characterBuilder.getResult();
-            director.buildMage(characterBuilder, physicsManager.getWorld(), game);
+            director.buildMage(characterBuilder, physicsManager.getWorld(), game, "Merlin");
             ally2Character = characterBuilder.getResult();
         }
         if(information.getIdCharacterClass()==3){
-            director.buildMage(characterBuilder, physicsManager.getWorld(), game);
+            director.buildMage(characterBuilder, physicsManager.getWorld(), game, information.getUsername());
             playerCharacter = characterBuilder.getResult();
-            director.buildKnight(characterBuilder, physicsManager.getWorld(), game);
+            director.buildKnight(characterBuilder, physicsManager.getWorld(), game, "Lancelot");
             ally1Character = characterBuilder.getResult();
-            director.buildArcher(characterBuilder, physicsManager.getWorld(), game);
+            director.buildArcher(characterBuilder, physicsManager.getWorld(), game, "Robin");
             ally2Character = characterBuilder.getResult();
         }
 
         hudElements = new HUD(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);
+        System.out.println(playerCharacter);
+        System.out.println(ally1Character);
+        System.out.println(ally2Character);
     }
 
     @Override
