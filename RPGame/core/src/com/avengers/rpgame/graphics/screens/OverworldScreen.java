@@ -53,7 +53,7 @@ public class OverworldScreen implements Screen {
         director = new EntitiesBuilderDirector();
         characterBuilder = new CharacterBuilder();
 
-        ioManager = new IOManager(game);
+        ioManager = new IOManager(game, backgroundMusic);
         cameraManager = new CameraManager(game);
         mapManager = new MapManager(resourceOverworldMap, cameraManager.getCamera(), game);
         physicsManager = new PhysicsManager(new Vector2(0, 0f), mapManager, cameraManager.getCamera(), true);
@@ -102,7 +102,6 @@ public class OverworldScreen implements Screen {
         aiManager.moveAllies(playerCharacter, ally1Character, 1);
         aiManager.moveAllies(ally1Character, ally2Character, 1);
     }
-
 
 
     @Override
@@ -154,6 +153,7 @@ public class OverworldScreen implements Screen {
         game.dispose();
         mapManager.dispose();
         physicsManager.dispose();
+        backgroundMusic.dispose();
         cameraManager.dispose();
         ioManager.dispose();
     }

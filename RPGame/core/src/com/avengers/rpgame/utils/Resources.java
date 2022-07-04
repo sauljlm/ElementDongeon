@@ -23,6 +23,7 @@ public class Resources {
     public static final String resourceOptionsScreenBackground = "graphics/backgrounds/optionsScreenbackground.png";
     public static final String resourceNewGameBackground = "graphics/backgrounds/newGameScreen.jpg";
     public static final String resourceFightBackgroundForest = "graphics/backgrounds/FightForestBackground.jpg";
+    public static final String resourceStoreScreen = "graphics/backgrounds/backgroundStore.jpg";
 
     //Textures
     public static final String resourceGameIcon = "graphics/icons/swordGameIcon.png";
@@ -70,6 +71,7 @@ public class Resources {
     public static final String resourceThemeMusic = "audio/music/theme.mp3";
     public static final String resourceFightMusic = "audio/music/DecisiveBattle.wav";
     public static final String resourceAndTheJourneyBeginsMusic = "audio/music/AndTheJourneyBegins.wav";
+    public static final String resourceStoreThemeMusic = "audio/music/storeTheme.mp3";
 
     //FONTS
     public static final String resourcePixelFont = "graphics/fonts/pixelFont.ttf";
@@ -77,8 +79,12 @@ public class Resources {
     public static final int mainTitleFontSize = 170;
     public static final int screenTitleFontSize = 100;
     public static final int emphasisFontSize = 70;
+    public static final int storeMenuOptionsFontSize = 50;
+    public static final int storePriceFontSize = 20;
     public static final int storyFontSize = 40;
     public static final int emphasisFontSize2 = 80;
+    public static final int generalHUDFontSize = 36;
+    public static final int levelHUDFontSize = 20;
 
     // HUD assets
     public static final String HUDHeart = "graphics/sprites/actors/HUD/heart.png";
@@ -101,6 +107,9 @@ public class Resources {
     public static final String skinTextfield2 = "graphics/skins/craftacular/skin/craftacular-ui.json";
     public static final String skinTextfield = "graphics/skins/commodore64/skin/uiskin.json";
 
-
+    // Store icons'public
+    public static final String coin = "graphics/icons/store/coin.png";
+    public static final String potion = "graphics/icons/store/potion.png";
+    public static final String sword = "graphics/icons/store/sword.png";
 
 }

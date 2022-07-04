@@ -18,6 +18,7 @@ public class MyInputProcessor implements InputProcessor {
     private boolean moveLeftMenu;
     private boolean moveRightMenu;
     private boolean enterFightMode; //debug/dev only
+    private boolean storeOpened;
 
     private int _MouseX, _MouseY;
     private final GameConfig config = GameConfig.getInstance();
@@ -74,6 +75,8 @@ public class MyInputProcessor implements InputProcessor {
         return moveRightMenu;
     }
 
+    public boolean isStoreOpened() { return storeOpened; }
+
     public int getMouseX() {
         return _MouseX;
     }
@@ -103,6 +106,9 @@ public class MyInputProcessor implements InputProcessor {
         }
         if(keycode == Input.Keys.D || keycode == Input.Keys.RIGHT){
             moveRight = true;
+        }
+        if(keycode == Input.Keys.T) {
+            storeOpened = true;
         }
         if(keycode == Input.Keys.SPACE){
             action1 = true;

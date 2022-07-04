@@ -2,14 +2,13 @@ package com.avengers.rpgame.graphics.hud;
 
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.text.FontFactory;
+import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-
-import static com.avengers.rpgame.utils.Resources.resourcePixelFont;
 
 public class HUD {
     private Array<Heart> heartsHB;
@@ -21,9 +20,8 @@ public class HUD {
     private float userHealth;
     private int experiencePoints;
     private int characterClass;
-    private BitmapFont gameFont = FontFactory.createBitMapFont(Gdx.files.internal(resourcePixelFont), 36, Color.WHITE, false, Color.BLACK);
-    private BitmapFont lvlFont = FontFactory.createBitMapFont(Gdx.files.internal(resourcePixelFont), 20, Color.WHITE, false, Color.BLACK);
-    private BitmapFont expFont = FontFactory.createBitMapFont(Gdx.files.internal(resourcePixelFont), 24, Color.WHITE, false, Color.BLACK);
+    private BitmapFont gameFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
+    private BitmapFont lvlFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.levelHUDFontSize, Color.WHITE, false, Color.BLACK);
     private final int maxPoints = 500;
     private GameConfig gameConfig;
 
@@ -133,9 +131,9 @@ public class HUD {
         }
 
         levelIcon.get_sprite().draw(batch);
-        gameFont.draw(batch, String.valueOf(this.playerLevel), resolution.x*0.033f, resolution.y*0.945f);
-        lvlFont.draw(batch, "Level", resolution.x*0.030f, resolution.y*0.965f);
-        expFont.draw(batch, "Exp: " + this.experiencePoints + "/ " + this.maxPoints, resolution.x*0.08f, resolution.y*0.955f);
+        gameFont.draw(batch, String.valueOf(this.playerLevel), resolution.x*0.036f, resolution.y*0.945f);
+        lvlFont.draw(batch, "Nivel", resolution.x*0.032f, resolution.y*0.965f);
+        gameFont.draw(batch, "Exp: " + this.experiencePoints + "/" + this.maxPoints, resolution.x*0.08f, resolution.y*0.96f);
         weapon.get_sprite().draw(batch);
     }
 

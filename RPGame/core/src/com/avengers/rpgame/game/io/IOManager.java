@@ -3,9 +3,11 @@ package com.avengers.rpgame.game.io;
 import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.screens.FightScreen;
+import com.avengers.rpgame.graphics.screens.StoreScreen;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
@@ -17,12 +19,14 @@ public class IOManager {
     private MyInputProcessor inputProcessor;
     private GameConfig config;
     private RPGame game;
+    private Music backgroundMusic;
 
-    public IOManager(RPGame game) {
+    public IOManager(RPGame game, Music backgroundMusic) {
         inputProcessor = new MyInputProcessor();
         Gdx.input.setInputProcessor(inputProcessor);
         config = GameConfig.getInstance();
         this.game = game;
+        this.backgroundMusic = backgroundMusic;
     }
 
     //the idea for this method is to process different request of IO processInput differently acording to the screen
@@ -67,9 +71,10 @@ public class IOManager {
             verticalForce = -movementSpeed;
             horizontalForce = 0;
         }
-
-
-
+        if(inputProcessor.isStoreOpened()){
+            game.setScreen(new StoreScreen(game));
+            this.backgroundMusic.dispose();
+        }
         if(inputProcessor.isAction1()){
             if(playerCharacter.getAnimatedCharacter().getPlayer().getLinearVelocity().y == 0){
                 playerCharacter.getAnimatedCharacter().getPlayer().applyLinearImpulse(0, 6, 0, 6, false);
