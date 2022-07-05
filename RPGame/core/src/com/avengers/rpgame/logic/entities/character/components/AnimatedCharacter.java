@@ -2,10 +2,14 @@ package com.avengers.rpgame.logic.entities.character.components;
 
 import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.logic.entities.character.components.skin.Skin;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+
+import java.io.IOException;
 
 import static com.avengers.rpgame.utils.FileManager.loadFile;
 import static com.avengers.rpgame.utils.FileManager.loadTexture;
@@ -40,7 +44,22 @@ public class AnimatedCharacter extends Sprite {
         this.currentTexture = skin.getUp().getTexture();
         this.currentAnimation = new Animation<>(gameConfig.getFrameTime(), currentAnimationAtlas.findRegions(skin.getUp().getAnimationName()));
         this.currentAnimation.setFrameDuration(gameConfig.getFrameTime());
-        this.player = createBox((int)gameConfig.getResolutionHorizontal()*12/5, (int) gameConfig.getResolutionVertical() /5, 12, 12, false, false);
+
+        //TODO Improve this, just prof concept testing it
+        Vector2 pos = new Vector2();
+        try {
+            pos.x = GameInformation.getInstance().getPlayerParty().getPartyMember1().getPosition().x*16;
+            pos.y = GameInformation.getInstance().getPlayerParty().getPartyMember1().getPosition().y*16;
+
+            System.out.println("Try");
+            System.out.println(pos.x+"___"+pos.y);
+        }
+        catch (NullPointerException e) {
+            pos.x = gameConfig.getResolutionHorizontal() * 12 / 5;
+            pos.y = gameConfig.getResolutionVertical() / 5;
+            System.out.println("Catch");
+        }
+        this.player = createBox((int)pos.x, (int) pos.y, 12, 12, false, false);
     }
 
     public AnimatedCharacter(String textureFileLocation,String textureAtlas) {

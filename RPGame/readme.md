@@ -30,3 +30,6 @@ https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
 
 Battle background:
 https://www.deviantart.com/aamatniekss/art/Forest-Battle-Background-750630685?src=MC_deviation_stack
+
+In-game UI assets:
+https://mounirtohami.itch.io/pixel-art-gui-elements

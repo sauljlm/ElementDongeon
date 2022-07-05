@@ -12,6 +12,17 @@ public class MyInputProcessor implements InputProcessor {
     private boolean clickTouch;
     private boolean pause;
     private boolean action1;
+    private boolean action2;
+    private boolean select1;
+    private boolean select2;
+    private boolean select3;
+    private boolean select4;
+    private boolean select5;
+    private boolean select6;
+    private boolean select7;
+    private boolean select8;
+    private boolean select9;
+    private boolean select0;
     private boolean enter;
     private boolean moveUpMenu;
     private boolean moveDownMenu;
@@ -53,6 +64,49 @@ public class MyInputProcessor implements InputProcessor {
 
     public boolean isAction1() {
         return action1;
+    }
+    public boolean isAction2() {
+        return action1;
+    }
+
+    public boolean isSelect1() {
+        return select1;
+    }
+
+    public boolean isSelect2() {
+        return select2;
+    }
+
+    public boolean isSelect3() {
+        return select3;
+    }
+
+    public boolean isSelect4() {
+        return select4;
+    }
+
+    public boolean isSelect5() {
+        return select5;
+    }
+
+    public boolean isSelect6() {
+        return select6;
+    }
+
+    public boolean isSelect7() {
+        return select7;
+    }
+
+    public boolean isSelect8() {
+        return select8;
+    }
+
+    public boolean isSelect9() {
+        return select9;
+    }
+
+    public boolean isSelect0() {
+        return select0;
     }
 
     public boolean isEnter() {
@@ -131,6 +185,36 @@ public class MyInputProcessor implements InputProcessor {
         if(keycode == Input.Keys.P){
             enterFightMode = true;
         }
+        if(keycode == Input.Keys.NUM_1){
+            select1 = true;
+        }
+        if(keycode == Input.Keys.NUM_2){
+            select2 = true;
+        }
+        if(keycode == Input.Keys.NUM_3){
+            select3 = true;
+        }
+        if(keycode == Input.Keys.NUM_4){
+            select4 = true;
+        }
+        if(keycode == Input.Keys.NUM_5){
+            select5 = true;
+        }
+        if(keycode == Input.Keys.NUM_6){
+            select6 = true;
+        }
+        if(keycode == Input.Keys.NUM_7){
+            select7 = true;
+        }
+        if(keycode == Input.Keys.NUM_8){
+            select8 = true;
+        }
+        if(keycode == Input.Keys.NUM_9){
+            select9 = true;
+        }
+        if(keycode == Input.Keys.NUM_0){
+            select0 = true;
+        }
         return false;
     }
 
@@ -167,6 +251,36 @@ public class MyInputProcessor implements InputProcessor {
         }
         if(keycode == Input.Keys.P){
             enterFightMode = false;
+        }
+        if(keycode == Input.Keys.NUM_1){
+            select1 = false;
+        }
+        if(keycode == Input.Keys.NUM_2){
+            select2 = false;
+        }
+        if(keycode == Input.Keys.NUM_3){
+            select3 = false;
+        }
+        if(keycode == Input.Keys.NUM_4){
+            select4 = false;
+        }
+        if(keycode == Input.Keys.NUM_5){
+            select5 = false;
+        }
+        if(keycode == Input.Keys.NUM_6){
+            select6 = false;
+        }
+        if(keycode == Input.Keys.NUM_7){
+            select7 = false;
+        }
+        if(keycode == Input.Keys.NUM_8){
+            select8 = false;
+        }
+        if(keycode == Input.Keys.NUM_9){
+            select9 = false;
+        }
+        if(keycode == Input.Keys.NUM_0){
+            select0 = false;
         }
         return false;
     }

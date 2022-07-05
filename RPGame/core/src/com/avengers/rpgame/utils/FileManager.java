@@ -8,6 +8,9 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+
+import static com.avengers.rpgame.utils.Resources.resourceSkin2;
 
 
 //Patron facade?
@@ -35,4 +38,7 @@ public class FileManager {
 
     public static TextureAtlas loadTextureAtlas(String fileLocation){ return new TextureAtlas(loadFile(fileLocation));}
 
+    public static Skin loadUISkin(String fileLocation){
+        return new Skin(Gdx.files.internal(fileLocation));
+    }
 }

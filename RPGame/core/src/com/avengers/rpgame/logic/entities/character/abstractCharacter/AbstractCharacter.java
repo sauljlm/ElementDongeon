@@ -217,13 +217,13 @@ public abstract class AbstractCharacter implements BattleActions {
 
     //Use/receive skill on oneself
     public void receiveSkill(Skill skill) {
-        this.setStrength(this.getStrength()+this.getStrength()*skill.getStrengthEffect());
-        this.setSpeed(this.getSpeed()+this.getSpeed()*skill.getSpeedEffect());
-        this.setMagic(this.getMagic()+this.getMagic()*skill.getMagicEffect());
-        this.setResistance(this.getResistance()+this.getResistance()*skill.getResistanceEffect());
-        this.setLuck(this.getLuck()+this.getLuck()* skill.getLuckEffect());
-        this.setMagicPoints(this.getMagicPoints()+this.getMagicPoints()*skill.getmPEffect());
-        this.setHealthPoints(this.getHealthPoints()+this.getHealthPoints()*skill.gethPEffect());
+        this.setStrength(this.getStrength()+this.getStrength()*skill.getStrengthEffect()/100);
+        this.setSpeed(this.getSpeed()+this.getSpeed()*skill.getSpeedEffect()/100);
+        this.setMagic(this.getMagic()+this.getMagic()*skill.getMagicEffect()/100);
+        this.setResistance(this.getResistance()+this.getResistance()*skill.getResistanceEffect()/100);
+        this.setLuck(this.getLuck()+this.getLuck()* skill.getLuckEffect()/100);
+        this.setMagicPoints(this.getMagicPoints()+this.getMagicPoints()*skill.getmPEffect()/100);
+        this.setHealthPoints(this.getHealthPoints()+this.getHealthPoints()*skill.gethPEffect()/100);
     }
 
     //Use item on other character
@@ -232,15 +232,15 @@ public abstract class AbstractCharacter implements BattleActions {
     }
 
     //Use/receive item on oneself
-    //This assumes the effects are % like 0.1. So the effect on strength for 0.1 is to increase base strength in 10%
+    //This assumes the effects are % like 10 So the effect on strength for 10 is to increase base strength in 10%
     public void receiveItem(Item item) {
-        this.setStrength(this.getStrength()+this.getStrength()*item.getStrengthEffect());
-        this.setSpeed(this.getSpeed()+this.getSpeed()*item.getSpeedEffect());
-        this.setMagic(this.getMagic()+this.getMagic()*item.getMagicEffect());
-        this.setResistance(this.getResistance()+this.getResistance()*item.getResistanceEffect());
-        this.setLuck(this.getLuck()+this.getLuck()* item.getLuckEffect());
-        this.setMagicPoints(this.getMagicPoints()+this.getMagicPoints()*item.getmPEffect());
-        this.setHealthPoints(this.getHealthPoints()+this.getHealthPoints()*item.gethPEffect());
+        this.setStrength(this.getStrength()+this.getStrength()*item.getStrengthEffect()/100);
+        this.setSpeed(this.getSpeed()+this.getSpeed()*item.getSpeedEffect()/100);
+        this.setMagic(this.getMagic()+this.getMagic()*item.getMagicEffect()/100);
+        this.setResistance(this.getResistance()+this.getResistance()*item.getResistanceEffect()/100);
+        this.setLuck(this.getLuck()+this.getLuck()* item.getLuckEffect()/100);
+        this.setMagicPoints(this.getMagicPoints()+this.getMagicPoints()*item.getmPEffect()/100);
+        this.setHealthPoints(this.getHealthPoints()+this.getHealthPoints()*item.gethPEffect()/100);
     }
 
     @Override

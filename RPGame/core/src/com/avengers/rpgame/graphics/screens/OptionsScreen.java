@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 
 import static com.avengers.rpgame.utils.FileManager.loadMusic;
+import static com.avengers.rpgame.utils.FileManager.loadUISkin;
 import static com.avengers.rpgame.utils.Resources.*;
 
 public class OptionsScreen implements Screen {
@@ -38,7 +39,6 @@ public class OptionsScreen implements Screen {
 
     private Slider musicVolumeSlider;
     private Slider soundEffectsSlider;
-    private Slider.SliderStyle sliderStyle;
 
 
 
@@ -60,9 +60,7 @@ public class OptionsScreen implements Screen {
         soundEffectsMusic = loadMusic(resourceAndTheJourneyBeginsMusic);
         soundEffectsMusic.setVolume(gameConfig.getSoundEffectsVolume());
 
-
-        sliderStyle = new Slider.SliderStyle();//Posiblemente haya que asignarle atributos a este sliderStyle o crearlo con un constructor no vacio
-        Skin skin = new Skin(Gdx.files.internal(resourceSkin2));
+        Skin skin = loadUISkin(resourceSkin2);
 
         musicVolumeSlider = new Slider(0f, 1f, 0.1f, false, skin);
         musicVolumeSlider.setSize(350f, 150f);

@@ -59,7 +59,7 @@ public class CharacterSelectionScreen implements Screen {
 
     public CharacterSelectionScreen(final RPGame game) {
         this.game = game;
-        gameInfo = new GameInformation();
+        gameInfo = GameInformation.getInstance();
         input = new MyInputProcessor();
         config = GameConfig.getInstance();
 

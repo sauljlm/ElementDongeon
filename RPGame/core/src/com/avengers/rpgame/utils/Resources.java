@@ -25,11 +25,19 @@ public class Resources {
     public static final String resourceFightBackgroundForest = "graphics/backgrounds/FightForestBackground.jpg";
     public static final String resourceStoreScreen = "graphics/backgrounds/backgroundStore.jpg";
 
+    //UI Skins
+    public static final String resourceSkin = "graphics/textures/skin/glassy-ui.json";
+    public static final String resourceSkin2 = "graphics/textures/skin2/pixthulhu-ui.json";
+    public static final String resourceSkin3 = "graphics/skins/terraMotherUI/terramotherui/terra-mother-ui.json";
+    public static final String resourceSkin4 = "graphics/skins/craftacular/skin/craftacular-ui.json";
+    public static final String resourceSkin5 = "graphics/skins/commodore64/skin/uiskin.json";
+
+
+
+
     //Textures
     public static final String resourceGameIcon = "graphics/icons/swordGameIcon.png";
     public static final String resourceBlack = "Resources/black.png";
-    public static final String resourceSkin = "graphics/textures/skin/glassy-ui.json";
-    public static final String resourceSkin2 = "graphics/textures/skin2/pixthulhu-ui.json";
 
     public static final String resourceMageTextureUp = "graphics/sprites/actors/mage2/TexturePackage/mageUp.png";
     public static final String resourceMageTextureDown = "graphics/sprites/actors/mage2/TexturePackage/mageDown.png";

@@ -32,7 +32,7 @@ public class StoreScreen implements Screen {
     private int itemType = 0;
     private int itemSelected = 0;
     private MyInputProcessor input;
-    private GameInformation gameInfo;
+    private GameInformation gameInfo = GameInformation.getInstance();
 
     ShapeRenderer _Border;
 
@@ -208,7 +208,8 @@ public class StoreScreen implements Screen {
                 break;
             case 2:
                 this.itemType = 3;
-                game.setScreen(new OverworldScreen(game, gameInfo));
+                gameInfo.updateLocation();
+                game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
                 dispose();
                 break;
         }

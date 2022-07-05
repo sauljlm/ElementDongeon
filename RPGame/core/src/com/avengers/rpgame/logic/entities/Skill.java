@@ -6,7 +6,7 @@ public class Skill {
     private int price;
     private int unlockLevel;
     private int mPCost; //MP cost of using this skill
-    //ALL effects must be created as 0.1 for a 10% increase, -0.5 for 50% decrease.
+    //ALL effects must be created as 10 for a 10% increase, -50 for 50% decrease.
     private int strengthEffect; //Effects can be positives for Buff or negative for Nerf/Debuff
     private int speedEffect;
     private int magicEffect;

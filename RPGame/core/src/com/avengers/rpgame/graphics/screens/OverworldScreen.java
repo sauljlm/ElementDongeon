@@ -9,6 +9,7 @@ import com.avengers.rpgame.graphics.hud.HUD;
 import com.avengers.rpgame.graphics.map.MapManager;
 import com.avengers.rpgame.graphics.physics.PhysicsManager;
 import com.avengers.rpgame.game.GameInformation;
+import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
 import com.avengers.rpgame.logic.entities.EntitiesBuilderDirector;
@@ -34,6 +35,7 @@ public class OverworldScreen implements Screen {
     private CameraManager cameraManager;
     private IOManager ioManager;
     private AIManager aiManager;
+    private Party playerParty;
 
     //HUD default values
     private int userHealth = 100;
@@ -58,6 +60,8 @@ public class OverworldScreen implements Screen {
         mapManager = new MapManager(resourceOverworldMap, cameraManager.getCamera(), game);
         physicsManager = new PhysicsManager(new Vector2(0, 0f), mapManager, cameraManager.getCamera(), true);
         aiManager = new AIManager();
+
+        playerParty = new Party();
 
         //TODO encapsulate this into an external class that takes care of creating the characters
         if(information.getIdCharacterClass()==1){
@@ -84,6 +88,10 @@ public class OverworldScreen implements Screen {
             director.buildArcher(characterBuilder, physicsManager.getWorld(), game, "Robin");
             ally2Character = characterBuilder.getResult();
         }
+        playerParty.setPartyMember1(playerCharacter);
+        playerParty.setPartyMember2(ally1Character);
+        playerParty.setPartyMember3(ally2Character);
+        gameInfo.setPlayerParty(playerParty);
 
         hudElements = new HUD(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);
         System.out.println(playerCharacter);
@@ -112,13 +120,13 @@ public class OverworldScreen implements Screen {
 
         mapManager.render();//Render the map first!
         physicsManager.simulate();
-        ioManager.processInput("overworld", delta, playerCharacter, ally1Character, ally2Character);
+        ioManager.processInput("overworld", delta, playerParty);
         cameraManager.action(delta, playerCharacter);
 
         game.batch.begin();//Never add game logic inside render begin, end
-        ally2Character.getAnimatedCharacter().draw(delta);
-        ally1Character.getAnimatedCharacter().draw(delta);
-        playerCharacter.getAnimatedCharacter().draw(delta);
+        playerParty.getPartyMember3().getAnimatedCharacter().draw(delta);
+        playerParty.getPartyMember2().getAnimatedCharacter().draw(delta);
+        playerParty.getPartyMember1().getAnimatedCharacter().draw(delta);
         game.batch.end();
 
         hudElements.update(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);
@@ -140,12 +148,12 @@ public class OverworldScreen implements Screen {
 
     @Override
     public void resume() {
-
+        backgroundMusic.play();
     }
 
     @Override
     public void hide() {
-
+        backgroundMusic.pause();
     }
 
     @Override

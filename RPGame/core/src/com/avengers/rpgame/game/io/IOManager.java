@@ -2,7 +2,10 @@ package com.avengers.rpgame.game.io;
 
 import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.graphics.screens.FightScreen;
+import com.avengers.rpgame.graphics.screens.OverworldScreen;
+import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.graphics.screens.StoreScreen;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.Gdx;
@@ -29,11 +32,21 @@ public class IOManager {
         this.backgroundMusic = backgroundMusic;
     }
 
-    //the idea for this method is to process different request of IO processInput differently acording to the screen
-    public void processInput(String type, float delta, AbstractCharacter playerCharacter, AbstractCharacter ally1Character, AbstractCharacter ally2Character){
-        if(type.equals("overworld")){
-            overworldUpdate(delta, playerCharacter, ally1Character, ally2Character);
+    public IOManager(RPGame game) {
+        inputProcessor = new MyInputProcessor();
+        Gdx.input.setInputProcessor(inputProcessor);
+        config = GameConfig.getInstance();
+        this.game = game;
+    }
 
+    //the idea for this method is to process different request of IO processInput differently acording to the screen
+    public void processInput(String type, float delta, Party playerParty){
+        if(type.equals("overworld")){
+            overworldUpdate(delta, playerParty);
+
+        }
+        if(type.equals("battle")){
+            battleUpdate(delta, playerParty);
         }
         if(type.equals("pauseMenu")){
 
@@ -43,7 +56,8 @@ public class IOManager {
         }
     }
 
-    private void overworldUpdate(float delta, AbstractCharacter playerCharacter, AbstractCharacter ally1Character, AbstractCharacter ally2Character) {
+    //Process input for overworld gameplay
+    private void overworldUpdate(float delta, Party playerParty) {
         float horizontalForce = 0;
         float verticalForce = 0;
         float movementSpeed = 1.5f;
@@ -52,22 +66,22 @@ public class IOManager {
             movementSpeed = 4;
         }
         if(inputProcessor.isMoveLeft()) {
-            playerCharacter.getAnimatedCharacter().setAction("runningLeft");
+            playerParty.getPartyMember1().getAnimatedCharacter().setAction("runningLeft");
             horizontalForce = -movementSpeed;
             verticalForce = 0;
         }
         if(inputProcessor.isMoveRight()){
-            playerCharacter.getAnimatedCharacter().setAction("runningRight");
+            playerParty.getPartyMember1().getAnimatedCharacter().setAction("runningRight");
             horizontalForce = movementSpeed;
             verticalForce = 0;
         }
         if(inputProcessor.isMoveUp()) {
-            playerCharacter.getAnimatedCharacter().setAction("runningUp");
+            playerParty.getPartyMember1().getAnimatedCharacter().setAction("runningUp");
             horizontalForce = 0;
             verticalForce = movementSpeed;
         }
         if(inputProcessor.isMoveDown()){
-            playerCharacter.getAnimatedCharacter().setAction("runningDown");
+            playerParty.getPartyMember1().getAnimatedCharacter().setAction("runningDown");
             verticalForce = -movementSpeed;
             horizontalForce = 0;
         }
@@ -75,21 +89,73 @@ public class IOManager {
             game.setScreen(new StoreScreen(game));
             this.backgroundMusic.dispose();
         }
-        if(inputProcessor.isAction1()){
-            if(playerCharacter.getAnimatedCharacter().getPlayer().getLinearVelocity().y == 0){
-                playerCharacter.getAnimatedCharacter().getPlayer().applyLinearImpulse(0, 6, 0, 6, false);
-            }
-        }
+
+//        if(inputProcessor.isAction1()){
+//            if(playerCharacter.getAnimatedCharacter().getPlayer().getLinearVelocity().y == 0){
+//                playerCharacter.getAnimatedCharacter().getPlayer().applyLinearImpulse(0, 6, 0, 6, false);
+//            }
+//        }
         velocity.x = horizontalForce * 5;
         velocity.y = verticalForce * 5;
 
-        playerCharacter.getAnimatedCharacter().getPlayer().setLinearVelocity(velocity.x,velocity.y);
+        playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().setLinearVelocity(velocity.x,velocity.y);
+
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
+        System.out.println("Player real position");
+        System.out.println(playerParty.getPartyMember1().getPosition());
+
+        System.out.println("Player animated position");
+        System.out.println(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
+        if(inputProcessor.isEnterFightMode()){
+            playerParty.getPartyMember1().setPosition(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
+            GameInformation.getInstance().setPlayerParty(playerParty);
+            game.setScreen(new FightScreen(game, playerParty));
+            System.out.println("FIGHT !");
+        }
+    }
+
+    //Process input for overworld gameplay
+    private void battleUpdate(float delta, Party playerParty) {
+        System.out.println("HEY IT'S BATTLE TIME!");
+        float horizontalForce = 0;
+        float verticalForce = 0;
+        float movementSpeed = 1.5f;
+        Vector2 velocity = new Vector2();
+        if(config.isGodMode()){
+            movementSpeed = 4;
+        }
+        if(inputProcessor.isMoveLeft()) {
+            playerParty.getPartyMember1().getAnimatedCharacter().setAction("runningLeft");
+            horizontalForce = -movementSpeed;
+            verticalForce = 0;
+        }
+        if(inputProcessor.isMoveRight()){
+            playerParty.getPartyMember1().getAnimatedCharacter().setAction("runningRight");
+            horizontalForce = movementSpeed;
+            verticalForce = 0;
+        }
+        if(inputProcessor.isMoveUp()) {
+            playerParty.getPartyMember1().getAnimatedCharacter().setAction("runningUp");
+            horizontalForce = 0;
+            verticalForce = movementSpeed;
+        }
+        if(inputProcessor.isMoveDown()){
+            playerParty.getPartyMember1().getAnimatedCharacter().setAction("runningDown");
+            verticalForce = -movementSpeed;
+            horizontalForce = 0;
+        }
+
+
+        velocity.x = horizontalForce * 5;
+        velocity.y = verticalForce * 5;
+
+        playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().setLinearVelocity(velocity.x,velocity.y);
 
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
 
         if(inputProcessor.isEnterFightMode()){
-            game.setScreen(new FightScreen(game));
-            System.out.println("FIGHT !");
+            System.out.println("EXIT!");
+            game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
         }
     }
 
