@@ -9,6 +9,7 @@ import com.avengers.rpgame.graphics.hud.HUD;
 import com.avengers.rpgame.graphics.map.MapManager;
 import com.avengers.rpgame.graphics.physics.PhysicsManager;
 import com.avengers.rpgame.game.GameInformation;
+import com.avengers.rpgame.json.DataStorage;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
@@ -36,6 +37,8 @@ public class OverworldScreen implements Screen {
     private IOManager ioManager;
     private AIManager aiManager;
     private Party playerParty;
+
+    private DataStorage dataStorage; //Temporal
 
     //HUD default values
     private int userHealth = 100;
@@ -97,6 +100,10 @@ public class OverworldScreen implements Screen {
         System.out.println(playerCharacter);
         System.out.println(ally1Character);
         System.out.println(ally2Character);
+
+        dataStorage=new DataStorage(); //Temporal
+        System.out.println(dataStorage.getData());
+
     }
 
     @Override

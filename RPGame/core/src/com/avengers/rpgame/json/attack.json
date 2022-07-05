@@ -1,0 +1,130 @@
+{
+  "attack": [
+    {
+      "name": "Knight",
+      "description": "Espada de hierro",
+      "unlockLevel": 1,
+      "mPCost": 0,
+      "HPEffect": 10
+    },
+    {
+      "name": "Knight",
+      "description": "Espadas de plata",
+      "unlockLevel": 3,
+      "mPCost": 0,
+      "HPEffect": 15
+    },
+    {
+      "name": "Knight",
+      "description": "Espadas doble mano",
+      "unlockLevel": 7,
+      "mPCost": 0,
+      "HPEffect": 20
+    },
+    {
+      "name": "Knight",
+      "description": "Hachas de plata / hierro",
+      "unlockLevel": 9,
+      "mPCost": 0,
+      "HPEffect": 25
+    },
+    {
+      "name": "Archer",
+      "description": "Flecha sencilla",
+      "unlockLevel": 1,
+      "mPCost": 0,
+      "HPEffect": 10
+    },
+    {
+      "name": "Archer",
+      "description": "Doble flecha",
+      "unlockLevel": 3,
+      "mPCost": 0,
+      "HPEffect": 15
+    },
+    {
+      "name": "Archer",
+      "description": "Triple flecha",
+      "unlockLevel": 7,
+      "mPCost": 0,
+      "HPEffect": 20
+    },
+    {
+      "name": "Archer",
+      "description": "Flecha bomba",
+      "unlockLevel": 9,
+      "mPCost": 0,
+      "HPEffect": 25
+    },
+    {
+      "name": "Mage",
+      "description": "Golpe mental",
+      "unlockLevel": 1,
+      "mPCost": 10,
+      "HPEffect": 10
+    },
+    {
+      "name": "Mage",
+      "description": "Paz mental",
+      "unlockLevel": 1,
+      "mPCost": 12,
+      "HPEffect": 12
+    },
+    {
+      "name": "EarthEnemy",
+      "description": "Ataque arena",
+      "unlockLevel": 1,
+      "mPCost": 0,
+      "HPEffect": 15
+    },
+    {
+      "name": "EarthChief",
+      "description": "Disparo lodo",
+      "unlockLevel": 6,
+      "mPCost": 0,
+      "HPEffect": 35
+    },
+    {
+      "name": "WaterEnemy",
+      "description": "Salpicadura",
+      "unlockLevel": 7,
+      "mPCost": 0,
+      "HPEffect": 20
+    },
+    {
+      "name": "WaterChief",
+      "description": "Hidrobomba",
+      "unlockLevel": 12,
+      "mPCost": 0,
+      "HPEffect": 45
+    },
+    {
+      "name": "WindEnemy",
+      "description": "Viento cortante",
+      "unlockLevel": 13,
+      "mPCost": 0,
+      "HPEffect": 25
+    },
+    {
+      "name": "WindChief",
+      "description": "Viento hielo",
+      "unlockLevel": 18,
+      "mPCost": 0,
+      "HPEffect": 60
+    },
+    {
+      "name": "FireEnemy",
+      "description": "Llamarada",
+      "unlockLevel": 19,
+      "mPCost": 0,
+      "HPEffect": 30
+    },
+    {
+      "name": "FireChief",
+      "description": "Giro fuego",
+      "unlockLevel": 24,
+      "mPCost": 0,
+      "HPEffect": 70
+    }
+  ]
+}
