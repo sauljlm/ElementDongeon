@@ -21,12 +21,12 @@ public class PlayableCharacter extends AbstractCharacter {
         this.experiencePoints = experiencePoints;
     }
 
-    public PlayableCharacter(int idCharacter, String name, String description, Vector2 position, double level, int healthPoints, int magicPoints, int strength, int speed, int magic, int resistance, int luck, CharacterClass characterClass, AnimatedCharacter animatedEntity, ArrayList<Item> items, ArrayList<Attack> attacks, ArrayList<Skill> skills) {
-        super(idCharacter, name, description, position, level, healthPoints, magicPoints, strength, speed, magic, resistance, luck, characterClass, animatedEntity, items, attacks, skills);
+    public PlayableCharacter(int idCharacter, String name, String description, Vector2 position, double level, int healthPoints, int magicPoints, int strength, int speed, int magic, int resistance, int luck, int coins, CharacterClass characterClass, AnimatedCharacter animatedEntity, ArrayList<Item> items, ArrayList<Attack> attacks, ArrayList<Skill> skills) {
+        super(idCharacter, name, description, position, level, healthPoints, magicPoints, strength, speed, magic, resistance, luck, coins, characterClass, animatedEntity, items, attacks, skills);
     }
 
-    public PlayableCharacter(int idCharacter, String name, String description, Vector2 position, double level, int healthPoints, int magicPoints, int strength, int speed, int magic, int resistance, int luck, CharacterClass characterClass, AnimatedCharacter animatedEntity, ArrayList<Item> items, ArrayList<Attack> attacks, ArrayList<Skill> skills, int experiencePoints) {
-        super(idCharacter, name, description, position, level, healthPoints, magicPoints, strength, speed, magic, resistance, luck, characterClass, animatedEntity, items, attacks, skills);
+    public PlayableCharacter(int idCharacter, String name, String description, Vector2 position, double level, int healthPoints, int magicPoints, int strength, int speed, int magic, int resistance, int luck, int coins, CharacterClass characterClass, AnimatedCharacter animatedEntity, ArrayList<Item> items, ArrayList<Attack> attacks, ArrayList<Skill> skills, int experiencePoints) {
+        super(idCharacter, name, description, position, level, healthPoints, magicPoints, strength, speed, magic, resistance, luck, coins, characterClass, animatedEntity, items, attacks, skills);
         this.experiencePoints = experiencePoints;
     }
 }

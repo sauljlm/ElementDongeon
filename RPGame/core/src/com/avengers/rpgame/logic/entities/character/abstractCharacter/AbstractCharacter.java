@@ -23,6 +23,7 @@ public abstract class AbstractCharacter implements BattleActions {
     private int magic;
     private int resistance; //Affects hPRecoveryRate/mPRecoveryRate by some math formula
     private int luck;
+    private int coins;
     private CharacterClass characterClass;
     private AnimatedCharacter animatedCharacter;
     private ArrayList<Item> items;
@@ -32,7 +33,7 @@ public abstract class AbstractCharacter implements BattleActions {
     public AbstractCharacter() {
     }
 
-    public AbstractCharacter(int idCharacter, String name, String description, Vector2 position, double level, int healthPoints, int magicPoints, int strength, int speed, int magic, int resistance, int luck, CharacterClass characterClass, AnimatedCharacter animatedEntity, ArrayList<Item> items, ArrayList<Attack> attacks, ArrayList<Skill> skills) {
+    public AbstractCharacter(int idCharacter, String name, String description, Vector2 position, double level, int healthPoints, int magicPoints, int strength, int speed, int magic, int resistance, int luck, int coins, CharacterClass characterClass, AnimatedCharacter animatedEntity, ArrayList<Item> items, ArrayList<Attack> attacks, ArrayList<Skill> skills) {
         this.idCharacter = idCharacter;
         this.name = name;
         this.description = description;
@@ -45,6 +46,7 @@ public abstract class AbstractCharacter implements BattleActions {
         this.magic = magic;
         this.resistance = resistance;
         this.luck = luck;
+        this.coins = coins;
         this.characterClass = characterClass;
         this.animatedCharacter = animatedEntity;
         this.items = items;
@@ -88,9 +90,7 @@ public abstract class AbstractCharacter implements BattleActions {
         return level;
     }
 
-    public void setLevel(double level) {
-        this.level = level;
-    }
+    public void setLevel(double level) { this.level = level; }
 
     public int getHealthPoints() {
         return healthPoints;
@@ -148,6 +148,14 @@ public abstract class AbstractCharacter implements BattleActions {
         this.luck = luck;
     }
 
+    public int getCoins() {
+        return coins;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
     public CharacterClass getCharacterClass() {
         return characterClass;
     }
@@ -188,6 +196,13 @@ public abstract class AbstractCharacter implements BattleActions {
         this.skills = skills;
     }
 
+    public void addNewItem (Item item) {
+        this.items.add(item);
+    }
+
+    public void deleteItem (int id) {
+        this.items.remove(id);
+    }
 
     //BattleSystem
     //Attack other character
@@ -258,6 +273,7 @@ public abstract class AbstractCharacter implements BattleActions {
                 ", magic=" + magic +
                 ", resistance=" + resistance +
                 ", luck=" + luck +
+                ", coins=" + coins +
                 ", characterClass=" + characterClass +
                 ", animatedCharacter=" + animatedCharacter +
                 ", items=" + items +

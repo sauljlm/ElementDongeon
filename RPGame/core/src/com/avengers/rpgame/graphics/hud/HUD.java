@@ -1,7 +1,10 @@
 package com.avengers.rpgame.graphics.hud;
 
 import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.graphics.store.Store;
 import com.avengers.rpgame.graphics.text.FontFactory;
+import com.avengers.rpgame.logic.entities.Party;
+import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -15,35 +18,17 @@ public class HUD {
     private MP magicPower = new MP();
     private UserLevel levelIcon = new UserLevel();
     private Weapon weapon;
-    private int playerLevel;
-    private String magicLevel;
-    private float userHealth;
-    private int experiencePoints;
-    private int characterClass;
     private BitmapFont gameFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
     private BitmapFont lvlFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.levelHUDFontSize, Color.WHITE, false, Color.BLACK);
     private final int maxPoints = 500;
     private GameConfig gameConfig;
+    private AbstractCharacter character;
 
-    public HUD () {
+    public HUD (Party playerParty) {
         gameConfig = GameConfig.getInstance();
-        this.setUserHealth(0);
-        this.setPlayerLevel(0);
-        this.setMagicLevel(String.valueOf(0));
-        this.setCharacterClass(0);
-        this.setExperiencePoints(0);
+        this.character = playerParty.getPartyMember1();
         createHearts();
-    }
-
-    public HUD (float userHealth, int playerLevel, int magicLevel, int experiencePoints, int characterClass) {
-        gameConfig = GameConfig.getInstance();
-        this.setUserHealth(userHealth);
-        this.setPlayerLevel(playerLevel);
-        this.setMagicLevel(String.valueOf(magicLevel));
-        this.setCharacterClass(characterClass);
-        this.setExperiencePoints(experiencePoints);
-        createHearts();
-        weapon = new Weapon(this.playerLevel, this.characterClass);
+        weapon = new Weapon((int) this.character.getLevel(), this.character.getCharacterClass().getIdCharacterClass());
     }
 
     public Array<Heart> getHeartsHB() {
@@ -62,84 +47,40 @@ public class HUD {
         this.magicPower = magicPower;
     }
 
-    public int getPlayerLevel() {
-        return playerLevel;
-    }
-
-    public void setPlayerLevel(int userLevel) {
-        this.playerLevel = userLevel;
-    }
-
-    public String getMagicLevel() {
-        return magicLevel;
-    }
-
-    public void setMagicLevel(String magicLevel) {
-        this.magicLevel = magicLevel;
-    }
-
-    public float getUserHealth() {
-        return userHealth;
-    }
-
-    public void setUserHealth(float userHealth) {
-        this.userHealth = userHealth;
-    }
-
-    public int getExperiencePoints() {
-        return experiencePoints;
-    }
-
-    public void setExperiencePoints(int experiencePoints) {
-        this.experiencePoints = experiencePoints;
-    }
-
-    public int getCharacterClass() {
-        return characterClass;
-    }
-
-    public void setCharacterClass(int characterClass) {
-        this.characterClass = characterClass;
-    }
-
     private int convertValue (float healthValue) {
         int finalValue = (int) Math.floor(healthValue/10);
         return finalValue;
     }
 
-    public void update (float userHealth, int playerLevel, int magicLevel, int experiencePoints, int characterClass) {
-        this.setUserHealth(userHealth);
-        this.setPlayerLevel(playerLevel);
-        this.setMagicLevel(String.valueOf(magicLevel));
-        this.setCharacterClass(characterClass);
-        this.setExperiencePoints(experiencePoints);
+    public void update (int userHealth, double playerLevel, int magicLevel, int experiencePoints) {
+        this.character.setHealthPoints(userHealth);
+        this.character.setLevel(playerLevel);
+        this.character.setMagicPoints(magicLevel);
+        this.character.setLevel(experiencePoints);
         this.createHearts();
     }
 
     public void draw (SpriteBatch batch) {
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
-        Vector2 mpLevel = new Vector2(resolution.x, resolution.y);
-        Vector2 playerLevel = new Vector2(resolution.x, resolution.y);
 
         for(Heart heart: heartsHB) {
             heart.get_sprite().draw(batch);
         }
-//        if (this.characterClass == 3) {
-        if (true) {
+        if (this.character.getCharacterClass().getIdCharacterClass() == 3) {
             magicPower.get_sprite().draw(batch);
-            gameFont.draw(batch, magicLevel, resolution.x*0.3f, resolution.y*0.96f);
+            gameFont.draw(batch, String.valueOf(this.character.getMagicPoints()), resolution.x*0.3f, resolution.y*0.96f);
         }
 
         levelIcon.get_sprite().draw(batch);
-        gameFont.draw(batch, String.valueOf(this.playerLevel), resolution.x*0.036f, resolution.y*0.945f);
+        gameFont.draw(batch, String.valueOf((int)this.character.getLevel()), resolution.x*0.036f, resolution.y*0.945f);
         lvlFont.draw(batch, "Nivel", resolution.x*0.032f, resolution.y*0.965f);
-        gameFont.draw(batch, "Exp: " + this.experiencePoints + "/" + this.maxPoints, resolution.x*0.08f, resolution.y*0.96f);
+        gameFont.draw(batch, "Exp: " + (int)this.character.getLevel() + "/" + this.maxPoints, resolution.x*0.08f, resolution.y*0.96f);
         weapon.get_sprite().draw(batch);
     }
 
     private void createHearts() {
         this.heartsHB = new Array<Heart>();
-        int health = this.convertValue(this.getUserHealth());
+        int health = this.convertValue(this.character.getHealthPoints());
         double lastValue = 0.06;
         for(int i=0; i < health; i++) {
             Heart heart = new Heart(lastValue);

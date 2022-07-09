@@ -116,6 +116,7 @@ public class Resources {
     public static final String skinTextfield = "graphics/skins/commodore64/skin/uiskin.json";
 
     // Store icons'public
+    public static final String speechBubble = "graphics/textures/speech-bubble.png";
     public static final String coin = "graphics/icons/store/coin.png";
     public static final String potion = "graphics/icons/store/potion.png";
     public static final String sword = "graphics/icons/store/sword.png";

@@ -30,6 +30,8 @@ public class MyInputProcessor implements InputProcessor {
     private boolean moveRightMenu;
     private boolean enterFightMode; //debug/dev only
     private boolean storeOpened;
+    private boolean buyItem;
+    private boolean sellItem;
 
     private int _MouseX, _MouseY;
     private final GameConfig config = GameConfig.getInstance();
@@ -131,6 +133,10 @@ public class MyInputProcessor implements InputProcessor {
 
     public boolean isStoreOpened() { return storeOpened; }
 
+    public boolean isBuyItem() { return buyItem; }
+
+    public boolean isSellItem() { return sellItem; }
+
     public int getMouseX() {
         return _MouseX;
     }
@@ -163,6 +169,12 @@ public class MyInputProcessor implements InputProcessor {
         }
         if(keycode == Input.Keys.T) {
             storeOpened = true;
+        }
+        if(keycode == Input.Keys.C) {
+            buyItem = true;
+        }
+        if(keycode == Input.Keys.V) {
+            sellItem = true;
         }
         if(keycode == Input.Keys.SPACE){
             action1 = true;
@@ -230,6 +242,12 @@ public class MyInputProcessor implements InputProcessor {
         }
         if(keycode == Input.Keys.D || keycode == Input.Keys.RIGHT){
             moveRight = false;
+        }
+        if(keycode == Input.Keys.C) {
+            buyItem = false;
+        }
+        if(keycode == Input.Keys.V) {
+            sellItem = false;
         }
         if(keycode == Input.Keys.SPACE){
             action1 = false;

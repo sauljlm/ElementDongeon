@@ -25,15 +25,15 @@ public class CharacterBuilder implements ICharacterBuilder {
     int magic;
     int resistance;
     int luck;
+    int coins;
     CharacterClass characterClass;
     AnimatedCharacter animatedCharacter;
     ArrayList<Item> items;
     ArrayList<Attack> attacks;
     ArrayList<Skill> skills;
 
-
     @Override
-    public void setCharacterBasicInfo(int idCharacter, String name, String description,Vector2 position, double level, int healthPoints, int magicPoints) {
+    public void setCharacterBasicInfo(int idCharacter, String name, String description,Vector2 position, double level, int healthPoints, int magicPoints, int coins) {
     this.idCharacter = idCharacter;
     this.name = name;
     this.description = description;
@@ -41,6 +41,7 @@ public class CharacterBuilder implements ICharacterBuilder {
     this.level = level;
     this.healthPoints = healthPoints;
     this.magicPoints = magicPoints;
+    this.coins = coins;
     }
 
     @Override
@@ -78,6 +79,6 @@ public class CharacterBuilder implements ICharacterBuilder {
     }
 
     public AbstractCharacter getResult(){
-        return new PlayableCharacter(idCharacter, name, description, position, level, healthPoints, magicPoints, strength, speed, magic, resistance, luck, characterClass, animatedCharacter, items, attacks, skills);
+        return new PlayableCharacter(idCharacter, name, description, position, level, healthPoints, magicPoints, strength, speed, magic, resistance, luck, coins, characterClass, animatedCharacter, items, attacks, skills);
     }
 }

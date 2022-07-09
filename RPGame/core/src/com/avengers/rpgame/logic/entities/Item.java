@@ -1,10 +1,14 @@
 package com.avengers.rpgame.logic.entities;
 
 public class Item implements IWearable, IConsumable {
+
+    private int id;
     private String name;
     private String description;
     private int price;
     private int unlockLevel;
+    private String imagePath;
+    private int itemType;
     //ALL effects must be created as 10 for a 10% increase, -50 for 50% decrease.
     private int strengthEffect; //Effects can be positives for Buff or negative for Nerf/Debuff
     private int speedEffect;
@@ -30,6 +34,27 @@ public class Item implements IWearable, IConsumable {
         this.mPEffect = mPEffect;
         this.hPEffect = hPEffect;
     }
+
+    public Item(int id, String name, String description, int price, int unlockLevel, String imagePath, int itemType, int strengthEffect, int speedEffect, int magicEffect, int resistanceEffect, int luckEffect, int mPEffect, int hPEffect) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.unlockLevel = unlockLevel;
+        this.imagePath = imagePath;
+        this.itemType = itemType;
+        this.strengthEffect = strengthEffect;
+        this.speedEffect = speedEffect;
+        this.magicEffect = magicEffect;
+        this.resistanceEffect = resistanceEffect;
+        this.luckEffect = luckEffect;
+        this.mPEffect = mPEffect;
+        this.hPEffect = hPEffect;
+    }
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getName() {
         return name;
@@ -62,6 +87,14 @@ public class Item implements IWearable, IConsumable {
     public void setUnlockLevel(int unlockLevel) {
         this.unlockLevel = unlockLevel;
     }
+
+    public String getImagePath() { return imagePath; }
+
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
+
+    public int getItemType() { return itemType; }
+
+    public void setItemType(int itemType) { this.itemType = itemType; }
 
     public int getStrengthEffect() {
         return strengthEffect;

@@ -86,7 +86,7 @@ public class IOManager {
             horizontalForce = 0;
         }
         if(inputProcessor.isStoreOpened()){
-            game.setScreen(new StoreScreen(game));
+            game.setScreen(new StoreScreen(game, playerParty));
             this.backgroundMusic.dispose();
         }
 
@@ -100,12 +100,17 @@ public class IOManager {
 
         playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().setLinearVelocity(velocity.x,velocity.y);
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
+        /*
+        // comentado para desarrollar
+
+         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
         System.out.println("Player real position");
         System.out.println(playerParty.getPartyMember1().getPosition());
 
         System.out.println("Player animated position");
         System.out.println(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
+         */
+
         if(inputProcessor.isEnterFightMode()){
             playerParty.getPartyMember1().setPosition(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
             GameInformation.getInstance().setPlayerParty(playerParty);

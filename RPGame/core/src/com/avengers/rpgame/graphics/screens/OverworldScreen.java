@@ -42,10 +42,9 @@ public class OverworldScreen implements Screen {
 
     //HUD default values
     private int userHealth = 100;
-    private int playerLevel = 34;
+    private int playerLevel = 1;
     private int magicLevel = 12;
     private int experiencePoints = 0;
-    private int characterClass = 2;
     // End HUD values
     private HUD hudElements;
 
@@ -91,12 +90,13 @@ public class OverworldScreen implements Screen {
             director.buildArcher(characterBuilder, physicsManager.getWorld(), game, "Robin");
             ally2Character = characterBuilder.getResult();
         }
+
         playerParty.setPartyMember1(playerCharacter);
         playerParty.setPartyMember2(ally1Character);
         playerParty.setPartyMember3(ally2Character);
         gameInfo.setPlayerParty(playerParty);
 
-        hudElements = new HUD(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);
+        hudElements = new HUD(this.playerParty);
         System.out.println(playerCharacter);
         System.out.println(ally1Character);
         System.out.println(ally2Character);
@@ -136,7 +136,7 @@ public class OverworldScreen implements Screen {
         playerParty.getPartyMember1().getAnimatedCharacter().draw(delta);
         game.batch.end();
 
-        hudElements.update(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);
+        // hudElements.update(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints);
         cameraManager.changeProjectionMatrix();
         game.batch.begin();//We can stop render, do something and start again
         hudElements.draw(game.batch);
