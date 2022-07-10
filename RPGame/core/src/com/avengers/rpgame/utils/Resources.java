@@ -108,6 +108,9 @@ public class Resources {
     public static final int generalHUDFontSize = 36;
     public static final int levelHUDFontSize = 20;
 
+    //DATABASES
+    public static final String SAVEDATA = "jdbc:sqlite:data/savedata.db";
+
     // HUD assets
     public static final String HUDHeart = "graphics/sprites/actors/HUD/heart.png";
     public static final String HUDPotion = "graphics/sprites/actors/HUD/MP.png";

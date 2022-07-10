@@ -1,6 +1,7 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.data.SavedFile;
 import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.graphics.store.Store;
 import com.avengers.rpgame.graphics.text.FontFactory;
@@ -255,9 +256,15 @@ public class StoreScreen implements Screen {
                 storeElements.update(itemType, actionOption, itemSelected);
                 break;
             case 2:
-                gameInfo.updateLocation();
+                this.itemType = 3;
+                try {
+                    game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
+                }
+                catch (NullPointerException e){
+                    SavedFile.getInstance().updateLocation();
+                    game.setScreen(new OverworldScreen(game, SavedFile.getInstance()));
+                }
                 this.actionSelected = false;
-                game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
                 dispose();
                 break;
         }
