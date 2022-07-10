@@ -6,6 +6,8 @@ import com.avengers.rpgame.graphics.hud.elements.MP;
 import com.avengers.rpgame.graphics.hud.elements.UserLevel;
 import com.avengers.rpgame.graphics.hud.elements.Weapon;
 import com.avengers.rpgame.graphics.text.FontFactory;
+import com.avengers.rpgame.logic.entities.Party;
+import com.avengers.rpgame.logic.entities.character.concrete.PlayableCharacter;
 import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -51,6 +53,19 @@ public class BattleHUD {
         this.type = type;
         createHearts(type);
         weapon = new Weapon(this.playerLevel, this.characterClass);
+    }
+    public BattleHUD(float type, Party party) {
+        gameConfig = GameConfig.getInstance();
+        this.setUserHealth(party.getPartyMember1().getHealthPoints());
+        this.levelIcon = new UserLevel(type);
+        this.setPlayerLevel((int)(party.getPartyMember1().getLevel()));
+        this.setMagicLevel(String.valueOf(magicLevel));
+        this.setCharacterClass(1);
+        //        this.setCharacterClass(party.getPartyMember1().getCharacterClass());
+        this.setExperiencePoints(((PlayableCharacter)party.getPartyMember1()).getExperiencePoints());
+        this.type = type;
+        createHearts(type);
+        weapon = new Weapon((int)(party.getPartyMember1().getLevel()), this.characterClass);
     }
 
     public Array<Heart> getHeartsHB() {
@@ -114,10 +129,10 @@ public class BattleHUD {
         return finalValue;
     }
 
-    public void update (float userHealth, int playerLevel, int magicLevel, int experiencePoints, int characterClass) {
-        this.setUserHealth(userHealth);
-        this.setPlayerLevel(playerLevel);
-        this.setMagicLevel(String.valueOf(magicLevel));
+    public void update (Party party) {
+        this.setUserHealth(party.getPartyMember1().getHealthPoints());
+        this.setPlayerLevel((int)party.getPartyMember1().getLevel());
+        this.setMagicLevel("HelloCat");
         this.setCharacterClass(characterClass);
         this.setExperiencePoints(experiencePoints);
         this.createHearts(type);

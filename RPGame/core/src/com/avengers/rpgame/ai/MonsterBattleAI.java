@@ -27,7 +27,7 @@ public class MonsterBattleAI {
         this.difficulty = difficulty;
     }
 
-    public void selectAction(AbstractCharacter oneSelfCharacter, AbstractCharacter targetCharacter){
+    public String selectAction(AbstractCharacter oneSelfCharacter, AbstractCharacter targetCharacter){
         int selectedNumber;
         if(oneSelfCharacter.getItems().size()>0){
             selectedNumber = MathUtils.random(1);
@@ -36,33 +36,36 @@ public class MonsterBattleAI {
         }
         switch (selectedNumber){
             case 0: //Attack enemy
-                oneSelfCharacter.attackOther(selectAttack(oneSelfCharacter), targetCharacter);
-                break;
+                Attack attack = selectAttack(oneSelfCharacter);
+                oneSelfCharacter.attackOther(attack, targetCharacter);
+                return attack.getName();
             case 1: //UseItem on himself
-                oneSelfCharacter.receiveItem(selectItem(oneSelfCharacter));
-                break;
+                Item item = selectItem(oneSelfCharacter);
+                oneSelfCharacter.receiveItem(item);
+                return (item.getName());
             case 2: //UNUSED
+                Skill skill = selectSkill(oneSelfCharacter);
 //                selectSkill(Character);
-                break;
+                return (skill.getName());
             default:
-                break;
+                return "Ya no quiero pelear, perdón!";
         }
     }
 
     public Attack selectAttack(AbstractCharacter Character){
-        int selectedNumber = Character.getAttacks().size();
+        int selectedNumber = Character.getAttacks().size() -1;
         selectedNumber = MathUtils.random(selectedNumber);
         return Character.getAttacks().get(selectedNumber);
     }
 
     public Skill selectSkill(AbstractCharacter Character){
-        int selectedNumber = Character.getSkills().size();
+        int selectedNumber = Character.getSkills().size() -1;
         selectedNumber = MathUtils.random(selectedNumber);
         return Character.getSkills().get(selectedNumber);
     }
 
     public Item selectItem(AbstractCharacter Character){
-        int selectedNumber = Character.getItems().size();
+        int selectedNumber = Character.getItems().size() -1;
         selectedNumber = MathUtils.random(selectedNumber);
         return Character.getItems().get(selectedNumber);
     }

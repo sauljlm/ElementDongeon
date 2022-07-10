@@ -9,19 +9,19 @@ public class Party {
     private boolean partyMember1Status;
     private boolean partyMember2Status;
     private boolean partyMember3Status;
-    private int activePartyMember;
+    private int activePartyMemberId;
 
     public Party() {
     }
 
-    public Party(AbstractCharacter partyMember1, AbstractCharacter partyMember2, AbstractCharacter partyMember3, boolean partyMember1Status, boolean partyMember2Status, boolean partyMember3Status, int activePartyMember) {
+    public Party(AbstractCharacter partyMember1, AbstractCharacter partyMember2, AbstractCharacter partyMember3, boolean partyMember1Status, boolean partyMember2Status, boolean partyMember3Status, int activePartyMemberId) {
         this.partyMember1 = partyMember1;
         this.partyMember2 = partyMember2;
         this.partyMember3 = partyMember3;
         this.partyMember1Status = partyMember1Status;
         this.partyMember2Status = partyMember2Status;
         this.partyMember3Status = partyMember3Status;
-        this.activePartyMember = activePartyMember;
+        this.activePartyMemberId = activePartyMemberId;
     }
 
     public AbstractCharacter getPartyMember1() {
@@ -72,11 +72,24 @@ public class Party {
         this.partyMember3Status = partyMember3Status;
     }
 
-    public int getActivePartyMember() {
-        return activePartyMember;
+    public int getActivePartyMemberId() {
+        return activePartyMemberId;
     }
 
-    public void setActivePartyMember(int activePartyMember) {
-        this.activePartyMember = activePartyMember;
+    public void setActivePartyMemberId(int activePartyMemberId) {
+        this.activePartyMemberId = activePartyMemberId;
+    }
+
+    public AbstractCharacter getActivePartyMember(){
+        switch (activePartyMemberId){
+            case 1:
+                return partyMember1;
+            case 2:
+                return partyMember2;
+            case 3:
+                return partyMember3;
+            default:
+                return partyMember1;
+        }
     }
 }

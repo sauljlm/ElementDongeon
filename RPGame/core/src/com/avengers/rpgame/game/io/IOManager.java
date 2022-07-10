@@ -6,9 +6,11 @@ import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.graphics.screens.FightScreen;
 import com.avengers.rpgame.graphics.screens.OverworldScreen;
+import com.avengers.rpgame.logic.entities.EntitiesBuilderDirector;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.graphics.screens.StoreScreen;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
+import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
 import com.avengers.rpgame.logic.entities.character.CharacterDAOImplementation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -36,7 +38,6 @@ public class IOManager {
         this.backgroundMusic = backgroundMusic;
         characterDAOImplementation = CharacterDAOImplementation.getInstance();
     }
-
 
     public IOManager(RPGame game) {
         inputProcessor = new MyInputProcessor();
@@ -119,8 +120,19 @@ public class IOManager {
 //        System.out.println(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
         if(inputProcessor.isEnterFightMode()){
             playerParty.getPartyMember1().setPosition(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
-            SavedFile.getInstance().setPlayerParty(playerParty);
-            game.setScreen(new FightScreen(game, playerParty));
+            GameInformation.getInstance().setPlayerParty(playerParty);
+            //This is just for battle testing
+            EntitiesBuilderDirector director = new EntitiesBuilderDirector();
+            CharacterBuilder characterBuilder = new CharacterBuilder();
+            director.buildKnight(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "Esqueleto de pruebas de tierra");
+            AbstractCharacter enemyCharacter = characterBuilder.getResult();
+            Party enemyParty = new Party();
+            enemyParty.setPartyMember1(enemyCharacter);
+            enemyParty.setPartyMember2(enemyCharacter);
+            enemyParty.setPartyMember3(enemyCharacter);
+
+            game.setScreen(new FightScreen(game, playerParty, enemyParty));
+//            SavedFile.getInstance().setPlayerParty(playerParty);
             System.out.println("FIGHT !");
         }
     }
@@ -165,7 +177,11 @@ public class IOManager {
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
 
         if(inputProcessor.isEnterFightMode()){
-            game.setScreen(new OverworldScreen(game, SavedFile.getInstance()));
+            try{
+                game.setScreen(new OverworldScreen(game, SavedFile.getInstance()));
+            }catch (NullPointerException e){
+                game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
+            }
         }
     }
 

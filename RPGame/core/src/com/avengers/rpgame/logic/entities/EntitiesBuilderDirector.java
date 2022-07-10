@@ -43,7 +43,6 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setAnimatedCharacter(animatedCharacter);
     }
 
-
     public void buildArcherDummy(CharacterBuilder builder, RPGame rpGame){
         //TODO Skin needs to be abstracted into a abstractFactory /Factory
         Skin skin = new Skin();
@@ -268,7 +267,6 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setItems(items);
         builder.setAttacks(attacks);
         builder.setSkills(skills);
-
     }
 
     public void buildMage(CharacterBuilder builder, World world, RPGame rpGame, String playerName, SavedFile savedFile){
@@ -309,6 +307,39 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     }
 
     //Enemies
+    public void buildEarthSkeleton(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+        //TODO Skin needs to be abstracted into a abstractFactory /Factory
+        Skin skin = new Skin();
+        skin.setUp(new AnimationAssets(loadTexture(resourceEarthSkeletonTextureUp), loadTextureAtlas(resourceEarthSkeletonTextureMapUp), "up"));
+        skin.setDown(new AnimationAssets(loadTexture(resourceEarthSkeletonTextureDown), loadTextureAtlas(resourceEarthSkeletonTextureMapDown), "down"));
+        skin.setLeft(new AnimationAssets(loadTexture(resourceEarthSkeletonTextureLeft), loadTextureAtlas(resourceEarthSkeletonTextureMapLeft), "left"));
+        skin.setRight(new AnimationAssets(loadTexture(resourceEarthSkeletonTextureRight), loadTextureAtlas(resourceEarthSkeletonTextureMapRight), "right"));
+        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
+        builder.setAnimatedCharacter(animatedCharacter);
+
+        //TODO: Implementacion temporal con valores quemados
+        ArrayList<Item> items = new ArrayList<>();
+        ArrayList<Attack> attacks = new ArrayList<>();
+        ArrayList<Skill> skills = new ArrayList<>();
+        this.idCharacter=4;
+        this.name=playerName;
+        this.level=1;
+        this.characterClass = new CharacterClass(4, "Esqueleto de tierra", "Esqueleto maldito con los poderes elementales de tierra", 50, 51, 52, 53, 54, 55, 56, 57, 58);
+        Item lifePotion = new Item (0, "Pocion vida","Description Joyeria magica", 100, 1, Resources.potion, 3, 0,0,0,0,0,0,50);
+        items.add(lifePotion);
+        Attack spellAttack = new Attack("Hueso de roca","El esqueleto se saca un hueso transformado en roca y lo lanza",1,1,10);
+        attacks.add(spellAttack);
+//        Skill teamPatchUp = new Skill("Recuperacion compartida", "Ayuda a recuperar a todo el equipo", 0, 1, 0, 0, 0,0,0,0,0,100);
+//        this.skills.add(teamPatchUp);
+
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
+        builder.setCharacterClass(this.characterClass);
+        builder.setItems(items);
+        builder.setAttacks(attacks);
+//        builder.setSkills(skills);
+    }
+
     public void buildEarthSkeletonDummy(CharacterBuilder builder, RPGame rpGame){
         //TODO Skin needs to be abstracted into a abstractFactory /Factory
         Skin skin = new Skin();

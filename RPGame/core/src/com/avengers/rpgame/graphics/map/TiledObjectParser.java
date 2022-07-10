@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.*;
 public class TiledObjectParser {
 
     private static GameConfig gameConfig = GameConfig.getInstance();
+//    private AIManager aiManager = new AIManager();
 
 
     public static  void parseTiledObjectLayer(World world, MapObjects mapObject){
@@ -50,7 +51,6 @@ public class TiledObjectParser {
         }
         shape.dispose();
     }
-
     public static  void parseTiledInteractiveLayer(World world, MapObjects mapObject){
         boolean isStatic = true;
         Shape shape = null;

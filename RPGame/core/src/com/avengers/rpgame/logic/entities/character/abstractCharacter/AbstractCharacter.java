@@ -256,6 +256,7 @@ public abstract class AbstractCharacter implements BattleActions {
         this.setLuck(this.getLuck()+this.getLuck()* item.getLuckEffect()/100);
         this.setMagicPoints(this.getMagicPoints()+this.getMagicPoints()*item.getmPEffect()/100);
         this.setHealthPoints(this.getHealthPoints()+this.getHealthPoints()*item.gethPEffect()/100);
+        items.remove(items.indexOf(item));
     }
 
     @Override

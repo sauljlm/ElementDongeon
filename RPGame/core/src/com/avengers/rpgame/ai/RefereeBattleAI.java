@@ -1,6 +1,10 @@
 package com.avengers.rpgame.ai;
 
+import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.data.SavedFile;
 import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.game.GameInformation;
+import com.avengers.rpgame.graphics.screens.OverworldScreen;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 
@@ -10,10 +14,12 @@ public class RefereeBattleAI {
     private GameConfig config = GameConfig.getInstance();
     private int partyTurn;
     private boolean partyTurnCompleted;
+    private RPGame game;
 
-    public RefereeBattleAI() {
+    public RefereeBattleAI(RPGame game) {
         this.turn = 0;
         this.winner = false;
+        this.game = game;
     }
 
     public void startBattle(Party party1, Party party2){
@@ -34,9 +40,21 @@ public class RefereeBattleAI {
 
         if(!checkPartyStatus(playerParty)){
             finishBattle(playerParty);
+            System.out.println("Player party death");
+            try{
+                game.setScreen(new OverworldScreen(game, SavedFile.getInstance()));
+            }catch (NullPointerException e){
+                game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
+            }
         };
         if(!checkPartyStatus(npcParty)){
             finishBattle(npcParty);
+            System.out.println("Enemy party death");
+            try{
+                game.setScreen(new OverworldScreen(game, SavedFile.getInstance()));
+            }catch (NullPointerException e){
+                game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
+            }
         }
 
         this.turn = turn++;
@@ -59,7 +77,8 @@ public class RefereeBattleAI {
             party.setPartyMember3Status(false);
             partyMember3 =false;
         }
-        return partyMember1 || partyMember2 || partyMember3; //returns false for death party, true if any member is still alive
+        return partyMember1; //returns false for death party, true if any member is still alive
+//        return partyMember1 || partyMember2 || partyMember3; //returns false for death party, true if any member is still alive
     }
 
     public boolean checkAlive(AbstractCharacter character){

@@ -29,4 +29,12 @@ public class PlayableCharacter extends AbstractCharacter {
         super(idCharacter, name, description, position, level, healthPoints, magicPoints, strength, speed, magic, resistance, luck, coins, characterClass, animatedEntity, items, attacks, skills);
         this.experiencePoints = experiencePoints;
     }
+
+    public int getExperiencePoints() {
+        return experiencePoints;
+    }
+
+    public void setExperiencePoints(int experiencePoints) {
+        this.experiencePoints = experiencePoints;
+    }
 }

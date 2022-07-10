@@ -12,10 +12,12 @@ public class AIManager {
     private static AIManager instance;
     private AlliesMovementAI allysMovement;
     private InteractionMonitor interactionMonitor;
+    private MonsterBattleAI monsterBattleAI;
 
     private AIManager() {
         allysMovement = new AlliesMovementAI();
         interactionMonitor = new InteractionMonitor();
+        monsterBattleAI = new MonsterBattleAI();
     }
 
 
@@ -49,6 +51,10 @@ public class AIManager {
 
     public ArrayList<MapObject> getInteractiveMapObjects(){
         return interactionMonitor.getInteractiveMapObjects();
+    }
+
+    public MonsterBattleAI accessMonsterBattleAI(){
+        return monsterBattleAI;
     }
 
     //PATRON Singleton
