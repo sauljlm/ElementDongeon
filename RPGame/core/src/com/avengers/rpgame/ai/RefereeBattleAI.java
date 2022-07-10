@@ -17,9 +17,9 @@ public class RefereeBattleAI {
     }
 
     public void startBattle(Party party1, Party party2){
-        System.out.println("Battle Starts");
-        System.out.println("Party1" + party1.getPartyMember1().getName() +" "+ party1.getPartyMember2().getName() + party1.getPartyMember3().getName());
-        System.out.println("Party2" + party2.getPartyMember1().getName() +" "+ party2.getPartyMember2().getName() + party2.getPartyMember3().getName());
+//        System.out.println("Battle Starts");
+//        System.out.println("Party1" + party1.getPartyMember1().getName() +" "+ party1.getPartyMember2().getName() + party1.getPartyMember3().getName());
+//        System.out.println("Party2" + party2.getPartyMember1().getName() +" "+ party2.getPartyMember2().getName() + party2.getPartyMember3().getName());
     };
 
     public void finishBattle(Party winnerParty){

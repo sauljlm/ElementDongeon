@@ -14,10 +14,21 @@ import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
 import com.avengers.rpgame.logic.entities.EntitiesBuilderDirector;
+import com.avengers.rpgame.utils.Resources;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
+
+import java.util.ArrayList;
+
 import static com.avengers.rpgame.utils.FileManager.*;
 import static com.avengers.rpgame.utils.Resources.*;
 
@@ -48,6 +59,13 @@ public class OverworldScreen implements Screen {
     // End HUD values
     private HUD hudElements;
 
+    //Interactive map objects
+    private ArrayList<Vector2> interactiveObjVectors;
+    private ArrayList<Body> interactiveObjBodies;
+    private ArrayList<MapObject> interactiveMapObj;
+    private Sprite accessPortal;
+
+
     public OverworldScreen(final RPGame game, GameInformation information) {
         this.game = game;
         this.gameInfo = information;
@@ -61,7 +79,7 @@ public class OverworldScreen implements Screen {
         cameraManager = new CameraManager(game);
         mapManager = new MapManager(resourceOverworldMap, cameraManager.getCamera(), game);
         physicsManager = new PhysicsManager(new Vector2(0, 0f), mapManager, cameraManager.getCamera(), true);
-        aiManager = new AIManager();
+        aiManager = AIManager.getInstance();
 
         playerParty = new Party();
 
@@ -104,6 +122,17 @@ public class OverworldScreen implements Screen {
         dataStorage=new DataStorage(); //Temporal
         System.out.println(dataStorage.getData());
 
+        //Interactive objects
+        interactiveObjVectors = new ArrayList<Vector2>();
+        interactiveObjBodies = new ArrayList<Body>();
+        interactiveMapObj = new ArrayList<MapObject>();
+
+        interactiveObjVectors = aiManager.getInteractiveObjectsV();
+        interactiveObjBodies = aiManager.getInteractiveObjects();
+        interactiveMapObj = aiManager.getInteractiveMapObjects();
+
+        this.accessPortal = new Sprite(new Texture(resourcePortalTexture));
+        accessPortal.setCenter(interactiveObjVectors.get(0).x,interactiveObjVectors.get(0).y);
     }
 
     @Override
@@ -116,6 +145,8 @@ public class OverworldScreen implements Screen {
     public void  logic(float delta){
         aiManager.moveAllies(playerCharacter, ally1Character, 1);
         aiManager.moveAllies(ally1Character, ally2Character, 1);
+        aiManager.monitorSurroundings(playerCharacter);
+
     }
 
 
@@ -134,6 +165,11 @@ public class OverworldScreen implements Screen {
         playerParty.getPartyMember3().getAnimatedCharacter().draw(delta);
         playerParty.getPartyMember2().getAnimatedCharacter().draw(delta);
         playerParty.getPartyMember1().getAnimatedCharacter().draw(delta);
+
+        for (int j=0;j<=3;j++) {
+            game.batch.draw(accessPortal, (interactiveObjVectors.get(j).x-1.25f) * config.getPPM(), (interactiveObjVectors.get(j).y-1.25f) * config.getPPM());
+        }
+
         game.batch.end();
 
         // hudElements.update(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints);

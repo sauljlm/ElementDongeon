@@ -30,6 +30,7 @@ public class AnimatedCharacter extends Sprite {
     private SpriteBatch spriteBatch;
     private float elapsedTime;
     private String action;
+    private Vector2 textureScreenLocation;
 
     public AnimatedCharacter() {
     }
@@ -62,6 +63,18 @@ public class AnimatedCharacter extends Sprite {
         this.player = createBox((int)pos.x, (int) pos.y, 12, 12, false, false);
     }
 
+    public AnimatedCharacter(Skin skin, RPGame rpGame, Vector2 position) {
+        this.rpGame = rpGame;
+        this.gameConfig = GameConfig.getInstance();
+        this.skin = skin;
+        this.action = "runningRight";
+        this.currentAnimationAtlas = skin.getUp().getAnimationAtlas();
+        this.currentTexture = skin.getUp().getTexture();
+        this.currentAnimation = new Animation<>(gameConfig.getFrameTime(), currentAnimationAtlas.findRegions(skin.getUp().getAnimationName()));
+        this.currentAnimation.setFrameDuration(gameConfig.getFrameTime());
+        this.textureScreenLocation = position;
+    }
+
     public AnimatedCharacter(String textureFileLocation,String textureAtlas) {
         this.gameConfig = GameConfig.getInstance();
         this.currentAnimationAtlas = new TextureAtlas(loadFile(textureAtlas));
@@ -69,6 +82,14 @@ public class AnimatedCharacter extends Sprite {
         this.currentAnimation = new Animation<>(gameConfig.getFrameTime(), currentAnimationAtlas.findRegions("run"));
         this.currentAnimation.setFrameDuration(gameConfig.getFrameTime());
         this.player = createBox((int)gameConfig.getResolutionHorizontal()/2, (int) gameConfig.getResolutionVertical() /2, 12, 12, false, true);
+    }
+
+    public Vector2 getTextureScreenLocation() {
+        return textureScreenLocation;
+    }
+
+    public void setTextureScreenLocation(Vector2 textureScreenLocation) {
+        this.textureScreenLocation = textureScreenLocation;
     }
 
     public String getAction() {
@@ -197,12 +218,17 @@ public class AnimatedCharacter extends Sprite {
     }
 
     public void draw(float delta){
-        elapsedTime += delta;
+        elapsedTime += delta/1.5f;
         setCurrentFrame();
         TextureRegion currentFrame = new TextureRegion();
         currentFrame = currentAnimation.getKeyFrame(elapsedTime, true);
         //The factor used to divide the texture size is related to the dimension of the full sprite (number of images in each sprite), this might be an issue if we use sprites of different sizes
         //If the sizes of sprites are different or the factor is wrong the texture will not be on the expected possition.
+        try{
         rpGame.batch.draw(currentFrame, player.getPosition().x * gameConfig.getPPM() - currentTexture.getWidth()/22f, player.getPosition().y*gameConfig.getPPM()- currentTexture.getHeight()/15);
+        }
+        catch (NullPointerException e){
+            rpGame.batch.draw(currentFrame,  this.textureScreenLocation.x*gameConfig.getPPM()- currentTexture.getHeight()/15, this.textureScreenLocation.y*gameConfig.getPPM()- currentTexture.getHeight()/15,250,250);
+        }
     }
 }

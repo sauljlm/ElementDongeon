@@ -100,17 +100,12 @@ public class IOManager {
 
         playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().setLinearVelocity(velocity.x,velocity.y);
 
-        /*
-        // comentado para desarrollar
-
-         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
-        System.out.println("Player real position");
-        System.out.println(playerParty.getPartyMember1().getPosition());
-
-        System.out.println("Player animated position");
-        System.out.println(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
-         */
-
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
+//        System.out.println("Player real position");
+//        System.out.println(playerParty.getPartyMember1().getPosition());
+//
+//        System.out.println("Player animated position");
+//        System.out.println(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
         if(inputProcessor.isEnterFightMode()){
             playerParty.getPartyMember1().setPosition(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
             GameInformation.getInstance().setPlayerParty(playerParty);
@@ -121,7 +116,7 @@ public class IOManager {
 
     //Process input for overworld gameplay
     private void battleUpdate(float delta, Party playerParty) {
-        System.out.println("HEY IT'S BATTLE TIME!");
+//        System.out.println("HEY IT'S BATTLE TIME!");
         float horizontalForce = 0;
         float verticalForce = 0;
         float movementSpeed = 1.5f;
@@ -159,7 +154,7 @@ public class IOManager {
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
 
         if(inputProcessor.isEnterFightMode()){
-            System.out.println("EXIT!");
+//            System.out.println("EXIT!");
             game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
         }
     }

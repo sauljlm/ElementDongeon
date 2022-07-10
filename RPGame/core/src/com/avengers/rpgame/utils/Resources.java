@@ -45,17 +45,24 @@ public class Resources {
     public static final String resourceMageTextureRight = "graphics/sprites/actors/mage2/TexturePackage/mageRight.png";
 
 
-    public static final String resourceKnightTextureUp = "graphics/sprites/actors/knight3/TexturePackage/knightUp.png";
-    public static final String resourceKnightTextureDown = "graphics/sprites/actors/knight3/TexturePackage/knightDown.png";
-    public static final String resourceKnightTextureLeft = "graphics/sprites/actors/knight3/TexturePackage/knightLeft.png";
-    public static final String resourceKnightTextureRight = "graphics/sprites/actors/knight3/TexturePackage/knightRight.png";
+    public static final String resourceKnightTextureUp = "graphics/sprites/actors/knight4/TexturePackage/knightUp.png";
+    public static final String resourceKnightTextureDown = "graphics/sprites/actors/knight4/TexturePackage/knightDown.png";
+    public static final String resourceKnightTextureLeft = "graphics/sprites/actors/knight4/TexturePackage/knightLeft.png";
+    public static final String resourceKnightTextureRight = "graphics/sprites/actors/knight4/TexturePackage/knightRight.png";
 
     public static final String resourceArcherTextureUp = "graphics/sprites/actors/archer2/TexturePackage/archerUp.png";
     public static final String resourceArcherTextureDown = "graphics/sprites/actors/archer2/TexturePackage/archerDown.png";
     public static final String resourceArcherTextureLeft = "graphics/sprites/actors/archer2/TexturePackage/archerLeft.png";
     public static final String resourceArcherTextureRight = "graphics/sprites/actors/archer2/TexturePackage/archerRight.png";
 
-    //TextureMaps
+    public static final String resourceEarthSkeletonTextureUp = "graphics/sprites/actors/earthSkeleton/TexturePackage/Up.png";
+    public static final String resourceEarthSkeletonTextureDown = "graphics/sprites/actors/earthSkeleton/TexturePackage/Down.png";
+    public static final String resourceEarthSkeletonTextureLeft = "graphics/sprites/actors/earthSkeleton/TexturePackage/Left.png";
+    public static final String resourceEarthSkeletonTextureRight = "graphics/sprites/actors/earthSkeleton/TexturePackage/Right.png";
+
+    public static final String resourcePortalTexture = "graphics/textures/mapInteractives/portal1.png";
+
+    //TextureMapsAtlas
     public static final String resourceMageTextureMapUp = "graphics/sprites/actors/mage2/TexturePackage/mageUp.atlas";
     public static final String resourceMageTextureMapDown = "graphics/sprites/actors/mage2/TexturePackage/mageDown.atlas";
     public static final String resourceMageTextureMapLeft = "graphics/sprites/actors/mage2/TexturePackage/mageLeft.atlas";
@@ -70,6 +77,13 @@ public class Resources {
     public static final String resourceArcherTextureMapDown = "graphics/sprites/actors/archer2/TexturePackage/archerDown.atlas";
     public static final String resourceArcherTextureMapLeft = "graphics/sprites/actors/archer2/TexturePackage/archerLeft.atlas";
     public static final String resourceArcherTextureMapRight = "graphics/sprites/actors/archer2/TexturePackage/archerRight.atlas";
+
+    public static final String resourceEarthSkeletonTextureMapUp = "graphics/sprites/actors/earthSkeleton/TexturePackage/Up.atlas";
+    public static final String resourceEarthSkeletonTextureMapDown = "graphics/sprites/actors/earthSkeleton/TexturePackage/Down.atlas";
+    public static final String resourceEarthSkeletonTextureMapLeft = "graphics/sprites/actors/earthSkeleton/TexturePackage/Left.atlas";
+    public static final String resourceEarthSkeletonTextureMapRight = "graphics/sprites/actors/earthSkeleton/TexturePackage/Right.atlas";
+
+
 
     //SoundEffects
     public static final String resourceIntroSound = "audio/soundEffects/intro.wav";

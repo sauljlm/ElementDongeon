@@ -1,6 +1,10 @@
 package com.avengers.rpgame.graphics.hud;
 
 import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.graphics.hud.elements.Heart;
+import com.avengers.rpgame.graphics.hud.elements.MP;
+import com.avengers.rpgame.graphics.hud.elements.UserLevel;
+import com.avengers.rpgame.graphics.hud.elements.Weapon;
 import com.avengers.rpgame.graphics.store.Store;
 import com.avengers.rpgame.graphics.text.FontFactory;
 import com.avengers.rpgame.logic.entities.Party;

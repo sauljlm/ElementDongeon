@@ -1,4 +1,5 @@
 package com.avengers.rpgame.graphics.map;
+import com.avengers.rpgame.ai.AIManager;
 import com.avengers.rpgame.game.GameConfig;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -11,7 +12,9 @@ import com.badlogic.gdx.physics.box2d.*;
 //This class is going to receive all the objects coming from the tiled map layer and parse them by type/class
 //The other way to do this is by assigning properties to every object created on tiled (to much work..) this is faster for dev, maybe more CPU consuming though
 public class TiledObjectParser {
+
     private static GameConfig gameConfig = GameConfig.getInstance();
+
 
     public static  void parseTiledObjectLayer(World world, MapObjects mapObject){
         boolean isStatic = true;
@@ -48,8 +51,49 @@ public class TiledObjectParser {
         shape.dispose();
     }
 
+    public static  void parseTiledInteractiveLayer(World world, MapObjects mapObject){
+        boolean isStatic = true;
+        Shape shape = null;
+        Vector2 pos = new Vector2();
+        for(MapObject object : mapObject) {
+//            System.out.println(object.toString());
+//            System.out.println(object.getName());
+//            System.out.println("stuff");
+//            System.out.println(object.getProperties().getValues().toString());
+            AIManager aiManager = AIManager.getInstance();
+
+            if (object instanceof RectangleMapObject) {
+                Rectangle rectangle = ((RectangleMapObject)object).getRectangle();
+                Vector2 center = new Vector2((rectangle.x + rectangle.width / 2) / gameConfig.getPPM(),
+                        (rectangle.y + rectangle.height / 2) /gameConfig.getPPM());
+                pos = center;
+
+                aiManager.addInteractiveMapObject(object);
+                aiManager.addInteractiveObjectV(center); //Add the object coordinates for AI monitoring
+
+                shape = createRectangle((RectangleMapObject) object);
+            } else
+            {
+                continue;
+            }
+            //Create box has this same code, probably this can be abstracted
+            Body body;
+            BodyDef bodyDef = new BodyDef(); //Creates the physical definition for body
+            bodyDef.type = BodyDef.BodyType.StaticBody;
+            bodyDef.fixedRotation = true; //this stops the object from rotating
+            //bodyDef.position.set(pos.x,pos.y);
+            bodyDef.linearDamping = 1f; //This' kind of simulates friction to ground so dinamic bodys don't move forever
+            bodyDef.angularDamping = 0.5f;
+            body = world.createBody(bodyDef); //this initialices the object body using the def and puts it inside the world
+            body.createFixture(shape, 5.0f);
+            aiManager.addInteractiveObject(body); //Adds the body for AI possible interactions
+        }
+        shape.dispose();
+    }
+
     //creates a PolygonShape object from a tiled RectangleMapObject
     private static PolygonShape createRectangle(RectangleMapObject rectangleObject) {
+
         Rectangle rectangle = rectangleObject.getRectangle();
         PolygonShape polygon = new PolygonShape();
         Vector2 size = new Vector2((rectangle.x + rectangle.width / 2) / gameConfig.getPPM(),

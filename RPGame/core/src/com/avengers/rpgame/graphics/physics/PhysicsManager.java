@@ -28,6 +28,7 @@ public class PhysicsManager {
 
         //For performance reasons parsing of objects on map needs to be on constructor
         TiledObjectParser.parseTiledObjectLayer(world, this.mapManager.getMap().getLayers().get("collisionLayer").getObjects());
+        TiledObjectParser.parseTiledInteractiveLayer(world, this.mapManager.getMap().getLayers().get("interactionLayer").getObjects());
     }
 
     public World getWorld() {
