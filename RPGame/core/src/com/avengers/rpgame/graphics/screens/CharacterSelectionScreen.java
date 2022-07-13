@@ -1,7 +1,6 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
-import com.avengers.rpgame.data.SavedFile;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.game.io.MyInputProcessor;
@@ -29,7 +28,6 @@ import static com.avengers.rpgame.utils.Resources.*;
 public class CharacterSelectionScreen implements Screen {
     final RPGame game;
     private GameInformation gameInfo;
-    private SavedFile savedFile;
     private final GameConfig config;
     //private final Music backgroundMusic;
     private final Texture backgroundImage;
@@ -62,7 +60,6 @@ public class CharacterSelectionScreen implements Screen {
     public CharacterSelectionScreen(final RPGame game) {
         this.game = game;
         gameInfo = GameInformation.getInstance();
-
         input = new MyInputProcessor();
         config = GameConfig.getInstance();
 
@@ -324,10 +321,8 @@ public class CharacterSelectionScreen implements Screen {
 
                     if(txtUsername.getText().isEmpty()){
                         gameInfo.setUsername("ElementPlayer");
-                        SavedFile.getInstance().setUsername("ElementPlayer");
                     }else{
                         gameInfo.setUsername(txtUsername.getText());
-                        SavedFile.getInstance().setUsername(txtUsername.getText());
                     }
 
                     game.setScreen(new NewGameScreen(game,gameInfo));

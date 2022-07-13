@@ -1,13 +1,10 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
-import com.avengers.rpgame.data.DataManager;
-import com.avengers.rpgame.data.SavedFile;
 import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.MyInputProcessor;
-import com.avengers.rpgame.logic.entities.character.CharacterDAOImplementation;
 import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -160,24 +157,17 @@ public class LoadGameScreen implements Screen {
 
     //Nota: aqui se debe ajustar para la carga correspondiente de los juegos guardados por usuarios
     private void executeAction() {
-        SavedFile savedFile;
         switch (this.actualSelection){
             case 0:
-
-                savedFile = CharacterDAOImplementation.getInstance().get(1);
-                game.setScreen(new OverworldScreen(game, savedFile));
+                game.setScreen(new OverworldScreen(game, gameInfo));
                 dispose();
                 break;
             case 1:
-
-                savedFile= CharacterDAOImplementation.getInstance().get(2);
-                game.setScreen(new OverworldScreen(game,savedFile));
+                game.setScreen(new OverworldScreen(game, gameInfo));
                 dispose();
                 break;
             case 2:
-
-                savedFile= CharacterDAOImplementation.getInstance().get(3);
-                game.setScreen(new OverworldScreen(game,savedFile));
+                game.setScreen(new OverworldScreen(game, gameInfo));
                 dispose();
                 break;
             case 3:

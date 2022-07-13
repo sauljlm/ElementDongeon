@@ -1,7 +1,4 @@
 sourceCompatibility = 1.7
-dependencies {
-    implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
-}
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 sourceSets.main.java.srcDirs = [ "src/" ]

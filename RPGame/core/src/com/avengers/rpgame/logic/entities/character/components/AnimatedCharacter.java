@@ -1,7 +1,6 @@
 package com.avengers.rpgame.logic.entities.character.components;
 
 import com.avengers.rpgame.RPGame;
-import com.avengers.rpgame.data.SavedFile;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.logic.entities.character.components.skin.Skin;
@@ -50,9 +49,9 @@ public class AnimatedCharacter extends Sprite {
         //TODO Improve this, just prof concept testing it
         Vector2 pos = new Vector2();
         try {
-            //TODO: Cambiar por Saved File
-            pos.x = SavedFile.getInstance().getPlayerParty().getPartyMember1().getPosition().x*16;
-            pos.y = SavedFile.getInstance().getPlayerParty().getPartyMember1().getPosition().y*16;
+            pos.x = GameInformation.getInstance().getPlayerParty().getPartyMember1().getPosition().x*16;
+            pos.y = GameInformation.getInstance().getPlayerParty().getPartyMember1().getPosition().y*16;
+
             System.out.println("Try");
             System.out.println(pos.x+"___"+pos.y);
         }

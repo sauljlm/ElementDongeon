@@ -40,8 +40,6 @@ public class MyInputProcessor implements InputProcessor {
         return enterFightMode;
     }
 
-    private boolean save;
-
     public boolean isMoveUp() {
         return moveUp;
     }
@@ -117,10 +115,6 @@ public class MyInputProcessor implements InputProcessor {
         return enter;
     }
 
-    public boolean isSave() {
-        return save;
-    }
-
     public boolean isMoveUpMenu() {
         return moveUpMenu;
     }
@@ -188,8 +182,6 @@ public class MyInputProcessor implements InputProcessor {
         if(keycode == Input.Keys.ENTER){
             enter = true;
         }
-        if(keycode == Input.Keys.BACKSPACE)
-            save = true;
         if(keycode == Input.Keys.UP){
             moveUpMenu = true;
         }

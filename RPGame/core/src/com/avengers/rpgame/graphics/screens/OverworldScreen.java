@@ -2,7 +2,6 @@ package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.ai.AIManager;
-import com.avengers.rpgame.data.SavedFile;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.IOManager;
 import com.avengers.rpgame.graphics.camera.CameraManager;
@@ -134,74 +133,6 @@ public class OverworldScreen implements Screen {
 
         this.accessPortal = new Sprite(new Texture(resourcePortalTexture));
         accessPortal.setCenter(interactiveObjVectors.get(0).x,interactiveObjVectors.get(0).y);
-    }
-
-    public OverworldScreen(final RPGame game, SavedFile savedFile){
-        this.game = game;
-        config = GameConfig.getInstance();
-
-        backgroundMusic = loadMusic(resourceAndTheJourneyBeginsMusic);
-        director = new EntitiesBuilderDirector();
-        characterBuilder = new CharacterBuilder();
-
-        ioManager = new IOManager(game, backgroundMusic);
-        cameraManager = new CameraManager(game);
-        mapManager = new MapManager(resourceOverworldMap, cameraManager.getCamera(), game);
-        physicsManager = new PhysicsManager(new Vector2(0, 0f), mapManager, cameraManager.getCamera(), true);
-        aiManager = AIManager.getInstance();
-
-        playerParty = new Party();
-//        character = new AnimatedCharacter("graphics/sprites/actors/player/tile000.png", physicsManager.getWorld(), game);
-        //TODO encapsulate this into an external class that takes care of creating the characters
-        if(savedFile.getIdCharacterClass()==1){
-            director.buildKnight(characterBuilder, physicsManager.getWorld(), game, savedFile.getUsername(), savedFile);
-            playerCharacter = characterBuilder.getResult();
-            director.buildMage(characterBuilder, physicsManager.getWorld(), game, "Merlin");
-            ally1Character = characterBuilder.getResult();
-            director.buildArcher(characterBuilder, physicsManager.getWorld(), game, "Robin");
-            ally2Character = characterBuilder.getResult();
-        }
-        if(savedFile.getIdCharacterClass()==2){
-            director.buildArcher(characterBuilder, physicsManager.getWorld(), game, savedFile.getUsername(), savedFile);
-            playerCharacter = characterBuilder.getResult();
-            director.buildKnight(characterBuilder, physicsManager.getWorld(), game, "Lancelot");
-            ally1Character = characterBuilder.getResult();
-            director.buildMage(characterBuilder, physicsManager.getWorld(), game, "Merlin");
-            ally2Character = characterBuilder.getResult();
-        }
-        if(savedFile.getIdCharacterClass()==3){
-            director.buildMage(characterBuilder, physicsManager.getWorld(), game, savedFile.getUsername(), savedFile);
-            playerCharacter = characterBuilder.getResult();
-            director.buildKnight(characterBuilder, physicsManager.getWorld(), game, "Lancelot");
-            ally1Character = characterBuilder.getResult();
-            director.buildArcher(characterBuilder, physicsManager.getWorld(), game, "Robin");
-            ally2Character = characterBuilder.getResult();
-        }
-        playerParty.setPartyMember1(playerCharacter);
-        playerParty.setPartyMember2(ally1Character);
-        playerParty.setPartyMember3(ally2Character);
-        savedFile.setPlayerParty(playerParty);
-
-        hudElements = new HUD(this.playerParty);
-        System.out.println(playerCharacter);
-        System.out.println(ally1Character);
-        System.out.println(ally2Character);
-
-        dataStorage=new DataStorage(); //Temporal
-        System.out.println(dataStorage.getData());
-
-        //Interactive objects
-        interactiveObjVectors = new ArrayList<Vector2>();
-        interactiveObjBodies = new ArrayList<Body>();
-        interactiveMapObj = new ArrayList<MapObject>();
-
-        interactiveObjVectors = aiManager.getInteractiveObjectsV();
-        interactiveObjBodies = aiManager.getInteractiveObjects();
-        interactiveMapObj = aiManager.getInteractiveMapObjects();
-
-        this.accessPortal = new Sprite(new Texture(resourcePortalTexture));
-        accessPortal.setCenter(interactiveObjVectors.get(0).x,interactiveObjVectors.get(0).y);
-
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.avengers.rpgame.ai;
 
 import com.avengers.rpgame.RPGame;
-import com.avengers.rpgame.data.SavedFile;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.graphics.screens.OverworldScreen;
@@ -41,20 +40,12 @@ public class RefereeBattleAI {
         if(!checkPartyStatus(playerParty)){
             finishBattle(playerParty);
             System.out.println("Player party death");
-            try{
-                game.setScreen(new OverworldScreen(game, SavedFile.getInstance()));
-            }catch (NullPointerException e){
-                game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
-            }
+            game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
         };
         if(!checkPartyStatus(npcParty)){
             finishBattle(npcParty);
             System.out.println("Enemy party death");
-            try{
-                game.setScreen(new OverworldScreen(game, SavedFile.getInstance()));
-            }catch (NullPointerException e){
-                game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
-            }
+            game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
         }
 
         this.turn = turn++;

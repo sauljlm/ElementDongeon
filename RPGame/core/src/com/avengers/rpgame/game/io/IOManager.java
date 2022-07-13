@@ -1,7 +1,6 @@
 package com.avengers.rpgame.game.io;
 
 import com.avengers.rpgame.RPGame;
-import com.avengers.rpgame.data.SavedFile;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.graphics.screens.FightScreen;
@@ -11,7 +10,6 @@ import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.graphics.screens.StoreScreen;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
-import com.avengers.rpgame.logic.entities.character.CharacterDAOImplementation;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
@@ -28,15 +26,12 @@ public class IOManager {
     private RPGame game;
     private Music backgroundMusic;
 
-    private CharacterDAOImplementation characterDAOImplementation;
-
     public IOManager(RPGame game, Music backgroundMusic) {
         inputProcessor = new MyInputProcessor();
         Gdx.input.setInputProcessor(inputProcessor);
         config = GameConfig.getInstance();
         this.game = game;
         this.backgroundMusic = backgroundMusic;
-        characterDAOImplementation = CharacterDAOImplementation.getInstance();
     }
 
     public IOManager(RPGame game) {
@@ -44,7 +39,6 @@ public class IOManager {
         Gdx.input.setInputProcessor(inputProcessor);
         config = GameConfig.getInstance();
         this.game = game;
-        characterDAOImplementation = CharacterDAOImplementation.getInstance();
     }
 
     //the idea for this method is to process different request of IO processInput differently acording to the screen
@@ -98,10 +92,6 @@ public class IOManager {
             this.backgroundMusic.dispose();
         }
 
-        if(inputProcessor.isSave()){
-            characterDAOImplementation.save(1, playerParty.getPartyMember1());
-        }
-
 //        if(inputProcessor.isAction1()){
 //            if(playerCharacter.getAnimatedCharacter().getPlayer().getLinearVelocity().y == 0){
 //                playerCharacter.getAnimatedCharacter().getPlayer().applyLinearImpulse(0, 6, 0, 6, false);
@@ -132,7 +122,6 @@ public class IOManager {
             enemyParty.setPartyMember3(enemyCharacter);
 
             game.setScreen(new FightScreen(game, playerParty, enemyParty));
-//            SavedFile.getInstance().setPlayerParty(playerParty);
             System.out.println("FIGHT !");
         }
     }
@@ -177,11 +166,8 @@ public class IOManager {
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
 
         if(inputProcessor.isEnterFightMode()){
-            try{
-                game.setScreen(new OverworldScreen(game, SavedFile.getInstance()));
-            }catch (NullPointerException e){
-                game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
-            }
+//            System.out.println("EXIT!");
+            game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
         }
     }
 
@@ -190,4 +176,3 @@ public class IOManager {
     }
 
 }
-
