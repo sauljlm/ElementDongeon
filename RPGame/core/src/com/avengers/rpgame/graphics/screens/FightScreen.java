@@ -247,7 +247,6 @@ public class FightScreen implements Screen {
 
         selector2.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("down");
                 return true;
             }
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -258,7 +257,6 @@ public class FightScreen implements Screen {
 
         selector3.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("down");
                 return true;
             }
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -311,8 +309,6 @@ public class FightScreen implements Screen {
                 public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
                         playerParty.getActivePartyMember().attackOther(playerParty.getActivePartyMember().getAttacks().get(finalIndex-1), enemyParty.getActivePartyMember());
-                        System.out.println(playerParty.getPartyMember1().toString());
-                        System.out.println(enemyParty.getPartyMember1().toString());
                         playerTimer.setValue(playerTimer.getMinValue());
                         changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + attack.getName());
                     }
@@ -342,8 +338,6 @@ public class FightScreen implements Screen {
                 public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
                         playerParty.getActivePartyMember().skillOther(playerParty.getActivePartyMember().getSkills().get(finalIndex-1), enemyParty.getActivePartyMember());
-                        System.out.println(playerParty.getPartyMember1().toString());
-                        System.out.println(enemyParty.getPartyMember1().toString());
                         playerTimer.setValue(playerTimer.getMinValue());
                         changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + skill.getName());
                     }
@@ -373,8 +367,6 @@ public class FightScreen implements Screen {
                 public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
                         playerParty.getActivePartyMember().receiveItem(playerParty.getActivePartyMember().getItems().get(finalIndex-1)); //TODO make items and skills dualmode for attack others and self use.
-                        System.out.println(playerParty.getPartyMember1().toString());
-                        System.out.println(enemyParty.getPartyMember1().toString());
                         playerTimer.setValue(playerTimer.getMinValue());
                         changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + item.getName());
                         setActivePlayerItems();

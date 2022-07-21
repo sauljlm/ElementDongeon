@@ -1,4 +1,4 @@
-package com.avengers.rpgame.logic.entities.character.components.skin;
+package com.avengers.rpgame.logic.entities.character.components.skin.components;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;

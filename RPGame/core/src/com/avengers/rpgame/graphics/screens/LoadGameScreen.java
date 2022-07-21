@@ -1,7 +1,7 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
-import com.avengers.rpgame.game.GameInformation;
+import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.MyInputProcessor;
@@ -21,7 +21,7 @@ import static com.avengers.rpgame.utils.Resources.resourceThemeMusic;
 
 public class LoadGameScreen implements Screen {
     final RPGame game;
-    private GameInformation gameInfo;
+    private GameStatus gameStatus;
     private final GameConfig config;
     private final Music backgroundMusic;
     private final Texture backgroundImage;
@@ -157,17 +157,21 @@ public class LoadGameScreen implements Screen {
 
     //Nota: aqui se debe ajustar para la carga correspondiente de los juegos guardados por usuarios
     private void executeAction() {
+        GameStatus.getInstance().setStatus("loadedGame");
         switch (this.actualSelection){
             case 0:
-                game.setScreen(new OverworldScreen(game, gameInfo));
+                GameStatus.getInstance().loadFromDB(1);
+                game.setScreen(new OverworldScreen(game));
                 dispose();
                 break;
             case 1:
-                game.setScreen(new OverworldScreen(game, gameInfo));
+                GameStatus.getInstance().loadFromDB(2);
+                game.setScreen(new OverworldScreen(game));
                 dispose();
                 break;
             case 2:
-                game.setScreen(new OverworldScreen(game, gameInfo));
+                GameStatus.getInstance().loadFromDB(3);
+                game.setScreen(new OverworldScreen(game));
                 dispose();
                 break;
             case 3:

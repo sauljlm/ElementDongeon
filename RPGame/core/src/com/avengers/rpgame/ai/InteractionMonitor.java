@@ -39,9 +39,7 @@ public class InteractionMonitor {
         Vector2 characterC = new Vector2(playerCharacter.getAnimatedCharacter().getPlayer().getPosition());
         boolean objectFound = false;
         int index=0;
-        //System.out.println("Array size "+interactiveObjectsV.size());
         for(Vector2 object : interactiveObjectsV) {
-            //System.out.println("PORTAL "+index);
             objectFound=itIsClose(characterC, object, maxDistance);
             if (objectFound){
                 actionTrigger(index,playerCharacter);

@@ -15,6 +15,9 @@ public class PlayableCharacter extends AbstractCharacter {
     private int experiencePoints;
 
     public PlayableCharacter() {
+        super.setAttacks(new ArrayList<Attack>());
+        super.setItems(new ArrayList<Item>());
+        super.setSkills(new ArrayList<Skill>());
     }
 
     public PlayableCharacter(int experiencePoints) {

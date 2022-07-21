@@ -1,15 +1,15 @@
 package com.avengers.rpgame.logic.entities;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
-import com.avengers.rpgame.game.GameInformation;
-import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
 import com.avengers.rpgame.logic.entities.character.builder.ICharacterDirector;
 import com.avengers.rpgame.logic.entities.character.components.AnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
-import com.avengers.rpgame.logic.entities.character.components.skin.Skin;
-import com.avengers.rpgame.logic.entities.character.components.skin.AnimationAssets;
+import com.avengers.rpgame.logic.entities.character.components.skin.ISkin;
+import com.avengers.rpgame.logic.entities.character.components.skin.components.AnimationAssets;
+import com.avengers.rpgame.logic.entities.character.components.skin.abstractFactory.*;
 import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -20,8 +20,9 @@ import static com.avengers.rpgame.utils.FileManager.*;
 import static com.avengers.rpgame.utils.Resources.*;
 
 public class EntitiesBuilderDirector implements ICharacterDirector {
-
     private GameConfig gameConfig = GameConfig.getInstance();
+    private GameStatus gameStatus = GameStatus.getInstance();
+    ISkinFactory skinFactory;
     int idCharacter;
     String name;
     Vector2 position = new Vector2((int)gameConfig.getResolutionHorizontal()*12/5, (int)gameConfig.getResolutionVertical() /5);
@@ -31,45 +32,37 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
 
     //DummyCharacters only contains the animatedCharacter data for it to render on the game. This is used on battle screen /Character selection screen
     public void buildKnightDummy(CharacterBuilder builder, RPGame rpGame){
-        //TODO Skin needs to be abstracted into a abstractFactory /Factory
-        Skin skin = new Skin();
-        skin.setUp(new AnimationAssets(loadTexture(resourceKnightTextureUp), loadTextureAtlas(resourceKnightTextureMapUp), "up"));
-        skin.setDown(new AnimationAssets(loadTexture(resourceKnightTextureDown), loadTextureAtlas(resourceKnightTextureMapDown), "down"));
-        skin.setLeft(new AnimationAssets(loadTexture(resourceKnightTextureLeft), loadTextureAtlas(resourceKnightTextureMapLeft), "left"));
-        skin.setRight(new AnimationAssets(loadTexture(resourceKnightTextureRight), loadTextureAtlas(resourceKnightTextureMapRight), "right"));
+        skinFactory = new KnighSkinFactory();
+        ISkin skin = skinFactory.createSkin();
         AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, rpGame, new Vector2(0,0));
         builder.setAnimatedCharacter(animatedCharacter);
     }
 
     public void buildArcherDummy(CharacterBuilder builder, RPGame rpGame){
-        //TODO Skin needs to be abstracted into a abstractFactory /Factory
-        Skin skin = new Skin();
-        skin.setUp(new AnimationAssets(loadTexture(resourceArcherTextureUp), loadTextureAtlas(resourceArcherTextureMapUp), "up"));
-        skin.setDown(new AnimationAssets(loadTexture(resourceArcherTextureDown), loadTextureAtlas(resourceArcherTextureMapDown), "down"));
-        skin.setLeft(new AnimationAssets(loadTexture(resourceArcherTextureLeft), loadTextureAtlas(resourceArcherTextureMapLeft), "left"));
-        skin.setRight(new AnimationAssets(loadTexture(resourceArcherTextureRight), loadTextureAtlas(resourceArcherTextureMapRight), "right"));
+        skinFactory = new ArcherSkinFactory();
+        ISkin skin = skinFactory.createSkin();
         AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, rpGame, new Vector2(0,0));
         builder.setAnimatedCharacter(animatedCharacter);
     }
 
     public void buildMageDummy(CharacterBuilder builder, RPGame rpGame){
-        //TODO Skin needs to be abstracted into a abstractFactory /Factory
-        Skin skin = new Skin();
-        skin.setUp(new AnimationAssets(loadTexture(resourceMageTextureUp), loadTextureAtlas(resourceMageTextureMapUp), "up"));
-        skin.setDown(new AnimationAssets(loadTexture(resourceMageTextureDown), loadTextureAtlas(resourceMageTextureMapDown), "down"));
-        skin.setLeft(new AnimationAssets(loadTexture(resourceMageTextureLeft), loadTextureAtlas(resourceMageTextureMapLeft), "left"));
-        skin.setRight(new AnimationAssets(loadTexture(resourceMageTextureRight), loadTextureAtlas(resourceMageTextureMapRight), "right"));
+        skinFactory = new MageSkinFactory();
+        ISkin skin = skinFactory.createSkin();
         AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, rpGame, new Vector2(0,0));
         builder.setAnimatedCharacter(animatedCharacter);
     }
 
+    public void buildEarthSkeletonDummy(CharacterBuilder builder, RPGame rpGame){
+        skinFactory = new EarthSkeletonSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, rpGame, new Vector2(0,0));
+        builder.setAnimatedCharacter(animatedCharacter);
+    }
+
+    // Playable characters
     public void buildKnight(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
-        //TODO Skin needs to be abstracted into a abstractFactory /Factory
-        Skin skin = new Skin();
-        skin.setUp(new AnimationAssets(loadTexture(resourceKnightTextureUp), loadTextureAtlas(resourceKnightTextureMapUp), "up"));
-        skin.setDown(new AnimationAssets(loadTexture(resourceKnightTextureDown), loadTextureAtlas(resourceKnightTextureMapDown), "down"));
-        skin.setLeft(new AnimationAssets(loadTexture(resourceKnightTextureLeft), loadTextureAtlas(resourceKnightTextureMapLeft), "left"));
-        skin.setRight(new AnimationAssets(loadTexture(resourceKnightTextureRight), loadTextureAtlas(resourceKnightTextureMapRight), "right"));
+        skinFactory = new KnighSkinFactory();
+        ISkin skin = skinFactory.createSkin();
         AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
         builder.setAnimatedCharacter(animatedCharacter);
 
@@ -101,12 +94,8 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     }
 
     public void buildArcher(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
-        //TODO Skin needs to be abstracted into a abstractFactory /Factory
-        Skin skin = new Skin();
-        skin.setUp(new AnimationAssets(loadTexture(resourceArcherTextureUp), loadTextureAtlas(resourceArcherTextureMapUp), "up"));
-        skin.setDown(new AnimationAssets(loadTexture(resourceArcherTextureDown), loadTextureAtlas(resourceArcherTextureMapDown), "down"));
-        skin.setLeft(new AnimationAssets(loadTexture(resourceArcherTextureLeft), loadTextureAtlas(resourceArcherTextureMapLeft), "left"));
-        skin.setRight(new AnimationAssets(loadTexture(resourceArcherTextureRight), loadTextureAtlas(resourceArcherTextureMapRight), "right"));
+        skinFactory = new ArcherSkinFactory();
+        ISkin skin = skinFactory.createSkin();
         AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
         builder.setAnimatedCharacter(animatedCharacter);
 
@@ -146,12 +135,8 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     }
 
     public void buildMage(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
-        //TODO Skin needs to be abstracted into a abstractFactory /Factory
-        Skin skin = new Skin();
-        skin.setUp(new AnimationAssets(loadTexture(resourceMageTextureUp), loadTextureAtlas(resourceMageTextureMapUp), "up"));
-        skin.setDown(new AnimationAssets(loadTexture(resourceMageTextureDown), loadTextureAtlas(resourceMageTextureMapDown), "down"));
-        skin.setLeft(new AnimationAssets(loadTexture(resourceMageTextureLeft), loadTextureAtlas(resourceMageTextureMapLeft), "left"));
-        skin.setRight(new AnimationAssets(loadTexture(resourceMageTextureRight), loadTextureAtlas(resourceMageTextureMapRight), "right"));
+        skinFactory = new MageSkinFactory();
+        ISkin skin = skinFactory.createSkin();
         AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
         builder.setAnimatedCharacter(animatedCharacter);
 
@@ -180,6 +165,82 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setSkills(skills);
     }
 
+    //Playable characters from DB
+    public void buildKnightFromDB(CharacterBuilder builder, World world, RPGame rpGame, int partyMember){
+        skinFactory = new KnighSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
+        builder.setAnimatedCharacter(animatedCharacter);
+
+        ArrayList<Item> items = gameStatus.getParty().getPartyMember(partyMember).getItems();
+        ArrayList<Attack> attacks = gameStatus.getParty().getPartyMember(partyMember).getAttacks();
+        ArrayList<Skill> skills = gameStatus.getParty().getPartyMember(partyMember).getSkills();
+
+        this.idCharacter=1;
+        this.name=gameStatus.getParty().getPartyMember(partyMember).getName();
+        this.level=gameStatus.getParty().getPartyMember(partyMember).getLevel();
+        this.coins=gameStatus.getParty().getPartyMember(partyMember).getCoins();
+        this.characterClass = new CharacterClass(1, "Knight", "Caballero", 60, 61, 62, 63, 64, 65, 66, 67, 68);
+
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getParty().getPartyMember(partyMember).getMagicPoints(), this.coins);
+        builder.setCharacterAttributes(gameStatus.getParty().getPartyMember(partyMember).getStrength(),gameStatus.getParty().getPartyMember(partyMember).getSpeed(),gameStatus.getParty().getPartyMember(partyMember).getMagic(),gameStatus.getParty().getPartyMember(partyMember).getResistance(),gameStatus.getParty().getPartyMember(partyMember).getLuck());
+        builder.setCharacterClass(this.characterClass);
+        builder.setItems(items);
+        builder.setAttacks(attacks);
+        builder.setSkills(skills);
+    }
+
+    public void buildArcherFromDB(CharacterBuilder builder, World world, RPGame rpGame, int partyMember){
+        skinFactory = new ArcherSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
+        builder.setAnimatedCharacter(animatedCharacter);
+
+        //TODO: Implementacion temporal con valores quemados
+        ArrayList<Item> items = gameStatus.getParty().getPartyMember(partyMember).getItems();
+        ArrayList<Attack> attacks = gameStatus.getParty().getPartyMember(partyMember).getAttacks();
+        ArrayList<Skill> skills = gameStatus.getParty().getPartyMember(partyMember).getSkills();
+
+        this.idCharacter=2;
+        this.name=gameStatus.getParty().getPartyMember(partyMember).getName();
+        this.level=gameStatus.getParty().getPartyMember(partyMember).getLevel();
+        this.coins=gameStatus.getParty().getPartyMember(partyMember).getCoins();
+        this.characterClass = new CharacterClass(2, "Archer", "Arquero", 70, 71, 72, 73, 74, 75, 76, 77, 78);
+
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getParty().getPartyMember(partyMember).getMagicPoints(), this.coins);
+        builder.setCharacterAttributes(gameStatus.getParty().getPartyMember(partyMember).getStrength(),gameStatus.getParty().getPartyMember(partyMember).getSpeed(),gameStatus.getParty().getPartyMember(partyMember).getMagic(),gameStatus.getParty().getPartyMember(partyMember).getResistance(),gameStatus.getParty().getPartyMember(partyMember).getLuck());
+        builder.setCharacterClass(this.characterClass);
+        //TODO SET THIS FROM DB
+        builder.setItems(items);
+        builder.setAttacks(attacks);
+        builder.setSkills(skills);
+    }
+
+    public void buildMageFromDB(CharacterBuilder builder, World world, RPGame rpGame, int partyMember){
+        skinFactory = new MageSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
+        builder.setAnimatedCharacter(animatedCharacter);
+
+        //TODO: Implementacion temporal con valores quemados
+        ArrayList<Item> items = gameStatus.getParty().getPartyMember(partyMember).getItems();
+        ArrayList<Attack> attacks = gameStatus.getParty().getPartyMember(partyMember).getAttacks();
+        ArrayList<Skill> skills = gameStatus.getParty().getPartyMember(partyMember).getSkills();
+
+        this.idCharacter=3;
+        this.name=gameStatus.getParty().getPartyMember(partyMember).getName();
+        this.level=gameStatus.getParty().getPartyMember(partyMember).getLevel();
+        this.coins=gameStatus.getParty().getPartyMember(partyMember).getCoins();
+        this.characterClass = new CharacterClass(3, "Mage", "Mago", 50, 51, 52, 53, 54, 55, 56, 57, 58);
+
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getParty().getPartyMember(partyMember).getMagicPoints(), this.coins);
+        builder.setCharacterAttributes(gameStatus.getParty().getPartyMember(partyMember).getStrength(),gameStatus.getParty().getPartyMember(partyMember).getSpeed(),gameStatus.getParty().getPartyMember(partyMember).getMagic(),gameStatus.getParty().getPartyMember(partyMember).getResistance(),gameStatus.getParty().getPartyMember(partyMember).getLuck());
+        builder.setCharacterClass(this.characterClass);
+        builder.setItems(items);
+        builder.setAttacks(attacks);
+        builder.setSkills(skills);
+    }
+
     //Enemies
     public void buildEarthSkeleton(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
         //TODO: Implementacion temporal con valores quemados
@@ -187,11 +248,8 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         ArrayList<Attack> attacks = new ArrayList<>();
         ArrayList<Skill> skills = new ArrayList<>();
 
-        //TODO Skin needs to be abstracted into a abstractFactory /Factory
-        Skin skin = new Skin();
-        skin.setUp(new AnimationAssets(loadTexture(resourceEarthSkeletonTextureUp), loadTextureAtlas(resourceEarthSkeletonTextureMapUp), "up"));
-        skin.setDown(new AnimationAssets(loadTexture(resourceEarthSkeletonTextureDown), loadTextureAtlas(resourceEarthSkeletonTextureMapDown), "down"));
-        skin.setLeft(new AnimationAssets(loadTexture(resourceEarthSkeletonTextureLeft), loadTextureAtlas(resourceEarthSkeletonTextureMapLeft), "left"));
+        skinFactory = new EarthSkeletonSkinFactory();
+        ISkin skin = skinFactory.createSkin();
         skin.setRight(new AnimationAssets(loadTexture(resourceEarthSkeletonTextureRight), loadTextureAtlas(resourceEarthSkeletonTextureMapRight), "right"));
         AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
         builder.setAnimatedCharacter(animatedCharacter);
@@ -216,15 +274,6 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
 //        builder.setSkills(skills);
     }
 
-    public void buildEarthSkeletonDummy(CharacterBuilder builder, RPGame rpGame){
-        //TODO Skin needs to be abstracted into a abstractFactory /Factory
-        Skin skin = new Skin();
-        skin.setUp(new AnimationAssets(loadTexture(resourceEarthSkeletonTextureUp), loadTextureAtlas(resourceEarthSkeletonTextureMapUp), "up"));
-        skin.setDown(new AnimationAssets(loadTexture(resourceEarthSkeletonTextureDown), loadTextureAtlas(resourceEarthSkeletonTextureMapDown), "down"));
-        skin.setLeft(new AnimationAssets(loadTexture(resourceEarthSkeletonTextureLeft), loadTextureAtlas(resourceEarthSkeletonTextureMapLeft), "left"));
-        skin.setRight(new AnimationAssets(loadTexture(resourceEarthSkeletonTextureRight), loadTextureAtlas(resourceEarthSkeletonTextureMapRight), "right"));
-        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, rpGame, new Vector2(0,0));
-        builder.setAnimatedCharacter(animatedCharacter);
-    }
+
 
 }

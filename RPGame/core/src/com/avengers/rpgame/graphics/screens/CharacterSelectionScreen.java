@@ -1,11 +1,9 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
-import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.game.io.MyInputProcessor;
-import com.avengers.rpgame.graphics.screens.MainMenuScreen;
-import com.avengers.rpgame.graphics.screens.NewGameScreen;
 import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
 import com.avengers.rpgame.utils.Resources;
@@ -14,7 +12,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -22,12 +19,11 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
-import static com.avengers.rpgame.utils.FileManager.loadTexture;
 import static com.avengers.rpgame.utils.Resources.*;
 
 public class CharacterSelectionScreen implements Screen {
     final RPGame game;
-    private GameInformation gameInfo;
+    private GameStatus gameStatus;
     private final GameConfig config;
     //private final Music backgroundMusic;
     private final Texture backgroundImage;
@@ -59,7 +55,8 @@ public class CharacterSelectionScreen implements Screen {
 
     public CharacterSelectionScreen(final RPGame game) {
         this.game = game;
-        gameInfo = GameInformation.getInstance();
+        gameStatus = GameStatus.getInstance();
+
         input = new MyInputProcessor();
         config = GameConfig.getInstance();
 
@@ -308,24 +305,24 @@ public class CharacterSelectionScreen implements Screen {
                 case 0:
                     //Knight
                     if(this.actualCharacter==0){
-                        gameInfo.setIdCharacterClass(1);
+                        gameStatus.getParty().getPartyMember(1).setIdCharacter(1);
                     }
                     //Archer
                     if(this.actualCharacter==1){
-                        gameInfo.setIdCharacterClass(2);
+                        gameStatus.getParty().getPartyMember(1).setIdCharacter(2);
                     }
                     //Mage
                     if(this.actualCharacter==2){
-                        gameInfo.setIdCharacterClass(3);
+                        gameStatus.getParty().getPartyMember(1).setIdCharacter(3);
                     }
 
                     if(txtUsername.getText().isEmpty()){
-                        gameInfo.setUsername("ElementPlayer");
+                        gameStatus.getParty().getPartyMember(1).setName("ElementPlayer");
                     }else{
-                        gameInfo.setUsername(txtUsername.getText());
+                        gameStatus.getParty().getPartyMember(1).setName(txtUsername.getText());
                     }
 
-                    game.setScreen(new NewGameScreen(game,gameInfo));
+                    game.setScreen(new NewGameScreen(game));
                     dispose();
                     break;
                 case 1:

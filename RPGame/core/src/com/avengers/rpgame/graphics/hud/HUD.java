@@ -34,7 +34,7 @@ public class HUD {
 
     public HUD (Party playerParty) {
         gameConfig = GameConfig.getInstance();
-        this.character = playerParty.getPartyMember1();
+        this.character = playerParty.getActivePartyMember();
         createHearts();
         weapon = new Weapon((int) this.character.getLevel(), this.character.getCharacterClass().getIdCharacterClass());
     }

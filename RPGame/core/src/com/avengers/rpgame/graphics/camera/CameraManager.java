@@ -1,6 +1,7 @@
 package com.avengers.rpgame.graphics.camera;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -33,8 +34,8 @@ public class CameraManager {
 
     //The camera needs a character to follow him
     //Anytime we get info from box2D "world" we need to multiply by PPM to go to regular units
-    public void action(float delta, AbstractCharacter character){
-        position = new Vector3(character.getAnimatedCharacter().getPlayer().getPosition().x * gameConfig.getPPM(), character.getAnimatedCharacter().getPlayer().getPosition().y * gameConfig.getPPM(), 0);
+    public void action(float delta){
+        position = new Vector3(GameStatus.getInstance().getParty().getActivePartyMember().getAnimatedCharacter().getPlayer().getPosition().x * gameConfig.getPPM(), GameStatus.getInstance().getParty().getActivePartyMember().getAnimatedCharacter().getPlayer().getPosition().y * gameConfig.getPPM(), 0);
         cameraUpdate(delta);
         rpGame.batch.setProjectionMatrix(camera.combined);
     }

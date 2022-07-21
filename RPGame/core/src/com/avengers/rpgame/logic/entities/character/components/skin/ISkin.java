@@ -1,17 +1,19 @@
 package com.avengers.rpgame.logic.entities.character.components.skin;
 
+import com.avengers.rpgame.logic.entities.character.components.skin.components.AnimationAssets;
+
 //A Skin contains the necessary information to change the graphical appearance of a character, each AnimationAsset contains all the information for a particular state/action
-public class Skin {
+public abstract class ISkin {
     private AnimationAssets up;
     private AnimationAssets down;
     private AnimationAssets left;
     private AnimationAssets right;
     private AnimationAssets waiting;
 
-    public Skin() {
+    public ISkin() {
     }
 
-    public Skin(AnimationAssets up, AnimationAssets down, AnimationAssets left, AnimationAssets right, AnimationAssets waiting) {
+    public ISkin(AnimationAssets up, AnimationAssets down, AnimationAssets left, AnimationAssets right, AnimationAssets waiting) {
         this.up = up;
         this.down = down;
         this.left = left;

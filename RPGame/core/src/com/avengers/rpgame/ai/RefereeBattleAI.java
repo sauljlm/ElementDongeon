@@ -1,8 +1,8 @@
 package com.avengers.rpgame.ai;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
-import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.graphics.screens.OverworldScreen;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
@@ -22,13 +22,10 @@ public class RefereeBattleAI {
     }
 
     public void startBattle(Party party1, Party party2){
-//        System.out.println("Battle Starts");
-//        System.out.println("Party1" + party1.getPartyMember1().getName() +" "+ party1.getPartyMember2().getName() + party1.getPartyMember3().getName());
-//        System.out.println("Party2" + party2.getPartyMember1().getName() +" "+ party2.getPartyMember2().getName() + party2.getPartyMember3().getName());
     };
 
     public void finishBattle(Party winnerParty){
-        System.out.println("Battle Finishes, the winners are" + winnerParty.getPartyMember1().getName() +" "+ winnerParty.getPartyMember2().getName() + winnerParty.getPartyMember3().getName());
+
     }
 
     public void manageBattle(Party playerParty , Party npcParty){
@@ -39,13 +36,13 @@ public class RefereeBattleAI {
 
         if(!checkPartyStatus(playerParty)){
             finishBattle(playerParty);
-            System.out.println("Player party death");
-            game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
+            GameStatus.getInstance().setStatus("gameInProgress");
+            game.setScreen(new OverworldScreen(game));
         };
         if(!checkPartyStatus(npcParty)){
             finishBattle(npcParty);
-            System.out.println("Enemy party death");
-            game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
+            GameStatus.getInstance().setStatus("gameInProgress");
+            game.setScreen(new OverworldScreen(game));
         }
 
         this.turn = turn++;

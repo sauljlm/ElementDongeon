@@ -20,7 +20,6 @@ public class AlliesMovementAI {
         Vector2 followerCharacterPos = new Vector2();
         Vector2 distance = new Vector2();
 
-
         mainCharacterPos = playerCharacter.getAnimatedCharacter().getPlayer().getPosition();
         followerCharacterPos = ally1Character.getAnimatedCharacter().getPlayer().getPosition();
         distance = mainCharacterPos.sub(followerCharacterPos);

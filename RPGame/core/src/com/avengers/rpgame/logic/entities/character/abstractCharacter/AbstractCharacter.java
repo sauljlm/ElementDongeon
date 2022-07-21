@@ -212,7 +212,6 @@ public abstract class AbstractCharacter implements BattleActions {
             this.setMagicPoints(this.getMagicPoints()-attack.getmPCost());
             targetCharacter.receiveAttack(attack);
         }
-        System.out.println("Not enough MP!");
     }
 
     //Receive attack
@@ -227,7 +226,6 @@ public abstract class AbstractCharacter implements BattleActions {
             this.setMagicPoints(this.getMagicPoints()-skill.getmPCost());
             targetCharacter.receiveSkill(skill);
         }
-        System.out.println("Not enough MP!");
     }
 
     //Use/receive skill on oneself

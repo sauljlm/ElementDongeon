@@ -1,9 +1,9 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.MyInputProcessor;
-import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
@@ -20,27 +20,18 @@ import static com.avengers.rpgame.utils.Resources.resourceThemeMusic;
 
 public class NewGameScreen implements Screen {
     final RPGame game;
-    private GameInformation gameInfo;
     private final GameConfig config;
     private final Music backgroundMusic;
     private final Texture backgroundImage;
-
-    private final float ScreenWidth;
-    private final float ScreenHeight;
-
     private final ArrayList<Text> story;
 
     private MyInputProcessor input;
 
-    public NewGameScreen(final RPGame game, GameInformation information) {
+    public NewGameScreen(final RPGame game) {
         this.game = game;
-        this.gameInfo = information;
 
         input = new MyInputProcessor();
         config = GameConfig.getInstance();
-
-        ScreenWidth = config.getResolutionHorizontal();
-        ScreenHeight = config.getResolutionVertical();
 
         backgroundImage = new Texture(Gdx.files.internal(resourceNewGameBackground));
 
@@ -72,7 +63,8 @@ public class NewGameScreen implements Screen {
         game.batch.end();
 
         if(this.input.isEnter() || this.input.isClickTouch()){
-            game.setScreen(new OverworldScreen(game, gameInfo));
+            GameStatus.getInstance().setStatus("newGame");
+            game.setScreen(new OverworldScreen(game));
             dispose();
         }
     }

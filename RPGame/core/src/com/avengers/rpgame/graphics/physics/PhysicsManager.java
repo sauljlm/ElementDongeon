@@ -1,5 +1,6 @@
 package com.avengers.rpgame.graphics.physics;
 
+import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.map.MapManager;
 import com.avengers.rpgame.graphics.map.TiledObjectParser;
@@ -20,6 +21,7 @@ public class PhysicsManager {
     public PhysicsManager(Vector2 gravityVector, MapManager mapManager, OrthographicCamera camera, boolean debug) {
         this.gravity = gravityVector;
         this.world = new World(gravity, false);
+        GameStatus.getInstance().setWorld(this.world);
         this.debugRenderer = new Box2DDebugRenderer();
         this.gameConfig = GameConfig.getInstance();
         this.debug = gameConfig.isDebugPhysics();

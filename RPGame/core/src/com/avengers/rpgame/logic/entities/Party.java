@@ -10,7 +10,7 @@ public class Party {
     private boolean partyMember1Status;
     private boolean partyMember2Status;
     private boolean partyMember3Status;
-    private int activePartyMemberId;
+    private int activePartyMemberId = 1;
 
     public Party() {
     }
@@ -91,6 +91,56 @@ public class Party {
                 return partyMember3;
             default:
                 return partyMember1;
+        }
+    }
+    public AbstractCharacter getInactivePartyMember(int id){
+        switch (id){
+            case 1:
+                if(activePartyMemberId==1){
+                    return partyMember2;
+                }
+                if(activePartyMemberId==2){
+                    return partyMember1;
+                }
+                if(activePartyMemberId==3){
+                    return partyMember1;
+                }
+            case 2:
+                if(activePartyMemberId==1){
+                    return partyMember3;
+                }
+                if(activePartyMemberId==2){
+                    return partyMember3;
+                }
+                if(activePartyMemberId==3){
+                    return partyMember2;
+                }
+            default:
+                return partyMember2;
+        }
+    }
+
+    public AbstractCharacter getPartyMember(int memberId){
+        switch (memberId){
+            case 1:
+                return partyMember1;
+            case 2:
+                return partyMember2;
+            case 3:
+                return partyMember3;
+            default:
+                return partyMember1;
+        }
+    }
+    public void setPartyMember(int memberId, AbstractCharacter member){
+        switch (memberId){
+            case 1:
+                setPartyMember1(member);
+            case 2:
+                setPartyMember2(member);
+            case 3:
+                setPartyMember3(member);
+            default:
         }
     }
 }

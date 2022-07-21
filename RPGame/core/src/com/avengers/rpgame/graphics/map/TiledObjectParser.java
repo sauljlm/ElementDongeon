@@ -26,7 +26,6 @@ public class TiledObjectParser {
             } else
                 if (object instanceof PolygonMapObject) {
                     shape = createPolygon((PolygonMapObject) object);
-//                    System.out.println("Polygon!");
                 } else
                     if (object instanceof EllipseMapObject) {
                         shape = createCircle((EllipseMapObject) object);
@@ -56,10 +55,6 @@ public class TiledObjectParser {
         Shape shape = null;
         Vector2 pos = new Vector2();
         for(MapObject object : mapObject) {
-//            System.out.println(object.toString());
-//            System.out.println(object.getName());
-//            System.out.println("stuff");
-//            System.out.println(object.getProperties().getValues().toString());
             AIManager aiManager = AIManager.getInstance();
 
             if (object instanceof RectangleMapObject) {

@@ -1,7 +1,7 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
-import com.avengers.rpgame.game.GameInformation;
+import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.graphics.store.Store;
 import com.avengers.rpgame.graphics.text.FontFactory;
 import com.avengers.rpgame.graphics.text.Text;
@@ -40,7 +40,6 @@ public class StoreScreen implements Screen {
     private int itemType = 0;
     private int itemSelected = 0;
     private MyInputProcessor input;
-    private GameInformation gameInfo = GameInformation.getInstance();
     private AbstractCharacter character;
 
     ShapeRenderer _Border;
@@ -255,9 +254,12 @@ public class StoreScreen implements Screen {
                 storeElements.update(itemType, actionOption, itemSelected);
                 break;
             case 2:
-                gameInfo.updateLocation();
+                GameStatus.getInstance().updateLocation();
+                GameStatus.getInstance().setSaveSlot(1);
+                GameStatus.getInstance().saveOnDB();
+                GameStatus.getInstance().setStatus("gameInProgress");
                 this.actionSelected = false;
-                game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
+                game.setScreen(new OverworldScreen(game));
                 dispose();
                 break;
         }

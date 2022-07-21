@@ -2,7 +2,6 @@ package com.avengers.rpgame.game.io;
 
 import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.game.GameConfig;
-import com.avengers.rpgame.game.GameInformation;
 import com.avengers.rpgame.graphics.screens.FightScreen;
 import com.avengers.rpgame.graphics.screens.OverworldScreen;
 import com.avengers.rpgame.logic.entities.EntitiesBuilderDirector;
@@ -13,11 +12,7 @@ import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-
-import java.util.LinkedList;
-import java.util.Queue;
 
 //TODO Improve this and create different controls for different screens
 public class IOManager {
@@ -43,6 +38,7 @@ public class IOManager {
 
     //the idea for this method is to process different request of IO processInput differently acording to the screen
     public void processInput(String type, float delta, Party playerParty){
+//        playerParty.getPartyMember1().setPosition(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
         if(type.equals("overworld")){
             overworldUpdate(delta, playerParty);
 
@@ -110,7 +106,7 @@ public class IOManager {
 //        System.out.println(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
         if(inputProcessor.isEnterFightMode()){
             playerParty.getPartyMember1().setPosition(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
-            GameInformation.getInstance().setPlayerParty(playerParty);
+//            GameInformation.getInstance().setPlayerParty(playerParty);
             //This is just for battle testing
             EntitiesBuilderDirector director = new EntitiesBuilderDirector();
             CharacterBuilder characterBuilder = new CharacterBuilder();
@@ -167,7 +163,7 @@ public class IOManager {
 
         if(inputProcessor.isEnterFightMode()){
 //            System.out.println("EXIT!");
-            game.setScreen(new OverworldScreen(game, GameInformation.getInstance()));
+//            game.setScreen(new OverworldScreen(game));
         }
     }
 

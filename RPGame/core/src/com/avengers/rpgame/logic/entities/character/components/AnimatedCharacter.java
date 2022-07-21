@@ -1,15 +1,13 @@
 package com.avengers.rpgame.logic.entities.character.components;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
-import com.avengers.rpgame.game.GameInformation;
-import com.avengers.rpgame.logic.entities.character.components.skin.Skin;
+import com.avengers.rpgame.logic.entities.character.components.skin.ISkin;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-
-import java.io.IOException;
 
 import static com.avengers.rpgame.utils.FileManager.loadFile;
 import static com.avengers.rpgame.utils.FileManager.loadTexture;
@@ -26,7 +24,7 @@ public class AnimatedCharacter extends Sprite {
     private Animation<TextureAtlas.AtlasRegion> currentAnimation;
     private Sprite sprite;
     private World world;
-    private Skin skin;
+    private ISkin skin;
     private SpriteBatch spriteBatch;
     private float elapsedTime;
     private String action;
@@ -35,7 +33,7 @@ public class AnimatedCharacter extends Sprite {
     public AnimatedCharacter() {
     }
 
-    public AnimatedCharacter(Skin skin, World world, RPGame rpGame) {
+    public AnimatedCharacter(ISkin skin, World world, RPGame rpGame) {
         this.rpGame = rpGame;
         this.gameConfig = GameConfig.getInstance();
         this.world = world;
@@ -48,22 +46,31 @@ public class AnimatedCharacter extends Sprite {
 
         //TODO Improve this, just prof concept testing it
         Vector2 pos = new Vector2();
-        try {
-            pos.x = GameInformation.getInstance().getPlayerParty().getPartyMember1().getPosition().x*16;
-            pos.y = GameInformation.getInstance().getPlayerParty().getPartyMember1().getPosition().y*16;
 
-            System.out.println("Try");
-            System.out.println(pos.x+"___"+pos.y);
-        }
-        catch (NullPointerException e) {
+        if (GameStatus.getInstance().getStatus().equals("newGame")){
             pos.x = gameConfig.getResolutionHorizontal() * 12 / 5;
             pos.y = gameConfig.getResolutionVertical() / 5;
-            System.out.println("Catch");
         }
+        if (GameStatus.getInstance().getStatus().equals("loadedGame")){
+            pos.x =GameStatus.getInstance().getParty().getPartyMember(1).getPosition().x*gameConfig.getPPM();
+            pos.y = GameStatus.getInstance().getParty().getPartyMember(1).getPosition().y*gameConfig.getPPM();
+        }
+        if (GameStatus.getInstance().getStatus().equals("gameInProgress")){
+            pos.x =GameStatus.getInstance().getParty().getPartyMember(1).getPosition().x*gameConfig.getPPM();
+            pos.y = GameStatus.getInstance().getParty().getPartyMember(1).getPosition().y*gameConfig.getPPM();
+        }
+
+//            GameStatus.getInstance().updateLocation();
+//            pos.x =GameStatus.getInstance().getParty().getPartyMember(1).getPosition().x*gameConfig.getPPM();
+//            pos.y = GameStatus.getInstance().getParty().getPartyMember(1).getPosition().y*gameConfig.getPPM();
+//        }
+//        catch (NullPointerException e) {
+//
+//        }
         this.player = createBox((int)pos.x, (int) pos.y, 12, 12, false, false);
     }
 
-    public AnimatedCharacter(Skin skin, RPGame rpGame, Vector2 position) {
+    public AnimatedCharacter(ISkin skin, RPGame rpGame, Vector2 position) {
         this.rpGame = rpGame;
         this.gameConfig = GameConfig.getInstance();
         this.skin = skin;
@@ -185,15 +192,21 @@ public class AnimatedCharacter extends Sprite {
         bodyDef.fixedRotation = isFixedRotation; //this stops the player from rotating
         body = world.createBody(bodyDef); //this initializes the player body using the def and puts it inside the world
 
-//        CircleShape shape = new CircleShape();
-//        shape.setRadius(width / 1.5f / gameConfig.getPPM());
-
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2f / gameConfig.getPPM(), height / 2f / gameConfig.getPPM()); // /2 cause box2D counts stuff from center, so 32 x 32 would be 64, /PPM to scale down into box2D units
 
         body.createFixture(shape, 1.0f);
         shape.dispose(); //As the shape is already "used" we can dispose it
         return body;
+    }
+
+    public void recreateBody(){
+        this.world = GameStatus.getInstance().getWorld();
+        Vector2 pos = new Vector2();
+            GameStatus.getInstance().updateLocation();
+            pos.x =GameStatus.getInstance().getParty().getPartyMember(1).getPosition().x*gameConfig.getPPM();
+            pos.y = GameStatus.getInstance().getParty().getPartyMember(1).getPosition().y*gameConfig.getPPM();
+        this.player = createBox((int)pos.x, (int) pos.y, 12, 12, false, false);
     }
 
     //sets the current atlas and texture for each frame based on the current action
