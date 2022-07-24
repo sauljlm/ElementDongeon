@@ -61,6 +61,55 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setAnimatedCharacter(animatedCharacter);
     }
 
+    public void buildFireSkeletonDummy(CharacterBuilder builder, RPGame rpGame){
+        skinFactory = new FireSkeletonSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
+        builder.setAnimatedCharacter(animatedCharacter);
+    }
+
+    public void buildWaterSkeletonDummy(CharacterBuilder builder, RPGame rpGame){
+        skinFactory = new WaterSkeletonSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
+        builder.setAnimatedCharacter(animatedCharacter);
+    }
+
+    public void buildWindSkeletonDummy(CharacterBuilder builder, RPGame rpGame){
+        skinFactory = new WindSkeletonSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
+        builder.setAnimatedCharacter(animatedCharacter);
+    }
+
+    public void buildChiefEarthDummy(CharacterBuilder builder, RPGame rpGame){
+        skinFactory = new ChiefEarthSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
+        builder.setAnimatedCharacter(animatedCharacter);
+    }
+
+    public void buildChiefWindDummy(CharacterBuilder builder, RPGame rpGame){
+        skinFactory = new ChiefWindSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
+        builder.setAnimatedCharacter(animatedCharacter);
+    }
+
+    public void buildChiefWaterDummy(CharacterBuilder builder, RPGame rpGame){
+        skinFactory = new ChiefWaterSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
+        builder.setAnimatedCharacter(animatedCharacter);
+    }
+
+    public void buildChiefFireDummy(CharacterBuilder builder, RPGame rpGame){
+        skinFactory = new ChiefFireSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
+        builder.setAnimatedCharacter(animatedCharacter);
+    }
+
     // Playable characters
     public void buildKnight(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
         skinFactory = new KnighSkinFactory();
@@ -244,38 +293,253 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     }
 
     //Enemies
-    public void buildEarthSkeleton(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+
+     public void buildEarthSkeleton(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+        skinFactory = new EarthSkeletonSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        builder.setAnimatedCharacter(animatedCharacter);
+
         //TODO: Implementacion temporal con valores quemados
         ArrayList<Item> items = new ArrayList<>();
         ArrayList<Attack> attacks = new ArrayList<>();
         ArrayList<Skill> skills = new ArrayList<>();
 
-        skinFactory = new EarthSkeletonSkinFactory();
-        ISkin skin = skinFactory.createSkin();
-        skin.setRight(new AnimationAssets(loadTexture(resourceEarthSkeletonTextureRight), loadTextureAtlas(resourceEarthSkeletonTextureMapRight), "right"));
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
-        builder.setAnimatedCharacter(animatedCharacter);
-
-        //TODO: Implementacion temporal con valores quemados
         this.idCharacter=4;
         this.name=playerName;
         this.level=1;
-        this.characterClass = new CharacterClass(4, "Esqueleto de tierra", "Esqueleto maldito con los poderes elementales de tierra", 50, 51, 52, 53, 54, 55, 56, 57, 58);
-//        Item lifePotion = new Item (0, "Pocion vida","Description Joyeria magica", 100, 1, Resources.potion, 3, 0,0,0,0,0,0,50);
-//        this.items.add(lifePotion);
-        Attack spellAttack = new Attack("Hueso de roca","El esqueleto se saca un hueso transformado en roca y lo lanza",1,1,10);
-        attacks.add(spellAttack);
-//        Skill teamPatchUp = new Skill("Recuperacion compartida", "Ayuda a recuperar a todo el equipo", 0, 1, 0, 0, 0,0,0,0,0,100);
-//        this.skills.add(teamPatchUp);
+        this.characterClass = new CharacterClass(4, "EarthSkeleton", "Esqueleto de tierra", 40, 41, 42, 43, 44, 45, 46, 46, 48);
+
+        Item shield = new Item (1, "Escudo esqueleto","Disminuye golpe de ataques basicos", 200, 1, Resources.potion, 3, 0,0,0,20,0,0,20);
+        items.add(shield);
+        Attack swordAttack = new Attack("Ataque esqueleto","Ataque basico con espada",1,0,10);
+        attacks.add(swordAttack);
+        Skill strength = new Skill("Fuerza esqueleto", "Incrementa 20% la fuerza del personaje", 300, 1, 0, 20, 0,0,0,0,0,0);
+        skills.add(strength);
 
         builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
         builder.setAttacks(attacks);
-//        builder.setSkills(skills);
+        builder.setSkills(skills);
     }
 
+    public void buildFireSkeleton(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+        skinFactory = new FireSkeletonSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        builder.setAnimatedCharacter(animatedCharacter);
 
+        //TODO: Implementacion temporal con valores quemados
+        ArrayList<Item> items = new ArrayList<>();
+        ArrayList<Attack> attacks = new ArrayList<>();
+        ArrayList<Skill> skills = new ArrayList<>();
+
+        this.idCharacter=5;
+        this.name=playerName;
+        this.level=1;
+        this.characterClass = new CharacterClass(5, "FireSkeleton", "Esqueleto de fuego", 40, 41, 42, 43, 44, 45, 46, 46, 48);
+
+        Item shield = new Item (1, "Escudo esqueleto","Disminuye golpe de ataques basicos", 200, 1, Resources.potion, 3, 0,0,0,20,0,0,20);
+        items.add(shield);
+        Attack swordAttack = new Attack("Ataque fuego esqueleto","Ataque basico con espada",1,0,10);
+        attacks.add(swordAttack);
+        Skill strength = new Skill("Fuerza fuego", "Incrementa 20% la fuerza del personaje", 300, 1, 0, 20, 0,0,0,0,0,0);
+        skills.add(strength);
+
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
+        builder.setCharacterClass(this.characterClass);
+        builder.setItems(items);
+        builder.setAttacks(attacks);
+        builder.setSkills(skills);
+    }
+
+    public void buildWindSkeleton(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+        skinFactory = new FireSkeletonSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        builder.setAnimatedCharacter(animatedCharacter);
+
+        //TODO: Implementacion temporal con valores quemados
+        ArrayList<Item> items = new ArrayList<>();
+        ArrayList<Attack> attacks = new ArrayList<>();
+        ArrayList<Skill> skills = new ArrayList<>();
+
+        this.idCharacter=6;
+        this.name=playerName;
+        this.level=1;
+        this.characterClass = new CharacterClass(6, "WindSkeleton", "Esqueleto de viento", 40, 41, 42, 43, 44, 45, 46, 46, 48);
+
+        Item shield = new Item (1, "Escudo esqueleto","Disminuye golpe de ataques basicos", 200, 1, Resources.potion, 3, 0,0,0,20,0,0,20);
+        items.add(shield);
+        Attack swordAttack = new Attack("Ataque fuego esqueleto","Ataque basico con espada",1,0,10);
+        attacks.add(swordAttack);
+        Skill strength = new Skill("Fuerza fuego", "Incrementa 20% la fuerza del personaje", 300, 1, 0, 20, 0,0,0,0,0,0);
+        skills.add(strength);
+
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
+        builder.setCharacterClass(this.characterClass);
+        builder.setItems(items);
+        builder.setAttacks(attacks);
+        builder.setSkills(skills);
+    }
+
+    public void buildWaterSkeleton(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+        skinFactory = new FireSkeletonSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        builder.setAnimatedCharacter(animatedCharacter);
+
+        //TODO: Implementacion temporal con valores quemados
+        ArrayList<Item> items = new ArrayList<>();
+        ArrayList<Attack> attacks = new ArrayList<>();
+        ArrayList<Skill> skills = new ArrayList<>();
+
+        this.idCharacter=7;
+        this.name=playerName;
+        this.level=1;
+        this.characterClass = new CharacterClass(7, "WaterSkeleton", "Esqueleto de agua", 40, 41, 42, 43, 44, 45, 46, 46, 48);
+
+        Item shield = new Item (1, "Escudo esqueleto","Disminuye golpe de ataques basicos", 200, 1, Resources.potion, 3, 0,0,0,20,0,0,20);
+        items.add(shield);
+        Attack swordAttack = new Attack("Ataque fuego esqueleto","Ataque basico con espada",1,0,10);
+        attacks.add(swordAttack);
+        Skill strength = new Skill("Fuerza fuego", "Incrementa 20% la fuerza del personaje", 300, 1, 0, 20, 0,0,0,0,0,0);
+        skills.add(strength);
+
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
+        builder.setCharacterClass(this.characterClass);
+        builder.setItems(items);
+        builder.setAttacks(attacks);
+        builder.setSkills(skills);
+    }
+
+    public void buildChiefEarth(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+        skinFactory = new EarthSkeletonSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        builder.setAnimatedCharacter(animatedCharacter);
+
+        //TODO: Implementacion temporal con valores quemados
+        ArrayList<Item> items = new ArrayList<>();
+        ArrayList<Attack> attacks = new ArrayList<>();
+        ArrayList<Skill> skills = new ArrayList<>();
+
+        this.idCharacter=8;
+        this.name=playerName;
+        this.level=1;
+        this.characterClass = new CharacterClass(8, "ChiefEarthSkeleton", "JEFE: Esqueleto de tierra", 40, 41, 42, 43, 44, 45, 46, 46, 48);
+
+        Item shield = new Item (1, "Escudo esqueleto","Disminuye golpe de ataques basicos", 200, 1, Resources.potion, 3, 0,0,0,20,0,0,20);
+        items.add(shield);
+        Attack swordAttack = new Attack("Ataque esqueleto","Ataque basico con espada",1,0,10);
+        attacks.add(swordAttack);
+        Skill strength = new Skill("Fuerza esqueleto", "Incrementa 20% la fuerza del personaje", 300, 1, 0, 20, 0,0,0,0,0,0);
+        skills.add(strength);
+
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
+        builder.setCharacterClass(this.characterClass);
+        builder.setItems(items);
+        builder.setAttacks(attacks);
+        builder.setSkills(skills);
+    }
+
+    public void buildChiefFire(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+        skinFactory = new ChiefFireSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        builder.setAnimatedCharacter(animatedCharacter);
+
+        //TODO: Implementacion temporal con valores quemados
+        ArrayList<Item> items = new ArrayList<>();
+        ArrayList<Attack> attacks = new ArrayList<>();
+        ArrayList<Skill> skills = new ArrayList<>();
+
+        this.idCharacter=9;
+        this.name=playerName;
+        this.level=1;
+        this.characterClass = new CharacterClass(9, "ChiefFireSkeleton", "JEFE: Esqueleto de fuego", 40, 41, 42, 43, 44, 45, 46, 46, 48);
+
+        Item shield = new Item (1, "Escudo esqueleto","Disminuye golpe de ataques basicos", 200, 1, Resources.potion, 3, 0,0,0,20,0,0,20);
+        items.add(shield);
+        Attack swordAttack = new Attack("Ataque fuego esqueleto","Ataque basico con espada",1,0,10);
+        attacks.add(swordAttack);
+        Skill strength = new Skill("Fuerza fuego", "Incrementa 20% la fuerza del personaje", 300, 1, 0, 20, 0,0,0,0,0,0);
+        skills.add(strength);
+
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
+        builder.setCharacterClass(this.characterClass);
+        builder.setItems(items);
+        builder.setAttacks(attacks);
+        builder.setSkills(skills);
+    }
+
+    public void buildChiefWind(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+        skinFactory = new ChiefWindSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        builder.setAnimatedCharacter(animatedCharacter);
+
+        //TODO: Implementacion temporal con valores quemados
+        ArrayList<Item> items = new ArrayList<>();
+        ArrayList<Attack> attacks = new ArrayList<>();
+        ArrayList<Skill> skills = new ArrayList<>();
+
+        this.idCharacter=10;
+        this.name=playerName;
+        this.level=1;
+        this.characterClass = new CharacterClass(10, "ChiefWindSkeleton", "JEFE: Esqueleto de viento", 40, 41, 42, 43, 44, 45, 46, 46, 48);
+
+        Item shield = new Item (1, "Escudo esqueleto","Disminuye golpe de ataques basicos", 200, 1, Resources.potion, 3, 0,0,0,20,0,0,20);
+        items.add(shield);
+        Attack swordAttack = new Attack("Ataque fuego esqueleto","Ataque basico con espada",1,0,10);
+        attacks.add(swordAttack);
+        Skill strength = new Skill("Fuerza fuego", "Incrementa 20% la fuerza del personaje", 300, 1, 0, 20, 0,0,0,0,0,0);
+        skills.add(strength);
+
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
+        builder.setCharacterClass(this.characterClass);
+        builder.setItems(items);
+        builder.setAttacks(attacks);
+        builder.setSkills(skills);
+    }
+
+    public void buildChiefWater(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+        skinFactory = new ChiefWaterSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        builder.setAnimatedCharacter(animatedCharacter);
+
+        //TODO: Implementacion temporal con valores quemados
+        ArrayList<Item> items = new ArrayList<>();
+        ArrayList<Attack> attacks = new ArrayList<>();
+        ArrayList<Skill> skills = new ArrayList<>();
+
+        this.idCharacter=11;
+        this.name=playerName;
+        this.level=1;
+        this.characterClass = new CharacterClass(11, "ChiefWaterSkeleton", "JEFE: Esqueleto de agua", 40, 41, 42, 43, 44, 45, 46, 46, 48);
+
+        Item shield = new Item (1, "Escudo esqueleto","Disminuye golpe de ataques basicos", 200, 1, Resources.potion, 3, 0,0,0,20,0,0,20);
+        items.add(shield);
+        Attack swordAttack = new Attack("Ataque fuego esqueleto","Ataque basico con espada",1,0,10);
+        attacks.add(swordAttack);
+        Skill strength = new Skill("Fuerza fuego", "Incrementa 20% la fuerza del personaje", 300, 1, 0, 20, 0,0,0,0,0,0);
+        skills.add(strength);
+
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
+        builder.setCharacterClass(this.characterClass);
+        builder.setItems(items);
+        builder.setAttacks(attacks);
+        builder.setSkills(skills);
+    }
 
 }

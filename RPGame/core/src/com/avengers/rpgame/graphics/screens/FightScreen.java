@@ -119,7 +119,16 @@ public class FightScreen implements Screen {
         partyMemberAnimated3 = characterBuilder.getResult();
         partyMemberAnimated3.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/9.5f/16*3, config.getResolutionVertical()/3*1.3f/16));
 
-        director.buildEarthSkeletonDummy(characterBuilder, game);
+        //director.buildChiefFireDummy(characterBuilder, game);
+        //director.buildChiefWaterDummy(characterBuilder, game);
+        //director.buildChiefWindDummy(characterBuilder, game);
+        //director.buildChiefEarthDummy(characterBuilder, game);
+
+        //director.buildWindSkeletonDummy(characterBuilder, game);
+        //director.buildWaterSkeletonDummy(characterBuilder, game);
+        director.buildFireSkeletonDummy(characterBuilder, game);
+        //director.buildEarthSkeletonDummy(characterBuilder, game);
+
         enemy = characterBuilder.getResult();
         enemy.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/4f/16*3, config.getResolutionVertical()/3*1.35f/16));
         enemy.getAnimatedCharacter().setAction("runningLeft");

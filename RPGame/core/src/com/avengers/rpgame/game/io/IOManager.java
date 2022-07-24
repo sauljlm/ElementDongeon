@@ -113,6 +113,19 @@ public class IOManager {
             EntitiesBuilderDirector director = new EntitiesBuilderDirector();
             CharacterBuilder characterBuilder = new CharacterBuilder();
             director.buildKnight(characterBuilder, GameStatus.getInstance().getWorld(), game, "Esqueleto de pruebas de tierra");
+
+            //TODO implementar logica para la seleccion de enemigo segun nivel de personaje, tambien resolver aparicion de enemigo
+            //director.buildWaterSkeleton(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
+            //director.buildEarthSkeleton(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
+            //director.buildFireSkeleton(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
+            //director.buildWindSkeleton(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
+
+            //director.buildChiefEarth(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
+            //director.buildChiefFire(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
+            //director.buildChiefWater(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
+            //director.buildChiefWind(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
+
+
             AbstractCharacter enemyCharacter = characterBuilder.getResult();
             Party enemyParty = new Party();
             enemyParty.setPartyMember1(enemyCharacter);

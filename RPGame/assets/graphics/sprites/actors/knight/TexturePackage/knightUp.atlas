@@ -1,69 +1,69 @@
 
 knightUp.png
-size: 256, 256
+size: 512, 64
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 up
   rotate: false
-  xy: 134, 134
-  size: 64, 64
-  orig: 64, 64
+  xy: 252, 2
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: 0
 up
   rotate: false
-  xy: 2, 68
-  size: 64, 64
-  orig: 64, 64
+  xy: 52, 2
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: 1
 up
   rotate: false
-  xy: 134, 68
-  size: 64, 64
-  orig: 64, 64
+  xy: 352, 2
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: 2
 up
   rotate: false
-  xy: 2, 2
-  size: 64, 64
-  orig: 64, 64
+  xy: 152, 2
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: 3
 up
   rotate: false
-  xy: 2, 134
-  size: 64, 64
-  orig: 64, 64
+  xy: 2, 2
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: 4
 up
   rotate: false
-  xy: 68, 2
-  size: 64, 64
-  orig: 64, 64
+  xy: 302, 2
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: 5
 up
   rotate: false
-  xy: 68, 134
-  size: 64, 64
-  orig: 64, 64
+  xy: 102, 2
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: 6
 up
   rotate: false
-  xy: 134, 2
-  size: 64, 64
-  orig: 64, 64
+  xy: 402, 2
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: 7
 up
   rotate: false
-  xy: 68, 68
-  size: 64, 64
-  orig: 64, 64
+  xy: 202, 2
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: 8
