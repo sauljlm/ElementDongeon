@@ -2,6 +2,7 @@ package com.avengers.rpgame.graphics.physics;
 
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.graphics.graphicManagerMediador.iGraphicManager;
 import com.avengers.rpgame.graphics.map.MapManager;
 import com.avengers.rpgame.graphics.map.TiledObjectParser;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -9,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class PhysicsManager {
+public class PhysicsManager extends iGraphicManager {
     private World world;
     private Vector2 gravity;
     private Box2DDebugRenderer debugRenderer;

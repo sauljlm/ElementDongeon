@@ -5,10 +5,8 @@ import com.avengers.rpgame.ai.AIManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.IOManager;
-import com.avengers.rpgame.graphics.camera.CameraManager;
+import com.avengers.rpgame.graphics.graphicManagerMediador.Mediador;
 import com.avengers.rpgame.graphics.hud.HUD;
-import com.avengers.rpgame.graphics.map.MapManager;
-import com.avengers.rpgame.graphics.physics.PhysicsManager;
 import com.avengers.rpgame.json.DataStorage;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
@@ -23,6 +21,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.ScreenUtils;
+
 import java.util.ArrayList;
 import static com.avengers.rpgame.utils.FileManager.*;
 import static com.avengers.rpgame.utils.Resources.*;
@@ -32,18 +31,18 @@ public class OverworldScreen implements Screen {
     private GameStatus gameStatus;
     private GameConfig config;
     private Music backgroundMusic;
-    private MapManager mapManager;
-    private PhysicsManager physicsManager;
     private EntitiesBuilderDirector director;
     private CharacterBuilder characterBuilder;
     private AbstractCharacter playerCharacter;
     private AbstractCharacter ally1Character;
     private AbstractCharacter ally2Character;
-    private CameraManager cameraManager;
     private IOManager ioManager;
     private AIManager aiManager;
     private Party playerParty;
     private CharacterFactory characterFactory;
+
+    //Graphic manager mediator
+    Mediador graphicMediator;
 
     private DataStorage dataStorage; //Temporal
 
@@ -72,14 +71,13 @@ public class OverworldScreen implements Screen {
         characterBuilder = new CharacterBuilder();
 
         ioManager = new IOManager(game, backgroundMusic);
-        cameraManager = new CameraManager(game);
-        mapManager = new MapManager(resourceOverworldMap, cameraManager.getCamera(), game);
-        physicsManager = new PhysicsManager(new Vector2(0, 0f), mapManager, cameraManager.getCamera(), true);
         aiManager = AIManager.getInstance();
 
-        playerParty = GameStatus.getInstance().getParty();
-        characterFactory = new CharacterFactory(physicsManager.getWorld(), game);
+        //Graphic manager mediator
+        graphicMediator = new Mediador(game);
 
+        playerParty = GameStatus.getInstance().getParty();
+        characterFactory = new CharacterFactory(graphicMediator.getWorld(), game);
         characterFactory.createParty();
 
         hudElements = new HUD(gameStatus.getParty());
@@ -123,10 +121,10 @@ public class OverworldScreen implements Screen {
 
         ScreenUtils.clear(0, 0, 0, 1f);
 
-        mapManager.render();//Render the map first!
-        physicsManager.simulate();
+        //Graphic manager mediator
+        graphicMediator.renderGraphicManagers(delta);
+
         ioManager.processInput("overworld", delta, playerParty);
-        cameraManager.action(delta);
 
         game.batch.begin();//Never add game logic inside render begin, end
         playerParty.getPartyMember1().getAnimatedCharacter().draw(delta);
@@ -140,7 +138,7 @@ public class OverworldScreen implements Screen {
         game.batch.end();
 
         // hudElements.update(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints);
-        cameraManager.changeProjectionMatrix();
+        graphicMediator.changeProjectionMatrix();
         game.batch.begin();//We can stop render, do something and start again
         hudElements.draw(game.batch);
         game.batch.end();
@@ -169,10 +167,8 @@ public class OverworldScreen implements Screen {
     @Override
     public void dispose() {
         game.dispose();
-        mapManager.dispose();
-        physicsManager.dispose();
+        graphicMediator.dispose();
         backgroundMusic.dispose();
-        cameraManager.dispose();
         ioManager.dispose();
     }
 }

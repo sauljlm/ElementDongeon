@@ -3,12 +3,12 @@ package com.avengers.rpgame.graphics.camera;
 import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
-import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
+import com.avengers.rpgame.graphics.graphicManagerMediador.iGraphicManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 
-public class CameraManager {
+public class CameraManager extends iGraphicManager {
     private GameConfig gameConfig;
     private RPGame rpGame;
     private OrthographicCamera camera;

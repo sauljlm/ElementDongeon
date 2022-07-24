@@ -1,15 +1,13 @@
 package com.avengers.rpgame.graphics.map;
 
 import com.avengers.rpgame.RPGame;
-import com.badlogic.gdx.graphics.Camera;
+import com.avengers.rpgame.graphics.graphicManagerMediador.iGraphicManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-import static com.avengers.rpgame.utils.Resources.resourceOverworldMap;
-
-public class MapManager {
+public class MapManager extends iGraphicManager {
     private RPGame game;
     private String mapFileLocation;
     private OrthographicCamera camera;
