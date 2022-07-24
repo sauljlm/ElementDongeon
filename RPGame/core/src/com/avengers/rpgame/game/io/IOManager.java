@@ -1,6 +1,7 @@
 package com.avengers.rpgame.game.io;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.screens.FightScreen;
 import com.avengers.rpgame.graphics.screens.OverworldScreen;
@@ -9,6 +10,7 @@ import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.graphics.screens.StoreScreen;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
+import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
@@ -96,7 +98,7 @@ public class IOManager {
         velocity.x = horizontalForce * 5;
         velocity.y = verticalForce * 5;
 
-        playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().setLinearVelocity(velocity.x,velocity.y);
+        ((DynamicAnimatedCharacter)playerParty.getPartyMember1().getAnimatedCharacter()).getPlayer().setLinearVelocity(velocity.x,velocity.y);
 
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
 //        System.out.println("Player real position");
@@ -105,12 +107,12 @@ public class IOManager {
 //        System.out.println("Player animated position");
 //        System.out.println(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
         if(inputProcessor.isEnterFightMode()){
-            playerParty.getPartyMember1().setPosition(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
+            playerParty.getPartyMember1().setPosition(((DynamicAnimatedCharacter)playerParty.getPartyMember1().getAnimatedCharacter()).getPlayer().getPosition());
 //            GameInformation.getInstance().setPlayerParty(playerParty);
             //This is just for battle testing
             EntitiesBuilderDirector director = new EntitiesBuilderDirector();
             CharacterBuilder characterBuilder = new CharacterBuilder();
-            director.buildKnight(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "Esqueleto de pruebas de tierra");
+            director.buildKnight(characterBuilder, GameStatus.getInstance().getWorld(), game, "Esqueleto de pruebas de tierra");
             AbstractCharacter enemyCharacter = characterBuilder.getResult();
             Party enemyParty = new Party();
             enemyParty.setPartyMember1(enemyCharacter);
@@ -157,7 +159,7 @@ public class IOManager {
         velocity.x = horizontalForce * 5;
         velocity.y = verticalForce * 5;
 
-        playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().setLinearVelocity(velocity.x,velocity.y);
+        ((DynamicAnimatedCharacter)playerParty.getPartyMember1().getAnimatedCharacter()).getPlayer().setLinearVelocity(velocity.x,velocity.y);
 
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
 

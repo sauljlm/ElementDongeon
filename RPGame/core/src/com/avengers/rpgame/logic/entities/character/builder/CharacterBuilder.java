@@ -4,7 +4,7 @@ import com.avengers.rpgame.logic.entities.Attack;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.Skill;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
-import com.avengers.rpgame.logic.entities.character.components.AnimatedCharacter;
+import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.AAnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
 import com.avengers.rpgame.logic.entities.character.concrete.PlayableCharacter;
 import com.badlogic.gdx.math.Vector2;
@@ -27,7 +27,7 @@ public class CharacterBuilder implements ICharacterBuilder {
     int luck;
     int coins;
     CharacterClass characterClass;
-    AnimatedCharacter animatedCharacter;
+    AAnimatedCharacter animatedCharacter;
     ArrayList<Item> items;
     ArrayList<Attack> attacks;
     ArrayList<Skill> skills;
@@ -59,7 +59,7 @@ public class CharacterBuilder implements ICharacterBuilder {
     }
 
     @Override
-    public void setAnimatedCharacter(AnimatedCharacter animatedCharacter) {
+    public void setAnimatedCharacter(AAnimatedCharacter animatedCharacter) {
     this.animatedCharacter = animatedCharacter;
     }
 

@@ -5,8 +5,10 @@ import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
 import com.avengers.rpgame.logic.entities.character.builder.ICharacterDirector;
-import com.avengers.rpgame.logic.entities.character.components.AnimatedCharacter;
+import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.AAnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
+import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
+import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.StaticAnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.components.skin.ISkin;
 import com.avengers.rpgame.logic.entities.character.components.skin.components.AnimationAssets;
 import com.avengers.rpgame.logic.entities.character.components.skin.abstractFactory.*;
@@ -34,28 +36,28 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     public void buildKnightDummy(CharacterBuilder builder, RPGame rpGame){
         skinFactory = new KnighSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, rpGame, new Vector2(0,0));
+        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
         builder.setAnimatedCharacter(animatedCharacter);
     }
 
     public void buildArcherDummy(CharacterBuilder builder, RPGame rpGame){
         skinFactory = new ArcherSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, rpGame, new Vector2(0,0));
+        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
         builder.setAnimatedCharacter(animatedCharacter);
     }
 
     public void buildMageDummy(CharacterBuilder builder, RPGame rpGame){
         skinFactory = new MageSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, rpGame, new Vector2(0,0));
+        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
         builder.setAnimatedCharacter(animatedCharacter);
     }
 
     public void buildEarthSkeletonDummy(CharacterBuilder builder, RPGame rpGame){
         skinFactory = new EarthSkeletonSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, rpGame, new Vector2(0,0));
+        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
         builder.setAnimatedCharacter(animatedCharacter);
     }
 
@@ -63,7 +65,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     public void buildKnight(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
         skinFactory = new KnighSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
         builder.setAnimatedCharacter(animatedCharacter);
 
         //TODO: Implementacion temporal con valores quemados
@@ -96,7 +98,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     public void buildArcher(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
         skinFactory = new ArcherSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
         builder.setAnimatedCharacter(animatedCharacter);
 
         //TODO: Implementacion temporal con valores quemados
@@ -137,7 +139,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     public void buildMage(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
         skinFactory = new MageSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
         builder.setAnimatedCharacter(animatedCharacter);
 
         //TODO: Implementacion temporal con valores quemados
@@ -169,7 +171,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     public void buildKnightFromDB(CharacterBuilder builder, World world, RPGame rpGame, int partyMember){
         skinFactory = new KnighSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
         builder.setAnimatedCharacter(animatedCharacter);
 
         ArrayList<Item> items = gameStatus.getParty().getPartyMember(partyMember).getItems();
@@ -193,7 +195,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     public void buildArcherFromDB(CharacterBuilder builder, World world, RPGame rpGame, int partyMember){
         skinFactory = new ArcherSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
         builder.setAnimatedCharacter(animatedCharacter);
 
         //TODO: Implementacion temporal con valores quemados
@@ -219,7 +221,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     public void buildMageFromDB(CharacterBuilder builder, World world, RPGame rpGame, int partyMember){
         skinFactory = new MageSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
         builder.setAnimatedCharacter(animatedCharacter);
 
         //TODO: Implementacion temporal con valores quemados
@@ -251,7 +253,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         skinFactory = new EarthSkeletonSkinFactory();
         ISkin skin = skinFactory.createSkin();
         skin.setRight(new AnimationAssets(loadTexture(resourceEarthSkeletonTextureRight), loadTextureAtlas(resourceEarthSkeletonTextureMapRight), "right"));
-        AnimatedCharacter animatedCharacter = new AnimatedCharacter(skin, world, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
         builder.setAnimatedCharacter(animatedCharacter);
 
         //TODO: Implementacion temporal con valores quemados

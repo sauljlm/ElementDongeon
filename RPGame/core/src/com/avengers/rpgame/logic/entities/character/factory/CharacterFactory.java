@@ -5,6 +5,7 @@ import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.logic.entities.EntitiesBuilderDirector;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
+import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class CharacterFactory implements ICharacterFactory{
@@ -97,8 +98,8 @@ public class CharacterFactory implements ICharacterFactory{
 
     private void restoreParty() {
         System.out.println("restoring party");
-        gameStatus.getParty().getPartyMember1().getAnimatedCharacter().recreateBody();
-        gameStatus.getParty().getPartyMember2().getAnimatedCharacter().recreateBody();
-        gameStatus.getParty().getPartyMember3().getAnimatedCharacter().recreateBody();
+        ((DynamicAnimatedCharacter)gameStatus.getParty().getPartyMember1().getAnimatedCharacter()).recreateBody();
+        ((DynamicAnimatedCharacter)gameStatus.getParty().getPartyMember2().getAnimatedCharacter()).recreateBody();
+        ((DynamicAnimatedCharacter)gameStatus.getParty().getPartyMember3().getAnimatedCharacter()).recreateBody();
     }
 }

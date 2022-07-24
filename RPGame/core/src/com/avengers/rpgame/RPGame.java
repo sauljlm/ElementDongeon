@@ -30,7 +30,7 @@ public class RPGame extends Game {
 
     //Clean memory
     public void dispose() {
-//        batch.dispose();
+        batch.dispose();
     }
 
     public static void print(String pMes){

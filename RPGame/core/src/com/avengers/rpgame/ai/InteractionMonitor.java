@@ -3,6 +3,7 @@ package com.avengers.rpgame.ai;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
+import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -36,7 +37,7 @@ public class InteractionMonitor {
     }
 
     public void monitorSurroundings(AbstractCharacter playerCharacter) {
-        Vector2 characterC = new Vector2(playerCharacter.getAnimatedCharacter().getPlayer().getPosition());
+        Vector2 characterC = new Vector2(((DynamicAnimatedCharacter)playerCharacter.getAnimatedCharacter()).getPlayer().getPosition());
         boolean objectFound = false;
         int index=0;
         for(Vector2 object : interactiveObjectsV) {

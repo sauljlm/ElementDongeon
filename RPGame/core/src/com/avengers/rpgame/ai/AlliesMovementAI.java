@@ -2,6 +2,7 @@ package com.avengers.rpgame.ai;
 
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
+import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
 import com.badlogic.gdx.math.Vector2;
 
 public class AlliesMovementAI {
@@ -20,8 +21,8 @@ public class AlliesMovementAI {
         Vector2 followerCharacterPos = new Vector2();
         Vector2 distance = new Vector2();
 
-        mainCharacterPos = playerCharacter.getAnimatedCharacter().getPlayer().getPosition();
-        followerCharacterPos = ally1Character.getAnimatedCharacter().getPlayer().getPosition();
+        mainCharacterPos = ((DynamicAnimatedCharacter)playerCharacter.getAnimatedCharacter()).getPlayer().getPosition();
+        followerCharacterPos = ((DynamicAnimatedCharacter)ally1Character.getAnimatedCharacter()).getPlayer().getPosition();
         distance = mainCharacterPos.sub(followerCharacterPos);
 
         if(distance.x > partyDistance || distance.x < -partyDistance){
@@ -57,6 +58,6 @@ public class AlliesMovementAI {
             }
         }
 
-        ally1Character.getAnimatedCharacter().getPlayer().setLinearVelocity(velocity.x,velocity.y);
+        ((DynamicAnimatedCharacter)ally1Character.getAnimatedCharacter()).getPlayer().setLinearVelocity(velocity.x,velocity.y);
     }
 }

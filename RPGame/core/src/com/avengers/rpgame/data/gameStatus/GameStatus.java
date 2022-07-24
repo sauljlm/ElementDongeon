@@ -1,6 +1,7 @@
 package com.avengers.rpgame.data.gameStatus;
 
 import com.avengers.rpgame.logic.entities.Party;
+import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.concrete.PlayableCharacter;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -57,7 +58,7 @@ public class GameStatus {
     }
 
     public void updateLocation(){
-        party.getPartyMember1().setPosition(party.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
+        party.getPartyMember1().setPosition(((DynamicAnimatedCharacter)party.getPartyMember1().getAnimatedCharacter()).getPlayer().getPosition());
     }
 
     public void saveOnDB() {
