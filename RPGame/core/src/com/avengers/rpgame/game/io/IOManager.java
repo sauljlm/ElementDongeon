@@ -5,6 +5,7 @@ import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.screens.FightScreen;
 import com.avengers.rpgame.graphics.screens.OverworldScreen;
+import com.avengers.rpgame.graphics.screens.PauseScreen;
 import com.avengers.rpgame.logic.entities.EntitiesBuilderDirector;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.graphics.screens.StoreScreen;
@@ -100,7 +101,6 @@ public class IOManager {
 
         ((DynamicAnimatedCharacter)playerParty.getPartyMember1().getAnimatedCharacter()).getPlayer().setLinearVelocity(velocity.x,velocity.y);
 
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
 //        System.out.println("Player real position");
 //        System.out.println(playerParty.getPartyMember1().getPosition());
 //
@@ -135,6 +135,11 @@ public class IOManager {
             game.setScreen(new FightScreen(game, playerParty, enemyParty));
             System.out.println("FIGHT !");
         }
+
+        if(inputProcessor.isPause()){
+            game.setScreen(new PauseScreen(game, playerParty));
+            this.backgroundMusic.dispose();
+        }
     }
 
     //Process input for overworld gameplay
@@ -168,13 +173,10 @@ public class IOManager {
             horizontalForce = 0;
         }
 
-
         velocity.x = horizontalForce * 5;
         velocity.y = verticalForce * 5;
 
         ((DynamicAnimatedCharacter)playerParty.getPartyMember1().getAnimatedCharacter()).getPlayer().setLinearVelocity(velocity.x,velocity.y);
-
-        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) Gdx.app.exit(); //TODO Improve this
 
         if(inputProcessor.isEnterFightMode()){
 //            System.out.println("EXIT!");

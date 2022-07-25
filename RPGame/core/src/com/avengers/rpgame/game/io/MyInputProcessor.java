@@ -179,6 +179,9 @@ public class MyInputProcessor implements InputProcessor {
         if(keycode == Input.Keys.SPACE){
             action1 = true;
         }
+        if(keycode == Input.Keys.ESCAPE){
+            pause = true;
+        }
         if(keycode == Input.Keys.ENTER){
             enter = true;
         }
@@ -251,6 +254,9 @@ public class MyInputProcessor implements InputProcessor {
         }
         if(keycode == Input.Keys.SPACE){
             action1 = false;
+        }
+        if(keycode == Input.Keys.ESCAPE){
+            pause = false;
         }
         if(keycode == Input.Keys.ENTER){
             enter = false;

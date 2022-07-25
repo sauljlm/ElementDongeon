@@ -40,7 +40,6 @@ public class LoadGameScreen implements Screen {
 
         ScreenWidth = config.getResolutionHorizontal();
         ScreenHeight = config.getResolutionVertical();
-
         backgroundImage = new Texture(Gdx.files.internal(resourceLoadScreenBackground));
 
         backgroundMusic = loadMusic(resourceThemeMusic);
@@ -71,6 +70,7 @@ public class LoadGameScreen implements Screen {
         this.inputTitle.draw();
         game.batch.end();
 
+        validateMouse();
         validateKeys();
     }
 
@@ -101,23 +101,24 @@ public class LoadGameScreen implements Screen {
     }
 
     private void generateLoadGames(){
-        int mFontSize = 70;
+        int mFontSize = Resources.emphasisFontSize;
         float mNextY = 0;
-        int mRest = 70;
+        int mRest = Resources.emphasisFontSize;
 
-        this.loadOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Juego1",true));
-        this.loadOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Juego2",true));
-        this.loadOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Juego3",true));
-        this.loadOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Volver a menú principal",true));
+        this.loadOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Juego #1",true));
+        this.loadOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Juego #2",true));
+        this.loadOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Juego #3",true));
+        this.loadOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Regresar",true));
 
         this.loadOptions.get(0).centerTextScreen();
-        mNextY = this.loadOptions.get(0).getY();
+        mNextY = this.loadOptions.get(0).getY()+100;
 
         for(Text mTemp : this.loadOptions){
             mTemp.centerTextScreen();
             mNextY -=mRest;
             mTemp.setY(mNextY);
         }
+        this.loadOptions.get(3).setY(mNextY-150);
 
         changeOptionColor(0);
     }
@@ -155,29 +156,46 @@ public class LoadGameScreen implements Screen {
         }
     }
 
-    //Nota: aqui se debe ajustar para la carga correspondiente de los juegos guardados por usuarios
+    private void validateMouse() {
+        for (int i = 0; i < this.loadOptions.size(); i++) {
+            float mX = this.input.getMouseX(), mY = this.input.getMouseY();
+            Text mTemp = this.loadOptions.get(i);
+            if (mX >= mTemp.getX() && mX <= (mTemp.getX() + mTemp.getWidth()))
+                if (mY >= (mTemp.getY() - mTemp.getHeight()) && mY <= mTemp.getY()){
+                    changeOptionColor(i);
+                    if(this.input.isClickTouch())
+                        executeAction();
+                }
+        }
+    }
+
     private void executeAction() {
         GameStatus.getInstance().setStatus("loadedGame");
-        switch (this.actualSelection){
-            case 0:
-                GameStatus.getInstance().loadFromDB(1);
-                game.setScreen(new OverworldScreen(game));
-                dispose();
-                break;
-            case 1:
-                GameStatus.getInstance().loadFromDB(2);
-                game.setScreen(new OverworldScreen(game));
-                dispose();
-                break;
-            case 2:
-                GameStatus.getInstance().loadFromDB(3);
-                game.setScreen(new OverworldScreen(game));
-                dispose();
-                break;
-            case 3:
-                game.setScreen(new MainMenuScreen(game));
-                dispose();
-                break;
+        try {
+            switch (this.actualSelection) {
+                case 0:
+                    GameStatus.getInstance().loadFromDB(1);
+                    game.setScreen(new OverworldScreen(game));
+                    dispose();
+                    break;
+                case 1:
+                    GameStatus.getInstance().loadFromDB(2);
+                    game.setScreen(new OverworldScreen(game));
+                    dispose();
+                    break;
+                case 2:
+                    GameStatus.getInstance().loadFromDB(3);
+                    game.setScreen(new OverworldScreen(game));
+                    dispose();
+                    break;
+                case 3:
+                    game.setScreen(new MainMenuScreen(game));
+                    dispose();
+                    break;
+            }
+        } catch (Exception e){
+            game.setScreen(new MainMenuScreen(game));
+            dispose();
         }
     }
 

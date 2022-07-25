@@ -206,7 +206,7 @@ public class MainMenuScreen implements Screen {
                 dispose();
                 break;
             case 2:
-                game.setScreen(new OptionsScreen(game));
+                game.setScreen(new SoundOptionScreen(game));
                 dispose();
                 break;
             case 3:

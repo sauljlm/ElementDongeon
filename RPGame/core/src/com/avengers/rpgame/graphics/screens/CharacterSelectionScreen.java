@@ -1,6 +1,7 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.data.dataStorage.ProxyDataManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.MyInputProcessor;
@@ -43,15 +44,13 @@ public class CharacterSelectionScreen implements Screen {
     private MyInputProcessor input;
     private InputMultiplexer multiplexer;
 
-    CharacterClass dummyMage;
-    CharacterClass dummyKnight;
-    CharacterClass dummyArcher;
     private ArrayList<Text> mageStats;
     private ArrayList<Text> knightStats;
     private ArrayList<Text> archerStats;
     private Texture knightTexture;
     private Texture archerTexture;
     private Texture mageTexture;
+    private ProxyDataManager proxyDataManager = new ProxyDataManager();
 
     public CharacterSelectionScreen(final RPGame game) {
         this.game = game;
@@ -96,7 +95,6 @@ public class CharacterSelectionScreen implements Screen {
         mageStats = new ArrayList<Text>();
         knightStats = new ArrayList<Text>();
         archerStats = new ArrayList<Text>();
-        createDummyCharacters();
 
         archerTexture = new Texture(archerImage);
         knightTexture = new Texture(knightImage);
@@ -333,13 +331,6 @@ public class CharacterSelectionScreen implements Screen {
         }
     }
 
-    //TODO: Esto es temporal, pendiente extraer de JSON
-    private void createDummyCharacters() {
-        this.dummyKnight = new CharacterClass(1, "Knight", "Caballero", 60, 61, 62, 63, 64, 65, 66, 67, 68);
-        this.dummyArcher = new CharacterClass(2, "Archer", "Arquero", 70, 71, 72, 73, 74, 75, 76, 77, 78);
-        this.dummyMage = new CharacterClass(3, "Mage", "Mago", 50, 51, 52, 53, 54, 55, 56, 57, 58);
-    }
-
     private ArrayList<String> characterStats (CharacterClass characterClass) {
         ArrayList<String> stats = new ArrayList<String>();
         stats.add(String.valueOf(characterClass.getInitialStrength())+" pts <= Fuerza");
@@ -359,17 +350,17 @@ public class CharacterSelectionScreen implements Screen {
         int mRest = 350;
         float pHeightText = ScreenHeight-650;
 
-        this.knightStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(dummyKnight).get(0),true));
-        this.knightStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(dummyKnight).get(1),true));
-        this.knightStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(dummyKnight).get(2),true));
+        this.knightStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(proxyDataManager.getCharacterClass("Knight")).get(0),true));
+        this.knightStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(proxyDataManager.getCharacterClass("Knight")).get(1),true));
+        this.knightStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(proxyDataManager.getCharacterClass("Knight")).get(2),true));
 
-        this.archerStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(dummyArcher).get(0),true));
-        this.archerStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(dummyArcher).get(1),true));
-        this.archerStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(dummyArcher).get(2),true));
+        this.archerStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(proxyDataManager.getCharacterClass("Archer")).get(0),true));
+        this.archerStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(proxyDataManager.getCharacterClass("Archer")).get(1),true));
+        this.archerStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(proxyDataManager.getCharacterClass("Archer")).get(2),true));
 
-        this.mageStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(dummyMage).get(0),true));
-        this.mageStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(dummyMage).get(1),true));
-        this.mageStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(dummyMage).get(2),true));
+        this.mageStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(proxyDataManager.getCharacterClass("Mage")).get(0),true));
+        this.mageStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(proxyDataManager.getCharacterClass("Mage")).get(1),true));
+        this.mageStats.add(new Text(Resources.resourceMainFont,mFontSize,colorStat,characterStats(proxyDataManager.getCharacterClass("Mage")).get(2),true));
 
         this.archerStats.get(0).customPositionTextScreen((ScreenWidth/2)-(archerStats.get(0).getWidth()/2),pHeightText);
         mNextY3 = this.archerStats.get(0).getY();
