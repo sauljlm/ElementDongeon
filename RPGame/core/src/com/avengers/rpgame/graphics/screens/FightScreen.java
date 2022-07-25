@@ -319,7 +319,7 @@ public class FightScreen implements Screen {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
                         playerParty.getActivePartyMember().attackOther(playerParty.getActivePartyMember().getAttacks().get(finalIndex-1), enemyParty.getActivePartyMember());
                         playerTimer.setValue(playerTimer.getMinValue());
-                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + attack.getName());
+                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + attack.getDescription());
                     }
                 }
             });
@@ -348,7 +348,7 @@ public class FightScreen implements Screen {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
                         playerParty.getActivePartyMember().skillOther(playerParty.getActivePartyMember().getSkills().get(finalIndex-1), enemyParty.getActivePartyMember());
                         playerTimer.setValue(playerTimer.getMinValue());
-                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + skill.getName());
+                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + skill.getDescription());
                     }
                 }
             });
@@ -377,7 +377,7 @@ public class FightScreen implements Screen {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
                         playerParty.getActivePartyMember().receiveItem(playerParty.getActivePartyMember().getItems().get(finalIndex-1)); //TODO make items and skills dualmode for attack others and self use.
                         playerTimer.setValue(playerTimer.getMinValue());
-                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + item.getName());
+                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + item.getDescription());
                         setActivePlayerItems();
                     }
                 }

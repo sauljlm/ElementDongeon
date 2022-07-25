@@ -7,7 +7,7 @@ import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.IOManager;
 import com.avengers.rpgame.graphics.graphicManagerMediador.Mediador;
 import com.avengers.rpgame.graphics.hud.HUD;
-import com.avengers.rpgame.json.DataStorage;
+import com.avengers.rpgame.data.dataStorage.DataStorage;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
@@ -81,8 +81,6 @@ public class OverworldScreen implements Screen {
         characterFactory.createParty();
 
         hudElements = new HUD(gameStatus.getParty());
-
-        dataStorage=new DataStorage(); //Temporal
 
         //Interactive objects
         interactiveObjVectors = new ArrayList<Vector2>();

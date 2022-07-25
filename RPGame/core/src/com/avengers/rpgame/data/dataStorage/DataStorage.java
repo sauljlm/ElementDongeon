@@ -1,38 +1,74 @@
-package com.avengers.rpgame.json;
+package com.avengers.rpgame.data.dataStorage;
 
 import com.avengers.rpgame.logic.entities.*;
 import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
+import com.avengers.rpgame.utils.Resources;
 
 import java.util.ArrayList;
 
 public class DataStorage {
 
+    private static DataStorage instance;
     private ArrayList<CharacterClass> characterClassList;
-    private ArrayList<Item> itemsList;
-    private ArrayList<Skill> skillsList;
+    private ArrayList<CharacterClass> enemyClassList;
     private ArrayList<Attack> attacksList;
+    private ArrayList<Attack> enemyAttacksList;
+    private ArrayList<Skill> skillsList;
+    private ArrayList<Item> specialItemsList;
+    private ArrayList<Item> consumableItemsList;
+    private ArrayList<Item> wearableItemsList;
+    private ArrayList<Item> enemyItemsList;
 
-    public String getData() {
+    private DataStorage() {
         characterClassList = new ArrayList<>();
-        itemsList = new ArrayList<>();
-        skillsList = new ArrayList<>();
+        enemyClassList = new ArrayList<>();
         attacksList = new ArrayList<>();
+        enemyAttacksList = new ArrayList<>();
+        skillsList = new ArrayList<>();
+        specialItemsList = new ArrayList<>();
+        consumableItemsList = new ArrayList<>();
+        wearableItemsList = new ArrayList<>();
+        enemyItemsList = new ArrayList<>();
         generateCharacterClassList();
         generateAttackList();
         generateSkillList();
         generateItemList();
-
-        return toString();
     }
 
-    @Override
-    public String toString() {
-        return "DataStorage{" +
-                "characterClassList=" + characterClassList +
-                ", itemsList=" + itemsList +
-                ", skillsList=" + skillsList +
-                ", attacksList=" + attacksList +
-                '}';
+    public ArrayList<CharacterClass> getCharacterClassList() {
+        return characterClassList;
+    }
+
+    public ArrayList<CharacterClass> getEnemyClassList() {
+        return enemyClassList;
+    }
+
+    public ArrayList<Attack> getEnemyAttacksList() {
+        return enemyAttacksList;
+    }
+
+    public ArrayList<Attack> getAttacksList() {
+        return attacksList;
+    }
+
+    public ArrayList<Skill> getSkillsList() {
+        return skillsList;
+    }
+
+    public ArrayList<Item> getSpecialItemsList() {
+        return specialItemsList;
+    }
+
+    public ArrayList<Item> getConsumableItemsList() {
+        return consumableItemsList;
+    }
+
+    public ArrayList<Item> getWearableItemsList() {
+        return wearableItemsList;
+    }
+
+    public ArrayList<Item> getEnemyItemsList() {
+        return enemyItemsList;
     }
 
     private void generateCharacterClassList() {
@@ -42,6 +78,23 @@ public class DataStorage {
         characterClassList.add(knight);
         characterClassList.add(archer);
         characterClassList.add(mage);
+
+        CharacterClass earthSkeleton = new CharacterClass(4, "EarthSkeleton", "Esqueleto de tierra", 30, 0, 10, 0, 10, 30, 0, 10, 10);
+        CharacterClass waterSkeleton = new CharacterClass(5, "WaterSkeleton", "Esqueleto de agua", 60, 0, 10, 0, 10, 30, 0, 10, 10);
+        CharacterClass windSkeleton = new CharacterClass(6, "WindSkeleton", "Esqueleto de viento", 80, 0, 10, 0, 10, 30, 0, 10, 10);
+        CharacterClass fireSkeleton = new CharacterClass(7, "FireSkeleton", "Esqueleto de fuego", 100, 0, 10, 0, 10, 30, 0, 10, 10);
+        CharacterClass earthChief = new CharacterClass(8, "EarthChief", "Jefe de tierra", 60, 0, 10, 0, 80, 30, 0, 30, 70);
+        CharacterClass waterChief = new CharacterClass(9, "WaterChief", "Jefe de agua", 90, 0, 10, 0, 80, 30, 0, 30, 70);
+        CharacterClass windChief = new CharacterClass(10, "WindChief", "Jefe de viento", 120, 0, 10, 0, 80, 30, 0, 30, 70);
+        CharacterClass fireChief = new CharacterClass(11, "FireChief", "Jefe de fuego", 150, 0, 10, 0, 80, 30, 0, 30, 70);
+        enemyClassList.add(earthSkeleton);
+        enemyClassList.add(waterSkeleton);
+        enemyClassList.add(windSkeleton);
+        enemyClassList.add(fireSkeleton);
+        enemyClassList.add(earthChief);
+        enemyClassList.add(waterChief);
+        enemyClassList.add(windChief);
+        enemyClassList.add(fireChief);
     }
 
     private void generateAttackList() {
@@ -68,22 +121,23 @@ public class DataStorage {
         attacksList.add(m1);
         attacksList.add(m2);
 
-        Attack e1 = new Attack("EarthEnemy", "Ataque arena", 1, 0, 15);
-        Attack e2 = new Attack("EarthChief", "Disparo lodo", 6, 0, 35);
-        Attack e3 = new Attack("WaterEnemy", "Salpicadura", 7, 0, 20);
-        Attack e4 = new Attack("WaterChief", "Hidrobomba", 12, 0, 45);
-        Attack e5 = new Attack("WindEnemy", "Viento cortante", 13, 0, 25);
-        Attack e6 = new Attack("WindChief", "Viento hielo", 18, 0, 60);
-        Attack e7 = new Attack("FireEnemy", "Llamarada", 19, 0, 30);
+        Attack e1 = new Attack("EarthSkeleton/EarthChief", "Ataque arena", 1, 0, 15);
+        Attack e2 = new Attack("WaterSkeleton/WaterChief", "Salpicadura", 7, 0, 20);
+        Attack e3 = new Attack("WindSkeleton/WindChief", "Viento cortante", 13, 0, 25);
+        Attack e4 = new Attack("FireSkeleton/FireChief", "Llamarada", 19, 0, 30);
+
+        Attack e5 = new Attack("EarthChief", "Disparo lodo", 6, 0, 35);
+        Attack e6 = new Attack("WaterChief", "Hidrobomba", 12, 0, 45);
+        Attack e7 = new Attack("WindChief", "Viento hielo", 18, 0, 60);
         Attack e8 = new Attack("FireChief", "Giro fuego", 24, 0, 70);
-        attacksList.add(e1);
-        attacksList.add(e2);
-        attacksList.add(e3);
-        attacksList.add(e4);
-        attacksList.add(e5);
-        attacksList.add(e6);
-        attacksList.add(e7);
-        attacksList.add(e8);
+        enemyAttacksList.add(e1);
+        enemyAttacksList.add(e2);
+        enemyAttacksList.add(e3);
+        enemyAttacksList.add(e4);
+        enemyAttacksList.add(e5);
+        enemyAttacksList.add(e6);
+        enemyAttacksList.add(e7);
+        enemyAttacksList.add(e8);
     }
 
     private void generateSkillList() {
@@ -124,28 +178,40 @@ public class DataStorage {
     }
 
     private void generateItemList() {
-        Consumable p1 = new Consumable("Knight/Mage/Archer", "Pocion Organica (50% HP)", 800, 1, 0, 0, 0, 0, 0, 0, 50);
+        Consumable p1 = new Consumable(1,"Knight/Mage/Archer", "Pocion Organica (50% HP)", 800, 1, Resources.potion, 3, 0, 0, 0, 0, 0, 0, 50);
         Consumable p2 = new Consumable("Mage", "Pocion Magica (50% MP)", 600, 1, 0, 0, 0, 0, 0, 50, 0);
         Consumable p3 = new Consumable("Mage", "Pocion Total (100% MP y HP)", 1200, 10, 0, 0, 0, 0, 0, 100, 100);
-        itemsList.add(p1);
-        itemsList.add(p2);
-        itemsList.add(p3);
+        consumableItemsList.add(p1);
+        consumableItemsList.add(p2);
+        consumableItemsList.add(p3);
 
         Item jewel = new Item("Knight/Mage/Archer", "Joya", 0, 1, 0, 0, 0, 0, 0, 0, 0);
         Item earthKey = new Item("Knight/Mage/Archer", "Llave tierra", 0, 6, 0, 0, 0, 0, 0, 0, 0);
         Item waterKey = new Item("Knight/Mage/Archer", "Llave agua", 0, 12, 0, 0, 0, 0, 0, 0, 0);
         Item windKey = new Item("Knight/Mage/Archer", "Llave viento", 0, 18, 0, 0, 0, 0, 0, 0, 0);
         Item fireKey = new Item("Knight/Mage/Archer", "Llave fuego", 0, 24, 0, 0, 0, 0, 0, 0, 0);
-        itemsList.add(jewel);
-        itemsList.add(earthKey);
-        itemsList.add(waterKey);
-        itemsList.add(windKey);
-        itemsList.add(fireKey);
+        specialItemsList.add(jewel);
+        specialItemsList.add(earthKey);
+        specialItemsList.add(waterKey);
+        specialItemsList.add(windKey);
+        specialItemsList.add(fireKey);
 
         Wearable armor = new Wearable("Knight/Mage/Archer", "Armadura", 500, 6, 30, 0, 0, 30, 0, 0, 10);
         Wearable magicJewelry = new Wearable("Knight/Mage/Archer", "Joyeria magica", 1000, 12, 0, 0, 30, 5, 0, 10, 0);
-        itemsList.add(armor);
-        itemsList.add(magicJewelry);
+        wearableItemsList.add(armor);
+        wearableItemsList.add(magicJewelry);
+
+        Item shield = new Item ("EarthSkeleton/WaterSkeleton/WindSkeleton/FireSkeleton","Escudo esqueleto", 0, 1, 0,0,0,20,0,0,5);
+        Item shieldChief = new Item ("EarthChief/WaterChief/WindChief/FireChief","Mega escudo esqueleto", 0, 1, 0,0,0,20,0,0,20);
+        enemyItemsList.add(shield);
+        enemyItemsList.add(shieldChief);
+    }
+
+    public static DataStorage getInstance() {
+        if (instance == null) {
+            instance = new DataStorage();
+        }
+        return instance;
     }
 
 }
