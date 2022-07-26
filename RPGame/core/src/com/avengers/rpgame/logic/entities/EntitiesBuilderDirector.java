@@ -13,6 +13,7 @@ import com.avengers.rpgame.logic.entities.character.components.animatedCharacter
 import com.avengers.rpgame.logic.entities.character.components.skin.ISkin;
 import com.avengers.rpgame.logic.entities.character.components.skin.abstractFactory.*;
 import com.avengers.rpgame.logic.entities.character.concrete.PlayableCharacter;
+import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -125,6 +126,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         this.experiencePoints = 0;
 
         ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Knight");
+        items.add(proxyDataManager.getSpecialItem("Talisman tierra"));
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Knight",1);
         ArrayList<Skill> skills = new ArrayList<>();
 
@@ -150,6 +152,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         this.experiencePoints = 0;
 
         ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Archer");
+        items.add(proxyDataManager.getSpecialItem("Talisman tierra"));
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Archer",1);
         ArrayList<Skill> skills = new ArrayList<>();
 
@@ -176,6 +179,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
 
         ArrayList<Item> items = new ArrayList<>();
         items.add(proxyDataManager.getConsumableItemsList("Mage").get(0));
+        items.add(proxyDataManager.getSpecialItem("Talisman tierra"));
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Mage",1);
         ArrayList<Skill> skills = new ArrayList<>();
 

@@ -9,6 +9,7 @@ public class Resources {
     public static final String knightImage = "graphics/textures/knight1.png";
     public static final String archerImage = "graphics/textures/archer1.png";
     public static final String mageImage = "graphics/textures/mage1.png";
+    public static final String dialog = "graphics/icons/dialog.png";
 
 
     //Maps
@@ -177,6 +178,7 @@ public class Resources {
     public static final int emphasisFontSize2 = 80;
     public static final int generalHUDFontSize = 36;
     public static final int levelHUDFontSize = 20;
+    public static final int generalDialogFontSize = 36;
 
     // HUD assets
     public static final String HUDHeart = "graphics/sprites/actors/HUD/heart.png";

@@ -1,6 +1,9 @@
 package com.avengers.rpgame.ai;
 
+import com.avengers.rpgame.ai.Interfaces.Observer;
+import com.avengers.rpgame.ai.Interfaces.Subject;
 import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.graphics.dialog.Dialog;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
@@ -9,13 +12,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class InteractionMonitor {
+public class InteractionMonitor implements Subject {
     private GameConfig config;
 
     private ArrayList<Vector2> interactiveObjectsV = new ArrayList<Vector2>();
     private ArrayList<Body> interactiveObjects = new ArrayList<Body>();
     private ArrayList<MapObject> interactiveMapObjects = new ArrayList<MapObject>();
+    private List<Observer> observers = new ArrayList<Observer>();
     private float maxDistance = 3;
     private GameConfig gameConfig = GameConfig.getInstance();
 
@@ -42,7 +47,7 @@ public class InteractionMonitor {
         for(Vector2 object : interactiveObjectsV) {
             objectFound=itIsClose(characterC, object, maxDistance);
             if (objectFound){
-                actionTrigger(index,playerCharacter);
+                notifyObservers(index,playerCharacter);
             }
             index++;
         }
@@ -77,57 +82,34 @@ public class InteractionMonitor {
 
 
         if(Math.abs(distance.x) < Math.abs(maxDistance) & Math.abs(distance.y) < Math.abs(maxDistance)){
-            System.out.println("Close encounter!");
+            // System.out.println("Close encounter!");
             return true;
         }
         return false;
     }
 
-    public void actionTrigger(int index,AbstractCharacter playerCharacter) {
-
-        if(interactiveMapObjects.get(index).getName().equals("earthPortal")){
-            for (Item itemFound: playerCharacter.getItems()){
-                if (itemFound.getDescription().equalsIgnoreCase("Llave tierra")){
-                    interactiveObjects.get(index).getWorld().destroyBody(interactiveObjects.get(index));
-                    System.out.println(itemFound.getDescription()+" found, access granted");
-                } else {
-                    System.out.println("No access");
-                }
-            };
-        };
-        if(interactiveMapObjects.get(index).getName().equals("windPortal")){
-            for (Item itemFound: playerCharacter.getItems()){
-                if (itemFound.getDescription().equalsIgnoreCase("Llave viento")){
-                    interactiveObjects.get(index).getWorld().destroyBody(interactiveObjects.get(index));
-                    System.out.println(itemFound.getDescription()+" found, access granted");
-                } else {
-                    System.out.println("No access");
-                }
-            };
-        };
-        if(interactiveMapObjects.get(index).getName().equals("waterPortal")){
-            for (Item itemFound: playerCharacter.getItems()){
-                if (itemFound.getDescription().equalsIgnoreCase("Llave agua")){
-                    interactiveObjects.get(index).getWorld().destroyBody(interactiveObjects.get(index));
-                    System.out.println(itemFound.getDescription()+" found, access granted");
-                } else {
-                    System.out.println("No access");
-                }
-            };
-        };
-        if(interactiveMapObjects.get(index).getName().equals("firePortal")){
-            for (Item itemFound: playerCharacter.getItems()){
-                if (itemFound.getDescription().equalsIgnoreCase("Llave fuego")){
-                    interactiveObjects.get(index).getWorld().destroyBody(interactiveObjects.get(index));
-                    System.out.println(itemFound.getDescription()+" found, access granted");
-                } else {
-                    System.out.println("No access");
-                }
-            };
-        };
-
-
-
+    @Override
+    public void addObserver(Observer o) {
+        observers.add(o);
     }
 
+    @Override
+    public void removeObserver(Observer o) {}
+
+    @Override
+    public void notifyObservers(int index, AbstractCharacter playerCharacter) {
+        for(Observer o : observers){
+            Body currentBody = interactiveObjects.get(index);
+            String currentMapObject = interactiveMapObjects.get(index).getName();
+            if (interactiveMapObjects.get(index).getName().contains("Portal") && o.getObserverName().equals("portal")) {
+                o.actionTrigger(playerCharacter, currentBody, currentMapObject);
+            } else if (interactiveMapObjects.get(index).getName().contains("kingNPC") && o.getObserverName().equals("king")) {
+                o.actionTrigger(playerCharacter, currentBody, currentMapObject);
+            } else if (interactiveMapObjects.get(index).getName().contains("npcCharacter") && o.getObserverName().equals("randomNPC")) {
+                o.actionTrigger(playerCharacter, currentBody, currentMapObject);
+            } else if (interactiveMapObjects.get(index).getName().contains("Treasure") && o.getObserverName().equals("chest")) {
+                o.actionTrigger(playerCharacter, currentBody, currentMapObject);
+            }
+        }
+    }
 }

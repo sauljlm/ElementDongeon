@@ -49,6 +49,16 @@ public class ProxyDataManager {
         return dataStorageProxy.getSpecialItemsList();
     }
 
+    public Item getSpecialItem(String description) {
+        Item itemFound = null;
+        for (Item currentItem: dataStorageProxy.getSpecialItemsList()) {
+            if (currentItem.getDescription().equals(description)) {
+                itemFound = currentItem;
+            }
+        }
+        return itemFound;
+    }
+
     public ArrayList<Item> getConsumableItemsList(String pName) {
         ArrayList<Item> result = new ArrayList<>();
         for (Item temp: dataStorageProxy.getConsumableItemsList()){
@@ -57,7 +67,6 @@ public class ProxyDataManager {
             }
         }
         return result;
-
     }
 
     public ArrayList<Item> getWearableItemsList() {

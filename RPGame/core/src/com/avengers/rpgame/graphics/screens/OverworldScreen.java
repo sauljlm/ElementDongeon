@@ -5,6 +5,7 @@ import com.avengers.rpgame.ai.AIManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.IOManager;
+import com.avengers.rpgame.graphics.dialog.Dialog;
 import com.avengers.rpgame.graphics.graphicManagerMediador.Mediador;
 import com.avengers.rpgame.graphics.hud.HUD;
 import com.avengers.rpgame.data.dataStorage.DataStorage;
@@ -39,6 +40,7 @@ public class OverworldScreen implements Screen {
 
     // End HUD values
     private HUD hudElements;
+    private Dialog dialog;
 
     //Interactive map objects
     private ArrayList<Vector2> interactiveObjVectors;
@@ -63,6 +65,8 @@ public class OverworldScreen implements Screen {
         characterFactory.createParty();
 
         hudElements = new HUD(gameStatus.getParty());
+
+        dialog = new Dialog();
 
         //Interactive objects
         interactiveObjVectors = new ArrayList<Vector2>();
@@ -115,6 +119,9 @@ public class OverworldScreen implements Screen {
         graphicMediator.changeProjectionMatrix();
         game.batch.begin();//We can stop render, do something and start again
         hudElements.draw(game.batch);
+        if (dialog.getDialogMessage().size > 0) {
+            dialog.draw(game.batch);
+        }
         game.batch.end();
     }
 

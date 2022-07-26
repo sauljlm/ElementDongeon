@@ -1,5 +1,9 @@
 package com.avengers.rpgame.ai;
 
+import com.avengers.rpgame.ai.concrete.ChestObserver;
+import com.avengers.rpgame.ai.concrete.KingObserver;
+import com.avengers.rpgame.ai.concrete.PortalObserver;
+import com.avengers.rpgame.ai.concrete.RandomNPCObserver;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
@@ -18,6 +22,11 @@ public class AIManager {
         allysMovement = new AlliesMovementAI();
         interactionMonitor = new InteractionMonitor();
         monsterBattleAI = new MonsterBattleAI();
+
+        interactionMonitor.addObserver(new PortalObserver("portal"));
+        interactionMonitor.addObserver(new KingObserver("king"));
+        interactionMonitor.addObserver(new RandomNPCObserver("randomNPC"));
+        interactionMonitor.addObserver(new ChestObserver("chest"));
     }
 
 

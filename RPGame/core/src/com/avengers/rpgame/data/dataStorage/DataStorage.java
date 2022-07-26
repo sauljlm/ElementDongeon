@@ -10,10 +10,10 @@ public class DataStorage {
 
     private static DataStorage instance;
     private ArrayList<CharacterClass> characterClassList;
+    private ArrayList<Skill> skillsList;
     private ArrayList<CharacterClass> enemyClassList;
     private ArrayList<Attack> attacksList;
     private ArrayList<Attack> enemyAttacksList;
-    private ArrayList<Skill> skillsList;
     private ArrayList<Item> specialItemsList;
     private ArrayList<Item> consumableItemsList;
     private ArrayList<Item> wearableItemsList;
@@ -185,12 +185,19 @@ public class DataStorage {
         consumableItemsList.add(p2);
         consumableItemsList.add(p3);
 
-        Item jewel = new Item("Knight/Mage/Archer", "Joya", 0, 1, 0, 0, 0, 0, 0, 0, 0);
+        Item earthTalisman = new Item("Knight/Mage/Archer", "Talisman tierra", 0, 1, 0, 0, 0, 0, 0, 0, 0);
+        Item waterTalisman = new Item("Knight/Mage/Archer", "Talisman agua", 0, 1, 0, 0, 0, 0, 0, 0, 0);
+        Item windTalisman = new Item("Knight/Mage/Archer", "Talisman viento", 0, 1, 0, 0, 0, 0, 0, 0, 0);
+        Item fireTalisman = new Item("Knight/Mage/Archer", "Talisman fuego", 0, 1, 0, 0, 0, 0, 0, 0, 0);
+        specialItemsList.add(earthTalisman);
+        specialItemsList.add(waterTalisman);
+        specialItemsList.add(windTalisman);
+        specialItemsList.add(fireTalisman);
+
         Item earthKey = new Item("Knight/Mage/Archer", "Llave tierra", 0, 6, 0, 0, 0, 0, 0, 0, 0);
         Item waterKey = new Item("Knight/Mage/Archer", "Llave agua", 0, 12, 0, 0, 0, 0, 0, 0, 0);
         Item windKey = new Item("Knight/Mage/Archer", "Llave viento", 0, 18, 0, 0, 0, 0, 0, 0, 0);
         Item fireKey = new Item("Knight/Mage/Archer", "Llave fuego", 0, 24, 0, 0, 0, 0, 0, 0, 0);
-        specialItemsList.add(jewel);
         specialItemsList.add(earthKey);
         specialItemsList.add(waterKey);
         specialItemsList.add(windKey);
