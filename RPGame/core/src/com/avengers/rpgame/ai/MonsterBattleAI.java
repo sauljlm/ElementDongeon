@@ -29,7 +29,7 @@ public class MonsterBattleAI {
 
     public String selectAction(AbstractCharacter oneSelfCharacter, AbstractCharacter targetCharacter){
         int selectedNumber;
-        if(oneSelfCharacter.getItems().size()>0){
+        if(oneSelfCharacter.getItems().size()>0 && oneSelfCharacter.getHealthPoints()<oneSelfCharacter.getHealthPointsMax()){
             selectedNumber = MathUtils.random(1);
         }else{
             selectedNumber = MathUtils.random(0);
@@ -38,15 +38,15 @@ public class MonsterBattleAI {
             case 0: //Attack enemy
                 Attack attack = selectAttack(oneSelfCharacter);
                 oneSelfCharacter.attackOther(attack, targetCharacter);
-                return attack.getDescription();
+                return attack.getName() +" ha infringido " +attack.getHPEffect() + " HP";
             case 1: //UseItem on himself
                 Item item = selectItem(oneSelfCharacter);
                 oneSelfCharacter.receiveItem(item);
-                return (item.getDescription());
+                return (item.getName()+" y se ha curado "+ item.gethPEffect()+ " HP");
             case 2: //UNUSED
                 Skill skill = selectSkill(oneSelfCharacter);
 //                selectSkill(Character);
-                return (skill.getDescription());
+                return (skill.getName());
             default:
                 return "Ya no quiero pelear, perdón!";
         }

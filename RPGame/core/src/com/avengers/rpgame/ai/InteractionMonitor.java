@@ -7,7 +7,6 @@ import com.avengers.rpgame.logic.entities.character.components.animatedCharacter
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 
 import java.util.ArrayList;
 

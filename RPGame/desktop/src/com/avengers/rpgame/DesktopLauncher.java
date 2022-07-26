@@ -3,6 +3,7 @@ package com.avengers.rpgame;
 import com.avengers.rpgame.game.GameConfig;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+
 import static com.avengers.rpgame.utils.Resources.resourceGameIcon;
 import static com.avengers.rpgame.utils.Resources.resourceGameTitle;
 
@@ -41,7 +42,7 @@ public class DesktopLauncher {
 		gameConfig.setMusicVolume(0f);
 		gameConfig.setSoundEffectsVolume(1f);
 		gameConfig.setFrameTime(1 / 15f);//Value based on docs
-		gameConfig.setDebugPhysics(true);
+		gameConfig.setDebugPhysics(false);
 		return gameConfig;
 	}
 }

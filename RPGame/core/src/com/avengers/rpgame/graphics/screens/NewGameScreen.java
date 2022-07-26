@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 
 import static com.avengers.rpgame.utils.Resources.*;
-import static com.avengers.rpgame.utils.Resources.resourceThemeMusic;
 
 
 public class NewGameScreen implements Screen {

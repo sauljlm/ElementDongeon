@@ -1,11 +1,11 @@
 package com.avengers.rpgame.graphics.store;
 
 import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.logic.entities.Item;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.avengers.rpgame.logic.entities.Item;
 
 public class ScreenItem {
     private Texture _texture;

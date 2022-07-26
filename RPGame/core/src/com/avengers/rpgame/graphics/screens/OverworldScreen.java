@@ -9,33 +9,26 @@ import com.avengers.rpgame.graphics.graphicManagerMediador.Mediador;
 import com.avengers.rpgame.graphics.hud.HUD;
 import com.avengers.rpgame.data.dataStorage.DataStorage;
 import com.avengers.rpgame.logic.entities.Party;
-import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
-import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
-import com.avengers.rpgame.logic.entities.EntitiesBuilderDirector;
 import com.avengers.rpgame.logic.entities.character.factory.CharacterFactory;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
-import static com.avengers.rpgame.utils.FileManager.*;
-import static com.avengers.rpgame.utils.Resources.*;
+
+import static com.avengers.rpgame.utils.FileManager.loadMusic;
+import static com.avengers.rpgame.utils.Resources.resourceAndTheJourneyBeginsMusic;
+import static com.avengers.rpgame.utils.Resources.resourcePortalTexture;
 
 public class OverworldScreen implements Screen {
     final RPGame game;
     private GameStatus gameStatus;
     private GameConfig config;
     private Music backgroundMusic;
-    private EntitiesBuilderDirector director;
-    private CharacterBuilder characterBuilder;
-    private AbstractCharacter playerCharacter;
-    private AbstractCharacter ally1Character;
-    private AbstractCharacter ally2Character;
+
     private IOManager ioManager;
     private AIManager aiManager;
     private Party playerParty;
@@ -44,20 +37,11 @@ public class OverworldScreen implements Screen {
     //Graphic manager mediator
     Mediador graphicMediator;
 
-    private DataStorage dataStorage; //Temporal
-
-    //HUD default values
-    private int userHealth = 100;
-    private int playerLevel = 1;
-    private int magicLevel = 12;
-    private int experiencePoints = 0;
     // End HUD values
     private HUD hudElements;
 
     //Interactive map objects
     private ArrayList<Vector2> interactiveObjVectors;
-    private ArrayList<Body> interactiveObjBodies;
-    private ArrayList<MapObject> interactiveMapObj;
     private Sprite accessPortal;
 
 
@@ -67,8 +51,6 @@ public class OverworldScreen implements Screen {
         config = GameConfig.getInstance();
 
         backgroundMusic = loadMusic(resourceAndTheJourneyBeginsMusic);
-        director = new EntitiesBuilderDirector();
-        characterBuilder = new CharacterBuilder();
 
         ioManager = new IOManager(game, backgroundMusic);
         aiManager = AIManager.getInstance();
@@ -84,12 +66,8 @@ public class OverworldScreen implements Screen {
 
         //Interactive objects
         interactiveObjVectors = new ArrayList<Vector2>();
-        interactiveObjBodies = new ArrayList<Body>();
-        interactiveMapObj = new ArrayList<MapObject>();
 
         interactiveObjVectors = aiManager.getInteractiveObjectsV();
-        interactiveObjBodies = aiManager.getInteractiveObjects();
-        interactiveMapObj = aiManager.getInteractiveMapObjects();
 
         this.accessPortal = new Sprite(new Texture(resourcePortalTexture));
         accessPortal.setCenter(interactiveObjVectors.get(0).x,interactiveObjVectors.get(0).y);
@@ -104,12 +82,10 @@ public class OverworldScreen implements Screen {
 
     //This method holds the game logic
     public void  logic(float delta){
-        AbstractCharacter character1 = playerParty.getActivePartyMember();
-        AbstractCharacter character2 = playerParty.getInactivePartyMember(1);
-        AbstractCharacter character3 = playerParty.getInactivePartyMember(2);
         aiManager.moveAllies(playerParty.getActivePartyMember(), playerParty.getInactivePartyMember(1), 1);
         aiManager.moveAllies(playerParty.getInactivePartyMember(1), playerParty.getInactivePartyMember(2), 1);
         aiManager.monitorSurroundings(playerParty.getActivePartyMember());
+        hudElements.update();
     }
 
 

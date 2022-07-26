@@ -22,6 +22,7 @@ public class Resources {
     public static final String resourceSettingsScreenBackground = "graphics/backgrounds/settingsScreen.jpg";
     public static final String resourceOptionsScreenBackground = "graphics/backgrounds/optionsScreenbackground.png";
     public static final String resourceNewGameBackground = "graphics/backgrounds/newGameScreen.jpg";
+    public static final String resourceGameOverBackground = "graphics/backgrounds/gameOverScreen.jpg";
     public static final String resourceFightBackgroundForest = "graphics/backgrounds/FightForestBackground.jpg";
     public static final String resourceStoreScreen = "graphics/backgrounds/backgroundStore.jpg";
 
@@ -162,6 +163,7 @@ public class Resources {
     public static final String resourceFightMusic = "audio/music/DecisiveBattle.wav";
     public static final String resourceAndTheJourneyBeginsMusic = "audio/music/AndTheJourneyBegins.wav";
     public static final String resourceStoreThemeMusic = "audio/music/storeTheme.mp3";
+    public static final String resourceGameOverMusic = "audio/music/TheFinalOfTheFantasy.wav";
 
     //FONTS
     public static final String resourcePixelFont = "graphics/fonts/pixelFont.ttf";

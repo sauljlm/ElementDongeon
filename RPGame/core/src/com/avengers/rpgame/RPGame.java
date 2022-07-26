@@ -1,10 +1,10 @@
 package com.avengers.rpgame;
+
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.screens.LoadScreen;
 import com.avengers.rpgame.graphics.screens.MainMenuScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 

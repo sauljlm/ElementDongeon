@@ -3,18 +3,26 @@ package com.avengers.rpgame.graphics.screens;
 import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.ai.AIManager;
 import com.avengers.rpgame.ai.RefereeBattleAI;
+import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.IOManager;
-import com.avengers.rpgame.graphics.camera.CameraManager;
 import com.avengers.rpgame.graphics.hud.BattleHUD;
 import com.avengers.rpgame.logic.entities.*;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
+import com.avengers.rpgame.logic.entities.character.behaviour.endFightActions.EndFightVisitor;
+import com.avengers.rpgame.logic.entities.character.behaviour.endFightActions.HealVisitor;
+import com.avengers.rpgame.logic.entities.character.behaviour.endFightActions.IVisitor;
+import com.avengers.rpgame.logic.entities.character.behaviour.endFightActions.UpdateLevelVisitor;
 import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
+import com.avengers.rpgame.logic.entities.reward.AReward;
+import com.avengers.rpgame.logic.entities.reward.BattleReward;
+import com.avengers.rpgame.logic.entities.reward.creation.RewardFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -46,6 +54,7 @@ public class FightScreen implements Screen {
     private AbstractCharacter partyMemberAnimated2;
     private AbstractCharacter partyMemberAnimated3;
     private AbstractCharacter enemy;
+    private RewardFactory rewardFactory;
 
     //HUD default values
     private int userHealth = 100;
@@ -95,17 +104,20 @@ public class FightScreen implements Screen {
     private ArrayList<String> messageStringList;
 
     public FightScreen(final RPGame game, final Party playerParty, final Party enemyParty) {
+        GameStatus.getInstance().saveOnDB();
         this.game = game;
         this.timer = new Timer();
         this.config = GameConfig.getInstance();
         this.playerParty = playerParty;
         this.enemyParty = enemyParty;
+        messageStringList = new ArrayList<String>();
         aiManager = AIManager.getInstance();
         ioManager = new IOManager(game);
         director = new EntitiesBuilderDirector();
         characterBuilder = new CharacterBuilder();
         hudPlayer = new BattleHUD(0, playerParty);
         hudEnemy = new BattleHUD(1, this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);
+        rewardFactory = new RewardFactory();
 
         director.buildKnightDummy(characterBuilder, game);
         partyMemberAnimated1 = characterBuilder.getResult();
@@ -158,8 +170,9 @@ public class FightScreen implements Screen {
         playerPartyStatus = new Window("", skin);
         enemyStatus = new Window("", skin);
 
-        playerTimer = new ProgressBar(0,600,1,false,skin2);
-        enemyTimer = new ProgressBar(0,600,1,false,skin2);
+        //Change MAX for faster debugging, default is 600
+        playerTimer = new ProgressBar(0,200,1,false,skin2);
+        enemyTimer = new ProgressBar(0,200,1,false,skin2);
         playerTimerLabel = new Label("Cargando . . .",skin);
         enemyTimerLabel = new Label("Cargando . . .",skin);
 
@@ -195,11 +208,11 @@ public class FightScreen implements Screen {
         statusTable.add(enemyStatus).expand().width(config.getResolutionHorizontal()/4).height(config.getResolutionVertical()/5).right().top();
 
         timerTable.add(playerTimer).expandY().fill().bottom().left().height(70).width(200).pad(10);
-        timerTable.add(playerTimerLabel).bottom().left().pad(20);
+        timerTable.add(playerTimerLabel).expandX().bottom().left().pad(20);
         playerTimerLabel.setFontScale(1.4f);
         enemyTimerLabel.setFontScale(1.4f);
-        timerTable.add(enemyTimer).expand().fill().bottom().right().height(70).width(200).pad(10);
         timerTable.add(enemyTimerLabel).bottom().right().pad(20);
+        timerTable.add(enemyTimer).bottom().right().height(70).width(200).pad(10);
 
         table.row();
 
@@ -277,21 +290,31 @@ public class FightScreen implements Screen {
 
     //Custom methods
     private void changeMessageBoard(String text){
-        this.messageString = text;
+        messageStringList.add(text);
+        if(messageStringList.size() >5){
+            messageStringList.remove(0);
+        }
+        messageString = "";
+        for (String message: messageStringList) {
+            messageString =messageString+"\n"+message;
+        }
+//        this.messageString = text;
         this.messageText.setText(messageString);
     }
 
-    private void fillTimer(final ProgressBar progressBar){
+    private void fillTimer(final ProgressBar progressBar, final int bar){
 //        this.timer.clear();
         this.timer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
                 if(progressBar.getValue() < progressBar.getMaxValue()){
                     progressBar.setValue(progressBar.getValue()+progressBar.getStepSize());
-                    playerTimerLabel.setText("Cargando . . .");
+                    if(bar==1) playerTimerLabel.setText("Cargando . . .");
+                    if(bar==2) enemyTimerLabel.setText("Cargando . . .");
                 }
                 if(progressBar.getValue() == progressBar.getMaxValue()){
-                    playerTimerLabel.setText("Listo para atacar !");
+                    if(bar==1) playerTimerLabel.setText("Listo para atacar !");
+                    if(bar==2) enemyTimerLabel.setText("Listo para atacar !");
                 }
             }
         }, 0.2f);
@@ -319,7 +342,7 @@ public class FightScreen implements Screen {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
                         playerParty.getActivePartyMember().attackOther(playerParty.getActivePartyMember().getAttacks().get(finalIndex-1), enemyParty.getActivePartyMember());
                         playerTimer.setValue(playerTimer.getMinValue());
-                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + attack.getDescription());
+                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + attack.getName()+ " ha infringido " +attack.getHPEffect() + " de daño.");
                     }
                 }
             });
@@ -348,7 +371,7 @@ public class FightScreen implements Screen {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
                         playerParty.getActivePartyMember().skillOther(playerParty.getActivePartyMember().getSkills().get(finalIndex-1), enemyParty.getActivePartyMember());
                         playerTimer.setValue(playerTimer.getMinValue());
-                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + skill.getDescription());
+                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + skill.getName()+ " ha tenido el efecto de " +skill.gethPEffect());
                     }
                 }
             });
@@ -377,7 +400,7 @@ public class FightScreen implements Screen {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
                         playerParty.getActivePartyMember().receiveItem(playerParty.getActivePartyMember().getItems().get(finalIndex-1)); //TODO make items and skills dualmode for attack others and self use.
                         playerTimer.setValue(playerTimer.getMinValue());
-                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + item.getDescription());
+                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado el item " + item.getName()+ " ha tenido el efecto de " +item.gethPEffect());
                         setActivePlayerItems();
                     }
                 }
@@ -386,7 +409,8 @@ public class FightScreen implements Screen {
     }
 
     private void enemyPartyAction(){
-        if(enemyTimer.getValue() == enemyTimer.getMaxValue()){
+        float delay = MathUtils.random(500);
+        if(enemyTimer.getValue() == enemyTimer.getMaxValue() && delay >492){
             String message = aiManager.accessMonsterBattleAI().selectAction(enemyParty.getActivePartyMember(), playerParty.getActivePartyMember());
             changeMessageBoard(enemyParty.getActivePartyMember().getName()+ " ha utilizado "+message);
             enemyTimer.setValue(enemyTimer.getMinValue());
@@ -403,9 +427,41 @@ public class FightScreen implements Screen {
 
     //This method holds the game logic
     public void  logic(float delta){
-        refereeBattleAI.manageBattle(playerParty, enemyParty);
-        fillTimer(playerTimer);
-        fillTimer(enemyTimer);
+        String result = refereeBattleAI.manageBattle(playerParty, enemyParty);
+        if(result.equals("EnemyWins")){
+            IVisitor visitor = new HealVisitor();
+            GameStatus.getInstance().getParty().getPartyMember(1).accept(visitor);
+            GameStatus.getInstance().getParty().getPartyMember(2).accept(visitor);
+            GameStatus.getInstance().getParty().getPartyMember(3).accept(visitor);
+            GameStatus.getInstance().setStatus("gameInProgress");
+            this.dispose();
+            game.setScreen(new GameOverScreen(game));
+        }
+        if(result.equals("PlayerWins")){
+            //TODO Improve this, maybe use visitor pattern
+            AReward reward = rewardFactory.createReward(enemyParty.getActivePartyMember());
+            IVisitor visitor = new EndFightVisitor(reward);
+
+            GameStatus.getInstance().getParty().getPartyMember(1).accept(visitor);
+            GameStatus.getInstance().getParty().getPartyMember(2).accept(visitor);
+            GameStatus.getInstance().getParty().getPartyMember(3).accept(visitor);
+
+            IVisitor visitor2 = new HealVisitor();
+            GameStatus.getInstance().getParty().getPartyMember(1).accept(visitor2);
+            GameStatus.getInstance().getParty().getPartyMember(2).accept(visitor2);
+            GameStatus.getInstance().getParty().getPartyMember(3).accept(visitor2);
+
+            IVisitor visitor3 = new UpdateLevelVisitor();
+            GameStatus.getInstance().getParty().getPartyMember(1).accept(visitor3);
+            GameStatus.getInstance().getParty().getPartyMember(2).accept(visitor3);
+            GameStatus.getInstance().getParty().getPartyMember(3).accept(visitor3);
+
+            GameStatus.getInstance().setStatus("gameInProgress");
+            this.dispose();
+            game.setScreen(new OverworldScreen(game));
+        }
+        fillTimer(playerTimer, 1);
+        fillTimer(enemyTimer, 2);
         enemyPartyAction();
     }
 
@@ -458,6 +514,6 @@ public class FightScreen implements Screen {
     public void dispose() {
         this.pause();
         this.hide();
-        stage.dispose();
+//        stage.dispose();
     }
 }

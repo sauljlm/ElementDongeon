@@ -5,8 +5,6 @@ import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.Skill;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 
-import java.util.ArrayList;
-
 
 //Another way to implement this would be to not pass the whole Skill, Attack. But the index so you just go find it inside the character.
 //The current way is less efficient but probably simpler to just make it works

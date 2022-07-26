@@ -3,7 +3,6 @@ package com.avengers.rpgame.ai;
 import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
-import com.avengers.rpgame.graphics.screens.OverworldScreen;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 
@@ -28,7 +27,7 @@ public class RefereeBattleAI {
 
     }
 
-    public void manageBattle(Party playerParty , Party npcParty){
+    public String manageBattle(Party playerParty , Party npcParty){
         if(turn==0){
             startBattle(playerParty, npcParty);
         }
@@ -37,15 +36,17 @@ public class RefereeBattleAI {
         if(!checkPartyStatus(playerParty)){
             finishBattle(playerParty);
             GameStatus.getInstance().setStatus("gameInProgress");
-            game.setScreen(new OverworldScreen(game));
+            return "EnemyWins";
+
         };
         if(!checkPartyStatus(npcParty)){
             finishBattle(npcParty);
             GameStatus.getInstance().setStatus("gameInProgress");
-            game.setScreen(new OverworldScreen(game));
+            return "PlayerWins";
         }
 
         this.turn = turn++;
+        return "catsAreGreat";
     }
 
     public boolean checkPartyStatus(Party party){

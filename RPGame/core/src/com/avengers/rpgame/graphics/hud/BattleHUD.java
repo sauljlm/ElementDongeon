@@ -1,5 +1,6 @@
 package com.avengers.rpgame.graphics.hud;
 
+import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.hud.elements.Heart;
 import com.avengers.rpgame.graphics.hud.elements.MP;
@@ -28,7 +29,7 @@ public class BattleHUD {
     private int characterClass;
     private BitmapFont gameFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
     private BitmapFont lvlFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.levelHUDFontSize, Color.WHITE, false, Color.BLACK);
-    private final int maxPoints = 500;
+    private final int maxPoints = ((PlayableCharacter) GameStatus.getInstance().getParty().getActivePartyMember()).getExperiencePointsMax();
     private GameConfig gameConfig;
     private float type;
 

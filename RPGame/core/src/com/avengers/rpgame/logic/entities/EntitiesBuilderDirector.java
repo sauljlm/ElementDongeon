@@ -6,12 +6,13 @@ import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
 import com.avengers.rpgame.logic.entities.character.builder.ICharacterDirector;
-import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.AAnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
+import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.AAnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.StaticAnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.components.skin.ISkin;
 import com.avengers.rpgame.logic.entities.character.components.skin.abstractFactory.*;
+import com.avengers.rpgame.logic.entities.character.concrete.PlayableCharacter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -30,6 +31,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     double level;
     CharacterClass characterClass;
     int coins = 1000;
+    int experiencePoints;
 
     //DummyCharacters only contains the animatedCharacter data for it to render on the game. This is used on battle screen /Character selection screen
     public void buildKnightDummy(CharacterBuilder builder, RPGame rpGame){
@@ -120,13 +122,15 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         this.name=playerName;
         this.level=1;
         this.characterClass = proxyDataManager.getCharacterClass("Knight");
+        this.experiencePoints = 0;
 
         ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Knight");
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Knight",1);
         ArrayList<Skill> skills = new ArrayList<>();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
+        builder.setPlayableCharacterInfo(this.experiencePoints);
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
         builder.setAttacks(attacks);
@@ -143,13 +147,15 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         this.name=playerName;
         this.level=1;
         this.characterClass = proxyDataManager.getCharacterClass("Archer");
+        this.experiencePoints = 0;
 
         ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Archer");
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Archer",1);
         ArrayList<Skill> skills = new ArrayList<>();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
+        builder.setPlayableCharacterInfo(this.experiencePoints);
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
         builder.setAttacks(attacks);
@@ -166,14 +172,16 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         this.name=playerName;
         this.level=1;
         this.characterClass = proxyDataManager.getCharacterClass("Mage");
+        this.experiencePoints = 0;
 
         ArrayList<Item> items = new ArrayList<>();
         items.add(proxyDataManager.getConsumableItemsList("Mage").get(0));
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Mage",1);
         ArrayList<Skill> skills = new ArrayList<>();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
+        builder.setPlayableCharacterInfo(this.experiencePoints);
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
         builder.setAttacks(attacks);
@@ -196,9 +204,11 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         this.level=gameStatus.getParty().getPartyMember(partyMember).getLevel();
         this.coins=gameStatus.getParty().getPartyMember(partyMember).getCoins();
         this.characterClass = proxyDataManager.getCharacterClass("Knight");
+        this.experiencePoints = ((PlayableCharacter)gameStatus.getParty().getPartyMember(partyMember)).getExperiencePoints();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getParty().getPartyMember(partyMember).getMagicPoints(), this.coins);
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getParty().getPartyMember(partyMember).getMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(gameStatus.getParty().getPartyMember(partyMember).getStrength(),gameStatus.getParty().getPartyMember(partyMember).getSpeed(),gameStatus.getParty().getPartyMember(partyMember).getMagic(),gameStatus.getParty().getPartyMember(partyMember).getResistance(),gameStatus.getParty().getPartyMember(partyMember).getLuck());
+        builder.setPlayableCharacterInfo(this.experiencePoints);
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
         builder.setAttacks(attacks);
@@ -220,11 +230,12 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         this.level=gameStatus.getParty().getPartyMember(partyMember).getLevel();
         this.coins=gameStatus.getParty().getPartyMember(partyMember).getCoins();
         this.characterClass = proxyDataManager.getCharacterClass("Archer");
+        this.experiencePoints = ((PlayableCharacter)gameStatus.getParty().getPartyMember(partyMember)).getExperiencePoints();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getParty().getPartyMember(partyMember).getMagicPoints(), this.coins);
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getParty().getPartyMember(partyMember).getMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(gameStatus.getParty().getPartyMember(partyMember).getStrength(),gameStatus.getParty().getPartyMember(partyMember).getSpeed(),gameStatus.getParty().getPartyMember(partyMember).getMagic(),gameStatus.getParty().getPartyMember(partyMember).getResistance(),gameStatus.getParty().getPartyMember(partyMember).getLuck());
+        builder.setPlayableCharacterInfo(this.experiencePoints);
         builder.setCharacterClass(this.characterClass);
-        //TODO SET THIS FROM DB
         builder.setItems(items);
         builder.setAttacks(attacks);
         builder.setSkills(skills);
@@ -245,9 +256,11 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         this.level=gameStatus.getParty().getPartyMember(partyMember).getLevel();
         this.coins=gameStatus.getParty().getPartyMember(partyMember).getCoins();
         this.characterClass = proxyDataManager.getCharacterClass("Mage");
+        this.experiencePoints = ((PlayableCharacter)gameStatus.getParty().getPartyMember(partyMember)).getExperiencePoints();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getParty().getPartyMember(partyMember).getMagicPoints(), this.coins);
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getParty().getPartyMember(partyMember).getMagicPoints(), characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(gameStatus.getParty().getPartyMember(partyMember).getStrength(),gameStatus.getParty().getPartyMember(partyMember).getSpeed(),gameStatus.getParty().getPartyMember(partyMember).getMagic(),gameStatus.getParty().getPartyMember(partyMember).getResistance(),gameStatus.getParty().getPartyMember(partyMember).getLuck());
+        builder.setPlayableCharacterInfo(this.experiencePoints);
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
         builder.setAttacks(attacks);
@@ -255,7 +268,6 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     }
 
     //Enemies
-
      public void buildEarthSkeleton(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
         skinFactory = new EarthSkeletonSkinFactory();
         ISkin skin = skinFactory.createSkin();
@@ -271,7 +283,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("EarthSkeleton");
         ArrayList<Skill> skills = new ArrayList<>();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
@@ -294,7 +306,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("WaterSkeleton");
         ArrayList<Skill> skills = new ArrayList<>();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
@@ -317,7 +329,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("WindSkeleton");
         ArrayList<Skill> skills = new ArrayList<>();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
@@ -340,7 +352,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("FireSkeleton");
         ArrayList<Skill> skills = new ArrayList<>();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
@@ -363,7 +375,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("EarthChief");
         ArrayList<Skill> skills = new ArrayList<>();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
@@ -386,7 +398,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("WaterChief");
         ArrayList<Skill> skills = new ArrayList<>();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
@@ -409,7 +421,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("WindChief");
         ArrayList<Skill> skills = new ArrayList<>();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
@@ -432,7 +444,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("FireChief");
         ArrayList<Skill> skills = new ArrayList<>();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);

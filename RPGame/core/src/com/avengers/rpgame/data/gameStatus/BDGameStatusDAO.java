@@ -7,9 +7,9 @@ import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.Skill;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
+import com.avengers.rpgame.logic.entities.character.concrete.PlayableCharacter;
 import com.badlogic.gdx.math.Vector2;
 
-import javax.swing.table.AbstractTableModel;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -32,7 +32,7 @@ public class BDGameStatusDAO implements IGameStatusDAO{
             sqlQuery = "DELETE FROM Skill where saveSlot is "+gameStatus.getSaveSlot()+" and timeStamp is NOT "+timeStamp;
             querys.add(sqlQuery);
             sqlQuery = "INSERT INTO AbstractCharacter "+
-                    "(saveSlot,partyMember,idCharacter,name,description,positionX,positionY,level,healthPoints,magicPoints,strength,speed,magic,resistance,luck,coins,characterClass,timeStamp)" +
+                    "(saveSlot,partyMember,idCharacter,name,description,positionX,positionY,level,healthPoints,magicPoints,healthPointsMax,magicPointsMax,strength,speed,magic,resistance,luck,coins,characterClass,experiencePoints,timeStamp)" +
                     "VALUES("+
                     gameStatus.getSaveSlot()+","+
                     partyMember+",'"+
@@ -44,6 +44,8 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                     gameStatus.getParty().getPartyMember(partyMember).getLevel()+","+
                     gameStatus.getParty().getPartyMember(partyMember).getHealthPoints()+","+
                     gameStatus.getParty().getPartyMember(partyMember).getMagicPoints()+","+
+                    gameStatus.getParty().getPartyMember(partyMember).getHealthPointsMax()+","+
+                    gameStatus.getParty().getPartyMember(partyMember).getMagicPointsMax()+","+
                     gameStatus.getParty().getPartyMember(partyMember).getStrength()+","+
                     gameStatus.getParty().getPartyMember(partyMember).getSpeed()+","+
                     gameStatus.getParty().getPartyMember(partyMember).getMagic()+","+
@@ -51,6 +53,7 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                     gameStatus.getParty().getPartyMember(partyMember).getLuck()+","+
                     gameStatus.getParty().getPartyMember(partyMember).getCoins()+","+
                     gameStatus.getParty().getPartyMember(partyMember).getCharacterClass().getIdCharacterClass()+","+
+                    ((PlayableCharacter)gameStatus.getParty().getPartyMember(partyMember)).getExperiencePoints()+","+
                     timeStamp+
                     ")";
             querys.add(sqlQuery);
@@ -153,6 +156,8 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                 character.setLevel(Integer.parseInt(resultSet.getString("level")));
                 character.setHealthPoints(Integer.parseInt(resultSet.getString("healthPoints")));
                 character.setMagicPoints(Integer.parseInt(resultSet.getString("magicPoints")));
+                character.setHealthPointsMax(Integer.parseInt(resultSet.getString("healthPointsMax")));
+                character.setMagicPointsMax(Integer.parseInt(resultSet.getString("magicPointsMax")));
                 character.setStrength(Integer.parseInt(resultSet.getString("strength")));
                 character.setSpeed(Integer.parseInt(resultSet.getString("speed")));
                 character.setMagic(Integer.parseInt(resultSet.getString("magic")));
@@ -162,6 +167,7 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                 CharacterClass characterClass = new CharacterClass();
                 character.setCharacterClass(characterClass);
                 character.getCharacterClass().setIdCharacterClass(Integer.parseInt(resultSet.getString("characterClass")));
+                ((PlayableCharacter)character).setExperiencePoints(Integer.parseInt(resultSet.getString("experiencePoints")));
                 party.setPartyMember(Integer.parseInt(resultSet.getString("partyMember")), character);
             }
 

@@ -8,7 +8,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public class GameStatus {
     private static GameStatus instance;
     private Party party;
-    private int saveSlot;
+    private int saveSlot = 0;
     private String status;
     private World world;
 
@@ -20,9 +20,8 @@ public class GameStatus {
         status = "newGame"; //default value to let all other components know this is a new game, otherwise game loader needs to set this to other state
     }
 
-    private GameStatus(Party party, int saveSlot) {
+    private GameStatus(Party party) {
         this.party = party;
-        this.saveSlot = saveSlot;
     }
 
     public Party getParty() {

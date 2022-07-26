@@ -5,7 +5,6 @@ import com.avengers.rpgame.logic.entities.character.components.skin.components.A
 import static com.avengers.rpgame.utils.FileManager.loadTexture;
 import static com.avengers.rpgame.utils.FileManager.loadTextureAtlas;
 import static com.avengers.rpgame.utils.Resources.*;
-import static com.avengers.rpgame.utils.Resources.resourceKnightTextureMapRight;
 
 public class KnightSkin extends ISkin{
     public KnightSkin() {

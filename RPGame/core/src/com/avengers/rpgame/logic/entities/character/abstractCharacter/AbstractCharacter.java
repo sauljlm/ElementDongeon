@@ -4,9 +4,11 @@ import com.avengers.rpgame.logic.entities.Attack;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.Skill;
 import com.avengers.rpgame.logic.entities.character.behaviour.BattleActions;
-import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.AAnimatedCharacter;
+import com.avengers.rpgame.logic.entities.character.behaviour.endFightActions.IVisitor;
 import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
+import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.AAnimatedCharacter;
 import com.badlogic.gdx.math.Vector2;
+
 import java.util.ArrayList;
 
 //Abstract Father class for all types of characters
@@ -18,6 +20,8 @@ public abstract class AbstractCharacter implements BattleActions {
     private double level;
     private int healthPoints;
     private int magicPoints;
+    private int healthPointsMax;
+    private int magicPointsMax;
     private int strength;
     private int speed;
     private int magic;
@@ -33,14 +37,16 @@ public abstract class AbstractCharacter implements BattleActions {
     public AbstractCharacter() {
     }
 
-    public AbstractCharacter(int idCharacter, String name, String description, Vector2 position, double level, int healthPoints, int magicPoints, int strength, int speed, int magic, int resistance, int luck, int coins, CharacterClass characterClass, AAnimatedCharacter animatedEntity, ArrayList<Item> items, ArrayList<Attack> attacks, ArrayList<Skill> skills) {
+    public AbstractCharacter(int idCharacter, String name, String description, Vector2 position, double level, int healthPoints, int magicPoints, int healthPointsMax, int magicPointsMax, int strength, int speed, int magic, int resistance, int luck, int coins, CharacterClass characterClass, AAnimatedCharacter animatedEntity, ArrayList<Item> items, ArrayList<Attack> attacks, ArrayList<Skill> skills) {
         this.idCharacter = idCharacter;
         this.name = name;
         this.description = description;
         this.position = position;
         this.level = level;
         this.healthPoints = healthPoints;
+        this.healthPointsMax = healthPointsMax;
         this.magicPoints = magicPoints;
+        this.magicPointsMax = magicPointsMax;
         this.strength = strength;
         this.speed = speed;
         this.magic = magic;
@@ -156,6 +162,22 @@ public abstract class AbstractCharacter implements BattleActions {
         this.coins = coins;
     }
 
+    public int getHealthPointsMax() {
+        return healthPointsMax;
+    }
+
+    public void setHealthPointsMax(int healthPointsMax) {
+        this.healthPointsMax = healthPointsMax;
+    }
+
+    public int getMagicPointsMax() {
+        return magicPointsMax;
+    }
+
+    public void setMagicPointsMax(int magicPointsMax) {
+        this.magicPointsMax = magicPointsMax;
+    }
+
     public CharacterClass getCharacterClass() {
         return characterClass;
     }
@@ -203,6 +225,9 @@ public abstract class AbstractCharacter implements BattleActions {
     public void deleteItem (int id) {
         this.items.remove(id);
     }
+
+    //BattleSystem Rewards Visitor pattern
+    public abstract void accept(IVisitor visitor);
 
     //BattleSystem
     //Attack other character
@@ -254,7 +279,17 @@ public abstract class AbstractCharacter implements BattleActions {
         this.setLuck(this.getLuck()+this.getLuck()* item.getLuckEffect()/100);
         this.setMagicPoints(this.getMagicPoints()+this.getMagicPoints()*item.getmPEffect()/100);
         this.setHealthPoints(this.getHealthPoints()+this.getHealthPoints()*item.gethPEffect()/100);
+        if(healthPoints>healthPointsMax)healthPoints=healthPointsMax;
+        if(magicPoints>magicPointsMax)magicPoints=magicPointsMax;
         items.remove(items.indexOf(item));
+    }
+
+    public void restoreHP() {
+        this.setHealthPoints(this.getHealthPointsMax());
+    }
+
+    public void restoreMP() {
+        this.setMagicPoints(this.getMagicPointsMax());
     }
 
     @Override

@@ -4,8 +4,8 @@ import com.avengers.rpgame.logic.entities.Attack;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.Skill;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
-import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.AAnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
+import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.AAnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.concrete.PlayableCharacter;
 import com.badlogic.gdx.math.Vector2;
 
@@ -20,12 +20,15 @@ public class CharacterBuilder implements ICharacterBuilder {
     double level;
     int healthPoints;
     int magicPoints;
+    int healthPointsMax;
+    int magicPointsMax;
     int strength;
     int speed;
     int magic;
     int resistance;
     int luck;
     int coins;
+    int experiencePoints;
     CharacterClass characterClass;
     AAnimatedCharacter animatedCharacter;
     ArrayList<Item> items;
@@ -33,7 +36,7 @@ public class CharacterBuilder implements ICharacterBuilder {
     ArrayList<Skill> skills;
 
     @Override
-    public void setCharacterBasicInfo(int idCharacter, String name, String description,Vector2 position, double level, int healthPoints, int magicPoints, int coins) {
+    public void setCharacterBasicInfo(int idCharacter, String name, String description,Vector2 position, double level, int healthPoints, int magicPoints, int healthPointsMax, int magicPointsMax, int coins) {
     this.idCharacter = idCharacter;
     this.name = name;
     this.description = description;
@@ -41,6 +44,8 @@ public class CharacterBuilder implements ICharacterBuilder {
     this.level = level;
     this.healthPoints = healthPoints;
     this.magicPoints = magicPoints;
+    this.healthPointsMax = healthPointsMax;
+    this.magicPointsMax = magicPointsMax;
     this.coins = coins;
     }
 
@@ -51,6 +56,11 @@ public class CharacterBuilder implements ICharacterBuilder {
     this.magic = magic;
     this.resistance = resistance;
     this.luck = luck;
+    }
+
+    @Override
+    public void setPlayableCharacterInfo(int experiencePoints) {
+        this.experiencePoints = experiencePoints;
     }
 
     @Override
@@ -79,6 +89,6 @@ public class CharacterBuilder implements ICharacterBuilder {
     }
 
     public AbstractCharacter getResult(){
-        return new PlayableCharacter(idCharacter, name, description, position, level, healthPoints, magicPoints, strength, speed, magic, resistance, luck, coins, characterClass, animatedCharacter, items, attacks, skills);
+        return new PlayableCharacter(idCharacter, name, description, position, level, healthPoints, magicPoints, healthPointsMax, magicPointsMax, strength, speed, magic, resistance, luck, coins, characterClass, animatedCharacter, items, attacks, skills, experiencePoints);
     }
 }

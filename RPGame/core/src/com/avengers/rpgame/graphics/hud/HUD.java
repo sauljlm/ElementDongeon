@@ -1,11 +1,7 @@
 package com.avengers.rpgame.graphics.hud;
 
+import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
-import com.avengers.rpgame.graphics.hud.elements.Heart;
-import com.avengers.rpgame.graphics.hud.elements.MP;
-import com.avengers.rpgame.graphics.hud.elements.UserLevel;
-import com.avengers.rpgame.graphics.hud.elements.Weapon;
-import com.avengers.rpgame.graphics.store.Store;
 import com.avengers.rpgame.graphics.hud.elements.Heart;
 import com.avengers.rpgame.graphics.hud.elements.MP;
 import com.avengers.rpgame.graphics.hud.elements.UserLevel;
@@ -13,6 +9,7 @@ import com.avengers.rpgame.graphics.hud.elements.Weapon;
 import com.avengers.rpgame.graphics.text.FontFactory;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
+import com.avengers.rpgame.logic.entities.character.concrete.PlayableCharacter;
 import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -28,7 +25,7 @@ public class HUD {
     private Weapon weapon;
     private BitmapFont gameFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
     private BitmapFont lvlFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.levelHUDFontSize, Color.WHITE, false, Color.BLACK);
-    private final int maxPoints = 500;
+    private final int maxPoints = ((PlayableCharacter)GameStatus.getInstance().getParty().getActivePartyMember()).getExperiencePointsMax();
     private GameConfig gameConfig;
     private AbstractCharacter character;
 
@@ -60,13 +57,23 @@ public class HUD {
         return finalValue;
     }
 
-    public void update (int userHealth, double playerLevel, int magicLevel, int experiencePoints) {
-        this.character.setHealthPoints(userHealth);
-        this.character.setLevel(playerLevel);
-        this.character.setMagicPoints(magicLevel);
-        this.character.setLevel(experiencePoints);
+    public void update () {
+        Party party = GameStatus.getInstance().getParty();
+        this.character.setHealthPoints(party.getActivePartyMember().getHealthPoints());
+        this.character.setLevel(party.getActivePartyMember().getLevel());
+        this.character.setMagicPoints(party.getActivePartyMember().getMagicPoints());
+//        this.character.(((PlayableCharacter)party.getActivePartyMember()).getExperiencePoints());
         this.createHearts();
     }
+
+//    public void update (Party party) {
+//        this.setUserHealth(party.getActivePartyMember().getHealthPoints());
+//        this.setPlayerLevel((int)party.getPartyMember1().getLevel());
+//        this.setMagicLevel("HelloCat");
+//        this.setCharacterClass(characterClass);
+//        this.setExperiencePoints(experiencePoints);
+//        this.createHearts(type);
+//    }
 
     public void draw (SpriteBatch batch) {
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
@@ -82,7 +89,7 @@ public class HUD {
         levelIcon.get_sprite().draw(batch);
         gameFont.draw(batch, String.valueOf((int)this.character.getLevel()), resolution.x*0.036f, resolution.y*0.945f);
         lvlFont.draw(batch, "Nivel", resolution.x*0.032f, resolution.y*0.965f);
-        gameFont.draw(batch, "Exp: " + (int)this.character.getLevel() + "/" + this.maxPoints, resolution.x*0.08f, resolution.y*0.96f);
+        gameFont.draw(batch, "Exp: " + (int)((PlayableCharacter)this.character).getExperiencePoints() + "/" + this.maxPoints, resolution.x*0.08f, resolution.y*0.96f);
         weapon.get_sprite().draw(batch);
     }
 

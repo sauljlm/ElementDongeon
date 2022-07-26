@@ -1,7 +1,6 @@
 package com.avengers.rpgame.logic.entities.character.components.skin.abstractFactory;
 
 import com.avengers.rpgame.logic.entities.character.components.skin.ISkin;
-import com.avengers.rpgame.logic.entities.character.components.skin.KnightSkin;
 import com.avengers.rpgame.logic.entities.character.components.skin.MageSkin;
 
 public class MageSkinFactory implements ISkinFactory {

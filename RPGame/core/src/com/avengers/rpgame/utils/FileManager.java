@@ -1,6 +1,5 @@
 package com.avengers.rpgame.utils;
 
-import com.avengers.rpgame.audio.AppPreferences;
 import com.avengers.rpgame.game.GameConfig;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -9,8 +8,6 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-
-import static com.avengers.rpgame.utils.Resources.resourceSkin2;
 
 
 //Patron facade?

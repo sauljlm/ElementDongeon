@@ -1,4 +1,5 @@
 package com.avengers.rpgame.graphics.map;
+
 import com.avengers.rpgame.ai.AIManager;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.map.mapObjectParsers.IMapObjectParser;
@@ -6,9 +7,11 @@ import com.avengers.rpgame.graphics.map.mapObjectParsers.RectangleParser;
 import com.avengers.rpgame.logic.factories.BodyFactory;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.*;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.physics.box2d.World;
 
 //This class is going to receive all the objects coming from the tiled map layer and parse them by type/class
 //The other way to do this is by assigning properties to every object created on tiled (to much work..) this is faster for dev, maybe more CPU consuming though

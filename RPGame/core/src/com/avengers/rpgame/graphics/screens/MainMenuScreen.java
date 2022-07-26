@@ -1,9 +1,9 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
-import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.MyInputProcessor;
+import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,7 +15,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 
 import static com.avengers.rpgame.utils.FileManager.loadMusic;
-import static com.avengers.rpgame.utils.Resources.*;
+import static com.avengers.rpgame.utils.Resources.resourceMainScreenBackground;
+import static com.avengers.rpgame.utils.Resources.resourceThemeMusic;
 
 public class MainMenuScreen implements Screen {
     final RPGame game;

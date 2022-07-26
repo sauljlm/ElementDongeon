@@ -2,9 +2,9 @@ package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
-import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.MyInputProcessor;
+import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

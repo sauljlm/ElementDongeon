@@ -2,7 +2,6 @@ package com.avengers.rpgame.logic.entities.character.components.skin.abstractFac
 
 import com.avengers.rpgame.logic.entities.character.components.skin.ArcherSkin;
 import com.avengers.rpgame.logic.entities.character.components.skin.ISkin;
-import com.avengers.rpgame.logic.entities.character.components.skin.MageSkin;
 
 public class ArcherSkinFactory implements ISkinFactory {
 

@@ -2,7 +2,7 @@ package com.avengers.rpgame.graphics.store;
 
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.text.FontFactory;
-import com.avengers.rpgame.graphics.text.Text;
+import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.avengers.rpgame.logic.entities.Item;
 
 public class Store {
     private Array<Item> items = new Array<Item>();

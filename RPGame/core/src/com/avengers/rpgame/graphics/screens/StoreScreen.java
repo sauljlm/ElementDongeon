@@ -2,11 +2,11 @@ package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
+import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.game.io.MyInputProcessor;
 import com.avengers.rpgame.graphics.store.Store;
 import com.avengers.rpgame.graphics.text.FontFactory;
 import com.avengers.rpgame.graphics.text.Text;
-import com.avengers.rpgame.game.GameConfig;
-import com.avengers.rpgame.game.io.MyInputProcessor;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.utils.Resources;
@@ -22,7 +22,9 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
-import static com.avengers.rpgame.utils.Resources.*;
+import static com.avengers.rpgame.utils.FileManager.loadMusic;
+import static com.avengers.rpgame.utils.Resources.resourceStoreScreen;
+import static com.avengers.rpgame.utils.Resources.resourceStoreThemeMusic;
 
 public class StoreScreen implements Screen {
     final RPGame game;
@@ -58,7 +60,7 @@ public class StoreScreen implements Screen {
 
         backgroundImage = new Texture(Gdx.files.internal(resourceStoreScreen));
 
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(resourceStoreThemeMusic));
+        backgroundMusic = loadMusic(resourceStoreThemeMusic);
         backgroundMusic.setLooping(true);
 
         menuOptions = new ArrayList<Text>();
