@@ -11,13 +11,23 @@ import static com.avengers.rpgame.utils.Resources.dialog;
 public class DialogSprite {
     private Texture _texture;
     private Sprite _sprite;
+    private int messageSize = 150;
 
-    public DialogSprite() {
+    public DialogSprite(int messageSize) {
+        this.setMessageSize(messageSize);
         createSprite();
     }
 
     public Texture get_texture() {
         return _texture;
+    }
+
+    public int getMessageSize() {
+        return messageSize;
+    }
+
+    public void setMessageSize(int messageSize) {
+        this.messageSize = messageSize;
     }
 
     public void set_texture(Texture _texture) {
@@ -69,6 +79,6 @@ public class DialogSprite {
         this.set_sprite(new Sprite(this.get_texture()));
         this.setSpriteX((int)position.x);
         this.setSpriteY((int)position.y);
-        this.setSize(700, 150);
+        this.setSize(700, this.messageSize);
     }
 }

@@ -109,6 +109,8 @@ public class InteractionMonitor implements Subject {
                 o.actionTrigger(playerCharacter, currentBody, currentMapObject);
             } else if (interactiveMapObjects.get(index).getName().contains("Treasure") && o.getObserverName().equals("chest")) {
                 o.actionTrigger(playerCharacter, currentBody, currentMapObject);
+            } else if (interactiveMapObjects.get(index).getName().contains("msg") && o.getObserverName().equals("sign")) {
+                o.actionTrigger(playerCharacter, currentBody, currentMapObject);
             }
         }
     }

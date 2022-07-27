@@ -19,8 +19,7 @@ public class Dialog {
 
     private static Array<String> dialogMessage = new Array<String>();
     private static String dialogSpeaker = "NPC";
-    private DialogSprite dialogSprite = new DialogSprite();
-
+    private DialogSprite dialogSprite;
     private BitmapFont dialogFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalDialogFontSize, Color.WHITE, false, Color.BLACK);
     private GameConfig gameConfig;
     private AbstractCharacter character;
@@ -48,12 +47,20 @@ public class Dialog {
     public void draw (SpriteBatch batch) {
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
 
-        dialogSprite.get_sprite().draw(batch);
-        dialogFont.draw(batch, dialogSpeaker, resolution.x*0.11f, resolution.y*0.175f);
-
         for(String message: dialogMessage) {
-            GlyphLayout text = new GlyphLayout(dialogFont, message, Color.WHITE, 600, Align.left, true);
-            dialogFont.draw(batch, text, resolution.x*0.07f, resolution.y*0.135f);
+            if (message.length() > 70) {
+                dialogSprite = new DialogSprite(200);
+                dialogSprite.get_sprite().draw(batch);
+                dialogFont.draw(batch, dialogSpeaker, resolution.x*0.11f, resolution.y*0.21f);
+                GlyphLayout text = new GlyphLayout(dialogFont, message, Color.WHITE, 600, Align.left, true);
+                dialogFont.draw(batch, text, resolution.x*0.07f, resolution.y*0.17f);
+            } else {
+                dialogSprite = new DialogSprite(150);
+                dialogSprite.get_sprite().draw(batch);
+                dialogFont.draw(batch, dialogSpeaker, resolution.x*0.11f, resolution.y*0.175f);
+                GlyphLayout text = new GlyphLayout(dialogFont, message, Color.WHITE, 600, Align.left, true);
+                dialogFont.draw(batch, text, resolution.x*0.07f, resolution.y*0.135f);
+            }
         }
     }
 }
