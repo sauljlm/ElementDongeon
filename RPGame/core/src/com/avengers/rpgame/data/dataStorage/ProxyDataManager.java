@@ -18,7 +18,7 @@ public class ProxyDataManager {
     public CharacterClass getCharacterClass(String pName) {
         CharacterClass result = null;
         for (CharacterClass temp: dataStorageProxy.getCharacterClassList()){
-            if (temp.getName().equalsIgnoreCase(pName)){
+            if (temp.getName().contains(pName)){
                 result = temp;
             }
         }
@@ -76,7 +76,7 @@ public class ProxyDataManager {
     public CharacterClass getEnemyClass(String pName) {
         CharacterClass result = null;
         for (CharacterClass temp: dataStorageProxy.getEnemyClassList()){
-            if (temp.getName().equalsIgnoreCase(pName)){
+            if (temp.getName().contains(pName)){
                 result = temp;
             }
         }
