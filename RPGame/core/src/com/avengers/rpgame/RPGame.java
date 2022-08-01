@@ -9,8 +9,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public class RPGame extends Game {
-    public static SpriteBatch batch;
+    private static RPGame instance;
+
+    public SpriteBatch batch;
     private GameConfig gameConfig;
+
+    private RPGame() {
+    }
 
     public void create() {
         batch = new SpriteBatch();
@@ -33,11 +38,18 @@ public class RPGame extends Game {
         batch.dispose();
     }
 
-    public static void print(String pMes){
-        System.out.println(pMes);
+    public void print(String pMes){
+//        System.out.println(pMes);
     }
 
-    public static void close(){
+    public void close(){
         Gdx.app.exit();
+    }
+
+    public static RPGame getInstance() {
+        if (instance == null) {
+            instance = new RPGame();
+        }
+        return instance;
     }
 }

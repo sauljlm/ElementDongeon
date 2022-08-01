@@ -38,15 +38,15 @@ public class MonsterBattleAI {
             case 0: //Attack enemy
                 Attack attack = selectAttack(oneSelfCharacter);
                 oneSelfCharacter.attackOther(attack, targetCharacter);
-                return attack.getName() +" ha infringido " +attack.getHPEffect() + " HP";
+                return attack.getDescription() +" ha infringido " +attack.getHPEffect() + " HP";
             case 1: //UseItem on himself
                 Item item = selectItem(oneSelfCharacter);
                 oneSelfCharacter.receiveItem(item);
-                return (item.getName()+" y se ha curado "+ item.gethPEffect()+ " HP");
+                return (item.getDescription()+" y se ha curado "+ item.gethPEffect()+ " HP");
             case 2: //UNUSED
                 Skill skill = selectSkill(oneSelfCharacter);
 //                selectSkill(Character);
-                return (skill.getName());
+                return (skill.getDescription());
             default:
                 return "Ya no quiero pelear, perdón!";
         }

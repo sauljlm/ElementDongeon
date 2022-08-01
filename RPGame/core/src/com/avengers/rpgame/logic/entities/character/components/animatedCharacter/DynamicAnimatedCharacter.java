@@ -16,12 +16,10 @@ public class DynamicAnimatedCharacter extends AAnimatedCharacter{
     private World world;
     private Vector2 worldPosition;
 
-    public DynamicAnimatedCharacter(ISkin skin, RPGame rpGame) {
+    public DynamicAnimatedCharacter(ISkin skin, RPGame rpGame, Vector2 worldPosition) {
         super(skin, rpGame);
         gameConfig = GameConfig.getInstance();
         world = GameStatus.getInstance().getWorld();
-        worldPosition = new Vector2();
-        determinePosition();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(12 / 2f / gameConfig.getPPM(), 12 / 2f / gameConfig.getPPM()); // /2 cause box2D counts stuff from center, so 32 x 32 would be 64, /PPM to scale down into box2D units
 
@@ -45,31 +43,24 @@ public class DynamicAnimatedCharacter extends AAnimatedCharacter{
         this.world = world;
     }
 
+    public Vector2 getWorldPosition() {
+        return worldPosition;
+    }
+
+    public void setWorldPosition(Vector2 worldPosition) {
+        this.worldPosition = worldPosition;
+    }
+
     public void recreateBody(){
         this.world = GameStatus.getInstance().getWorld();
         Vector2 pos = new Vector2();
-        GameStatus.getInstance().updateLocation();
-        pos.x =GameStatus.getInstance().getParty().getPartyMember(1).getPosition().x*gameConfig.getPPM();
-        pos.y = GameStatus.getInstance().getParty().getPartyMember(1).getPosition().y*gameConfig.getPPM();
+//        GameStatus.getInstance().updateLocation();
+        pos.x = this.getPlayer().getPosition().x*gameConfig.getPPM();
+        pos.y = this.getPlayer().getPosition().y*gameConfig.getPPM();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(12 / 2f / gameConfig.getPPM(), 12 / 2f / gameConfig.getPPM()); // /2 cause box2D counts stuff from center, so 32 x 32 would be 64, /PPM to scale down into box2D units
 
         this.player = BodyFactory.createBody(world, shape, pos, false, false);
-    }
-
-    private void determinePosition(){
-        if (GameStatus.getInstance().getStatus().equals("newGame")){
-            worldPosition.x = gameConfig.getResolutionHorizontal() * 12 / 5;
-            worldPosition.y = gameConfig.getResolutionVertical() / 5;
-        }
-        if (GameStatus.getInstance().getStatus().equals("loadedGame")){
-            worldPosition.x =GameStatus.getInstance().getParty().getPartyMember(1).getPosition().x*gameConfig.getPPM();
-            worldPosition.y = GameStatus.getInstance().getParty().getPartyMember(1).getPosition().y*gameConfig.getPPM();
-        }
-        if (GameStatus.getInstance().getStatus().equals("gameInProgress")){
-            worldPosition.x =GameStatus.getInstance().getParty().getPartyMember(1).getPosition().x*gameConfig.getPPM();
-            worldPosition.y = GameStatus.getInstance().getParty().getPartyMember(1).getPosition().y*gameConfig.getPPM();
-        }
     }
 
     @Override

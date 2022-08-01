@@ -1,9 +1,14 @@
 package com.avengers.rpgame.data.gameStatus;
 
 import com.avengers.rpgame.logic.entities.Party;
+import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.concrete.PlayableCharacter;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GameStatus {
     private static GameStatus instance;
@@ -11,6 +16,9 @@ public class GameStatus {
     private int saveSlot = 0;
     private String status;
     private World world;
+
+    private ArrayList<AbstractCharacter> enemies = new ArrayList<>();
+    private HashMap<String, Integer> enemiesHealth = new HashMap<>();
 
     private GameStatus() {
         party = new Party();
@@ -56,11 +64,28 @@ public class GameStatus {
         this.world = world;
     }
 
+    public ArrayList<AbstractCharacter> getEnemies() {
+        return enemies;
+    }
+
+    public void setEnemies(ArrayList<AbstractCharacter> enemies) {
+        this.enemies = enemies;
+    }
+
+    public HashMap<String, Integer> getEnemiesHealth() {
+        return enemiesHealth;
+    }
+
+    public void setEnemiesHealth(HashMap<String, Integer> enemiesHealth) {
+        this.enemiesHealth = enemiesHealth;
+    }
+
     public void updateLocation(){
-        party.getPartyMember1().setPosition(((DynamicAnimatedCharacter)party.getPartyMember1().getAnimatedCharacter()).getPlayer().getPosition());
+        party.getActivePartyMember().setPosition(((DynamicAnimatedCharacter)party.getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition());
     }
 
     public void saveOnDB() {
+        updateLocation();
         BDGameStatusDAO bdGameStatusDAO = new BDGameStatusDAO();
         bdGameStatusDAO.saveGameStatus(instance);
     }

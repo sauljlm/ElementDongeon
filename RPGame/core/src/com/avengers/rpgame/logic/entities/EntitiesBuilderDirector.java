@@ -4,7 +4,8 @@ import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.data.dataStorage.ProxyDataManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
-import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
+import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
+import com.avengers.rpgame.logic.entities.character.builder.ICharacterBuilder;
 import com.avengers.rpgame.logic.entities.character.builder.ICharacterDirector;
 import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
 import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.AAnimatedCharacter;
@@ -13,7 +14,7 @@ import com.avengers.rpgame.logic.entities.character.components.animatedCharacter
 import com.avengers.rpgame.logic.entities.character.components.skin.ISkin;
 import com.avengers.rpgame.logic.entities.character.components.skin.abstractFactory.*;
 import com.avengers.rpgame.logic.entities.character.concrete.PlayableCharacter;
-import com.avengers.rpgame.utils.Resources;
+import com.avengers.rpgame.utils.StartingPositionsReducer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -22,8 +23,9 @@ import java.util.ArrayList;
 public class EntitiesBuilderDirector implements ICharacterDirector {
     private GameConfig gameConfig = GameConfig.getInstance();
     private GameStatus gameStatus = GameStatus.getInstance();
-
     private ProxyDataManager proxyDataManager = new ProxyDataManager();
+
+    private StartingPositionsReducer startingPositionsReducer = new StartingPositionsReducer();
 
     ISkinFactory skinFactory;
     int idCharacter;
@@ -34,89 +36,19 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     int coins = 1000;
     int experiencePoints;
 
-    //DummyCharacters only contains the animatedCharacter data for it to render on the game. This is used on battle screen /Character selection screen
-    public void buildKnightDummy(CharacterBuilder builder, RPGame rpGame){
-        skinFactory = new KnighSkinFactory();
-        ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
-        builder.setAnimatedCharacter(animatedCharacter);
-    }
-
-    public void buildArcherDummy(CharacterBuilder builder, RPGame rpGame){
-        skinFactory = new ArcherSkinFactory();
-        ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
-        builder.setAnimatedCharacter(animatedCharacter);
-    }
-
-    public void buildMageDummy(CharacterBuilder builder, RPGame rpGame){
-        skinFactory = new MageSkinFactory();
-        ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
-        builder.setAnimatedCharacter(animatedCharacter);
-    }
-
-    public void buildEarthSkeletonDummy(CharacterBuilder builder, RPGame rpGame){
-        skinFactory = new EarthSkeletonSkinFactory();
-        ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
-        builder.setAnimatedCharacter(animatedCharacter);
-    }
-
-    public void buildFireSkeletonDummy(CharacterBuilder builder, RPGame rpGame){
-        skinFactory = new FireSkeletonSkinFactory();
-        ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
-        builder.setAnimatedCharacter(animatedCharacter);
-    }
-
-    public void buildWaterSkeletonDummy(CharacterBuilder builder, RPGame rpGame){
-        skinFactory = new WaterSkeletonSkinFactory();
-        ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
-        builder.setAnimatedCharacter(animatedCharacter);
-    }
-
-    public void buildWindSkeletonDummy(CharacterBuilder builder, RPGame rpGame){
-        skinFactory = new WindSkeletonSkinFactory();
-        ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
-        builder.setAnimatedCharacter(animatedCharacter);
-    }
-
-    public void buildChiefEarthDummy(CharacterBuilder builder, RPGame rpGame){
-        skinFactory = new ChiefEarthSkinFactory();
-        ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
-        builder.setAnimatedCharacter(animatedCharacter);
-    }
-
-    public void buildChiefWindDummy(CharacterBuilder builder, RPGame rpGame){
-        skinFactory = new ChiefWindSkinFactory();
-        ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
-        builder.setAnimatedCharacter(animatedCharacter);
-    }
-
-    public void buildChiefWaterDummy(CharacterBuilder builder, RPGame rpGame){
-        skinFactory = new ChiefWaterSkinFactory();
-        ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
-        builder.setAnimatedCharacter(animatedCharacter);
-    }
-
-    public void buildChiefFireDummy(CharacterBuilder builder, RPGame rpGame){
-        skinFactory = new ChiefFireSkinFactory();
-        ISkin skin = skinFactory.createSkin();
+    //This method builds a Dummy from any complete character. A dummy only contains the animatedCharacter data for it to render on the game. This is used on battle screen /Character selection screen.
+    public void buildBattleDummy(ICharacterBuilder builder, RPGame rpGame, AbstractCharacter baseCharacter){
+        ISkin skin = baseCharacter.getAnimatedCharacter().getSkin();
         AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
         builder.setAnimatedCharacter(animatedCharacter);
     }
 
     // Playable characters
-    public void buildKnight(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+    public void buildKnight(ICharacterBuilder builder, World world, RPGame rpGame, String playerName){
+        position = startingPositionsReducer.getPosition("player");
         skinFactory = new KnighSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
         this.idCharacter=1;
@@ -127,6 +59,13 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
 
         ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Knight");
         items.add(proxyDataManager.getSpecialItem("Talisman tierra"));
+        if(true){ //Keys for debug
+//        if(gameConfig.isGodMode()){ //Keys for debug
+            items.add(proxyDataManager.getSpecialItem("Llave tierra"));
+            items.add(proxyDataManager.getSpecialItem("Llave agua"));
+            items.add(proxyDataManager.getSpecialItem("Llave viento"));
+            items.add(proxyDataManager.getSpecialItem("Llave fuego"));
+        }
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Knight",1);
         ArrayList<Skill> skills = new ArrayList<>();
 
@@ -139,10 +78,11 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setSkills(skills);
     }
 
-    public void buildArcher(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+    public void buildArcher(ICharacterBuilder builder, World world, RPGame rpGame, String playerName){
+        position = startingPositionsReducer.getPosition("player");
         skinFactory = new ArcherSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
         this.idCharacter=2;
@@ -165,10 +105,11 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setSkills(skills);
     }
 
-    public void buildMage(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+    public void buildMage(ICharacterBuilder builder, World world, RPGame rpGame, String playerName){
+        position = startingPositionsReducer.getPosition("player");
         skinFactory = new MageSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
         this.idCharacter=3;
@@ -193,10 +134,11 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     }
 
     //Playable characters from DB
-    public void buildKnightFromDB(CharacterBuilder builder, World world, RPGame rpGame, int partyMember){
+    public void buildKnightFromDB(ICharacterBuilder builder, World world, RPGame rpGame, int partyMember){
+        position = startingPositionsReducer.getPosition("player");
         skinFactory = new KnighSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
         ArrayList<Item> items = gameStatus.getParty().getPartyMember(partyMember).getItems();
@@ -219,10 +161,11 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setSkills(skills);
     }
 
-    public void buildArcherFromDB(CharacterBuilder builder, World world, RPGame rpGame, int partyMember){
+    public void buildArcherFromDB(ICharacterBuilder builder, World world, RPGame rpGame, int partyMember){
+        position = startingPositionsReducer.getPosition("player");
         skinFactory = new ArcherSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
         ArrayList<Item> items = gameStatus.getParty().getPartyMember(partyMember).getItems();
@@ -245,10 +188,11 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setSkills(skills);
     }
 
-    public void buildMageFromDB(CharacterBuilder builder, World world, RPGame rpGame, int partyMember){
+    public void buildMageFromDB(ICharacterBuilder builder, World world, RPGame rpGame, int partyMember){
+        position = startingPositionsReducer.getPosition("player");
         skinFactory = new MageSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
         ArrayList<Item> items = gameStatus.getParty().getPartyMember(partyMember).getItems();
@@ -272,16 +216,17 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     }
 
     //Enemies
-     public void buildEarthSkeleton(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+     public void buildEarthSkeleton(ICharacterBuilder builder, World world, RPGame rpGame, String id){
+        position = startingPositionsReducer.getPosition(id);
         skinFactory = new EarthSkeletonSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
         this.idCharacter=4;
         this.level=1;
         this.characterClass = proxyDataManager.getEnemyClass("EarthSkeleton");
-        this.name= characterClass.getDescription();
+        this.name= id;
 
         ArrayList<Item> items = proxyDataManager.getEnemyItemsList("EarthSkeleton");
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("EarthSkeleton");
@@ -295,16 +240,17 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setSkills(skills);
     }
 
-    public void buildWaterSkeleton(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
-        skinFactory = new FireSkeletonSkinFactory();
+    public void buildWaterSkeleton(ICharacterBuilder builder, World world, RPGame rpGame, String id){
+        position = startingPositionsReducer.getPosition(id);
+        skinFactory = new WaterSkeletonSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
         this.idCharacter=5;
         this.level=7;
         this.characterClass = proxyDataManager.getEnemyClass("WaterSkeleton");
-        this.name= characterClass.getDescription();
+        this.name= id;
 
         ArrayList<Item> items = proxyDataManager.getEnemyItemsList("WaterSkeleton");
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("WaterSkeleton");
@@ -318,16 +264,17 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setSkills(skills);
     }
 
-    public void buildWindSkeleton(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
-        skinFactory = new FireSkeletonSkinFactory();
+    public void buildWindSkeleton(ICharacterBuilder builder, World world, RPGame rpGame, String id){
+        position = startingPositionsReducer.getPosition(id);
+        skinFactory = new WindSkeletonSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
         this.idCharacter=6;
         this.level=13;
         this.characterClass = proxyDataManager.getEnemyClass("WindSkeleton");
-        this.name= characterClass.getDescription();
+        this.name= id;
 
         ArrayList<Item> items = proxyDataManager.getEnemyItemsList("WindSkeleton");
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("WindSkeleton");
@@ -341,16 +288,18 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setSkills(skills);
     }
 
-    public void buildFireSkeleton(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+    public void buildFireSkeleton(ICharacterBuilder builder, World world, RPGame rpGame, String id){
+        position = startingPositionsReducer.getPosition(id);
         skinFactory = new FireSkeletonSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
+        ((DynamicAnimatedCharacter)animatedCharacter).setWorldPosition(new Vector2(0,0));
         builder.setAnimatedCharacter(animatedCharacter);
 
         this.idCharacter=7;
         this.level=19;
         this.characterClass = proxyDataManager.getEnemyClass("FireSkeleton");
-        this.name= characterClass.getDescription();
+        this.name= id;
 
         ArrayList<Item> items = proxyDataManager.getEnemyItemsList("FireSkeleton");
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("FireSkeleton");
@@ -364,16 +313,17 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setSkills(skills);
     }
 
-    public void buildChiefEarth(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
-        skinFactory = new EarthSkeletonSkinFactory();
+    public void buildChiefEarth(ICharacterBuilder builder, World world, RPGame rpGame, String id){
+        position = startingPositionsReducer.getPosition(id);
+        skinFactory = new ChiefEarthSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
         this.idCharacter=8;
         this.level=6;
         this.characterClass = proxyDataManager.getEnemyClass("EarthChief");
-        this.name= characterClass.getDescription();
+        this.name= id;
 
         ArrayList<Item> items = proxyDataManager.getEnemyItemsList("EarthChief");
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("EarthChief");
@@ -387,16 +337,17 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setSkills(skills);
     }
 
-    public void buildChiefWater(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+    public void buildChiefWater(ICharacterBuilder builder, World world, RPGame rpGame, String id){
+        position = startingPositionsReducer.getPosition(id);
         skinFactory = new ChiefWaterSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
         this.idCharacter=9;
         this.level=12;
         this.characterClass = proxyDataManager.getEnemyClass("WaterChief");
-        this.name= characterClass.getDescription();
+        this.name= id;
 
         ArrayList<Item> items = proxyDataManager.getEnemyItemsList("WaterChief");
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("WaterChief");
@@ -410,16 +361,17 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setSkills(skills);
     }
 
-    public void buildChiefWind(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+    public void buildChiefWind(ICharacterBuilder builder, World world, RPGame rpGame, String id){
+        position = startingPositionsReducer.getPosition(id);
         skinFactory = new ChiefWindSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
         this.idCharacter=10;
         this.level=18;
         this.characterClass = proxyDataManager.getEnemyClass("WindChief");
-        this.name= characterClass.getDescription();
+        this.name= id;
 
         ArrayList<Item> items = proxyDataManager.getEnemyItemsList("WindChief");
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("WindChief");
@@ -433,16 +385,17 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setSkills(skills);
     }
 
-    public void buildChiefFire(CharacterBuilder builder, World world, RPGame rpGame, String playerName){
+    public void buildChiefFire(ICharacterBuilder builder, World world, RPGame rpGame, String id){
+        position = startingPositionsReducer.getPosition(id);
         skinFactory = new ChiefFireSkinFactory();
         ISkin skin = skinFactory.createSkin();
-        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame);
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
         this.idCharacter=11;
         this.level=20;
         this.characterClass = proxyDataManager.getEnemyClass("FireChief");
-        this.name= characterClass.getDescription();
+        this.name= id;
 
         ArrayList<Item> items = proxyDataManager.getEnemyItemsList("FireChief");
         ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("FireChief");

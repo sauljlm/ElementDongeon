@@ -14,8 +14,8 @@ import com.avengers.rpgame.logic.entities.character.behaviour.endFightActions.He
 import com.avengers.rpgame.logic.entities.character.behaviour.endFightActions.IVisitor;
 import com.avengers.rpgame.logic.entities.character.behaviour.endFightActions.UpdateLevelVisitor;
 import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
+import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
 import com.avengers.rpgame.logic.entities.reward.AReward;
-import com.avengers.rpgame.logic.entities.reward.BattleReward;
 import com.avengers.rpgame.logic.entities.reward.creation.RewardFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -38,6 +38,8 @@ import static com.avengers.rpgame.utils.Resources.*;
 
 public class FightScreen implements Screen {
     private final RPGame game;
+
+    private GameStatus gameStatus;
     private final Timer timer;
 
     private final GameConfig config;
@@ -103,12 +105,12 @@ public class FightScreen implements Screen {
     private String messageString;
     private ArrayList<String> messageStringList;
 
-    public FightScreen(final RPGame game, final Party playerParty, final Party enemyParty) {
-        GameStatus.getInstance().saveOnDB();
+    public FightScreen(final RPGame game, final Party enemyParty) {
         this.game = game;
-        this.timer = new Timer();
         this.config = GameConfig.getInstance();
-        this.playerParty = playerParty;
+        this.gameStatus = GameStatus.getInstance();
+        this.timer = new Timer();
+        this.playerParty = gameStatus.getParty();
         this.enemyParty = enemyParty;
         messageStringList = new ArrayList<String>();
         aiManager = AIManager.getInstance();
@@ -116,30 +118,23 @@ public class FightScreen implements Screen {
         director = new EntitiesBuilderDirector();
         characterBuilder = new CharacterBuilder();
         hudPlayer = new BattleHUD(0, playerParty);
-        hudEnemy = new BattleHUD(1, this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);
+        hudEnemy = new BattleHUD(1, enemyParty);
+//        hudEnemy = new BattleHUD(1, this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);
         rewardFactory = new RewardFactory();
 
-        director.buildKnightDummy(characterBuilder, game);
+        director.buildBattleDummy(characterBuilder, game, playerParty.getPartyMember(1));
         partyMemberAnimated1 = characterBuilder.getResult();
         partyMemberAnimated1.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/9.5f/16, config.getResolutionVertical()/3*1.32f/16));
 
-        director.buildArcherDummy(characterBuilder, game);
+        director.buildBattleDummy(characterBuilder, game, playerParty.getPartyMember(2));
         partyMemberAnimated2 = characterBuilder.getResult();
         partyMemberAnimated2.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/9.5f/16*2, config.getResolutionVertical()/3*1.3f/16));
 
-        director.buildMageDummy(characterBuilder, game);
+        director.buildBattleDummy(characterBuilder, game, playerParty.getPartyMember(3));
         partyMemberAnimated3 = characterBuilder.getResult();
         partyMemberAnimated3.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/9.5f/16*3, config.getResolutionVertical()/3*1.3f/16));
 
-        //director.buildChiefFireDummy(characterBuilder, game);
-        //director.buildChiefWaterDummy(characterBuilder, game);
-        //director.buildChiefWindDummy(characterBuilder, game);
-        //director.buildChiefEarthDummy(characterBuilder, game);
-
-        //director.buildWindSkeletonDummy(characterBuilder, game);
-        //director.buildWaterSkeletonDummy(characterBuilder, game);
-        director.buildFireSkeletonDummy(characterBuilder, game);
-        //director.buildEarthSkeletonDummy(characterBuilder, game);
+        director.buildBattleDummy(characterBuilder, game, enemyParty.getActivePartyMember());
 
         enemy = characterBuilder.getResult();
         enemy.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/4f/16*3, config.getResolutionVertical()/3*1.35f/16));
@@ -291,14 +286,13 @@ public class FightScreen implements Screen {
     //Custom methods
     private void changeMessageBoard(String text){
         messageStringList.add(text);
-        if(messageStringList.size() >5){
+        if(messageStringList.size() >=5){
             messageStringList.remove(0);
         }
         messageString = "";
         for (String message: messageStringList) {
             messageString =messageString+"\n"+message;
         }
-//        this.messageString = text;
         this.messageText.setText(messageString);
     }
 
@@ -329,7 +323,7 @@ public class FightScreen implements Screen {
             buttonsTable.row();
             buttonsTable.add(buttonW).fillX().expandX().height(100);
             buttonW.add(buttonA);
-            buttonA.setText(attack.getName() +":  "+ attack.getDescription());
+            buttonA.setText(attack.getDescription());
             index++;
 
             final int finalIndex = index;
@@ -342,7 +336,7 @@ public class FightScreen implements Screen {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
                         playerParty.getActivePartyMember().attackOther(playerParty.getActivePartyMember().getAttacks().get(finalIndex-1), enemyParty.getActivePartyMember());
                         playerTimer.setValue(playerTimer.getMinValue());
-                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + attack.getName()+ " ha infringido " +attack.getHPEffect() + " de daño.");
+                        changeMessageBoard(playerParty.getActivePartyMember().getDescription() + " ha utilizado " + attack.getDescription()+ " ha infringido " +attack.getHPEffect() + " de daño.");
                     }
                 }
             });
@@ -358,7 +352,7 @@ public class FightScreen implements Screen {
             buttonsTable.row();
             buttonsTable.add(buttonW).fillX().expandX().height(100);
             buttonW.add(buttonA);
-            buttonA.setText(skill.getName() +":  "+ skill.getDescription());
+            buttonA.setText(skill.getDescription());
             index++;
 
             final int finalIndex = index;
@@ -371,7 +365,7 @@ public class FightScreen implements Screen {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
                         playerParty.getActivePartyMember().skillOther(playerParty.getActivePartyMember().getSkills().get(finalIndex-1), enemyParty.getActivePartyMember());
                         playerTimer.setValue(playerTimer.getMinValue());
-                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado " + skill.getName()+ " ha tenido el efecto de " +skill.gethPEffect());
+                        changeMessageBoard(playerParty.getActivePartyMember().getDescription() + " ha utilizado " + skill.getDescription()+ " ha tenido el efecto de " +skill.gethPEffect());
                     }
                 }
             });
@@ -387,7 +381,7 @@ public class FightScreen implements Screen {
             buttonsTable.row();
             buttonsTable.add(buttonW).fillX().expandX().height(100);
             buttonW.add(buttonA);
-            buttonA.setText(item.getName() +":  "+ item.getDescription());
+            buttonA.setText(item.getDescription());
             index++;
 
             final int finalIndex = index;
@@ -400,7 +394,7 @@ public class FightScreen implements Screen {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
                         playerParty.getActivePartyMember().receiveItem(playerParty.getActivePartyMember().getItems().get(finalIndex-1)); //TODO make items and skills dualmode for attack others and self use.
                         playerTimer.setValue(playerTimer.getMinValue());
-                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado el item " + item.getName()+ " ha tenido el efecto de " +item.gethPEffect());
+                        changeMessageBoard(playerParty.getActivePartyMember().getDescription() + " ha utilizado el item " + item.getDescription()+ " ha tenido el efecto de " +item.gethPEffect());
                         setActivePlayerItems();
                     }
                 }
@@ -412,7 +406,7 @@ public class FightScreen implements Screen {
         float delay = MathUtils.random(500);
         if(enemyTimer.getValue() == enemyTimer.getMaxValue() && delay >492){
             String message = aiManager.accessMonsterBattleAI().selectAction(enemyParty.getActivePartyMember(), playerParty.getActivePartyMember());
-            changeMessageBoard(enemyParty.getActivePartyMember().getName()+ " ha utilizado "+message);
+            changeMessageBoard(enemyParty.getActivePartyMember().getDescription()+ " ha utilizado "+message);
             enemyTimer.setValue(enemyTimer.getMinValue());
         }
     }
@@ -429,15 +423,11 @@ public class FightScreen implements Screen {
     public void  logic(float delta){
         String result = refereeBattleAI.manageBattle(playerParty, enemyParty);
         if(result.equals("EnemyWins")){
-            IVisitor visitor = new HealVisitor();
-            GameStatus.getInstance().getParty().getPartyMember(1).accept(visitor);
-            GameStatus.getInstance().getParty().getPartyMember(2).accept(visitor);
-            GameStatus.getInstance().getParty().getPartyMember(3).accept(visitor);
-            GameStatus.getInstance().setStatus("gameInProgress");
             this.dispose();
-            game.setScreen(new GameOverScreen(game));
+            game.setScreen(new GameOverScreen());
         }
         if(result.equals("PlayerWins")){
+            gameStatus.getWorld().destroyBody(((DynamicAnimatedCharacter)enemyParty.getActivePartyMember().getAnimatedCharacter()).getPlayer());
             //TODO Improve this, maybe use visitor pattern
             AReward reward = rewardFactory.createReward(enemyParty.getActivePartyMember());
             IVisitor visitor = new EndFightVisitor(reward);

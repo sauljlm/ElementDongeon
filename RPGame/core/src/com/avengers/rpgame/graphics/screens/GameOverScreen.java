@@ -20,8 +20,9 @@ import static com.avengers.rpgame.utils.Resources.*;
 import static com.avengers.rpgame.utils.Resources.resourceThemeMusic;
 
 public class GameOverScreen implements Screen {
-        final RPGame game;
-        private final GameConfig config;
+        private RPGame game;
+        private GameStatus gameStatus;
+        private GameConfig config;
         private final Music backgroundMusic;
         private final Texture backgroundImage;
 
@@ -34,10 +35,11 @@ public class GameOverScreen implements Screen {
 
         private MyInputProcessor input;
 
-        public GameOverScreen(RPGame game) {
-            this.game = game;
-            input = new MyInputProcessor();
+        public GameOverScreen() {
+            game = RPGame.getInstance();
             config = GameConfig.getInstance();
+            gameStatus = GameStatus.getInstance();
+            input = new MyInputProcessor();
 
             ScreenWidth = config.getResolutionHorizontal();
             ScreenHeight = config.getResolutionVertical();
@@ -195,8 +197,8 @@ public class GameOverScreen implements Screen {
         private void executeAction() {
             switch (this.actualSelection){
                 case 0:
-                    GameStatus.getInstance().setStatus("loadedGame");
-                    GameStatus.getInstance().loadFromDB(GameStatus.getInstance().getSaveSlot());
+                    gameStatus.loadFromDB(GameStatus.getInstance().getSaveSlot());
+                    gameStatus.setStatus("loadedGame");
                     game.setScreen(new OverworldScreen(game));
                     dispose();
                     break;

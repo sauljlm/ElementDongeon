@@ -23,7 +23,7 @@ public class DesktopLauncher {
 			gameConfig.setResolutionHorizontal(Lwjgl3ApplicationConfiguration.getDisplayMode().width);
 			gameConfig.setResolutionVertical(Lwjgl3ApplicationConfiguration.getDisplayMode().height);
 		}
-		new Lwjgl3Application(new RPGame(), config);
+		new Lwjgl3Application(RPGame.getInstance(), config);
 	}
 
 	//Gets an instance of GameConfig and sets the configuration for the game
@@ -42,7 +42,7 @@ public class DesktopLauncher {
 		gameConfig.setMusicVolume(0.2f);
 		gameConfig.setSoundEffectsVolume(0.2f);
 		gameConfig.setFrameTime(1 / 15f);//Value based on docs
-		gameConfig.setDebugPhysics(false);
+		gameConfig.setDebugPhysics(true);
 		return gameConfig;
 	}
 }

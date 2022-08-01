@@ -1,11 +1,14 @@
 package com.avengers.rpgame.ai.concrete;
 
+import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.ai.Interfaces.Observer;
 import com.avengers.rpgame.data.dataStorage.ProxyDataManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
+import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.dialog.Dialog;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.physics.box2d.Body;
 
 import java.util.ArrayList;
@@ -50,12 +53,13 @@ public class ChestObserver implements Observer {
 
     @Override
     public void actionTrigger(AbstractCharacter playerCharacter, Body currentBody, String currentMapObject) {
-        Dialog.updateSeaker("Cofre");
+        Dialog dialog = new Dialog();
+        dialog.updateSeaker("Cofre");
         if (verifyAccess(playerCharacter, currentMapObject)) {
             provideTalisman(playerCharacter, currentMapObject);
-            Dialog.updateDialog("Has obtenido un talisman, ve donde el rey para cambiarlo por una llave");
+            dialog.updateDialog("Has obtenido un talisman, ve donde el rey para cambiarlo por una llave");
         } else {
-            Dialog.updateDialog("Debes vencer al jefe para abrir el cofre");
+            dialog.updateDialog("Debes vencer al jefe para abrir el cofre");
         }
     }
 }

@@ -175,16 +175,19 @@ public class LoadGameScreen implements Screen {
             switch (this.actualSelection) {
                 case 0:
                     GameStatus.getInstance().loadFromDB(1);
+                    GameStatus.getInstance().setStatus("loadedGame");
                     game.setScreen(new OverworldScreen(game));
                     dispose();
                     break;
                 case 1:
                     GameStatus.getInstance().loadFromDB(2);
+                    GameStatus.getInstance().setStatus("loadedGame");
                     game.setScreen(new OverworldScreen(game));
                     dispose();
                     break;
                 case 2:
                     GameStatus.getInstance().loadFromDB(3);
+                    GameStatus.getInstance().setStatus("loadedGame");
                     game.setScreen(new OverworldScreen(game));
                     dispose();
                     break;

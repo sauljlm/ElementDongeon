@@ -22,15 +22,18 @@ public class BDGameStatusDAO implements IGameStatusDAO{
         String timeStamp = String.valueOf(System.currentTimeMillis());
         ArrayList<String> querys = new ArrayList<String>();
         String sqlQuery;
+        //Delete previous slot saves
+        sqlQuery = "DELETE FROM AbstractCharacter where saveSlot is "+gameStatus.getSaveSlot()+" and timeStamp is NOT "+timeStamp;
+        querys.add(sqlQuery);
+        sqlQuery = "DELETE FROM Attack where saveSlot is "+gameStatus.getSaveSlot()+" and timeStamp is NOT "+timeStamp;
+        querys.add(sqlQuery);
+        sqlQuery = "DELETE FROM Item where saveSlot is "+gameStatus.getSaveSlot()+" and timeStamp is NOT "+timeStamp;
+        querys.add(sqlQuery);
+        sqlQuery = "DELETE FROM Skill where saveSlot is "+gameStatus.getSaveSlot()+" and timeStamp is NOT "+timeStamp;
+        querys.add(sqlQuery);
+        sqlQuery = "DELETE FROM Enemy where saveSlot is "+gameStatus.getSaveSlot()+" and timeStamp is NOT "+timeStamp;
+        querys.add(sqlQuery);
         while (partyMember>0){
-            sqlQuery = "DELETE FROM AbstractCharacter where saveSlot is "+gameStatus.getSaveSlot()+" and timeStamp is NOT "+timeStamp;
-            querys.add(sqlQuery);
-            sqlQuery = "DELETE FROM Attack where saveSlot is "+gameStatus.getSaveSlot()+" and timeStamp is NOT "+timeStamp;
-            querys.add(sqlQuery);
-            sqlQuery = "DELETE FROM Item where saveSlot is "+gameStatus.getSaveSlot()+" and timeStamp is NOT "+timeStamp;
-            querys.add(sqlQuery);
-            sqlQuery = "DELETE FROM Skill where saveSlot is "+gameStatus.getSaveSlot()+" and timeStamp is NOT "+timeStamp;
-            querys.add(sqlQuery);
             sqlQuery = "INSERT INTO AbstractCharacter "+
                     "(saveSlot,partyMember,idCharacter,name,description,positionX,positionY,level,healthPoints,magicPoints,healthPointsMax,magicPointsMax,strength,speed,magic,resistance,luck,coins,characterClass,experiencePoints,timeStamp)" +
                     "VALUES("+
@@ -121,6 +124,23 @@ public class BDGameStatusDAO implements IGameStatusDAO{
             }
             partyMember--;
         }
+        //Enemies save, This is a multiLine query, there are 40 enemies, doing 1 query and conection/enemy is too slow
+        sqlQuery = "INSERT INTO Enemy "+
+                "(saveSlot,name,healthPoints,timeStamp)" +
+                "VALUES";
+        for (int i = 0;i < gameStatus.getEnemies().size(); i++){
+            sqlQuery = sqlQuery+"("+
+                    gameStatus.getSaveSlot()+",'"+
+                    gameStatus.getEnemies().get(i).getName()+"',"+
+                    gameStatus.getEnemies().get(i).getHealthPoints()+","+
+                    timeStamp+
+                    ")";
+            if(i != gameStatus.getEnemies().size()-1){
+                sqlQuery = sqlQuery+",";
+            }
+        }
+        querys.add(sqlQuery);
+        //Run the querys
         for (String query : querys)
         {
             try {
@@ -142,6 +162,7 @@ public class BDGameStatusDAO implements IGameStatusDAO{
         String sqlQuery2 = "SELECT * from Attack where saveSlot is "+saveSlot;
         String sqlQuery3 = "SELECT * from Item where saveSlot is "+saveSlot;
         String sqlQuery4 = "SELECT * from Skill where saveSlot is "+saveSlot;
+        String sqlQuery5 = "SELECT * from Enemy where saveSlot is "+saveSlot;
         try {
             resultSet = DBConnector.getConnection().executeQueryGET(sqlQuery1);
             gameStatus.setSaveSlot(Integer.parseInt(resultSet.getString("saveSlot"))); //Sets the saveSlot
@@ -169,6 +190,9 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                 character.getCharacterClass().setIdCharacterClass(Integer.parseInt(resultSet.getString("characterClass")));
                 ((PlayableCharacter)character).setExperiencePoints(Integer.parseInt(resultSet.getString("experiencePoints")));
                 party.setPartyMember(Integer.parseInt(resultSet.getString("partyMember")), character);
+                character.getAttacks().clear();
+                character.getItems().clear();
+                character.getSkills().clear();
             }
 
             resultSet = DBConnector.getConnection().executeQueryGET(sqlQuery2);
@@ -221,6 +245,12 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                 character.getSkills().add(skill);
             }
 
+            resultSet = DBConnector.getConnection().executeQueryGET(sqlQuery5);
+            gameStatus.getEnemies().clear();
+            gameStatus.getEnemiesHealth().clear();
+            while(resultSet.next()){
+                gameStatus.getEnemiesHealth().put(resultSet.getString("name"), Integer.parseInt(resultSet.getString("healthPoints")));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         };

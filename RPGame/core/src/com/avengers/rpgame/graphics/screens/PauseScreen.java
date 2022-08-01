@@ -191,7 +191,6 @@ public class PauseScreen implements Screen {
     private void executeAction() {
         switch (this.actualSelection){
             case 0:
-                GameStatus.getInstance().updateLocation();
                 GameStatus.getInstance().setSaveSlot(1);
                 GameStatus.getInstance().saveOnDB();
                 GameStatus.getInstance().setStatus("gameInProgress");
@@ -200,7 +199,6 @@ public class PauseScreen implements Screen {
                 dispose();
                 break;
             case 1:
-                GameStatus.getInstance().updateLocation();
                 GameStatus.getInstance().setSaveSlot(2);
                 GameStatus.getInstance().saveOnDB();
                 GameStatus.getInstance().setStatus("gameInProgress");
@@ -208,7 +206,6 @@ public class PauseScreen implements Screen {
                 dispose();
                 break;
             case 2:
-                GameStatus.getInstance().updateLocation();
                 GameStatus.getInstance().setSaveSlot(3);
                 GameStatus.getInstance().saveOnDB();
                 GameStatus.getInstance().setStatus("gameInProgress");
@@ -216,7 +213,6 @@ public class PauseScreen implements Screen {
                 dispose();
                 break;
             case 3:
-                GameStatus.getInstance().updateLocation();
                 GameStatus.getInstance().setStatus("gameInProgress");
                 game.setScreen(new OverworldScreen(game));
                 dispose();

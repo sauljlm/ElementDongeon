@@ -42,6 +42,8 @@ public class CharacterSelectionScreen implements Screen {
     private Text inputTitle1;
     private Text inputTitle2;
 
+//    private
+
     private MyInputProcessor input;
     private InputMultiplexer multiplexer;
 
@@ -324,7 +326,7 @@ public class CharacterSelectionScreen implements Screen {
                     dispose();
                     break;
                 case 1:
-                    game.setScreen(new MainMenuScreen(game));
+                    game.setScreen(new SaveSlotSelectionScreen());
                     dispose();
                     break;
             }

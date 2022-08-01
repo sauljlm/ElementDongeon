@@ -1,5 +1,6 @@
 package com.avengers.rpgame.ai.concrete;
 
+import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.ai.Interfaces.Observer;
 import com.avengers.rpgame.graphics.dialog.Dialog;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
@@ -20,7 +21,8 @@ public class RandomNPCObserver implements Observer {
 
     @Override
     public void actionTrigger(AbstractCharacter playerCharacter, Body currentBody, String currentMapObject) {
-        Dialog.updateSeaker("Aldeano");
-        Dialog.updateDialog("Deberias de hablar con el Rey!");
+        Dialog dialog = new Dialog();
+        dialog.updateSeaker("Aldeano");
+        dialog.updateDialog("Deberias de hablar con el Rey!");
     }
 }

@@ -5,10 +5,9 @@ import com.avengers.rpgame.ai.AIManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.IOManager;
-import com.avengers.rpgame.graphics.dialog.Dialog;
 import com.avengers.rpgame.graphics.graphicManagerMediador.Mediador;
 import com.avengers.rpgame.graphics.hud.HUD;
-import com.avengers.rpgame.data.dataStorage.DataStorage;
+import com.avengers.rpgame.graphics.npc.EnemiesManager;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.factory.CharacterFactory;
 import com.badlogic.gdx.Screen;
@@ -40,11 +39,13 @@ public class OverworldScreen implements Screen {
 
     // End HUD values
     private HUD hudElements;
-    private Dialog dialog;
 
     //Interactive map objects
     private ArrayList<Vector2> interactiveObjVectors;
     private Sprite accessPortal;
+
+    //Monsters
+    EnemiesManager enemiesManager;
 
 
     public OverworldScreen(final RPGame game) {
@@ -66,7 +67,9 @@ public class OverworldScreen implements Screen {
 
         hudElements = new HUD(gameStatus.getParty());
 
-        dialog = new Dialog();
+        // Monsters
+        enemiesManager = new EnemiesManager();
+        enemiesManager.createEnemies();
 
         //Interactive objects
         interactiveObjVectors = new ArrayList<Vector2>();
@@ -75,7 +78,7 @@ public class OverworldScreen implements Screen {
 
         this.accessPortal = new Sprite(new Texture(resourcePortalTexture));
         accessPortal.setCenter(interactiveObjVectors.get(0).x,interactiveObjVectors.get(0).y);
-        GameStatus.getInstance().setStatus("newGame");
+        gameStatus.saveOnDB();
     }
 
     @Override
@@ -86,9 +89,9 @@ public class OverworldScreen implements Screen {
 
     //This method holds the game logic
     public void  logic(float delta){
+//        monsterMovement.chaseActivePlayer(enemyCharacter);
         aiManager.moveAllies(playerParty.getActivePartyMember(), playerParty.getInactivePartyMember(1), 1);
         aiManager.moveAllies(playerParty.getInactivePartyMember(1), playerParty.getInactivePartyMember(2), 1);
-        aiManager.monitorSurroundings(playerParty.getActivePartyMember());
         hudElements.update();
     }
 
@@ -108,6 +111,7 @@ public class OverworldScreen implements Screen {
         playerParty.getPartyMember1().getAnimatedCharacter().draw(delta);
         playerParty.getPartyMember2().getAnimatedCharacter().draw(delta);
         playerParty.getPartyMember3().getAnimatedCharacter().draw(delta);
+        enemiesManager.draw(delta);
 
         for (int j=0;j<=3;j++) {
             game.batch.draw(accessPortal, (interactiveObjVectors.get(j).x-1.25f) * config.getPPM(), (interactiveObjVectors.get(j).y-1.25f) * config.getPPM());
@@ -119,10 +123,8 @@ public class OverworldScreen implements Screen {
         graphicMediator.changeProjectionMatrix();
         game.batch.begin();//We can stop render, do something and start again
         hudElements.draw(game.batch);
-        if (dialog.getDialogMessage().size > 0) {
-            dialog.draw(game.batch);
-        }
         game.batch.end();
+        aiManager.monitorSurroundings(playerParty.getActivePartyMember());
     }
 
     @Override

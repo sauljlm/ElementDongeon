@@ -219,7 +219,7 @@ public abstract class AbstractCharacter implements BattleActions {
     }
 
     public void addNewItem (Item item) {
-        System.out.println(item);
+//        System.out.println(item);
         this.items.add(item);
     }
 

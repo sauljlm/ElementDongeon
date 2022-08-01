@@ -23,7 +23,8 @@ public class SignObserver implements Observer {
 
     @Override
     public void actionTrigger(AbstractCharacter playerCharacter, Body currentBody, String currentMapObject) {
-        Dialog.updateSeaker("Calabozo");
+        Dialog dialog = new Dialog();
+        dialog.updateSeaker("Calabozo");
 
         String message = "";
 
@@ -38,9 +39,9 @@ public class SignObserver implements Observer {
         } else if (currentMapObject.contains("Capital")) {
             message = "Bienvenido a la ciudad central del reino";
         } else if (currentMapObject.contains("House")) {
+            dialog.updateSeaker("Hola");
             message = "Debes proteger el reino y vencer a los jefes de los calabozos, grandes aventuras te esperan!";
         }
-
-        Dialog.updateDialog(message);
+        dialog.updateDialog(message);
     }
 }

@@ -199,7 +199,7 @@ public class MainMenuScreen implements Screen {
     private void executeAction() {
         switch (this.actualSelection){
             case 0:
-                game.setScreen(new CharacterSelectionScreen(game));
+                game.setScreen(new SaveSlotSelectionScreen());
                 dispose();
                 break;
             case 1:

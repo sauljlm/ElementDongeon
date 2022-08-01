@@ -6,9 +6,11 @@ import com.avengers.rpgame.graphics.hud.elements.Heart;
 import com.avengers.rpgame.graphics.hud.elements.MP;
 import com.avengers.rpgame.graphics.hud.elements.UserLevel;
 import com.avengers.rpgame.graphics.hud.elements.Weapon;
+import com.avengers.rpgame.graphics.store.Coin;
 import com.avengers.rpgame.graphics.text.FontFactory;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
+import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.concrete.PlayableCharacter;
 import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
@@ -28,6 +30,9 @@ public class HUD {
     private final int maxPoints = ((PlayableCharacter)GameStatus.getInstance().getParty().getActivePartyMember()).getExperiencePointsMax();
     private GameConfig gameConfig;
     private AbstractCharacter character;
+
+    private Coin coin = new Coin(50, 50, 0.92f, 0.11f);
+    private BitmapFont characterCoinsFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
 
     public HUD (Party playerParty) {
         gameConfig = GameConfig.getInstance();
@@ -77,6 +82,9 @@ public class HUD {
 
     public void draw (SpriteBatch batch) {
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
+        if(gameConfig.isDebugPhysics()){ //Debug print for character coordinates
+            gameFont.draw(batch, String.valueOf(((DynamicAnimatedCharacter)this.character.getAnimatedCharacter()).getPlayer().getPosition()), resolution.x*0.2f, resolution.y*0.2f);
+        }
 
         for(Heart heart: heartsHB) {
             heart.get_sprite().draw(batch);
@@ -91,6 +99,8 @@ public class HUD {
         lvlFont.draw(batch, "Nivel", resolution.x*0.032f, resolution.y*0.965f);
         gameFont.draw(batch, "Exp: " + (int)((PlayableCharacter)this.character).getExperiencePoints() + "/" + this.maxPoints, resolution.x*0.08f, resolution.y*0.96f);
         weapon.get_sprite().draw(batch);
+        coin.get_sprite().draw(batch);
+        characterCoinsFont.draw(batch, String.valueOf(this.character.getCoins()), resolution.x*0.115f, resolution.y- resolution.y*0.100f+coin.getHeight()/2f);
     }
 
     private void createHearts() {

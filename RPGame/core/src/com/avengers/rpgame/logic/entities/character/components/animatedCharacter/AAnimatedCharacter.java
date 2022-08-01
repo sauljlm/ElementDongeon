@@ -126,6 +126,14 @@ public abstract class AAnimatedCharacter extends Sprite {
         this.sizeY = sizeY;
     }
 
+    public ISkin getSkin() {
+        return skin;
+    }
+
+    public void setSkin(ISkin skin) {
+        this.skin = skin;
+    }
+
     //sets the current atlas and texture for each frame based on the current action
     private void setCurrentFrame(){
         if(action.equals("runningUp")){
@@ -153,6 +161,6 @@ public abstract class AAnimatedCharacter extends Sprite {
         currentFrame = currentAnimation.getKeyFrame(elapsedTime, true);
         //The factor used to divide the texture size is related to the dimension of the full sprite (number of images in each sprite), this might be an issue if we use sprites of different sizes
         //If the sizes of sprites are different or the factor is wrong the texture will not be on the expected possition.
-        rpGame.batch.draw(currentFrame, textureScreenLocation.x * gameConfig.getPPM() - currentTexture.getWidth()/22f, textureScreenLocation.y*gameConfig.getPPM()- currentTexture.getHeight()/15,sizeX,sizeY);
+        rpGame.batch.draw(currentFrame, textureScreenLocation.x * gameConfig.getPPM() - currentTexture.getWidth()/currentFrame.getTexture().getWidth()*25, textureScreenLocation.y*gameConfig.getPPM()- currentTexture.getHeight()/currentFrame.getTexture().getHeight()*2.5f,sizeX,sizeY);
     }
 }

@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class Text {
     private GameConfig gameConfig;
+
+    private RPGame rpGame = RPGame.getInstance();
     private static final Color FONT_COLOR = Color.WHITE;
     private BitmapFont _Font;
     private GlyphLayout _GLayout;
@@ -158,7 +160,7 @@ public class Text {
     //Funciones publicas
 
     public void draw(){
-        this._Font.draw(RPGame.batch, this.getText(),this.getX(),this.getY());
+        this._Font.draw(rpGame.batch, this.getText(),this.getX(),this.getY());
     }
 
 //    public void centerTextScreen(){

@@ -94,12 +94,13 @@ public class KingObserver  implements Observer {
 
     @Override
     public void actionTrigger(AbstractCharacter playerCharacter, Body currentBody, String currentMapObject) {
-        Dialog.updateSeaker("Rey");
+        Dialog dialog = new Dialog();
+        dialog.updateSeaker("Rey");
         if (verifyAccess(playerCharacter)) {
             provideKey(playerCharacter);
-            Dialog.updateDialog("Aqui tienes tus llaves");
+            dialog.updateDialog("Aqui tienes tus llaves");
         } else {
-            Dialog.updateDialog("Necesitas un talisman para entregarte las llaves");
+            dialog.updateDialog("Necesitas un talisman para entregarte las llaves");
         }
     }
 }

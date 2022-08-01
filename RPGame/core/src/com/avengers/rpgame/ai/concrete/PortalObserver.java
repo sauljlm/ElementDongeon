@@ -16,10 +16,10 @@ public class PortalObserver implements Observer {
 
     private boolean verifyAccess(AbstractCharacter playerCharacter, String currentMapObject) {
         boolean access = false;
-        System.out.println(currentMapObject);
+//        System.out.println(currentMapObject);
 
         for (Item itemFound: playerCharacter.getItems()){
-            System.out.println(itemFound.getDescription());
+//            System.out.println(itemFound.getDescription());
             if(currentMapObject.equals("earthPortal")){
                 if (itemFound.getDescription().equalsIgnoreCase("Llave tierra")){
                     access = true;
@@ -53,12 +53,13 @@ public class PortalObserver implements Observer {
 
     @Override
     public void actionTrigger(AbstractCharacter playerCharacter, Body currentBody, String currentMapObject) {
-        Dialog.updateSeaker("Portal");
+        Dialog dialog = new Dialog();
+        dialog.updateSeaker("Portal");
         if (verifyAccess(playerCharacter, currentMapObject)) {
             destroyPortal(currentBody);
-            Dialog.updateDialog("portal abierto");
+            dialog.updateDialog("portal abierto");
         } else {
-            Dialog.updateDialog("El portal no se puede abrir, debes tener una llave");
+            dialog.updateDialog("El portal no se puede abrir, debes tener una llave");
         }
     }
 }

@@ -112,7 +112,7 @@ public class IOManager {
             //This is just for battle testing
             EntitiesBuilderDirector director = new EntitiesBuilderDirector();
             CharacterBuilder characterBuilder = new CharacterBuilder();
-            director.buildEarthSkeleton(characterBuilder, GameStatus.getInstance().getWorld(), game, "Enemigo");
+//            director.buildFireSkeleton(characterBuilder, GameStatus.getInstance().getWorld(), game, "Enemigo");
 
             //TODO implementar logica para la seleccion de enemigo segun nivel de personaje, tambien resolver aparicion de enemigo
             //director.buildWaterSkeleton(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
@@ -132,7 +132,7 @@ public class IOManager {
             enemyParty.setPartyMember2(enemyCharacter);
             enemyParty.setPartyMember3(enemyCharacter);
 
-            game.setScreen(new FightScreen(game, playerParty, enemyParty));
+//            game.setScreen(new FightScreen(game, enemyParty));
             System.out.println("FIGHT !");
         }
 

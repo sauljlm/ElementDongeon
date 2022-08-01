@@ -256,9 +256,6 @@ public class StoreScreen implements Screen {
                 storeElements.update(itemType, actionOption, itemSelected);
                 break;
             case 2:
-                GameStatus.getInstance().updateLocation();
-                //GameStatus.getInstance().setSaveSlot(1);
-                //GameStatus.getInstance().saveOnDB();
                 GameStatus.getInstance().setStatus("gameInProgress");
                 this.actionSelected = false;
                 game.setScreen(new OverworldScreen(game));

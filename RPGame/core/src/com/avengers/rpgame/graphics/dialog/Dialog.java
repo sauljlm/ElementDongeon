@@ -1,5 +1,6 @@
 package com.avengers.rpgame.graphics.dialog;
 
+import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.dialog.elements.DialogSprite;
 import com.avengers.rpgame.graphics.text.FontFactory;
@@ -16,9 +17,9 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 public class Dialog {
-
-    private static Array<String> dialogMessage = new Array<String>();
-    private static String dialogSpeaker = "NPC";
+    private RPGame rpGame;
+    private Array<String> dialogMessage = new Array<String>();
+    private String dialogSpeaker = "NPC";
     private DialogSprite dialogSprite;
     private BitmapFont dialogFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalDialogFontSize, Color.WHITE, false, Color.BLACK);
     private GameConfig gameConfig;
@@ -26,40 +27,47 @@ public class Dialog {
 
     public Dialog () {
         gameConfig = GameConfig.getInstance();
+        rpGame = RPGame.getInstance();
         // this.character = playerParty.getActivePartyMember();
     }
 
-    public static Array<String> getDialogMessage() {
+    public Array<String> getDialogMessage() {
         return dialogMessage;
     }
 
-    public static void updateDialog(String message) {
+    public void updateDialog(String message) {
+        RPGame game = RPGame.getInstance();
         dialogMessage = new Array<String>();
         if (!message.equals("")) {
             dialogMessage.add(message);
         }
+        if (dialogMessage.size > 0) {
+            game.batch.begin();
+            draw();
+            game.batch.end();
+        }
     }
 
-    public static void updateSeaker(String name) {
+    public void updateSeaker(String name) {
         dialogSpeaker = name;
     }
 
-    public void draw (SpriteBatch batch) {
+    public void draw () {
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
 
         for(String message: dialogMessage) {
             if (message.length() > 70) {
                 dialogSprite = new DialogSprite(200);
-                dialogSprite.get_sprite().draw(batch);
-                dialogFont.draw(batch, dialogSpeaker, resolution.x*0.11f, resolution.y*0.21f);
+                dialogSprite.get_sprite().draw(rpGame.batch);
+                dialogFont.draw(rpGame.batch, dialogSpeaker, resolution.x*0.11f, resolution.y*0.21f);
                 GlyphLayout text = new GlyphLayout(dialogFont, message, Color.WHITE, 600, Align.left, true);
-                dialogFont.draw(batch, text, resolution.x*0.07f, resolution.y*0.17f);
+                dialogFont.draw(rpGame.batch, text, resolution.x*0.07f, resolution.y*0.17f);
             } else {
                 dialogSprite = new DialogSprite(150);
-                dialogSprite.get_sprite().draw(batch);
-                dialogFont.draw(batch, dialogSpeaker, resolution.x*0.11f, resolution.y*0.175f);
+                dialogSprite.get_sprite().draw(rpGame.batch);
+                dialogFont.draw(rpGame.batch, dialogSpeaker, resolution.x*0.11f, resolution.y*0.175f);
                 GlyphLayout text = new GlyphLayout(dialogFont, message, Color.WHITE, 600, Align.left, true);
-                dialogFont.draw(batch, text, resolution.x*0.07f, resolution.y*0.135f);
+                dialogFont.draw(rpGame.batch, text, resolution.x*0.07f, resolution.y*0.135f);
             }
         }
     }
