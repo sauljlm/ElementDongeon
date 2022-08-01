@@ -9,6 +9,7 @@ import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -95,16 +96,26 @@ public class NewGameScreen implements Screen {
     }
 
     private void generateStory(){
-        int mFontSize = emphasisFontSize;
+        int mFontSize = storeMenuOptionsFontSize;
         float mNextY = 0;
-        int mRest = Resources.emphasisFontSize;
+        int mRest = Resources.storeMenuOptionsFontSize;
 
-        this.story.add(new Text(Resources.resourceMainFont,mFontSize, "Aqui se puede incluir la historia",true));
-        this.story.add(new Text(Resources.resourceMainFont,mFontSize, "y los objetivos del juego",true));
-        this.story.add(new Text(Resources.resourceMainFont,mFontSize, "para ganar.",true));
-        this.story.add(new Text(Resources.resourceMainFont,mFontSize, "Presione enter o haga click para continuar.",true));
+        this.story.add(new Text(Resources.resourceMainFont,mFontSize, "El reino de Camlot fue invadido por esqueletos místicos",true));
+        this.story.add(new Text(Resources.resourceMainFont,mFontSize, "con poderes de los cuatro elementos de la naturaleza:",true));
+        this.story.add(new Text(Resources.resourceMainFont,mFontSize,Color.YELLOW,"tierra, agua, aire y fuego.  ",true));
+        this.story.add(new Text(Resources.resourceMainFont,mFontSize, "  ",true));
+        this.story.add(new Text(Resources.resourceMainFont,mFontSize, "El ejercito del Rey Leónidas valientemente aisló cada",true));
+        this.story.add(new Text(Resources.resourceMainFont,mFontSize, " elemento en un punto cardinal del reino de Camlot.",true));
+        this.story.add(new Text(Resources.resourceMainFont,mFontSize, " ",true));
+        this.story.add(new Text(Resources.resourceMainFont,mFontSize, "Aquí comienza la historia de nuestros héroes, tres amigos",true));
+        this.story.add(new Text(Resources.resourceMainFont,mFontSize, "con gran valentía y talentos únicos. Su objetivo es simple:",true));
+        this.story.add(new Text(Resources.resourceMainFont,mFontSize,Color.YELLOW,"derrotar a cada Jefe Esqueleto, recuperar el talismán y ",true));
+        this.story.add(new Text(Resources.resourceMainFont,mFontSize,Color.YELLOW, "llevarlo al Rey Leónidas.",true));
+        this.story.add(new Text(Resources.resourceMainFont,mFontSize, " ",true));
+        this.story.add(new Text(Resources.resourceMainFont,mFontSize, " ",true));
+        this.story.add(new Text(Resources.resourceMainFont,mFontSize, "Presione enter o haga click para salvar al reino.",true));
 
-        this.story.get(0).centerTextScreen();
+        this.story.get(0).centerTextScreenInX(900);
         mNextY = this.story.get(0).getY();
 
         for(Text mTemp : this.story){
