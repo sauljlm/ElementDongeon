@@ -39,8 +39,8 @@ public class DesktopLauncher {
 		gameConfig.setGodMode(true);
 		gameConfig.setSkipIntro(true);
 		gameConfig.setMapTileSize(16);
-		gameConfig.setMusicVolume(0f);
-		gameConfig.setSoundEffectsVolume(1f);
+		gameConfig.setMusicVolume(0.2f);
+		gameConfig.setSoundEffectsVolume(0.2f);
 		gameConfig.setFrameTime(1 / 15f);//Value based on docs
 		gameConfig.setDebugPhysics(false);
 		return gameConfig;

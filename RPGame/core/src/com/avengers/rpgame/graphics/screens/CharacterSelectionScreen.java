@@ -11,6 +11,7 @@ import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -26,7 +27,7 @@ public class CharacterSelectionScreen implements Screen {
     final RPGame game;
     private GameStatus gameStatus;
     private final GameConfig config;
-    //private final Music backgroundMusic;
+    private final Music backgroundMusic;
     private final Texture backgroundImage;
 
     private Stage stage;
@@ -64,8 +65,8 @@ public class CharacterSelectionScreen implements Screen {
 
         backgroundImage = new Texture(Gdx.files.internal(resourceLoadScreenBackground));
 
-        //backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(resourceThemeMusic));
-        //backgroundMusic.setLooping(true);
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(resourceThemeMusic));
+        backgroundMusic.setLooping(true);
 
         menuOptions = new ArrayList<Text>();
         menuCharacters = new ArrayList<Text>();
@@ -99,14 +100,13 @@ public class CharacterSelectionScreen implements Screen {
         archerTexture = new Texture(archerImage);
         knightTexture = new Texture(knightImage);
         mageTexture = new Texture(mageImage);
-
     }
 
     @Override
     public void show() {
         generateOptions();
         generateCharacters();
-        //backgroundMusic.play();
+        backgroundMusic.play();
         Gdx.input.setInputProcessor(multiplexer);
         generateCharactersStats();
     }
@@ -172,14 +172,14 @@ public class CharacterSelectionScreen implements Screen {
 
     @Override
     public void dispose() {
-       //backgroundMusic.dispose();
+        backgroundMusic.dispose();
         backgroundImage.dispose();
     }
 
     private void generateOptions(){
-        int mFontSize = 70;
+        int mFontSize = Resources.emphasisFontSize;
         float mNextY = 0;
-        int mRest = 70;
+        int mRest = Resources.emphasisFontSize;
 
         this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Iniciar partida",true));
         this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Regresar",true));

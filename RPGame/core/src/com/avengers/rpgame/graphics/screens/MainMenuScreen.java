@@ -131,9 +131,9 @@ public class MainMenuScreen implements Screen {
         float mNextY = 0;
         int mRest = Resources.emphasisFontSize;
 
-        this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Nuevo Juego",true));
-        this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Cargar Juego",true));
-        this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Opciones",true));
+        this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Nuevo juego",true));
+        this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Cargar juego",true));
+        this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Opciones de sonido",true));
         this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Salir",true));
 
         this.menuOptions.get(0).customPositionTextScreen(ScreenWidth/10, ScreenHeight/3+this.gameTitle.get(0).getHeight());

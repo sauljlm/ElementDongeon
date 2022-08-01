@@ -29,7 +29,7 @@ public class Resources {
 
     //UI Skins
     public static final String resourceSkin = "graphics/textures/skin/glassy-ui.json";
-    public static final String resourceSkin2 = "graphics/textures/skin2/pixthulhu-ui.json";
+    public static final String resourceSkin2 = "graphics/textures/skin2/pixthulhu-ui.json";//borrar
     public static final String resourceSkin3 = "graphics/skins/terraMotherUI/terramotherui/terra-mother-ui.json";
     public static final String resourceSkin4 = "graphics/skins/craftacular/skin/craftacular-ui.json";
     public static final String resourceSkin5 = "graphics/skins/commodore64/skin/uiskin.json";
@@ -157,6 +157,7 @@ public class Resources {
 
     //SoundEffects
     public static final String resourceIntroSound = "audio/soundEffects/intro.wav";
+    public static final String resourceSwordAttackSound = "audio/soundEffects/sword-attack.wav";
 
 
     //Music
