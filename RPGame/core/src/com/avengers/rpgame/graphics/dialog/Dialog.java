@@ -4,71 +4,62 @@ import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.dialog.elements.DialogSprite;
 import com.avengers.rpgame.graphics.text.FontFactory;
-import com.avengers.rpgame.logic.entities.Party;
-import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 public class Dialog {
     private RPGame rpGame;
-    private Array<String> dialogMessage = new Array<String>();
-    private String dialogSpeaker = "NPC";
-    private DialogSprite dialogSprite;
-    private BitmapFont dialogFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalDialogFontSize, Color.WHITE, false, Color.BLACK);
     private GameConfig gameConfig;
-    private AbstractCharacter character;
+    private String dialogSpeaker;
+    private String dialogMessage;
+    private DialogSprite dialogSprite;
+    private BitmapFont dialogFont;
 
-    public Dialog () {
-        gameConfig = GameConfig.getInstance();
+
+    protected Dialog () {
         rpGame = RPGame.getInstance();
-        // this.character = playerParty.getActivePartyMember();
+        gameConfig = GameConfig.getInstance();
+        dialogSpeaker= "Ayuda";
+        dialogMessage = "El reino te necesita aventurero";
+        dialogSprite = new DialogSprite(200);
+        dialogFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalDialogFontSize, Color.WHITE, false, Color.BLACK);
     }
 
-    public Array<String> getDialogMessage() {
+    public String getDialogSpeaker() {
+        return dialogSpeaker;
+    }
+
+    public void setDialogSpeaker(String dialogSpeaker) {
+        this.dialogSpeaker = dialogSpeaker;
+    }
+
+    public String getDialogMessage() {
         return dialogMessage;
     }
 
-    public void updateDialog(String message) {
-        RPGame game = RPGame.getInstance();
-        dialogMessage = new Array<String>();
-        if (!message.equals("")) {
-            dialogMessage.add(message);
-        }
-        if (dialogMessage.size > 0) {
-            game.batch.begin();
-            draw();
-            game.batch.end();
-        }
+    public void setDialogMessage(String dialogMessage) {
+        this.dialogMessage = dialogMessage;
     }
 
-    public void updateSeaker(String name) {
-        dialogSpeaker = name;
+    public DialogSprite getDialogSprite() {
+        return dialogSprite;
     }
 
-    public void draw () {
-        Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
+    public void setDialogSprite(DialogSprite dialogSprite) {
+        this.dialogSprite = dialogSprite;
+    }
 
-        for(String message: dialogMessage) {
-            if (message.length() > 70) {
-                dialogSprite = new DialogSprite(200);
-                dialogSprite.get_sprite().draw(rpGame.batch);
-                dialogFont.draw(rpGame.batch, dialogSpeaker, resolution.x*0.11f, resolution.y*0.21f);
-                GlyphLayout text = new GlyphLayout(dialogFont, message, Color.WHITE, 600, Align.left, true);
-                dialogFont.draw(rpGame.batch, text, resolution.x*0.07f, resolution.y*0.17f);
-            } else {
-                dialogSprite = new DialogSprite(150);
-                dialogSprite.get_sprite().draw(rpGame.batch);
-                dialogFont.draw(rpGame.batch, dialogSpeaker, resolution.x*0.11f, resolution.y*0.175f);
-                GlyphLayout text = new GlyphLayout(dialogFont, message, Color.WHITE, 600, Align.left, true);
-                dialogFont.draw(rpGame.batch, text, resolution.x*0.07f, resolution.y*0.135f);
-            }
-        }
+    public BitmapFont getDialogFont() {
+        return dialogFont;
+    }
+
+    public void setDialogFont(BitmapFont dialogFont) {
+        this.dialogFont = dialogFont;
     }
 }

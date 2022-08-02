@@ -42,4 +42,9 @@ public class AnimationAssets {
     public void setAnimationName(String animationName) {
         this.animationName = animationName;
     }
+
+    public void dispose() {
+        texture.dispose();
+        animationAtlas.dispose();
+    }
 }

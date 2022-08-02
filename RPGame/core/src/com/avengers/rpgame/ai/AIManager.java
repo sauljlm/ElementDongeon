@@ -5,7 +5,6 @@ import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCh
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-
 import java.util.ArrayList;
 
 
@@ -20,11 +19,11 @@ public class AIManager {
         interactionMonitor = new InteractionMonitor();
         monsterBattleAI = new MonsterBattleAI();
 
-        interactionMonitor.addObserver(new PortalObserver("portal"));
-        interactionMonitor.addObserver(new KingObserver("king"));
-        interactionMonitor.addObserver(new RandomNPCObserver("randomNPC"));
-        interactionMonitor.addObserver(new ChestObserver("chest"));
-        interactionMonitor.addObserver(new SignObserver("sign"));
+        interactionMonitor.addObserver("portal", new PortalObserver());
+        interactionMonitor.addObserver("kingNPC", new KingObserver());
+        interactionMonitor.addObserver("randomNPC", new RandomNPCObserver());
+        interactionMonitor.addObserver("chest", new ChestObserver());
+        interactionMonitor.addObserver("sign", new SignObserver());
     }
 
 

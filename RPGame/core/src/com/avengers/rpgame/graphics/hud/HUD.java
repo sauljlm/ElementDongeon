@@ -1,5 +1,6 @@
 package com.avengers.rpgame.graphics.hud;
 
+import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.hud.elements.Heart;
@@ -21,24 +22,36 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class HUD {
+    private RPGame rpGame;
+    private GameStatus gameStatus;
     private Array<Heart> heartsHB;
-    private MP magicPower = new MP();
-    private UserLevel levelIcon = new UserLevel();
+    private MP magicPower;
+    private UserLevel levelIcon;
     private Weapon weapon;
-    private BitmapFont gameFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
-    private BitmapFont lvlFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.levelHUDFontSize, Color.WHITE, false, Color.BLACK);
-    private final int maxPoints = ((PlayableCharacter)GameStatus.getInstance().getParty().getActivePartyMember()).getExperiencePointsMax();
+    private BitmapFont gameFont;
+    private BitmapFont lvlFont;
+    private final int maxPoints;
     private GameConfig gameConfig;
     private AbstractCharacter character;
 
-    private Coin coin = new Coin(50, 50, 0.92f, 0.11f);
-    private BitmapFont characterCoinsFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
+    private Coin coin;
+    private BitmapFont characterCoinsFont;
 
-    public HUD (Party playerParty) {
+    public HUD () {
+        rpGame = RPGame.getInstance();
         gameConfig = GameConfig.getInstance();
-        this.character = playerParty.getActivePartyMember();
-        createHearts();
+        gameStatus = GameStatus.getInstance();
+        magicPower = new MP();
+        levelIcon = new UserLevel();
+        heartsHB = new Array<Heart>();
+        coin = new Coin(50, 50, 0.92f, 0.11f);
+        lvlFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.levelHUDFontSize, Color.WHITE, false, Color.BLACK);
+        gameFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
+        characterCoinsFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
+        maxPoints = ((PlayableCharacter)GameStatus.getInstance().getParty().getActivePartyMember()).getExperiencePointsMax();
+        character = gameStatus.getParty().getActivePartyMember();
         weapon = new Weapon((int) this.character.getLevel(), this.character.getCharacterClass().getIdCharacterClass());
+        createHearts();
     }
 
     public Array<Heart> getHeartsHB() {
@@ -68,43 +81,36 @@ public class HUD {
         this.character.setLevel(party.getActivePartyMember().getLevel());
         this.character.setMagicPoints(party.getActivePartyMember().getMagicPoints());
 //        this.character.(((PlayableCharacter)party.getActivePartyMember()).getExperiencePoints());
-        this.createHearts();
+//        this.createHearts();
     }
 
-//    public void update (Party party) {
-//        this.setUserHealth(party.getActivePartyMember().getHealthPoints());
-//        this.setPlayerLevel((int)party.getPartyMember1().getLevel());
-//        this.setMagicLevel("HelloCat");
-//        this.setCharacterClass(characterClass);
-//        this.setExperiencePoints(experiencePoints);
-//        this.createHearts(type);
-//    }
-
-    public void draw (SpriteBatch batch) {
+    public void draw () {
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
         if(gameConfig.isDebugPhysics()){ //Debug print for character coordinates
-            gameFont.draw(batch, String.valueOf(((DynamicAnimatedCharacter)this.character.getAnimatedCharacter()).getPlayer().getPosition()), resolution.x*0.2f, resolution.y*0.2f);
+            gameFont.draw(rpGame.batch, String.valueOf(((DynamicAnimatedCharacter)this.character.getAnimatedCharacter()).getPlayer().getPosition()), resolution.x*0.2f, resolution.y*0.2f);
         }
 
         for(Heart heart: heartsHB) {
-            heart.get_sprite().draw(batch);
+            heart.get_sprite().draw(rpGame.batch);
         }
         if (this.character.getCharacterClass().getIdCharacterClass() == 3) {
-            magicPower.get_sprite().draw(batch);
-            gameFont.draw(batch, String.valueOf(this.character.getMagicPoints()), resolution.x*0.3f, resolution.y*0.96f);
+            magicPower.get_sprite().draw(rpGame.batch);
+            gameFont.draw(rpGame.batch, String.valueOf(this.character.getMagicPoints()), resolution.x*0.3f, resolution.y*0.96f);
         }
 
-        levelIcon.get_sprite().draw(batch);
-        gameFont.draw(batch, String.valueOf((int)this.character.getLevel()), resolution.x*0.036f, resolution.y*0.945f);
-        lvlFont.draw(batch, "Nivel", resolution.x*0.032f, resolution.y*0.965f);
-        gameFont.draw(batch, "Exp: " + (int)((PlayableCharacter)this.character).getExperiencePoints() + "/" + this.maxPoints, resolution.x*0.08f, resolution.y*0.96f);
-        weapon.get_sprite().draw(batch);
-        coin.get_sprite().draw(batch);
-        characterCoinsFont.draw(batch, String.valueOf(this.character.getCoins()), resolution.x*0.115f, resolution.y- resolution.y*0.100f+coin.getHeight()/2f);
+        levelIcon.get_sprite().draw(rpGame.batch);
+        gameFont.draw(rpGame.batch, String.valueOf((int)this.character.getLevel()), resolution.x*0.036f, resolution.y*0.945f);
+        lvlFont.draw(rpGame.batch, "Nivel", resolution.x*0.032f, resolution.y*0.965f);
+        gameFont.draw(rpGame.batch, "Exp: " + (int)((PlayableCharacter)this.character).getExperiencePoints() + "/" + this.maxPoints, resolution.x*0.08f, resolution.y*0.96f);
+        weapon.get_sprite().draw(rpGame.batch);
+        coin.get_sprite().draw(rpGame.batch);
+        characterCoinsFont.draw(rpGame.batch, String.valueOf(this.character.getCoins()), resolution.x*0.115f, resolution.y- resolution.y*0.100f+coin.getHeight()/2f);
     }
 
     private void createHearts() {
-        this.heartsHB = new Array<Heart>();
+        for (Heart heart:heartsHB) {
+            heart.dispose();
+        }
         int health = this.convertValue(this.character.getHealthPoints());
         double lastValue = 0.06;
         for(int i=0; i < health; i++) {
@@ -112,5 +118,16 @@ public class HUD {
             heartsHB.add(heart);
             lastValue += 0.03;
         }
+    }
+
+    public void dispose(){
+        for (Heart heart:heartsHB) {
+            heart.dispose();
+        }
+        gameFont.dispose();
+        lvlFont.dispose();
+        weapon.dispose();
+        levelIcon.dispose();
+        magicPower.dispose();
     }
 }

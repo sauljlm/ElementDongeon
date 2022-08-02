@@ -60,4 +60,12 @@ public abstract class ISkin {
     public void setWaiting(AnimationAssets waiting) {
         this.waiting = waiting;
     }
+
+    public void dispose() {
+        up.dispose();
+        down.dispose();
+        left.dispose();
+        right.dispose();
+//        waiting.dispose();
+    }
 }

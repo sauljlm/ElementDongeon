@@ -1,7 +1,7 @@
 package com.avengers.rpgame.ai.concrete;
 
 import com.avengers.rpgame.ai.Interfaces.Observer;
-import com.avengers.rpgame.graphics.dialog.Dialog;
+import com.avengers.rpgame.graphics.dialog.DialogManager;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -9,9 +9,11 @@ import com.badlogic.gdx.physics.box2d.Body;
 public class PortalObserver implements Observer {
 
     private String observerName;
+    private DialogManager dialogManager;
 
-    public PortalObserver(String pN) {
-        observerName=pN;
+    public PortalObserver() {
+        dialogManager = DialogManager.getInstance();
+        observerName = "portal";
     }
 
     private boolean verifyAccess(AbstractCharacter playerCharacter, String currentMapObject) {
@@ -43,7 +45,10 @@ public class PortalObserver implements Observer {
     }
 
     private void destroyPortal(Body currentBody) {
-        currentBody.getWorld().destroyBody(currentBody);
+        if(currentBody.isActive()){
+            currentBody.getWorld().destroyBody(currentBody);
+            currentBody.setActive(false);
+        }
     }
 
     @Override
@@ -53,13 +58,13 @@ public class PortalObserver implements Observer {
 
     @Override
     public void actionTrigger(AbstractCharacter playerCharacter, Body currentBody, String currentMapObject) {
-        Dialog dialog = new Dialog();
-        dialog.updateSeaker("Portal");
+
+        dialogManager.updateSpeaker("Portal");
         if (verifyAccess(playerCharacter, currentMapObject)) {
             destroyPortal(currentBody);
-            dialog.updateDialog("portal abierto");
+            dialogManager.updateDialog("portal abierto");
         } else {
-            dialog.updateDialog("El portal no se puede abrir, debes tener una llave");
+            dialogManager.updateDialog("El portal no se puede abrir, debes tener una llave");
         }
     }
 }

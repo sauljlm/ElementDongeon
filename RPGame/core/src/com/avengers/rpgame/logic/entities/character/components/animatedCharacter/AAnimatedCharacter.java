@@ -163,4 +163,9 @@ public abstract class AAnimatedCharacter extends Sprite {
         //If the sizes of sprites are different or the factor is wrong the texture will not be on the expected possition.
         rpGame.batch.draw(currentFrame, textureScreenLocation.x * gameConfig.getPPM() - currentTexture.getWidth()/currentFrame.getTexture().getWidth()*25, textureScreenLocation.y*gameConfig.getPPM()- currentTexture.getHeight()/currentFrame.getTexture().getHeight()*2.5f,sizeX,sizeY);
     }
+
+    public void dispose() {
+        currentTexture.dispose();
+        skin.dispose();
+    }
 }

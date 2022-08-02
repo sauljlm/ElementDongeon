@@ -62,6 +62,7 @@ public class BattleHUD {
         this.setPlayerLevel((int)(party.getPartyMember1().getLevel()));
         this.setMagicLevel(String.valueOf(magicLevel));
         this.setCharacterClass(1);
+        heartsHB = new Array<Heart>();
         //        this.setCharacterClass(party.getPartyMember1().getCharacterClass());
         this.setExperiencePoints(((PlayableCharacter)party.getPartyMember1()).getExperiencePoints());
         this.type = type;
@@ -173,7 +174,10 @@ public class BattleHUD {
     }
 
     private void createHearts(float type) {
-        this.heartsHB = new Array<Heart>();
+        for (Heart heart:heartsHB) {
+            heart.dispose();
+        }
+
         int health = this.convertValue(this.getUserHealth());
         double lastValue = 0.06;
         for(int i=0; i < health; i++) {
@@ -181,5 +185,16 @@ public class BattleHUD {
             heartsHB.add(heart);
             lastValue += 0.03;
         }
+    }
+
+    public void dispose(){
+        for (Heart heart:heartsHB) {
+            heart.dispose();
+        }
+        gameFont.dispose();
+        lvlFont.dispose();
+        weapon.dispose();
+        levelIcon.dispose();
+        magicPower.dispose();
     }
 }

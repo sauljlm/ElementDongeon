@@ -59,7 +59,6 @@ public class DynamicAnimatedCharacter extends AAnimatedCharacter{
         pos.y = this.getPlayer().getPosition().y*gameConfig.getPPM();
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(12 / 2f / gameConfig.getPPM(), 12 / 2f / gameConfig.getPPM()); // /2 cause box2D counts stuff from center, so 32 x 32 would be 64, /PPM to scale down into box2D units
-
         this.player = BodyFactory.createBody(world, shape, pos, false, false);
     }
 

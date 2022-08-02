@@ -3,12 +3,11 @@ package com.avengers.rpgame.ai.concrete;
 import com.avengers.rpgame.ai.Interfaces.Observer;
 import com.avengers.rpgame.data.dataStorage.ProxyDataManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
-import com.avengers.rpgame.graphics.dialog.Dialog;
+import com.avengers.rpgame.graphics.dialog.DialogManager;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.physics.box2d.Body;
 
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 
 
@@ -16,9 +15,13 @@ public class KingObserver  implements Observer {
 
     private String observerName;
     private ArrayList<Item> dataItems;
-    private ProxyDataManager proxyDataManager = new ProxyDataManager();
-    public KingObserver(String pN) {
-        observerName=pN;
+    private ProxyDataManager proxyDataManager;
+    private DialogManager dialogManager;
+    public KingObserver() {
+        dialogManager = DialogManager.getInstance();
+        proxyDataManager = new ProxyDataManager();
+        dataItems = proxyDataManager.getSpecialItemsList();
+        observerName="king";
     }
 
     private boolean verifyAccess(AbstractCharacter playerCharacter) {
@@ -55,8 +58,6 @@ public class KingObserver  implements Observer {
     }
 
     private void provideKey(AbstractCharacter playerCharacter) {
-        dataItems = proxyDataManager.getSpecialItemsList();
-
         String talisman = "";
 
         for (Item itemFound: playerCharacter.getItems()){
@@ -94,13 +95,12 @@ public class KingObserver  implements Observer {
 
     @Override
     public void actionTrigger(AbstractCharacter playerCharacter, Body currentBody, String currentMapObject) {
-        Dialog dialog = new Dialog();
-        dialog.updateSeaker("Rey");
+        dialogManager.updateSpeaker("Rey");
         if (verifyAccess(playerCharacter)) {
             provideKey(playerCharacter);
-            dialog.updateDialog("Aqui tienes tus llaves");
+            dialogManager.updateDialog("Aqui tienes tus llaves");
         } else {
-            dialog.updateDialog("Necesitas un talisman para entregarte las llaves");
+            dialogManager.updateDialog("Necesitas un talisman para entregarte las llaves");
         }
     }
 }

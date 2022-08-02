@@ -5,6 +5,7 @@ import com.avengers.rpgame.ai.AIManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.IOManager;
+import com.avengers.rpgame.graphics.dialog.DialogManager;
 import com.avengers.rpgame.graphics.graphicManagerMediador.Mediador;
 import com.avengers.rpgame.graphics.hud.HUD;
 import com.avengers.rpgame.graphics.npc.EnemiesManager;
@@ -29,6 +30,8 @@ public class OverworldScreen implements Screen {
     private GameConfig config;
     private Music backgroundMusic;
 
+    private DialogManager dialogManager;
+
     private IOManager ioManager;
     private AIManager aiManager;
     private Party playerParty;
@@ -47,7 +50,6 @@ public class OverworldScreen implements Screen {
     //Monsters
     EnemiesManager enemiesManager;
 
-
     public OverworldScreen(final RPGame game) {
         this.game = game;
         gameStatus = GameStatus.getInstance();
@@ -65,7 +67,9 @@ public class OverworldScreen implements Screen {
         characterFactory = new CharacterFactory(graphicMediator.getWorld(), game);
         characterFactory.createParty();
 
-        hudElements = new HUD(gameStatus.getParty());
+        hudElements = new HUD();
+
+        dialogManager = DialogManager.getInstance();
 
         // Monsters
         enemiesManager = new EnemiesManager();
@@ -89,18 +93,18 @@ public class OverworldScreen implements Screen {
 
     //This method holds the game logic
     public void  logic(float delta){
-//        monsterMovement.chaseActivePlayer(enemyCharacter);
         aiManager.moveAllies(playerParty.getActivePartyMember(), playerParty.getInactivePartyMember(1), 1);
         aiManager.moveAllies(playerParty.getInactivePartyMember(1), playerParty.getInactivePartyMember(2), 1);
+        aiManager.monitorSurroundings(playerParty.getActivePartyMember());
         hudElements.update();
     }
 
 
     @Override
     public void render(float delta) {
-        logic(delta);// Separate the game logic from rendering for clarity
-
         ScreenUtils.clear(0, 0, 0, 1f);
+        dialogManager.clean();
+        logic(delta);// Separate the game logic from rendering for clarity
 
         //Graphic manager mediator
         graphicMediator.renderGraphicManagers(delta);
@@ -122,9 +126,10 @@ public class OverworldScreen implements Screen {
         // hudElements.update(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints);
         graphicMediator.changeProjectionMatrix();
         game.batch.begin();//We can stop render, do something and start again
-        hudElements.draw(game.batch);
+        hudElements.draw();
+        dialogManager.draw();
         game.batch.end();
-        aiManager.monitorSurroundings(playerParty.getActivePartyMember());
+
     }
 
     @Override
@@ -153,5 +158,6 @@ public class OverworldScreen implements Screen {
         graphicMediator.dispose();
         backgroundMusic.dispose();
         ioManager.dispose();
+        hudElements.dispose();
     }
 }

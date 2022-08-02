@@ -102,4 +102,8 @@ public class UserLevel {
         this.setPotionY((int)position.y);
         this.setSize(90, 90);
     }
+    public void dispose(){
+        _texture.dispose();
+        _sprite.getTexture().dispose();
+    }
 }

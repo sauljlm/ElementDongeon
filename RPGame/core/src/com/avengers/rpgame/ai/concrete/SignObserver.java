@@ -1,19 +1,18 @@
 package com.avengers.rpgame.ai.concrete;
 
 import com.avengers.rpgame.ai.Interfaces.Observer;
-import com.avengers.rpgame.graphics.dialog.Dialog;
-import com.avengers.rpgame.logic.entities.Item;
+import com.avengers.rpgame.graphics.dialog.DialogManager;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.physics.box2d.Body;
 
-import java.util.ArrayList;
-
 public class SignObserver implements Observer {
-
     private String observerName;
-    private ArrayList<Item> dataItems;
-    public SignObserver(String pN) {
-        observerName=pN;
+    private String message;
+    private DialogManager dialogManager;
+    public SignObserver() {
+        dialogManager = DialogManager.getInstance();
+        observerName="sign";
+        message = "";
     }
 
     @Override
@@ -23,11 +22,7 @@ public class SignObserver implements Observer {
 
     @Override
     public void actionTrigger(AbstractCharacter playerCharacter, Body currentBody, String currentMapObject) {
-        Dialog dialog = new Dialog();
-        dialog.updateSeaker("Calabozo");
-
-        String message = "";
-
+        dialogManager.updateSpeaker("Calabozo");
         if (currentMapObject.contains("Earth")) {
             message = "Bienvenido al calabozo de tierra, ve e intenta vencer al Jefe de tierra que guarda el talisman de agua";
         } else if (currentMapObject.contains("Water")) {
@@ -39,9 +34,9 @@ public class SignObserver implements Observer {
         } else if (currentMapObject.contains("Capital")) {
             message = "Bienvenido a la ciudad central del reino";
         } else if (currentMapObject.contains("House")) {
-            dialog.updateSeaker("Hola");
+            dialogManager.updateSpeaker("Hola");
             message = "Debes proteger el reino y vencer a los jefes de los calabozos, grandes aventuras te esperan!";
         }
-        dialog.updateDialog(message);
+        dialogManager.updateDialog(message);
     }
 }

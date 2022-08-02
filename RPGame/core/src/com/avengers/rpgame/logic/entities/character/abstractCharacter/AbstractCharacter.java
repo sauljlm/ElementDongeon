@@ -316,4 +316,8 @@ public abstract class AbstractCharacter implements BattleActions {
                 ", skills=" + skills +
                 '}';
     }
+
+    public void dispose(){
+        animatedCharacter.dispose();
+    }
 }

@@ -71,4 +71,9 @@ public class MP {
         this.setPotionY((int)position.y);
         this.setSize(50, 50);
     }
+
+    public void dispose(){
+        _texture.dispose();
+        _sprite.getTexture().dispose();
+    }
 }

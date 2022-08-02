@@ -3,20 +3,34 @@ package com.avengers.rpgame.ai;
 import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
-import com.avengers.rpgame.graphics.dialog.Dialog;
+import com.avengers.rpgame.graphics.dialog.DialogManager;
+import com.avengers.rpgame.graphics.dialog.DialogsFactory;
+import com.avengers.rpgame.graphics.dialog.RandomDialogs.ARandomDialogHelper;
 import com.avengers.rpgame.graphics.screens.FightScreen;
-import com.avengers.rpgame.logic.entities.EntitiesBuilderDirector;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
-import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
 import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
 import com.badlogic.gdx.math.Vector2;
 
 public class MonsterMovement {
-    private GameConfig gameConfig = GameConfig.getInstance();
-    private GameStatus gameStatus = GameStatus.getInstance();
+    private GameConfig gameConfig;
+    private GameStatus gameStatus;
+    private DialogManager dialogManager;
+    private RPGame rpGame;
 
-    private RPGame rpGame = RPGame.getInstance();
+    private DialogsFactory dialogsFactory;
+    private ARandomDialogHelper fightMessages;
+    private ARandomDialogHelper defeatedMessages;
+
+    public MonsterMovement() {
+        gameConfig = GameConfig.getInstance();
+        gameStatus = GameStatus.getInstance();
+        dialogManager = DialogManager.getInstance();
+        rpGame = RPGame.getInstance();
+        dialogsFactory = new DialogsFactory();
+        fightMessages = dialogsFactory.getRandomDialogHelper("monsterFight");
+        defeatedMessages = dialogsFactory.getRandomDialogHelper("monsterDefeated");
+    }
 
     public void chaseActivePlayer(AbstractCharacter enemy){
         AbstractCharacter playerCharacter = gameStatus.getParty().getActivePartyMember();
@@ -37,16 +51,18 @@ public class MonsterMovement {
         if(Math.abs(distance.x) < partyDistance && Math.abs(distance.y) < partyDistance && enemy.getHealthPoints() >0){
             horizontalForce = movementSpeed;
             verticalForce = movementSpeed;
+            dialogManager.updateSpeaker("Esqueleto");
+            dialogManager.updateDialog(fightMessages.getRandomMessage());
+
         }
 
-//        if(enemy.getHealthPoints() <= 0){
-//            Dialog dialog = new Dialog();
-//            dialog.updateSeaker(enemy.getDescription());
-//            rpGame.batch.end();//TODO Improve this. We need to finish batch cause it is already started but next line tries to do it
-//            dialog.updateDialog("Me has vencido");
-//            rpGame.batch.begin();
-//            System.out.println("me has vencido");
-//        }
+        if(Math.abs(distance.x) < 2 && Math.abs(distance.y) < 2 && enemy.getHealthPoints() <=0){
+            dialogManager.setActive(true);
+            dialogManager.updateSpeaker("Esqueleto");
+            dialogManager.updateDialog(defeatedMessages.getRandomMessage());
+        } else {
+            dialogManager.setActive(false);
+        }
 
         velocity.x = horizontalForce * distance.x/2;
         velocity.y = verticalForce * distance.y/2;

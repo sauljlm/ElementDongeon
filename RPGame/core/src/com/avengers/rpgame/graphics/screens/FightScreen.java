@@ -502,8 +502,9 @@ public class FightScreen implements Screen {
 
     @Override
     public void dispose() {
-        this.pause();
-        this.hide();
-//        stage.dispose();
+        hudPlayer.dispose();
+        hudEnemy.dispose();
+        backgroundMusic.dispose();
+        backgroundImage.dispose();
     }
 }

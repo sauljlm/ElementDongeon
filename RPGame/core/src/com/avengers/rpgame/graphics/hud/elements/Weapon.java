@@ -140,4 +140,9 @@ public class Weapon {
         this.setPotionY((int)position.y);
         this.setSize(60, 60);
     }
+
+    public void dispose(){
+        _texture.dispose();
+        _sprite.getTexture().dispose();
+    }
 }
