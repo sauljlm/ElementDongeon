@@ -25,57 +25,57 @@ public class StartingPositionsReducer {
     }
 
     private void setPositions(){
-        add("startPlayer", 298,14);
-        add("EarthMonster1", 200.77f,51.52f);
-        add("EarthMonster2", 179.84f,57.30f);
-        add("EarthMonster3", 181.84f,35.08f);
-        add("EarthMonster4", 153.48f,52.64f);
-        add("EarthMonster5", 118.04f,52.45f);
-        add("EarthMonster6", 121.91f,31.48f);
-        add("EarthMonster7", 127.50f,13.68f);
-        add("EarthMonster8", 167.20f,25.37f);
-        add("EarthMonster9", 154.29f,3.30f);
-        add("EarthBossMonster", 194.95f,8.76f);
+        add("startPlayer", 338,44);
+        add("EarthMonster1", 240.77f,81.52f);
+        add("EarthMonster2", 219.84f,87.30f);
+        add("EarthMonster3", 221.84f,65.08f);
+        add("EarthMonster4", 193.48f,82.64f);
+        add("EarthMonster5", 158.04f,82.45f);
+        add("EarthMonster6", 161.91f,61.48f);
+        add("EarthMonster7", 187.50f,43.68f);
+        add("EarthMonster8", 207.20f,55.37f);
+        add("EarthMonster9", 194.29f,33.30f);
+        add("EarthBossMonster", 234.95f,38.76f);
 
-        add("WaterMonster1", 75,104);
-        add("WaterMonster2", 80.6f,126);
-        add("WaterMonster3", 57.9f,86.9f);
-        add("WaterMonster4", 49.9f,127.3f);
-        add("WaterMonster5", 29.7f,111f);
-        add("WaterMonster6", 11.97f,117f);
-        add("WaterMonster7", 32.6f,96.8f);
-        add("WaterMonster8", 25.47f,131.8f);
-        add("WaterMonster9", 94.45f,97.7f);
-        add("WaterBossMonster", 21.61f,80.8f);
+        add("WaterMonster1", 115,134);
+        add("WaterMonster2", 120.6f,156);
+        add("WaterMonster3", 51.9f,147.9f);
+        add("WaterMonster4", 89.9f,157.3f);
+        add("WaterMonster5", 70.7f,141f);
+        add("WaterMonster6", 71.97f,110f);
+        add("WaterMonster7", 73.6f,126.8f);
+        add("WaterMonster8", 71.47f,151.8f);
+        add("WaterMonster9", 134.45f,127.7f);
+        add("WaterBossMonster", 60.61f,110.8f);
 
-        add("WindMonster1", 242.7f,82.40f);
-        add("WindMonster2", 251.17f,97.71f);
-        add("WindMonster3", 249f,137f);
-        add("WindMonster4", 262.48f,131f);
-        add("WindMonster5", 263.04f,104f);
-        add("WindMonster6", 281.91f,79f);
-        add("WindMonster7", 292.02f,100.52f);
-        add("WindMonster8", 301.4f,128.5f);
-        add("WindMonster9", 309.86f,108f);
-        add("WindBossMonster", 327.57f,126.1f);
+        add("WindMonster1", 282.7f,112.40f);
+        add("WindMonster2", 291.17f,127.71f);
+        add("WindMonster3", 289f,167f);
+        add("WindMonster4", 302.48f,161f);
+        add("WindMonster5", 303.04f,134f);
+        add("WindMonster6", 321.91f,109f);
+        add("WindMonster7", 332.02f,130.52f);
+        add("WindMonster8", 341.4f,158.5f);
+        add("WindMonster9", 349.86f,138f);
+        add("WindBossMonster", 367.57f,156.1f);
 
-        add("FireMonster1", 174,161);
-        add("FireMonster2", 141,170);
-        add("FireMonster3", 130,198);
-        add("FireMonster4", 160,192);
-        add("FireMonster5", 191,191);
-        add("FireMonster6", 213,198);
-        add("FireMonster7", 173,195);
-        add("FireMonster8", 154,176);
-        add("FireMonster9", 181.93f,150);
-        add("FireBossMonster", 196.89f,168.61f);
+        add("FireMonster1", 214,191);
+        add("FireMonster2", 181,200);
+        add("FireMonster3", 170,228);
+        add("FireMonster4", 200,222);
+        add("FireMonster5", 231,221);
+        add("FireMonster6", 253,228);
+        add("FireMonster7", 213,225);
+        add("FireMonster8", 194,206);
+        add("FireMonster9", 221.93f,180);
+        add("FireBossMonster", 236.89f,198.61f);
     }
 
     private Vector2 determinePosition(){
         Vector2 worldPosition = new Vector2();
         if (GameStatus.getInstance().getStatus().equals("newGame")){
-            worldPosition.x = 298*gameConfig.getPPM();
-            worldPosition.y = 14*gameConfig.getPPM();
+            worldPosition.x = 338*gameConfig.getPPM();
+            worldPosition.y = 44*gameConfig.getPPM();
         }
         if (GameStatus.getInstance().getStatus().equals("loadedGame")){
             worldPosition.x =GameStatus.getInstance().getParty().getPartyMember(1).getPosition().x*gameConfig.getPPM();
