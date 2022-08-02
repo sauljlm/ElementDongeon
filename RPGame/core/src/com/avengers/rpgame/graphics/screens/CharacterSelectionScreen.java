@@ -65,7 +65,7 @@ public class CharacterSelectionScreen implements Screen {
         ScreenWidth = config.getResolutionHorizontal();
         ScreenHeight = config.getResolutionVertical();
 
-        backgroundImage = new Texture(Gdx.files.internal(resourceLoadScreenBackground));
+        backgroundImage = new Texture(Gdx.files.internal(resourceBlurBackground));
 
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(resourceThemeMusic));
         backgroundMusic.setLooping(true);
@@ -226,7 +226,7 @@ public class CharacterSelectionScreen implements Screen {
         }
         if(menu.equals(menuCharacters)) {
             for (Text mTemp2 : this.menuCharacters)
-                mTemp2.setColor(Color.GREEN);
+                mTemp2.setColor(Color.YELLOW);
             if (pId >= 0)
                 this.menuCharacters.get(pId).setColor(Color.FIREBRICK);
             this.actualCharacter = pId;
@@ -343,7 +343,7 @@ public class CharacterSelectionScreen implements Screen {
 
     private void generateCharactersStats() {
         int mFontSize = storyFontSize;
-        Color colorStat = Color.GREEN;
+        Color colorStat = Color.YELLOW;
         float mNextY1 = 0;
         float mNextY2 = 0;
         float mNextY3 = 0;

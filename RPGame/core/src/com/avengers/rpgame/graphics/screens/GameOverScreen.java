@@ -43,7 +43,7 @@ public class GameOverScreen implements Screen {
 
             ScreenWidth = config.getResolutionHorizontal();
             ScreenHeight = config.getResolutionVertical();
-            backgroundImage = new Texture(Gdx.files.internal(resourceGameOverBackground));
+            backgroundImage = new Texture(Gdx.files.internal(resourceBlackWhiteBackground));
 
             backgroundMusic = loadMusic(resourceGameOverMusic);
             backgroundMusic.setLooping(true);

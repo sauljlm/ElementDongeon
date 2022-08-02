@@ -33,7 +33,7 @@ public class GameOverCutScene implements ICutScene{
         gameOverSound = loadSound((resourceIntroSound));
 
         gameOverTexture = new Sprite();
-        gameOverTexture.setTexture(loadTexture(resourceGameOverBackground));
+        gameOverTexture.setTexture(loadTexture(resourceBlackWhiteBackground));
         gameOverTexture.setSize(config.getResolutionHorizontal(), config.getResolutionVertical());
         gameOverTexture.setRegion(0,0,config.getResolutionHorizontal(), config.getResolutionVertical());
         gameOverTexture.setCenter(config.getResolutionHorizontal()/2,config.getResolutionVertical()/2);

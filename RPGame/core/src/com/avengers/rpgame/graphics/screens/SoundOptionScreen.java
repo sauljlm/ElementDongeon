@@ -48,7 +48,7 @@ public class SoundOptionScreen implements Screen {
 
         ScreenWidth = gameConfig.getResolutionHorizontal();
         ScreenHeight = gameConfig.getResolutionVertical();
-        backgroundImage = new Texture(Gdx.files.internal(resourceOptionsScreenBackground));
+        backgroundImage = new Texture(Gdx.files.internal(resourceBlurBackground));
 
         menuOptions = new ArrayList<Text>();
         this.screenTitle = new Text(Resources.resourceMainFont, 100,"Opciones de sonido",true);

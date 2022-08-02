@@ -33,7 +33,7 @@ public class NewGameScreen implements Screen {
         input = new MyInputProcessor();
         config = GameConfig.getInstance();
 
-        backgroundImage = new Texture(Gdx.files.internal(resourceNewGameBackground));
+        backgroundImage = new Texture(Gdx.files.internal(resourceElementBackground));
 
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(resourceThemeMusic));
         backgroundMusic.setLooping(true);

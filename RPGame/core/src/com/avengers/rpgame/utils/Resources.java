@@ -18,13 +18,12 @@ public class Resources {
 
 
     //Backgrounds
-    public static final String resourceMainScreenBackground = "graphics/backgrounds/mainScreen1.jpg";
-    public static final String resourceLoadScreenBackground = "graphics/backgrounds/loadScreen.jpg";
-    public static final String resourceSettingsScreenBackground = "graphics/backgrounds/settingsScreen.jpg";
-    public static final String resourceOptionsScreenBackground = "graphics/backgrounds/optionsScreenbackground.png";
-    public static final String resourceNewGameBackground = "graphics/backgrounds/newGameScreen.jpg";
-    public static final String resourceGameOverBackground = "graphics/backgrounds/gameOverScreen.jpg";
-    public static final String resourceFightBackgroundForest = "graphics/backgrounds/FightForestBackground.jpg";
+    public static final String resourceMainBackground = "graphics/backgrounds/mainBackground.jpg";
+    public static final String resourceBlurBackground = "graphics/backgrounds/blurBackground.png";
+    public static final String resourceElementBackground = "graphics/backgrounds/elementBackground.jpg";
+    public static final String resourceBlackWhiteBackground = "graphics/backgrounds/blackWhiteBackground.jpg";
+    public static final String resourceFireworksBackground = "graphics/backgrounds/fireworksBackground.jpg";
+    public static final String resourceFightBackgroundForest = "graphics/backgrounds/fightForestBackground.jpg";
     public static final String resourceStoreScreen = "graphics/backgrounds/backgroundStore.jpg";
 
     //UI Skins
@@ -33,8 +32,6 @@ public class Resources {
     public static final String resourceSkin3 = "graphics/skins/terraMotherUI/terramotherui/terra-mother-ui.json";
     public static final String resourceSkin4 = "graphics/skins/craftacular/skin/craftacular-ui.json";
     public static final String resourceSkin5 = "graphics/skins/commodore64/skin/uiskin.json";
-
-
 
 
     //Textures
@@ -176,7 +173,6 @@ public class Resources {
     public static final int storeMenuOptionsFontSize = 50;
     public static final int storePriceFontSize = 20;
     public static final int storyFontSize = 40;
-    public static final int emphasisFontSize2 = 80;
     public static final int generalHUDFontSize = 36;
     public static final int levelHUDFontSize = 20;
     public static final int generalDialogFontSize = 36;

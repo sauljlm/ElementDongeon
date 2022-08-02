@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 
 import static com.avengers.rpgame.utils.FileManager.loadMusic;
-import static com.avengers.rpgame.utils.Resources.resourceMainScreenBackground;
+import static com.avengers.rpgame.utils.Resources.resourceMainBackground;
 import static com.avengers.rpgame.utils.Resources.resourceThemeMusic;
 
 public class MainMenuScreen implements Screen {
@@ -41,7 +41,7 @@ public class MainMenuScreen implements Screen {
         ScreenWidth = config.getResolutionHorizontal();
         ScreenHeight = config.getResolutionVertical();
 
-        backgroundImage = new Texture(Gdx.files.internal(resourceMainScreenBackground));
+        backgroundImage = new Texture(Gdx.files.internal(resourceMainBackground));
 
         backgroundMusic = loadMusic(resourceThemeMusic);
         backgroundMusic.setLooping(true);

@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 
 import static com.avengers.rpgame.utils.FileManager.loadMusic;
-import static com.avengers.rpgame.utils.Resources.resourceLoadScreenBackground;
+import static com.avengers.rpgame.utils.Resources.resourceBlurBackground;
 import static com.avengers.rpgame.utils.Resources.resourceThemeMusic;
 
 public class LoadGameScreen implements Screen {
@@ -40,14 +40,14 @@ public class LoadGameScreen implements Screen {
 
         ScreenWidth = config.getResolutionHorizontal();
         ScreenHeight = config.getResolutionVertical();
-        backgroundImage = new Texture(Gdx.files.internal(resourceLoadScreenBackground));
+        backgroundImage = new Texture(Gdx.files.internal(resourceBlurBackground));
 
         backgroundMusic = loadMusic(resourceThemeMusic);
         backgroundMusic.setLooping(true);
         backgroundMusic.setVolume(config.getMusicVolume());
 
         loadOptions = new ArrayList<Text>();
-        this.inputTitle = new Text(Resources.resourceMainFont, 100,"Juegos guardados",true);
+        this.inputTitle = new Text(Resources.resourceMainFont, Resources.screenTitleFontSize,"Juegos guardados",true);
         this.inputTitle.centerTextScreenInX( ScreenHeight-150);
     }
 

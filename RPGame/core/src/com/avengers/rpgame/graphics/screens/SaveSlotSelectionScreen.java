@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 
 import static com.avengers.rpgame.utils.FileManager.loadMusic;
-import static com.avengers.rpgame.utils.Resources.resourceLoadScreenBackground;
+import static com.avengers.rpgame.utils.Resources.resourceBlurBackground;
 import static com.avengers.rpgame.utils.Resources.resourceThemeMusic;
 
 public class SaveSlotSelectionScreen implements Screen {
@@ -46,14 +46,14 @@ public class SaveSlotSelectionScreen implements Screen {
 
         ScreenWidth = config.getResolutionHorizontal();
         ScreenHeight = config.getResolutionVertical();
-        backgroundImage = new Texture(Gdx.files.internal(resourceLoadScreenBackground));
+        backgroundImage = new Texture(Gdx.files.internal(resourceBlurBackground));
 
         backgroundMusic = loadMusic(resourceThemeMusic);
         backgroundMusic.setLooping(true);
         backgroundMusic.setVolume(config.getMusicVolume());
 
         menuOptions = new ArrayList<Text>();
-        this.title = new Text(Resources.resourceMainFont, Resources.mainTitleFontSize,"LA AVENTURA COMIENZA",true);
+        this.title = new Text(Resources.resourceMainFont, Resources.screenTitleFontSize+20,"LA AVENTURA COMIENZA",true);
         this.title.centerTextScreenInX( ScreenHeight-150);
 
         this.subTitleSave = new Text(Resources.resourceMainFont, Resources.screenTitleFontSize-20,"Guardar juego en:",true);

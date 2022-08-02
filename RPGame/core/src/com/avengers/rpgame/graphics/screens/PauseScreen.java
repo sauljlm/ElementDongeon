@@ -46,7 +46,7 @@ public class PauseScreen implements Screen {
 
         ScreenWidth = config.getResolutionHorizontal();
         ScreenHeight = config.getResolutionVertical();
-        backgroundImage = new Texture(Gdx.files.internal(resourceLoadScreenBackground));
+        backgroundImage = new Texture(Gdx.files.internal(resourceBlurBackground));
 
         backgroundMusic = loadMusic(resourceThemeMusic);
         backgroundMusic.setLooping(true);
