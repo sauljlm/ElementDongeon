@@ -1,6 +1,6 @@
 package com.avengers.rpgame.logic.entities;
 
-public class Consumable extends Item implements IConsumable{
+public class Consumable extends Item{
 
     public Consumable() {
     }

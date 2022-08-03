@@ -67,7 +67,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
             items.add(proxyDataManager.getSpecialItem("Llave fuego"));
         }
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Knight",1);
-        ArrayList<Skill> skills = new ArrayList<>();
+        ArrayList<Skill> skills = proxyDataManager.getSkillsList("Knight",1);
 
         builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
@@ -94,7 +94,8 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Archer");
         items.add(proxyDataManager.getSpecialItem("Talisman tierra"));
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Archer",1);
-        ArrayList<Skill> skills = new ArrayList<>();
+        ArrayList<Skill> skills = proxyDataManager.getSkillsList("Archer",1);
+
 
         builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
@@ -122,7 +123,8 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         items.add(proxyDataManager.getConsumableItemsList("Mage").get(0));
         items.add(proxyDataManager.getSpecialItem("Talisman tierra"));
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Mage",1);
-        ArrayList<Skill> skills = new ArrayList<>();
+        ArrayList<Skill> skills = proxyDataManager.getSkillsList("Mage",1);
+
 
         builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(), characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());

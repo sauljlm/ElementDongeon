@@ -35,7 +35,7 @@ public class DataStorageProxy implements IDataStorage {
     public ArrayList<Skill> getSkillsList() {
         ArrayList<Skill> result = dataStorage.getSkillsList();
         if (result.isEmpty()){
-            Skill basic = new Skill("Knight/Archer/Mage", "Habilidad basica", 1200, 12, 0, 0,0,0,0,0,0,20);
+            Skill basic = new Skill("Knight/Archer/Mage", "Habilidad basica", 1200, 12, 0, 0,0,0,0,0,0,20,"external");
             result.add(basic);
         }
         return result;
@@ -55,7 +55,7 @@ public class DataStorageProxy implements IDataStorage {
     public ArrayList<Item> getConsumableItemsList() {
         ArrayList<Item> result = dataStorage.getConsumableItemsList();
         if (result.isEmpty()){
-            Consumable basic = new Consumable(1,"Knight/Mage/Archer", "Pocion Organica (50% HP)", 800, 1, Resources.potion, 3, 0, 0, 0, 0, 0, 0, 50);
+            Consumable basic = new Consumable(1,"Knight/Mage/Archer", "Pocion organica", 800, 1, Resources.potion, 3, 0, 0, 0, 0, 0, 0, 50);
             result.add(basic);
         }
         return result;

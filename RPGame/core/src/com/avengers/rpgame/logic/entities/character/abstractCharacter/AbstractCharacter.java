@@ -232,26 +232,41 @@ public abstract class AbstractCharacter implements BattleActions {
 
     //BattleSystem
     //Attack other character
-    public void attackOther(Attack attack, AbstractCharacter targetCharacter) {
-        //TODO manage insufficient MP to return feedback
+    public String attackOther(Attack attack, AbstractCharacter targetCharacter) {
+        String result="";
         if(this.getMagicPoints() >= attack.getmPCost()){
             this.setMagicPoints(this.getMagicPoints()-attack.getmPCost());
-            targetCharacter.receiveAttack(attack);
+            int hpDamage = (int) ((attack.getHPEffect()/2)+(attack.getHPEffect()*((this.strength*0.75+this.speed*0.45+this.luck*0.1+this.magic*0.2)/100)));
+//            int hpDamage = attack.getHPEffect();
+            result=targetCharacter.receiveAttack(hpDamage);
+        } else {
+            result="0 (sin magia)";
         }
+        return result;
     }
 
     //Receive attack
-    public void receiveAttack(Attack attack) {
-        this.setHealthPoints(this.getHealthPoints()-attack.getHPEffect());
+    public String receiveAttack(int hpDamage) {
+        this.setHealthPoints(this.getHealthPoints()-(hpDamage-(hpDamage/4*this.resistance/100)));
+        return String.valueOf(hpDamage-(hpDamage/4*this.resistance/100));
     }
 
     //Use skill on other character
-    public void skillOther(Skill skill, AbstractCharacter targetCharacter) {
-        //TODO manage insufficient MP to return feedback
+    public String skillOther(Skill skill, AbstractCharacter targetCharacter) {
+        String result="";
         if(this.getMagicPoints() >= skill.getmPCost()){
             this.setMagicPoints(this.getMagicPoints()-skill.getmPCost());
-            targetCharacter.receiveSkill(skill);
+            if(skill.getType().equalsIgnoreCase("internal")) {
+                receiveSkill(skill);
+                result= String.valueOf(skill.gethPEffect());
+            } else {
+                int hpDamage = (int) ((skill.gethPEffect()/2)+(skill.gethPEffect()*((this.strength*0.75+this.speed*0.45+this.luck*0.1+this.magic*0.2)/100)));
+                result=targetCharacter.receiveAttack(hpDamage);
+            }
+        }else{
+            result="0 (sin magia)";
         }
+        return result;
     }
 
     //Use/receive skill on oneself
@@ -278,11 +293,13 @@ public abstract class AbstractCharacter implements BattleActions {
         this.setMagic(this.getMagic()+this.getMagic()*item.getMagicEffect()/100);
         this.setResistance(this.getResistance()+this.getResistance()*item.getResistanceEffect()/100);
         this.setLuck(this.getLuck()+this.getLuck()* item.getLuckEffect()/100);
-        this.setMagicPoints(this.getMagicPoints()+this.getMagicPoints()*item.getmPEffect()/100);
-        this.setHealthPoints(this.getHealthPoints()+this.getHealthPoints()*item.gethPEffect()/100);
+        this.setMagicPoints(this.getMagicPoints()+this.getMagicPointsMax()*item.getmPEffect()/100);
+        this.setHealthPoints(this.getHealthPoints()+this.getHealthPointsMax()*item.gethPEffect()/100);
         if(healthPoints>healthPointsMax)healthPoints=healthPointsMax;
         if(magicPoints>magicPointsMax)magicPoints=magicPointsMax;
-        items.remove(items.indexOf(item));
+        if(item.getDescription().contains("Pocion")){
+            items.remove(items.indexOf(item));
+        }
     }
 
     public void restoreHP() {

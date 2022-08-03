@@ -1,6 +1,6 @@
 package com.avengers.rpgame.logic.entities;
 
-public class Item implements IWearable, IConsumable {
+public class Item {
     private int id;
     private String name;
     private String description;

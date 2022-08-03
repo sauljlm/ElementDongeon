@@ -1,6 +1,6 @@
 package com.avengers.rpgame.logic.entities;
 
-public class Wearable extends Item implements IWearable{
+public class Wearable extends Item{
 
     public Wearable() {
     }

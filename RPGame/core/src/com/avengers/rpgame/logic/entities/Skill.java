@@ -14,11 +14,12 @@ public class Skill {
     private int luckEffect;
     private int mPEffect;
     private int hPEffect;
+    private String type;
 
     public Skill() {
     }
 
-    public Skill(String name, String description, int price, int unlockLevel, int mPCost, int strengthEffect, int speedEffect, int magicEffect, int resistanceEffect, int luckEffect, int mPEffect, int hPEffect) {
+    public Skill(String name, String description, int price, int unlockLevel, int mPCost, int strengthEffect, int speedEffect, int magicEffect, int resistanceEffect, int luckEffect, int mPEffect, int hPEffect, String type) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -31,6 +32,7 @@ public class Skill {
         this.luckEffect = luckEffect;
         this.mPEffect = mPEffect;
         this.hPEffect = hPEffect;
+        this.type = type;
     }
 
     public String getName() {
@@ -129,6 +131,14 @@ public class Skill {
         this.hPEffect = hPEffect;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "Skill{" +
@@ -144,6 +154,7 @@ public class Skill {
                 ", luckEffect=" + luckEffect +
                 ", mPEffect=" + mPEffect +
                 ", hPEffect=" + hPEffect +
+                ", type=" + type +
                 '}';
     }
 }

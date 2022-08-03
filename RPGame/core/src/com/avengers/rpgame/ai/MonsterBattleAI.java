@@ -37,8 +37,8 @@ public class MonsterBattleAI {
         switch (selectedNumber){
             case 0: //Attack enemy
                 Attack attack = selectAttack(oneSelfCharacter);
-                oneSelfCharacter.attackOther(attack, targetCharacter);
-                return attack.getDescription() +" ha infringido " +attack.getHPEffect() + " HP";
+                String hpValue = oneSelfCharacter.attackOther(attack, targetCharacter);
+                return attack.getDescription() +" ha infringido " +hpValue + " HP";
             case 1: //UseItem on himself
                 Item item = selectItem(oneSelfCharacter);
                 oneSelfCharacter.receiveItem(item);
@@ -48,7 +48,7 @@ public class MonsterBattleAI {
 //                selectSkill(Character);
                 return (skill.getDescription());
             default:
-                return "Ya no quiero pelear, perdón!";
+                return "Ya no quiero pelear.";
         }
     }
 

@@ -32,6 +32,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import static com.avengers.rpgame.utils.FileManager.*;
 import static com.avengers.rpgame.utils.Resources.*;
@@ -181,7 +182,7 @@ public class FightScreen implements Screen {
         buttonsScroll.layout();
 
         selector1 = new TextButton("Ataques", skin);
-        selector2 = new TextButton("Skills", skin);
+        selector2 = new TextButton("Poderes", skin);
         selector3 = new TextButton("Items", skin);
 
         selector1W = new Window("", skin);
@@ -258,7 +259,7 @@ public class FightScreen implements Screen {
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 setActivePlayerAttacks();
-                changeMessageBoard("Seleccionar un ataque");
+                //changeMessageBoard("Seleccionar un ataque");
             }
         });
 
@@ -268,7 +269,7 @@ public class FightScreen implements Screen {
             }
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 setActivePlayerSkills();
-                changeMessageBoard("Seleccionar un skill");
+                //changeMessageBoard("Seleccionar un skill");
             }
         });
 
@@ -278,7 +279,7 @@ public class FightScreen implements Screen {
             }
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 setActivePlayerItems();
-                changeMessageBoard("Seleccionar un item");
+                //changeMessageBoard("Seleccionar un item");
             }
         });
     }
@@ -334,9 +335,9 @@ public class FightScreen implements Screen {
 
                 public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
-                        playerParty.getActivePartyMember().attackOther(playerParty.getActivePartyMember().getAttacks().get(finalIndex-1), enemyParty.getActivePartyMember());
+                        String hpValue = playerParty.getActivePartyMember().attackOther(playerParty.getActivePartyMember().getAttacks().get(finalIndex-1), enemyParty.getActivePartyMember());
                         playerTimer.setValue(playerTimer.getMinValue());
-                        changeMessageBoard(playerParty.getActivePartyMember().getDescription() + " ha utilizado " + attack.getDescription()+ " ha infringido " +attack.getHPEffect() + " de daño.");
+                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado el ataque " + attack.getDescription().toUpperCase(Locale.ROOT)+ " (" + hpValue + " HP)");
                     }
                 }
             });
@@ -348,7 +349,7 @@ public class FightScreen implements Screen {
         buttonsTable.clear();
         for (final Skill skill:playerParty.getActivePartyMember().getSkills()) {
             Table buttonW = new Table();
-            TextButton buttonA = new TextButton("Skill "+index, skin);
+            TextButton buttonA = new TextButton("Poder "+index, skin);
             buttonsTable.row();
             buttonsTable.add(buttonW).fillX().expandX().height(100);
             buttonW.add(buttonA);
@@ -363,9 +364,9 @@ public class FightScreen implements Screen {
 
                 public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
-                        playerParty.getActivePartyMember().skillOther(playerParty.getActivePartyMember().getSkills().get(finalIndex-1), enemyParty.getActivePartyMember());
+                        String hpValue = playerParty.getActivePartyMember().skillOther(playerParty.getActivePartyMember().getSkills().get(finalIndex-1), enemyParty.getActivePartyMember());
                         playerTimer.setValue(playerTimer.getMinValue());
-                        changeMessageBoard(playerParty.getActivePartyMember().getDescription() + " ha utilizado " + skill.getDescription()+ " ha tenido el efecto de " +skill.gethPEffect());
+                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado el poder " + skill.getDescription()+ " (" +hpValue+ " HP)");
                     }
                 }
             });
@@ -394,7 +395,7 @@ public class FightScreen implements Screen {
                     if(playerTimer.getValue() == playerTimer.getMaxValue()){
                         playerParty.getActivePartyMember().receiveItem(playerParty.getActivePartyMember().getItems().get(finalIndex-1)); //TODO make items and skills dualmode for attack others and self use.
                         playerTimer.setValue(playerTimer.getMinValue());
-                        changeMessageBoard(playerParty.getActivePartyMember().getDescription() + " ha utilizado el item " + item.getDescription()+ " ha tenido el efecto de " +item.gethPEffect());
+                        changeMessageBoard(playerParty.getActivePartyMember().getName() + " ha utilizado el item " + item.getDescription()+ " (" +item.gethPEffect()+" HP)");
                         setActivePlayerItems();
                     }
                 }

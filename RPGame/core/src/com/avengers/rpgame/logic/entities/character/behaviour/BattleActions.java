@@ -10,12 +10,12 @@ import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCh
 //The current way is less efficient but probably simpler to just make it works
 public interface BattleActions {
     //Attack other character
-    void attackOther(Attack attack, AbstractCharacter targetCharacter);
+    String attackOther(Attack attack, AbstractCharacter targetCharacter);
     //Receive attack
-    void receiveAttack(Attack attack);
+    String receiveAttack(int hpDamage);
 
     //Use skill on other character
-    void skillOther(Skill attack, AbstractCharacter targetCharacter);
+    String skillOther(Skill attack, AbstractCharacter targetCharacter);
     //Use/receive skill on oneself
     void receiveSkill(Skill attack);
 
