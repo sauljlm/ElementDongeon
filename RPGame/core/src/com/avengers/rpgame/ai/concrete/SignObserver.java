@@ -24,18 +24,18 @@ public class SignObserver implements Observer {
     public void actionTrigger(AbstractCharacter playerCharacter, Body currentBody, String currentMapObject) {
         dialogManager.updateSpeaker("Calabozo");
         if (currentMapObject.contains("Earth")) {
-            message = "Bienvenido al calabozo de tierra, ve e intenta vencer al Jefe de tierra que guarda el talisman de agua";
+            message = "Bienvenido al calabozo de tierra, vence al Jefe de Tierra y recupera el talisman de su cofre.";
         } else if (currentMapObject.contains("Water")) {
-            message = "Bienvenido al calabozo de agua, ve e intenta vencer al Jefe de agua que guarda el talisman de viento";
+            message = "Bienvenido al calabozo de agua, vence al Jefe de Agua y recupera el talisman de su cofre.";
         } else if (currentMapObject.contains("Wind")) {
-            message = "Bienvenido al calabozo de viento, ve e intenta vencer al Jefe de viento que guarda el talisman de fuego";
+            message = "Bienvenido al calabozo de viento, vence al Jefe de Viento y recupera el talisman de su cofre.";
         } else if (currentMapObject.contains("Fire")) {
-            message = "Bienvenido al calabozo de fuego, ve e intenta vencer al Jefe de fuego";
+            message = "Bienvenido al calabozo de fuego, vence al Jefe de Fuego y recupera el talisman de su cofre.";
         } else if (currentMapObject.contains("Capital")) {
-            message = "Bienvenido a la ciudad central del reino";
+            message = "Bienvenido a la Ciudad Central del reino Camlot.";
         } else if (currentMapObject.contains("House")) {
-            dialogManager.updateSpeaker("Hola");
-            message = "Debes proteger el reino y vencer a los jefes de los calabozos, grandes aventuras te esperan!";
+            dialogManager.updateSpeaker("Hogar");
+            message = "Objetivo: Recuperar los talismanes y llevarlos donde el Rey. ¡Grandes aventuras te esperan!";
         }
         dialogManager.updateDialog(message);
     }

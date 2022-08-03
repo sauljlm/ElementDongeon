@@ -40,7 +40,6 @@ public class PortalObserver implements Observer {
                 }
             }
         }
-
         return access;
     }
 
@@ -64,7 +63,7 @@ public class PortalObserver implements Observer {
             destroyPortal(currentBody);
             dialogManager.updateDialog("portal abierto");
         } else {
-            dialogManager.updateDialog("El portal no se puede abrir, debes tener una llave");
+            dialogManager.updateDialog("portal cerrado, ocupas la llave");
         }
     }
 }

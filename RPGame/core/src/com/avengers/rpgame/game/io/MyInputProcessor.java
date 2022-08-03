@@ -28,7 +28,7 @@ public class MyInputProcessor implements InputProcessor {
     private boolean moveDownMenu;
     private boolean moveLeftMenu;
     private boolean moveRightMenu;
-    private boolean enterFightMode; //debug/dev only
+    private boolean enterCreditMode;
     private boolean storeOpened;
     private boolean buyItem;
     private boolean sellItem;
@@ -36,8 +36,8 @@ public class MyInputProcessor implements InputProcessor {
     private int _MouseX, _MouseY;
     private final GameConfig config = GameConfig.getInstance();
 
-    public boolean isEnterFightMode() {
-        return enterFightMode;
+    public boolean isCreditMode() {
+        return enterCreditMode;
     }
 
     public boolean isMoveUp() {
@@ -197,8 +197,8 @@ public class MyInputProcessor implements InputProcessor {
         if(keycode == Input.Keys.RIGHT){
             moveRightMenu = true;
         }
-        if(keycode == Input.Keys.P){
-            enterFightMode = true;
+        if(keycode == Input.Keys.F){
+            enterCreditMode = true;
         }
         if(keycode == Input.Keys.NUM_1){
             select1 = true;
@@ -273,8 +273,8 @@ public class MyInputProcessor implements InputProcessor {
         if(keycode == Input.Keys.RIGHT){
             moveRightMenu = false;
         }
-        if(keycode == Input.Keys.P){
-            enterFightMode = false;
+        if(keycode == Input.Keys.F){
+            enterCreditMode = false;
         }
         if(keycode == Input.Keys.NUM_1){
             select1 = false;

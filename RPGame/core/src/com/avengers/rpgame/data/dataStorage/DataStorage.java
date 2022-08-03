@@ -185,10 +185,12 @@ public class DataStorage {
         consumableItemsList.add(p2);
         consumableItemsList.add(p3);
 
+        Item initialTalisman = new Item("Knight/Mage/Archer", "Talisman inicial", 0, 1, 0, 0, 0, 0, 0, 0, 0);
         Item earthTalisman = new Item("Knight/Mage/Archer", "Talisman tierra", 0, 1, 0, 0, 0, 0, 0, 0, 0);
         Item waterTalisman = new Item("Knight/Mage/Archer", "Talisman agua", 0, 1, 0, 0, 0, 0, 0, 0, 0);
         Item windTalisman = new Item("Knight/Mage/Archer", "Talisman viento", 0, 1, 0, 0, 0, 0, 0, 0, 0);
         Item fireTalisman = new Item("Knight/Mage/Archer", "Talisman fuego", 0, 1, 0, 0, 0, 0, 0, 0, 0);
+        specialItemsList.add(initialTalisman);
         specialItemsList.add(earthTalisman);
         specialItemsList.add(waterTalisman);
         specialItemsList.add(windTalisman);
@@ -198,10 +200,12 @@ public class DataStorage {
         Item waterKey = new Item("Knight/Mage/Archer", "Llave agua", 0, 12, 0, 0, 0, 0, 0, 0, 0);
         Item windKey = new Item("Knight/Mage/Archer", "Llave viento", 0, 18, 0, 0, 0, 0, 0, 0, 0);
         Item fireKey = new Item("Knight/Mage/Archer", "Llave fuego", 0, 24, 0, 0, 0, 0, 0, 0, 0);
+        Item elementKey = new Item("Knight/Mage/Archer", "Llave elemental", 0, 24, 0, 0, 0, 0, 0, 0, 0);
         specialItemsList.add(earthKey);
         specialItemsList.add(waterKey);
         specialItemsList.add(windKey);
         specialItemsList.add(fireKey);
+        specialItemsList.add(elementKey);
 
         Wearable armor = new Wearable("Knight/Mage/Archer", "Armadura", 500, 6, 30, 0, 0, 30, 0, 0, 10);
         Wearable magicJewelry = new Wearable("Knight/Mage/Archer", "Joyeria magica", 1000, 12, 0, 0, 30, 5, 0, 10, 0);

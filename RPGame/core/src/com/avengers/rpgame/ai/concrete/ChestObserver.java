@@ -23,19 +23,34 @@ public class ChestObserver implements Observer {
     }
 
     private boolean verifyAccess(AbstractCharacter playerCharacter, String currentMapObject) {
-        boolean access = true;
-        return access;
+        return true;
     }
 
     private void provideTalisman(AbstractCharacter playerCharacter, String currentMapObject) {
+        String talisman = "";
+
+        for (Item itemFound: playerCharacter.getItems()){
+            if (itemFound.getDescription().equals("Talisman inicial")){
+                talisman = itemFound.getDescription();
+            } else if (itemFound.getDescription().equals("Talisman tierra")) {
+                talisman = itemFound.getDescription();
+            } else if (itemFound.getDescription().equals("Talisman agua")) {
+                talisman = itemFound.getDescription();
+            } else if (itemFound.getDescription().equals("Talisman viento")) {
+                talisman = itemFound.getDescription();
+            } else if (itemFound.getDescription().equals("Talisman fuego")) {
+                talisman = itemFound.getDescription();
+            }
+        }
+
         for (Item item: dataItems){
-            if (item.getDescription().equals("Talisman agua") && currentMapObject.contains("earth")) {
+            if (item.getDescription().equals("Talisman tierra") && currentMapObject.contains("earth") && talisman.equals("")) {
                 GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
-            } else if (item.getDescription().equals("Talisman viento") && currentMapObject.contains("water")) {
+            } else if (item.getDescription().equals("Talisman agua") && currentMapObject.contains("water") && talisman.equals("")) {
                 GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
-            } else if (item.getDescription().equals("Talisman fuego") && currentMapObject.contains("wind")) {
+            } else if (item.getDescription().equals("Talisman viento") && currentMapObject.contains("wind") && talisman.equals("")) {
                 GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
-            } else if (item.getDescription().equals("Talisman fuego") && currentMapObject.contains("fire")) {
+            } else if (item.getDescription().equals("Talisman fuego") && currentMapObject.contains("fire") && talisman.equals("")) {
                 GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
             }
         }
@@ -51,9 +66,9 @@ public class ChestObserver implements Observer {
         dialogManager.updateSpeaker("Cofre");
         if (verifyAccess(playerCharacter, currentMapObject)) {
             provideTalisman(playerCharacter, currentMapObject);
-            dialogManager.updateDialog("Has obtenido un talisman, ve donde el rey para cambiarlo por una llave");
+            dialogManager.updateDialog("Has obtenido un talisman, ve donde el Rey.");
         } else {
-            dialogManager.updateDialog("Debes vencer al jefe para abrir el cofre");
+            dialogManager.updateDialog("Debes vencer al jefe para abrir el cofre.");
         }
     }
 }

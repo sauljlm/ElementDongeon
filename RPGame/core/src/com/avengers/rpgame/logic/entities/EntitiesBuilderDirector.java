@@ -58,7 +58,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         this.experiencePoints = 0;
 
         ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Knight");
-        items.add(proxyDataManager.getSpecialItem("Talisman tierra"));
+        items.add(proxyDataManager.getSpecialItem("Talisman fuego"));
         if(true){ //Keys for debug
 //        if(gameConfig.isGodMode()){ //Keys for debug
             items.add(proxyDataManager.getSpecialItem("Llave tierra"));
@@ -92,10 +92,9 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         this.experiencePoints = 0;
 
         ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Archer");
-        items.add(proxyDataManager.getSpecialItem("Talisman tierra"));
+        items.add(proxyDataManager.getSpecialItem("Talisman inicial"));
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Archer",1);
         ArrayList<Skill> skills = proxyDataManager.getSkillsList("Archer",1);
-
 
         builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
         builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
@@ -121,7 +120,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
 
         ArrayList<Item> items = new ArrayList<>();
         items.add(proxyDataManager.getConsumableItemsList("Mage").get(0));
-        items.add(proxyDataManager.getSpecialItem("Talisman tierra"));
+        items.add(proxyDataManager.getSpecialItem("Talisman inicial"));
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Mage",1);
         ArrayList<Skill> skills = proxyDataManager.getSkillsList("Mage",1);
 

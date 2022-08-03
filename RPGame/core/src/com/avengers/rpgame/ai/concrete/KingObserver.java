@@ -4,6 +4,7 @@ import com.avengers.rpgame.ai.Interfaces.Observer;
 import com.avengers.rpgame.data.dataStorage.ProxyDataManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.graphics.dialog.DialogManager;
+import com.avengers.rpgame.graphics.screens.CreditScreen;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 public class KingObserver  implements Observer {
 
     private String observerName;
+    private String keyName;
+
     private ArrayList<Item> dataItems;
     private ProxyDataManager proxyDataManager;
     private DialogManager dialogManager;
@@ -28,7 +31,9 @@ public class KingObserver  implements Observer {
         boolean access = false;
 
         for (Item itemFound: playerCharacter.getItems()){
-            if (itemFound.getDescription().equals("Talisman tierra")){
+            if (itemFound.getDescription().equals("Talisman inicial")){
+                access = true;
+            } else if (itemFound.getDescription().equals("Talisman tierra")) {
                 access = true;
             } else if (itemFound.getDescription().equals("Talisman agua")) {
                 access = true;
@@ -61,7 +66,9 @@ public class KingObserver  implements Observer {
         String talisman = "";
 
         for (Item itemFound: playerCharacter.getItems()){
-            if (itemFound.getDescription().equals("Talisman tierra")){
+            if (itemFound.getDescription().equals("Talisman inicial")){
+                talisman = itemFound.getDescription();
+            } else if (itemFound.getDescription().equals("Talisman tierra")) {
                 talisman = itemFound.getDescription();
             } else if (itemFound.getDescription().equals("Talisman agua")) {
                 talisman = itemFound.getDescription();
@@ -72,20 +79,29 @@ public class KingObserver  implements Observer {
             }
         }
         for (Item item: dataItems){
-            if (item.getDescription().equals("Llave tierra") && talisman.equals("Talisman tierra")){
+            if (item.getDescription().equals("Llave tierra") && talisman.equals("Talisman inicial")){
                 GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
                 deleteTalisman(talisman);
-            } else if (item.getDescription().equals("Llave agua") && talisman.equals("Talisman agua")){
+                this.keyName = "Aqui tienes la llave del calabozo de tierra.";
+            } else if (item.getDescription().equals("Llave agua") && talisman.equals("Talisman tierra")){
                 GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
                 deleteTalisman(talisman);
-            } else if (item.getDescription().equals("Llave viento") && talisman.equals("Talisman viento")){
+                this.keyName = "Aqui tienes la llave del calabozo de agua.";
+            } else if (item.getDescription().equals("Llave viento") && talisman.equals("Talisman agua")){
                 GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
                 deleteTalisman(talisman);
-            } else if (item.getDescription().equals("Llave fuego") && talisman.equals("Talisman fuego")){
+                this.keyName = "Aqui tienes la llave del calabozo de viento.";
+            } else if (item.getDescription().equals("Llave fuego") && talisman.equals("Talisman viento")){
                 GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
                 deleteTalisman(talisman);
+                this.keyName = "Aqui tienes la llave del calabozo de fuego.";
+            } else if (item.getDescription().equals("Llave elemental") && talisman.equals("Talisman fuego")){
+                GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
+                deleteTalisman(talisman);
+                this.keyName = "Ya tenemos los cuatro talismanes. ¡El reino está a salvo! Presiona la tecla 'F' para finalizar la partida.";
             }
         }
+
     }
 
     @Override
@@ -98,9 +114,9 @@ public class KingObserver  implements Observer {
         dialogManager.updateSpeaker("Rey");
         if (verifyAccess(playerCharacter)) {
             provideKey(playerCharacter);
-            dialogManager.updateDialog("Aqui tienes tus llaves");
+            dialogManager.updateDialog(keyName);
         } else {
-            dialogManager.updateDialog("Necesitas un talisman para entregarte las llaves");
+            dialogManager.updateDialog("Necesitas traerme el talisman del cofre para entregarte la siguiente llave.");
         }
     }
 }

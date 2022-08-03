@@ -5,6 +5,7 @@ import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.screens.*;
 import com.avengers.rpgame.logic.entities.EntitiesBuilderDirector;
+import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
@@ -88,54 +89,17 @@ public class IOManager {
             this.backgroundMusic.dispose();
         }
 
-//        if(inputProcessor.isAction1()){
-//            if(playerCharacter.getAnimatedCharacter().getPlayer().getLinearVelocity().y == 0){
-//                playerCharacter.getAnimatedCharacter().getPlayer().applyLinearImpulse(0, 6, 0, 6, false);
-//            }
-//        }
         velocity.x = horizontalForce * 5;
         velocity.y = verticalForce * 5;
 
         ((DynamicAnimatedCharacter)playerParty.getPartyMember1().getAnimatedCharacter()).getPlayer().setLinearVelocity(velocity.x,velocity.y);
 
-//        System.out.println("Player real position");
-//        System.out.println(playerParty.getPartyMember1().getPosition());
-//
-//        System.out.println("Player animated position");
-//
-
-//        if(inputProcessor.isEnterFightMode()){
-//            playerParty.getPartyMember1().setPosition(((DynamicAnimatedCharacter)playerParty.getPartyMember1().getAnimatedCharacter()).getPlayer().getPosition());
-////            GameInformation.getInstance().setPlayerParty(playerParty);
-//            //This is just for battle testing
-//            EntitiesBuilderDirector director = new EntitiesBuilderDirector();
-//            CharacterBuilder characterBuilder = new CharacterBuilder();
-////            director.buildFireSkeleton(characterBuilder, GameStatus.getInstance().getWorld(), game, "Enemigo");
-//
-//            //TODO implementar logica para la seleccion de enemigo segun nivel de personaje, tambien resolver aparicion de enemigo
-//            //director.buildWaterSkeleton(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
-//            //director.buildEarthSkeleton(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
-//            //director.buildFireSkeleton(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
-//            //director.buildWindSkeleton(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
-//
-//            //director.buildChiefEarth(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
-//            //director.buildChiefFire(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
-//            //director.buildChiefWater(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
-//            //director.buildChiefWind(characterBuilder, playerParty.getActivePartyMember().getAnimatedCharacter().getWorld(), game, "FireSkeletonTest");
-//
-//
-//            AbstractCharacter enemyCharacter = characterBuilder.getResult();
-//            Party enemyParty = new Party();
-//            enemyParty.setPartyMember1(enemyCharacter);
-//            enemyParty.setPartyMember2(enemyCharacter);
-//            enemyParty.setPartyMember3(enemyCharacter);
-//
-////            game.setScreen(new FightScreen(game, enemyParty));
-//            System.out.println("FIGHT !");
-//        }
-
-        if(inputProcessor.isEnterFightMode()) {
-            game.setScreen(new CreditScreen(game));
+        if(inputProcessor.isCreditMode()) {
+            for (Item itemFound: playerParty.getActivePartyMember().getItems()) {
+                if (itemFound.getDescription().equals("Llave elemental")) {
+                    game.setScreen(new CreditScreen(game));
+                }
+            }
         }
 
         if(inputProcessor.isPause()){
@@ -146,7 +110,7 @@ public class IOManager {
 
     //Process input for overworld gameplay
     private void battleUpdate(float delta, Party playerParty) {
-//        System.out.println("HEY IT'S BATTLE TIME!");
+
         float horizontalForce = 0;
         float verticalForce = 0;
         float movementSpeed = 1.5f;
@@ -180,10 +144,6 @@ public class IOManager {
 
         ((DynamicAnimatedCharacter)playerParty.getPartyMember1().getAnimatedCharacter()).getPlayer().setLinearVelocity(velocity.x,velocity.y);
 
-        if(inputProcessor.isEnterFightMode()){
-//            System.out.println("EXIT!");
-//            game.setScreen(new OverworldScreen(game));
-        }
     }
 
     public void dispose(){

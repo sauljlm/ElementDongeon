@@ -22,6 +22,6 @@ public class RandomNPCObserver implements Observer {
     @Override
     public void actionTrigger(AbstractCharacter playerCharacter, Body currentBody, String currentMapObject) {
         dialogManager.updateSpeaker("Aldeano");
-        dialogManager.updateDialog("Deberias de hablar con el Rey!");
+        dialogManager.updateDialog("Deberías de hablar con el Rey.");
     }
 }

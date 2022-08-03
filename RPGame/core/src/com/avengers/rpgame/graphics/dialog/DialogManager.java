@@ -56,7 +56,7 @@ public class DialogManager {
             Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
             dialog.getDialogSprite().get_sprite().draw(rpGame.batch);
             dialog.getDialogFont().draw(rpGame.batch, dialog.getDialogSpeaker(), resolution.x*0.11f, resolution.y*0.21f);
-            GlyphLayout text = new GlyphLayout(dialog.getDialogFont(), dialog.getDialogMessage(), Color.WHITE, 600, Align.left, true);
+            GlyphLayout text = new GlyphLayout(dialog.getDialogFont(), dialog.getDialogMessage(), Color.BROWN, 600, Align.left, true);
             dialog.getDialogFont().draw(rpGame.batch, text, resolution.x*0.07f, resolution.y*0.17f);
         }
     }
