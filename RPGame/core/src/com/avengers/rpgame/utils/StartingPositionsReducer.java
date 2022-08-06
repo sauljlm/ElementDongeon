@@ -49,7 +49,7 @@ public class StartingPositionsReducer {
         add("WaterMonster6", 71.97f,110f);
         add("WaterMonster7", 73.6f,126.8f);
         add("WaterMonster8", 71.47f,151.8f);
-        add("WaterMonster9", 134.45f,127.7f);
+        add("WaterMonster9", 99f,135f);
         add("WaterBossMonster", 60.61f,110.8f);
 
         add("WindMonster1", 282.7f,112.40f);
@@ -63,7 +63,7 @@ public class StartingPositionsReducer {
         add("WindMonster9", 349.86f,138f);
         add("WindBossMonster", 367.57f,156.1f);
 
-        add("FireMonster1", 214,191);
+        add("FireMonster1", 214,195);
         add("FireMonster2", 181,200);
         add("FireMonster3", 170,228);
         add("FireMonster4", 200,222);
@@ -71,7 +71,7 @@ public class StartingPositionsReducer {
         add("FireMonster6", 253,228);
         add("FireMonster7", 213,225);
         add("FireMonster8", 194,206);
-        add("FireMonster9", 221.93f,180);
+        add("FireMonster9", 213,190);
         add("FireBossMonster", 236.89f,198.61f);
     }
 
