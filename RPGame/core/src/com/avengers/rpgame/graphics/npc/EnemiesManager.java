@@ -50,7 +50,7 @@ public class EnemiesManager {
             createNewEnemies();
             gameStatus.setEnemies(enemies);
         }
-        if (gameStatus.getStatus().equals("loadedGame")){
+        if (gameStatus.getStatus().equals("loadedGame") || gameStatus.getStatus().contains("defeated")){
             createNewEnemies();
             gameStatus.setEnemies(enemies);
             restoreHealth();
@@ -58,7 +58,6 @@ public class EnemiesManager {
         if (gameStatus.getStatus().equals("gameInProgress")){
             enemies = gameStatus.getEnemies();
             restoreEnemies();
-            System.out.println("done");
         }
     }
 

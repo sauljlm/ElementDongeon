@@ -26,6 +26,10 @@ public class StartingPositionsReducer {
 
     private void setPositions(){
         add("startPlayer", 338,44);
+        add("defeatedEarth", 338,44);
+        add("defeatedWind", 338,44);
+        add("defeatedWater", 338,44);
+        add("defeatedFire", 338,44);
         add("EarthMonster1", 240.77f,81.52f);
         add("EarthMonster2", 219.84f,87.30f);
         add("EarthMonster3", 221.84f,65.08f);
@@ -74,12 +78,14 @@ public class StartingPositionsReducer {
     private Vector2 determinePosition(){
         Vector2 worldPosition = new Vector2();
         if (GameStatus.getInstance().getStatus().equals("newGame")){
-            worldPosition.x = 338*gameConfig.getPPM();
-            worldPosition.y = 44*gameConfig.getPPM();
+            worldPosition = getPosition("startPlayer");
         }
         if (GameStatus.getInstance().getStatus().equals("loadedGame")){
             worldPosition.x =GameStatus.getInstance().getParty().getPartyMember(1).getPosition().x*gameConfig.getPPM();
             worldPosition.y = GameStatus.getInstance().getParty().getPartyMember(1).getPosition().y*gameConfig.getPPM();
+        }
+        if (GameStatus.getInstance().getStatus().equals("defeated")){
+            worldPosition = getPosition("startPlayer");
         }
         if (GameStatus.getInstance().getStatus().equals("gameInProgress")){
             worldPosition.x =GameStatus.getInstance().getParty().getPartyMember(1).getPosition().x*gameConfig.getPPM();

@@ -198,7 +198,7 @@ public class GameOverScreen implements Screen {
             switch (this.actualSelection){
                 case 0:
                     gameStatus.loadFromDB(GameStatus.getInstance().getSaveSlot());
-                    gameStatus.setStatus("loadedGame");
+                    gameStatus.setStatus("defeated");
                     game.setScreen(new OverworldScreen(game));
                     dispose();
                     break;

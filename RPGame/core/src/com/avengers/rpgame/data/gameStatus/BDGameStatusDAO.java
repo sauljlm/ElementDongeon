@@ -15,9 +15,13 @@ import java.util.ArrayList;
 
 public class BDGameStatusDAO implements IGameStatusDAO{
 
+    public BDGameStatusDAO() {
+    }
+
     //TODO for future me, refactor this into stored procedures
     @Override
-    public void saveGameStatus(GameStatus gameStatus) {
+    public void saveGameStatus() {
+        GameStatus gameStatus = GameStatus.getInstance();
         int partyMember = 3;
         String timeStamp = String.valueOf(System.currentTimeMillis());
         ArrayList<String> querys = new ArrayList<String>();
@@ -102,7 +106,7 @@ public class BDGameStatusDAO implements IGameStatusDAO{
             }
             for (Skill skill : gameStatus.getParty().getPartyMember(partyMember).getSkills()){
                 sqlQuery = "INSERT INTO Skill "+
-                        "(saveSlot,partyMember,name,description,price,unlockLevel,mPCost,strengthEffect,speedEffect,magicEffect,resistanceEffect,luckEffect,mPEffect,hPEffect,timeStamp)" +
+                        "(saveSlot,partyMember,name,description,price,unlockLevel,mPCost,strengthEffect,speedEffect,magicEffect,resistanceEffect,luckEffect,mPEffect,hPEffect,type,timeStamp)" +
                         "VALUES("+
                         gameStatus.getSaveSlot()+","+
                         partyMember+",'"+
@@ -117,7 +121,8 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                         skill.getResistanceEffect()+","+
                         skill.getLuckEffect()+","+
                         skill.getmPEffect()+","+
-                        skill.gethPEffect()+","+
+                        skill.gethPEffect()+",'"+
+                        skill.getType()+"',"+
                         timeStamp+
                         ")";
                 querys.add(sqlQuery);
@@ -149,13 +154,18 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                 e.printStackTrace();
             };
         }
+        try {
+            DBConnector.getConnection().closeConnection();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public GameStatus loadGameStatus(int saveSlot) {
         GameStatus gameStatus = GameStatus.getInstance();
         Party party = gameStatus.getParty();
-        ResultSet resultSet;
+        ResultSet resultSet = null;
         AbstractCharacter character = party.getActivePartyMember();
 
         String sqlQuery1 = "SELECT * from AbstractCharacter where saveSlot is "+saveSlot;
@@ -189,7 +199,6 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                 character.setCharacterClass(characterClass);
                 character.getCharacterClass().setIdCharacterClass(Integer.parseInt(resultSet.getString("characterClass")));
                 ((PlayableCharacter)character).setExperiencePoints(Integer.parseInt(resultSet.getString("experiencePoints")));
-                party.setPartyMember(Integer.parseInt(resultSet.getString("partyMember")), character);
                 character.getAttacks().clear();
                 character.getItems().clear();
                 character.getSkills().clear();
@@ -242,6 +251,7 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                 skill.setLuckEffect(Integer.parseInt(resultSet.getString("luckEffect")));
                 skill.setmPEffect(Integer.parseInt(resultSet.getString("mPEffect")));
                 skill.sethPEffect(Integer.parseInt(resultSet.getString("hPEffect")));
+                skill.setType(resultSet.getString("type"));
                 character.getSkills().add(skill);
             }
 
@@ -251,9 +261,10 @@ public class BDGameStatusDAO implements IGameStatusDAO{
             while(resultSet.next()){
                 gameStatus.getEnemiesHealth().put(resultSet.getString("name"), Integer.parseInt(resultSet.getString("healthPoints")));
             }
+            DBConnector.getConnection().closeConnection();
         } catch (Exception e) {
             e.printStackTrace();
-        };
+        }
         return null;
     }
 }

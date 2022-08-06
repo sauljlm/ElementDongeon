@@ -30,7 +30,7 @@ public class CharacterFactory implements ICharacterFactory{
         if (gameStatus.getStatus().equals("newGame")){
             createNewParty();
         }
-        if (gameStatus.getStatus().equals("loadedGame")){
+        if (gameStatus.getStatus().equals("loadedGame") || gameStatus.getStatus().contains("defeated")){
             loadParty();
         }
         if (gameStatus.getStatus().equals("gameInProgress")){

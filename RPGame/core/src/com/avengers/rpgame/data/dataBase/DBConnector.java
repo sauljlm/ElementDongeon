@@ -5,10 +5,8 @@ public class DBConnector {
 
     public static DBAccess getConnection() throws Exception {
 
-        //DB Params
-
+        //DB string conection + params
         String URL = "jdbc:sqlite:../core/src/com/avengers/rpgame/data/dataBase/rpGameDB.db";
-//        String URL = "jdbc:sqlite:C:com/avengers/rpgame/data/rpGameDB.db";
 
         if (dBConnection == null) {
             dBConnection = new DBAccess(URL);

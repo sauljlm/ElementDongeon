@@ -17,10 +17,13 @@ public class GameStatus {
     private String status;
     private World world;
 
+    private BDGameStatusDAO bdGameStatusDAO;
+
     private ArrayList<AbstractCharacter> enemies = new ArrayList<>();
     private HashMap<String, Integer> enemiesHealth = new HashMap<>();
 
     private GameStatus() {
+        bdGameStatusDAO = new BDGameStatusDAO();
         party = new Party();
         party.setPartyMember1(new PlayableCharacter()); //Just to avoid null
         party.setPartyMember2(new PlayableCharacter()); //Just to avoid null
@@ -86,11 +89,9 @@ public class GameStatus {
 
     public void saveOnDB() {
         updateLocation();
-        BDGameStatusDAO bdGameStatusDAO = new BDGameStatusDAO();
-        bdGameStatusDAO.saveGameStatus(instance);
+        bdGameStatusDAO.saveGameStatus();
     }
     public void loadFromDB(int saveSlot) {
-        BDGameStatusDAO bdGameStatusDAO = new BDGameStatusDAO();
         bdGameStatusDAO.loadGameStatus(saveSlot);
     }
 
