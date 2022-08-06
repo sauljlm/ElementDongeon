@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
 import static com.avengers.rpgame.utils.Resources.HUDShield;
 
 public class UserLevel {
@@ -74,7 +75,7 @@ public class UserLevel {
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
         Vector2 ofset =  new Vector2(resolution.x*0.98f, resolution.y*0.1f);
         Vector2 position = new Vector2(resolution.x -ofset.x, resolution.y-ofset.y);
-        this.set_texture(new Texture(Gdx.files.internal(HUDShield)));
+        this.set_texture(loadTexture(HUDShield));
         this.set_sprite(new Sprite(this.get_texture()));
         this.setPotionX((int)position.x);
         this.setPotionY((int)position.y);
@@ -85,7 +86,7 @@ public class UserLevel {
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
         Vector2 ofset =  new Vector2(resolution.x/4*0.98f, resolution.y*0.1f);
         Vector2 position = new Vector2(resolution.x -ofset.x, resolution.y-ofset.y);
-        this.set_texture(new Texture(Gdx.files.internal(HUDShield)));
+        this.set_texture(loadTexture(HUDShield));
         this.set_sprite(new Sprite(this.get_texture()));
         this.setPotionX((int)position.x);
         this.setPotionY((int)position.y);
@@ -96,14 +97,14 @@ public class UserLevel {
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
         Vector2 ofset =  new Vector2(resolution.x*0.98f, resolution.y*0.1f);
         Vector2 position = new Vector2(resolution.x -ofset.x, resolution.y-ofset.y);
-        this.set_texture(new Texture(Gdx.files.internal(HUDShield)));
+        this.set_texture(loadTexture(HUDShield));
         this.set_sprite(new Sprite(this.get_texture()));
         this.setPotionX((int)position.x);
         this.setPotionY((int)position.y);
         this.setSize(90, 90);
     }
     public void dispose(){
-        _texture.dispose();
-        _sprite.getTexture().dispose();
+//        _texture.dispose();
+//        _sprite.getTexture().dispose();
     }
 }

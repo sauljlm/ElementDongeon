@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
 import static com.avengers.rpgame.utils.Resources.HUDPotion;
 
 public class MP {
@@ -65,7 +66,7 @@ public class MP {
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
         Vector2 ofset =  new Vector2(resolution.x*0.74f, resolution.y*0.07f);
         Vector2 position = new Vector2(resolution.x -ofset.x, resolution.y-ofset.y);
-        this.set_texture(new Texture(Gdx.files.internal(HUDPotion)));
+        this.set_texture(loadTexture(HUDPotion));
         this.set_sprite(new Sprite(this.get_texture()));
         this.setPotionX((int)position.x);
         this.setPotionY((int)position.y);
@@ -73,7 +74,7 @@ public class MP {
     }
 
     public void dispose(){
-        _texture.dispose();
-        _sprite.getTexture().dispose();
+//        _texture.dispose();
+//        _sprite.getTexture().dispose();
     }
 }

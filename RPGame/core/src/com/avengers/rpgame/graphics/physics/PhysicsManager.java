@@ -17,7 +17,7 @@ public class PhysicsManager extends iGraphicManager {
     private MapManager mapManager;
     private GameConfig gameConfig;
     private boolean debug;
-    OrthographicCamera camera;
+    private OrthographicCamera camera;
 
     public PhysicsManager(Vector2 gravityVector, MapManager mapManager, OrthographicCamera camera, boolean debug) {
         this.gravity = gravityVector;
@@ -48,6 +48,5 @@ public class PhysicsManager extends iGraphicManager {
     public void dispose(){
         world.dispose();
         debugRenderer.dispose();
-        mapManager.dispose();
     }
 }

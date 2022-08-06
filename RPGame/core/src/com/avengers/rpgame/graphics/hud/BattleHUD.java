@@ -29,32 +29,10 @@ public class BattleHUD {
     private int characterClass;
     private BitmapFont gameFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
     private BitmapFont lvlFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.levelHUDFontSize, Color.WHITE, false, Color.BLACK);
-    private final int maxPoints = ((PlayableCharacter) GameStatus.getInstance().getParty().getActivePartyMember()).getExperiencePointsMax();
+    private final int maxPoints = ((PlayableCharacter) GameStatus.getInstance().getPlayerParty().getActivePartyMember()).getExperiencePointsMax();
     private GameConfig gameConfig;
     private float type;
 
-    public BattleHUD() {
-        gameConfig = GameConfig.getInstance();
-        this.setUserHealth(0);
-        this.setPlayerLevel(0);
-        this.setMagicLevel(String.valueOf(0));
-        this.setCharacterClass(0);
-        this.setExperiencePoints(0);
-        createHearts(0);
-    }
-
-    public BattleHUD(float type, float userHealth, int playerLevel, int magicLevel, int experiencePoints, int characterClass) {
-        gameConfig = GameConfig.getInstance();
-        this.setUserHealth(userHealth);
-        this.levelIcon = new UserLevel(type);
-        this.setPlayerLevel(playerLevel);
-        this.setMagicLevel(String.valueOf(magicLevel));
-        this.setCharacterClass(characterClass);
-        this.setExperiencePoints(experiencePoints);
-        this.type = type;
-        createHearts(type);
-        weapon = new Weapon(this.playerLevel, this.characterClass);
-    }
     public BattleHUD(float type, Party party) {
         gameConfig = GameConfig.getInstance();
         this.setUserHealth(party.getPartyMember1().getHealthPoints());
@@ -177,6 +155,7 @@ public class BattleHUD {
         for (Heart heart:heartsHB) {
             heart.dispose();
         }
+        heartsHB.clear();
 
         int health = this.convertValue(this.getUserHealth());
         double lastValue = 0.06;
@@ -189,12 +168,12 @@ public class BattleHUD {
 
     public void dispose(){
         for (Heart heart:heartsHB) {
-            heart.dispose();
+//            heart.dispose();
         }
-        gameFont.dispose();
-        lvlFont.dispose();
-        weapon.dispose();
-        levelIcon.dispose();
-        magicPower.dispose();
+//        gameFont.dispose();
+//        lvlFont.dispose();
+//        weapon.dispose();
+//        levelIcon.dispose();
+//        magicPower.dispose();
     }
 }

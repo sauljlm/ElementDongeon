@@ -36,7 +36,7 @@ public class CameraManager extends iGraphicManager {
     //The camera needs a character to follow him
     //Anytime we get info from box2D "world" we need to multiply by PPM to go to regular units
     public void action(float delta){
-        position = new Vector3(((DynamicAnimatedCharacter)GameStatus.getInstance().getParty().getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition().x * gameConfig.getPPM(), ((DynamicAnimatedCharacter)GameStatus.getInstance().getParty().getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition().y * gameConfig.getPPM(), 0);
+        position = new Vector3(((DynamicAnimatedCharacter)GameStatus.getInstance().getPlayerParty().getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition().x * gameConfig.getPPM(), ((DynamicAnimatedCharacter)GameStatus.getInstance().getPlayerParty().getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition().y * gameConfig.getPPM(), 0);
         cameraUpdate(delta);
         rpGame.batch.setProjectionMatrix(camera.combined);
     }
@@ -48,6 +48,5 @@ public class CameraManager extends iGraphicManager {
     }
 
     public void  dispose(){
-        rpGame.dispose();
     }
 }

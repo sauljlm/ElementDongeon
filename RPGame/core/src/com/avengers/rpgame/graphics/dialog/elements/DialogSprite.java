@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
 import static com.avengers.rpgame.utils.Resources.dialog;
 
 public class DialogSprite {
@@ -75,7 +76,7 @@ public class DialogSprite {
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
         Vector2 ofset =  new Vector2(resolution.x*0.95f, resolution.y*0.95f);
         Vector2 position = new Vector2(resolution.x -ofset.x, resolution.y-ofset.y);
-        this.set_texture(new Texture(Gdx.files.internal(dialog)));
+        this.set_texture(loadTexture(dialog));
         this.set_sprite(new Sprite(this.get_texture()));
         this.setSpriteX((int)position.x);
         this.setSpriteY((int)position.y);

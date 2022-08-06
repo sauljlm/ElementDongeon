@@ -10,8 +10,8 @@ public class LoadScreen implements Screen {
     private final RPGame game;
     private ICutScene introCutScene;
 
-    public LoadScreen(final RPGame game) {
-        this.game = game;
+    public LoadScreen() {
+        this.game = RPGame.getInstance();
         introCutScene = new GameIntroCutScene(game);
     }
 

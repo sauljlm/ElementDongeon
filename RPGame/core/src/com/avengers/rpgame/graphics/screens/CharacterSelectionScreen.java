@@ -1,6 +1,7 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.audio.SoundEffectsManager;
 import com.avengers.rpgame.data.dataStorage.ProxyDataManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
@@ -8,10 +9,10 @@ import com.avengers.rpgame.game.io.MyInputProcessor;
 import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
 import com.avengers.rpgame.utils.Resources;
+import com.avengers.rpgame.utils.Utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -21,13 +22,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
 import static com.avengers.rpgame.utils.Resources.*;
 
 public class CharacterSelectionScreen implements Screen {
     final RPGame game;
     private GameStatus gameStatus;
     private final GameConfig config;
-    private final Music backgroundMusic;
     private final Texture backgroundImage;
 
     private Stage stage;
@@ -42,6 +43,8 @@ public class CharacterSelectionScreen implements Screen {
     private Text inputTitle1;
     private Text inputTitle2;
 
+    private int selectionMemento;
+
 //    private
 
     private MyInputProcessor input;
@@ -55,8 +58,8 @@ public class CharacterSelectionScreen implements Screen {
     private Texture mageTexture;
     private ProxyDataManager proxyDataManager = new ProxyDataManager();
 
-    public CharacterSelectionScreen(final RPGame game) {
-        this.game = game;
+    public CharacterSelectionScreen() {
+        this.game = RPGame.getInstance();
         gameStatus = GameStatus.getInstance();
 
         input = new MyInputProcessor();
@@ -65,10 +68,8 @@ public class CharacterSelectionScreen implements Screen {
         ScreenWidth = config.getResolutionHorizontal();
         ScreenHeight = config.getResolutionVertical();
 
-        backgroundImage = new Texture(Gdx.files.internal(resourceBlurBackground));
+        backgroundImage = loadTexture(resourceBlurBackground);
 
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(resourceThemeMusic));
-        backgroundMusic.setLooping(true);
 
         menuOptions = new ArrayList<Text>();
         menuCharacters = new ArrayList<Text>();
@@ -99,16 +100,15 @@ public class CharacterSelectionScreen implements Screen {
         knightStats = new ArrayList<Text>();
         archerStats = new ArrayList<Text>();
 
-        archerTexture = new Texture(archerImage);
-        knightTexture = new Texture(knightImage);
-        mageTexture = new Texture(mageImage);
+        archerTexture = loadTexture(archerImage);
+        knightTexture = loadTexture(knightImage);
+        mageTexture = loadTexture(mageImage);
     }
 
     @Override
     public void show() {
         generateOptions();
         generateCharacters();
-        backgroundMusic.play();
         Gdx.input.setInputProcessor(multiplexer);
         generateCharactersStats();
     }
@@ -174,8 +174,6 @@ public class CharacterSelectionScreen implements Screen {
 
     @Override
     public void dispose() {
-        backgroundMusic.dispose();
-        backgroundImage.dispose();
     }
 
     private void generateOptions(){
@@ -217,6 +215,7 @@ public class CharacterSelectionScreen implements Screen {
     }
 
     private void changeOptionColor(int pId, ArrayList<Text> menu){
+        playSelectionSound();
         if(menu.equals(menuOptions)) {
             for (Text mTemp1 : this.menuOptions)
                 mTemp1.setColor(Color.WHITE);
@@ -234,45 +233,37 @@ public class CharacterSelectionScreen implements Screen {
     }
 
     private void validateKeys() {
-        try{
-            int mTime = (int) (config.getFrameRate()*3.5);
-            if(this.input.isMoveDownMenu()){
-                stage.setKeyboardFocus(null);
-                this.actualOption++;
-                if(this.actualOption > menuOptions.size()-1)
-                    this.actualOption =0;
-                Thread.sleep(mTime);
-                changeOptionColor(this.actualOption,menuOptions);
-            }
-            if(this.input.isMoveUpMenu()){
-                stage.setKeyboardFocus(null);
-                this.actualOption--;
-                if(this.actualOption <0)
-                    this.actualOption = menuOptions.size()-1;
-                Thread.sleep(mTime);
-                changeOptionColor(this.actualOption,menuOptions);
-            }
-            if(this.input.isMoveRightMenu()){
-                stage.setKeyboardFocus(null);
-                this.actualCharacter++;
-                if(this.actualCharacter > menuCharacters.size()-1)
-                    this.actualCharacter =0;
-                Thread.sleep(mTime);
-                changeOptionColor(this.actualCharacter,menuCharacters);
-            }
-            if(this.input.isMoveLeftMenu()){
-                stage.setKeyboardFocus(null);
-                this.actualCharacter--;
-                if(this.actualCharacter <0)
-                    this.actualCharacter = menuCharacters.size()-1;
-                Thread.sleep(mTime);
-                changeOptionColor(this.actualCharacter,menuCharacters);
-            }
-            if(this.input.isEnter()){
-                executeAction(menuOptions);
-            }
-        } catch (InterruptedException e){
-            game.print(e.toString());
+        int mTime = (int) (config.getFrameRate()*3.5);
+        if(this.input.isMoveDownMenu()&& Utils.getInstance().skipFrames()){
+            stage.setKeyboardFocus(null);
+            this.actualOption++;
+            if(this.actualOption > menuOptions.size()-1)
+                this.actualOption =0;
+            changeOptionColor(this.actualOption,menuOptions);
+        }
+        if(this.input.isMoveUpMenu()&& Utils.getInstance().skipFrames()){
+            stage.setKeyboardFocus(null);
+            this.actualOption--;
+            if(this.actualOption <0)
+                this.actualOption = menuOptions.size()-1;
+            changeOptionColor(this.actualOption,menuOptions);
+        }
+        if(this.input.isMoveRightMenu()&& Utils.getInstance().skipFrames()){
+            stage.setKeyboardFocus(null);
+            this.actualCharacter++;
+            if(this.actualCharacter > menuCharacters.size()-1)
+                this.actualCharacter =0;
+            changeOptionColor(this.actualCharacter,menuCharacters);
+        }
+        if(this.input.isMoveLeftMenu()&& Utils.getInstance().skipFrames()){
+            stage.setKeyboardFocus(null);
+            this.actualCharacter--;
+            if(this.actualCharacter <0)
+                this.actualCharacter = menuCharacters.size()-1;
+            changeOptionColor(this.actualCharacter,menuCharacters);
+        }
+        if(this.input.isEnter()){
+            executeAction(menuOptions);
         }
     }
 
@@ -282,6 +273,7 @@ public class CharacterSelectionScreen implements Screen {
             Text mTemp = this.menuOptions.get(i);
             if (mX >= mTemp.getX() && mX <= (mTemp.getX() + mTemp.getWidth()))
                 if (mY >= (mTemp.getY() - mTemp.getHeight()) && mY <= mTemp.getY()){
+                    playSelectionSound();
                     changeOptionColor(i,menuOptions);
                     if(this.input.isClickTouch())
                         executeAction(menuOptions);
@@ -292,41 +284,48 @@ public class CharacterSelectionScreen implements Screen {
             Text mTemp = this.menuCharacters.get(i);
             if (mX >= mTemp.getX() && mX <= (mTemp.getX() + mTemp.getWidth()))
                 if (mY >= (mTemp.getY() - mTemp.getHeight()) && mY <= mTemp.getY()){
+                    playSelectionSound();
                     changeOptionColor(i,menuCharacters);
                     if(this.input.isClickTouch())
                         executeAction(menuCharacters);
                 }
         }
     }
+    private void playSelectionSound(){
+        if(actualOption != selectionMemento){
+            SoundEffectsManager.getInstance().play(menuSoundEffect, false);
+            selectionMemento = actualOption;
+        }
+    }
 
     private void executeAction(ArrayList<Text> menu) {
+        playSelectionSound();
         if(menu.equals(menuOptions)) {
             switch (this.actualOption) {
                 case 0:
                     //Knight
                     if(this.actualCharacter==0){
-                        gameStatus.getParty().getPartyMember(1).setIdCharacter(1);
+                        gameStatus.getPlayerParty().getPartyMember(1).setIdCharacter(1);
                     }
                     //Archer
                     if(this.actualCharacter==1){
-                        gameStatus.getParty().getPartyMember(1).setIdCharacter(2);
+                        gameStatus.getPlayerParty().getPartyMember(1).setIdCharacter(2);
                     }
                     //Mage
                     if(this.actualCharacter==2){
-                        gameStatus.getParty().getPartyMember(1).setIdCharacter(3);
+                        gameStatus.getPlayerParty().getPartyMember(1).setIdCharacter(3);
                     }
 
                     if(txtUsername.getText().isEmpty()){
-                        gameStatus.getParty().getPartyMember(1).setName("ElementPlayer");
+                        gameStatus.getPlayerParty().getPartyMember(1).setName("ElementPlayer");
                     }else{
-                        gameStatus.getParty().getPartyMember(1).setName(txtUsername.getText());
+                        gameStatus.getPlayerParty().getPartyMember(1).setName(txtUsername.getText());
                     }
-
-                    game.setScreen(new NewGameScreen(game));
+                    ScreeenManager.getInstance().changeScreen("NewGameScreen");
                     dispose();
                     break;
                 case 1:
-                    game.setScreen(new SaveSlotSelectionScreen());
+                    ScreeenManager.getInstance().changeScreen("SaveSlotSelectionScreen");
                     dispose();
                     break;
             }

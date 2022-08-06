@@ -1,18 +1,25 @@
 package com.avengers.rpgame.graphics.store;
 
 import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.graphics.assetManager.MyAssetManager;
 import com.avengers.rpgame.logic.entities.Item;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
+
 public class ScreenItem {
+    private MyAssetManager assetManager;
+    private GameConfig gameConfig;
     private Texture _texture;
     private Sprite _sprite;
     private Item item;
 
     public ScreenItem(Item item, double itemX, double itemY) {
+        gameConfig = GameConfig.getInstance();
+        assetManager = MyAssetManager.getInstance();
         this.setItem(item);
         createScreenItem((float) itemX, (float) itemY, 90);
     }
@@ -75,11 +82,10 @@ public class ScreenItem {
     }
 
     private void createScreenItem (float itemX, float itemY, int itemSize) {
-        GameConfig gameConfig = GameConfig.getInstance();
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
-        Vector2 ofset =  new Vector2(resolution.x*itemX, resolution.y*itemY);
-        Vector2 position = new Vector2(resolution.x -ofset.x, resolution.y-ofset.y);
-        this.set_texture(new Texture(Gdx.files.internal(item.getImagePath())));
+        Vector2 offset =  new Vector2(resolution.x*itemX, resolution.y*itemY);
+        Vector2 position = new Vector2(resolution.x -offset.x, resolution.y-offset.y);
+        this.set_texture(loadTexture(item.getImagePath()));
         this.set_sprite(new Sprite(this.get_texture()));
         this.setItemX((int)position.x);
         this.setItemY((int)position.y);

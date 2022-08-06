@@ -1,27 +1,28 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.audio.SoundEffectsManager;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.MyInputProcessor;
+import com.avengers.rpgame.graphics.assetManager.MyAssetManager;
 import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.utils.Resources;
+import com.avengers.rpgame.utils.Utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
-import static com.avengers.rpgame.utils.FileManager.loadMusic;
-import static com.avengers.rpgame.utils.Resources.resourceMainBackground;
-import static com.avengers.rpgame.utils.Resources.resourceThemeMusic;
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
+import static com.avengers.rpgame.utils.Resources.*;
 
 public class MainMenuScreen implements Screen {
     final RPGame game;
     private final GameConfig config;
-    private final Music backgroundMusic;
+//    private final Music backgroundMusic;
     private final Texture backgroundImage;
 
     private final float ScreenWidth;
@@ -29,22 +30,25 @@ public class MainMenuScreen implements Screen {
 
     private final ArrayList<Text> menuOptions;
     private int actualSelection =0;
+
+    private int selectionMemento;
+
     private final ArrayList<Text> gameTitle;
 
     private MyInputProcessor input;
 
-    public MainMenuScreen(final RPGame game) {
-        this.game = game;
+    private MyAssetManager assetManager;
+
+    public MainMenuScreen() {
+        this.game = RPGame.getInstance();
         input = new MyInputProcessor();
         config = GameConfig.getInstance();
+        assetManager = MyAssetManager.getInstance();
 
         ScreenWidth = config.getResolutionHorizontal();
         ScreenHeight = config.getResolutionVertical();
 
-        backgroundImage = new Texture(Gdx.files.internal(resourceMainBackground));
-
-        backgroundMusic = loadMusic(resourceThemeMusic);
-        backgroundMusic.setLooping(true);
+        backgroundImage = loadTexture(resourceMainBackground);
 
         menuOptions = new ArrayList<Text>();
         gameTitle = new ArrayList<Text>();
@@ -56,7 +60,7 @@ public class MainMenuScreen implements Screen {
         generateGameTitle();
         generateMenu();
 
-        backgroundMusic.play();
+//        backgroundMusic.play();
         Gdx.input.setInputProcessor(input);
     }
 
@@ -76,7 +80,6 @@ public class MainMenuScreen implements Screen {
         }
 
         game.batch.end();
-
         validateMouse();
         validateKeys();
     }
@@ -103,8 +106,8 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        backgroundMusic.dispose();
-        backgroundImage.dispose();
+//        backgroundMusic.dispose();
+//        backgroundImage.dispose();
 
     }
 
@@ -150,6 +153,7 @@ public class MainMenuScreen implements Screen {
 
 
     private void changeOptionColor(int pId){
+        playSelectionSound();
         for (Text mTemp: this.menuOptions)
             mTemp.setColor(Color.WHITE);
         if(pId>=0)
@@ -158,28 +162,22 @@ public class MainMenuScreen implements Screen {
     }
 
     private void validateKeys() {
-        try{
-            int mTime = (int) (config.getFrameRate()*3.5);
-            //int mTime = 180;
-            if(this.input.isMoveDown()){
+        int mTime = (int) (config.getFrameRate()*1.5);
+        if(this.input.isMoveDown() && Utils.getInstance().skipFrames()){
                 this.actualSelection++;
-                if(this.actualSelection >3)
+                if(this.actualSelection >3) {
                     this.actualSelection =0;
-                Thread.sleep(mTime);
+                }
                 changeOptionColor(this.actualSelection);
-            }
-            if(this.input.isMoveUp()){
-                this.actualSelection--;
-                if(this.actualSelection <0)
-                    this.actualSelection =3;
-                Thread.sleep(mTime);
-                changeOptionColor(this.actualSelection);
-            }
-            if(this.input.isEnter()){
-                executeAction();
-            }
-        } catch (InterruptedException e){
-            game.print(e.toString());
+        }
+        if(this.input.isMoveUp() && Utils.getInstance().skipFrames()){
+            this.actualSelection--;
+            if(this.actualSelection <0)
+                this.actualSelection =3;
+            changeOptionColor(this.actualSelection);
+        }
+        if(this.input.isEnter()){
+            executeAction();
         }
     }
 
@@ -196,18 +194,26 @@ public class MainMenuScreen implements Screen {
         }
     }
 
+    private void playSelectionSound(){
+        if(actualSelection != selectionMemento){
+            SoundEffectsManager.getInstance().play(menuSoundEffect, false);
+            selectionMemento = actualSelection;
+        }
+    }
+
     private void executeAction() {
+        playSelectionSound();
         switch (this.actualSelection){
             case 0:
-                game.setScreen(new SaveSlotSelectionScreen());
+                ScreeenManager.getInstance().changeScreen("SaveSlotSelectionScreen");
                 dispose();
                 break;
             case 1:
-                game.setScreen(new LoadGameScreen(game));
+                ScreeenManager.getInstance().changeScreen("LoadGameScreen");
                 dispose();
                 break;
             case 2:
-                game.setScreen(new SoundOptionScreen(game));
+                ScreeenManager.getInstance().changeScreen("SoundOptionScreen");
                 dispose();
                 break;
             case 3:

@@ -36,7 +36,6 @@ public class Resources {
 
     //Textures
     public static final String resourceGameIcon = "graphics/icons/swordGameIcon.png";
-    public static final String resourceBlack = "Resources/black.png";
 
     public static final String resourceMageTextureUp = "graphics/sprites/actors/mage/TexturePackage/mageUp.png";
     public static final String resourceMageTextureDown = "graphics/sprites/actors/mage/TexturePackage/mageDown.png";
@@ -156,6 +155,10 @@ public class Resources {
     public static final String resourceIntroSound = "audio/soundEffects/intro.wav";
     public static final String resourceSwordAttackSound = "audio/soundEffects/sword-attack.wav";
 
+    public static final String menuSoundEffect = "audio/soundEffects/MENU.wav";
+    public static final String steps = "audio/soundEffects/steps.wav";
+    public static final String popUp = "audio/soundEffects/pop2.mp3";
+    public static final String coinSound = "audio/soundEffects/coin.wav";
 
     //Music
     public static final String resourceThemeMusic = "audio/music/theme.mp3";
@@ -163,6 +166,8 @@ public class Resources {
     public static final String resourceAndTheJourneyBeginsMusic = "audio/music/AndTheJourneyBegins.wav";
     public static final String resourceStoreThemeMusic = "audio/music/storeTheme.mp3";
     public static final String resourceGameOverMusic = "audio/music/TheFinalOfTheFantasy.wav";
+
+    public static final String credits = "audio/music/TitleTheme.wav";
 
     //FONTS
     public static final String resourcePixelFont = "graphics/fonts/pixelFont.ttf";

@@ -1,31 +1,27 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.audio.SoundEffectsManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.MyInputProcessor;
 import com.avengers.rpgame.graphics.text.Text;
-import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.utils.Resources;
+import com.avengers.rpgame.utils.Utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
-
 import java.util.ArrayList;
-
-import static com.avengers.rpgame.utils.FileManager.loadMusic;
-import static com.avengers.rpgame.utils.Resources.resourceBlurBackground;
-import static com.avengers.rpgame.utils.Resources.resourceThemeMusic;
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
+import static com.avengers.rpgame.utils.Resources.*;
 
 public class SaveSlotSelectionScreen implements Screen {
 
     final RPGame game;
     private final GameConfig config;
-    private final Music backgroundMusic;
     private final Texture backgroundImage;
 
     private final float ScreenWidth;
@@ -38,6 +34,7 @@ public class SaveSlotSelectionScreen implements Screen {
 
     private MyInputProcessor input;
     private AbstractCharacter character;
+    private int selectionMemento;
 
     public SaveSlotSelectionScreen() {
         this.game = RPGame.getInstance();
@@ -46,11 +43,7 @@ public class SaveSlotSelectionScreen implements Screen {
 
         ScreenWidth = config.getResolutionHorizontal();
         ScreenHeight = config.getResolutionVertical();
-        backgroundImage = new Texture(Gdx.files.internal(resourceBlurBackground));
-
-        backgroundMusic = loadMusic(resourceThemeMusic);
-        backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(config.getMusicVolume());
+        backgroundImage = loadTexture(resourceBlurBackground);
 
         menuOptions = new ArrayList<Text>();
         this.title = new Text(Resources.resourceMainFont, Resources.screenTitleFontSize+20,"LA AVENTURA COMIENZA",true);
@@ -63,7 +56,6 @@ public class SaveSlotSelectionScreen implements Screen {
     @Override
     public void show() {
         generateMenu();
-        backgroundMusic.play();
         Gdx.input.setInputProcessor(input);
     }
 
@@ -106,9 +98,6 @@ public class SaveSlotSelectionScreen implements Screen {
 
     @Override
     public void dispose() {
-        backgroundMusic.dispose();
-        backgroundImage.dispose();
-
     }
 
     private void generateMenu(){
@@ -142,6 +131,7 @@ public class SaveSlotSelectionScreen implements Screen {
 
 
     private void changeOptionColor(int pId){
+        playSelectionSound();
         for (Text mTemp: this.menuOptions)
             mTemp.setColor(Color.WHITE);
         if(pId>=0)
@@ -150,27 +140,21 @@ public class SaveSlotSelectionScreen implements Screen {
     }
 
     private void validateKeys() {
-        try{
-            int mTime = (int) (config.getFrameRate()*3.5);
-            if(this.input.isMoveDown()){
-                this.actualSelection++;
-                if(this.actualSelection >4)
-                    this.actualSelection =0;
-                Thread.sleep(mTime);
-                changeOptionColor(this.actualSelection);
-            }
-            if(this.input.isMoveUp()){
-                this.actualSelection--;
-                if(this.actualSelection <0)
-                    this.actualSelection =4;
-                Thread.sleep(mTime);
-                changeOptionColor(this.actualSelection);
-            }
-            if(this.input.isEnter()){
-                executeAction();
-            }
-        } catch (InterruptedException e){
-            game.print(e.toString());
+        int mTime = (int) (config.getFrameRate()*3.5);
+        if(this.input.isMoveDown() && Utils.getInstance().skipFrames()){
+            this.actualSelection++;
+            if(this.actualSelection >4)
+                this.actualSelection =0;
+            changeOptionColor(this.actualSelection);
+        }
+        if(this.input.isMoveUp() && Utils.getInstance().skipFrames()){
+            this.actualSelection--;
+            if(this.actualSelection <0)
+                this.actualSelection =4;
+            changeOptionColor(this.actualSelection);
+        }
+        if(this.input.isEnter()){
+            executeAction();
         }
     }
 
@@ -187,28 +171,36 @@ public class SaveSlotSelectionScreen implements Screen {
         }
     }
 
+    private void playSelectionSound(){
+        if(actualSelection != selectionMemento){
+            SoundEffectsManager.getInstance().play(menuSoundEffect, false);
+            selectionMemento = actualSelection;
+        }
+    }
+
     private void executeAction() {
+        playSelectionSound();
         switch (this.actualSelection){
             case 0:
                 GameStatus.getInstance().setSaveSlot(1);
                 GameStatus.getInstance().setStatus("newGame");
-                game.setScreen(new CharacterSelectionScreen(game));
+                ScreeenManager.getInstance().changeScreen("CharacterSelectionScreen");
                 dispose();
                 break;
             case 1:
                 GameStatus.getInstance().setSaveSlot(2);
                 GameStatus.getInstance().setStatus("newGame");
-                game.setScreen(new CharacterSelectionScreen(game));
+                ScreeenManager.getInstance().changeScreen("CharacterSelectionScreen");
                 dispose();
                 break;
             case 2:
                 GameStatus.getInstance().setSaveSlot(3);
                 GameStatus.getInstance().setStatus("newGame");
-                game.setScreen(new CharacterSelectionScreen(game));
+                ScreeenManager.getInstance().changeScreen("CharacterSelectionScreen");
                 dispose();
                 break;
             case 3:
-                game.setScreen(new MainMenuScreen(game));
+                ScreeenManager.getInstance().changeScreen("MainMenuScreen");
                 dispose();
                 break;
         }

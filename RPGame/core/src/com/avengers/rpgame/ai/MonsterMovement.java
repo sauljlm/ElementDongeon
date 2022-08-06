@@ -7,6 +7,7 @@ import com.avengers.rpgame.graphics.dialog.DialogManager;
 import com.avengers.rpgame.graphics.dialog.DialogsFactory;
 import com.avengers.rpgame.graphics.dialog.RandomDialogs.ARandomDialogHelper;
 import com.avengers.rpgame.graphics.screens.FightScreen;
+import com.avengers.rpgame.graphics.screens.ScreeenManager;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
@@ -33,7 +34,7 @@ public class MonsterMovement {
     }
 
     public void chaseActivePlayer(AbstractCharacter enemy){
-        AbstractCharacter playerCharacter = gameStatus.getParty().getActivePartyMember();
+        AbstractCharacter playerCharacter = gameStatus.getPlayerParty().getActivePartyMember();
         float partyDistance = 10;
         float horizontalForce = 0;
         float verticalForce = 0;
@@ -99,12 +100,10 @@ public class MonsterMovement {
 
     private void enterBattleMode(AbstractCharacter enemy){
         gameStatus.saveOnDB();
-        Party enemyParty = new Party();
+        Party enemyParty = gameStatus.getEnemyParty();
         enemyParty.setPartyMember1(enemy);
         enemyParty.setPartyMember2(enemy);
         enemyParty.setPartyMember3(enemy);
-
-        rpGame.setScreen(new FightScreen(rpGame, enemyParty));
-        System.out.println("FIGHT !");
+        ScreeenManager.getInstance().changeScreen("FightScreen");
     }
 }

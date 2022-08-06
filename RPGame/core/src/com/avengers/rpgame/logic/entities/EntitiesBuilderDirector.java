@@ -142,19 +142,19 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
-        ArrayList<Item> items = gameStatus.getParty().getPartyMember(partyMember).getItems();
-        ArrayList<Attack> attacks = gameStatus.getParty().getPartyMember(partyMember).getAttacks();
-        ArrayList<Skill> skills = gameStatus.getParty().getPartyMember(partyMember).getSkills();
+        ArrayList<Item> items = gameStatus.getPlayerParty().getPartyMember(partyMember).getItems();
+        ArrayList<Attack> attacks = gameStatus.getPlayerParty().getPartyMember(partyMember).getAttacks();
+        ArrayList<Skill> skills = gameStatus.getPlayerParty().getPartyMember(partyMember).getSkills();
 
         this.idCharacter=1;
-        this.name=gameStatus.getParty().getPartyMember(partyMember).getName();
-        this.level=gameStatus.getParty().getPartyMember(partyMember).getLevel();
-        this.coins=gameStatus.getParty().getPartyMember(partyMember).getCoins();
+        this.name=gameStatus.getPlayerParty().getPartyMember(partyMember).getName();
+        this.level=gameStatus.getPlayerParty().getPartyMember(partyMember).getLevel();
+        this.coins=gameStatus.getPlayerParty().getPartyMember(partyMember).getCoins();
         this.characterClass = proxyDataManager.getCharacterClass("Knight");
-        this.experiencePoints = ((PlayableCharacter)gameStatus.getParty().getPartyMember(partyMember)).getExperiencePoints();
+        this.experiencePoints = ((PlayableCharacter)gameStatus.getPlayerParty().getPartyMember(partyMember)).getExperiencePoints();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getParty().getPartyMember(partyMember).getMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
-        builder.setCharacterAttributes(gameStatus.getParty().getPartyMember(partyMember).getStrength(),gameStatus.getParty().getPartyMember(partyMember).getSpeed(),gameStatus.getParty().getPartyMember(partyMember).getMagic(),gameStatus.getParty().getPartyMember(partyMember).getResistance(),gameStatus.getParty().getPartyMember(partyMember).getLuck());
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getPlayerParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getPlayerParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getPlayerParty().getPartyMember(partyMember).getMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterAttributes(gameStatus.getPlayerParty().getPartyMember(partyMember).getStrength(),gameStatus.getPlayerParty().getPartyMember(partyMember).getSpeed(),gameStatus.getPlayerParty().getPartyMember(partyMember).getMagic(),gameStatus.getPlayerParty().getPartyMember(partyMember).getResistance(),gameStatus.getPlayerParty().getPartyMember(partyMember).getLuck());
         builder.setPlayableCharacterInfo(this.experiencePoints);
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
@@ -169,19 +169,19 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
-        ArrayList<Item> items = gameStatus.getParty().getPartyMember(partyMember).getItems();
-        ArrayList<Attack> attacks = gameStatus.getParty().getPartyMember(partyMember).getAttacks();
-        ArrayList<Skill> skills = gameStatus.getParty().getPartyMember(partyMember).getSkills();
+        ArrayList<Item> items = gameStatus.getPlayerParty().getPartyMember(partyMember).getItems();
+        ArrayList<Attack> attacks = gameStatus.getPlayerParty().getPartyMember(partyMember).getAttacks();
+        ArrayList<Skill> skills = gameStatus.getPlayerParty().getPartyMember(partyMember).getSkills();
 
         this.idCharacter=2;
-        this.name=gameStatus.getParty().getPartyMember(partyMember).getName();
-        this.level=gameStatus.getParty().getPartyMember(partyMember).getLevel();
-        this.coins=gameStatus.getParty().getPartyMember(partyMember).getCoins();
+        this.name=gameStatus.getPlayerParty().getPartyMember(partyMember).getName();
+        this.level=gameStatus.getPlayerParty().getPartyMember(partyMember).getLevel();
+        this.coins=gameStatus.getPlayerParty().getPartyMember(partyMember).getCoins();
         this.characterClass = proxyDataManager.getCharacterClass("Archer");
-        this.experiencePoints = ((PlayableCharacter)gameStatus.getParty().getPartyMember(partyMember)).getExperiencePoints();
+        this.experiencePoints = ((PlayableCharacter)gameStatus.getPlayerParty().getPartyMember(partyMember)).getExperiencePoints();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getParty().getPartyMember(partyMember).getMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
-        builder.setCharacterAttributes(gameStatus.getParty().getPartyMember(partyMember).getStrength(),gameStatus.getParty().getPartyMember(partyMember).getSpeed(),gameStatus.getParty().getPartyMember(partyMember).getMagic(),gameStatus.getParty().getPartyMember(partyMember).getResistance(),gameStatus.getParty().getPartyMember(partyMember).getLuck());
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getPlayerParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getPlayerParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getPlayerParty().getPartyMember(partyMember).getMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterAttributes(gameStatus.getPlayerParty().getPartyMember(partyMember).getStrength(),gameStatus.getPlayerParty().getPartyMember(partyMember).getSpeed(),gameStatus.getPlayerParty().getPartyMember(partyMember).getMagic(),gameStatus.getPlayerParty().getPartyMember(partyMember).getResistance(),gameStatus.getPlayerParty().getPartyMember(partyMember).getLuck());
         builder.setPlayableCharacterInfo(this.experiencePoints);
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);
@@ -196,19 +196,19 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
         builder.setAnimatedCharacter(animatedCharacter);
 
-        ArrayList<Item> items = gameStatus.getParty().getPartyMember(partyMember).getItems();
-        ArrayList<Attack> attacks = gameStatus.getParty().getPartyMember(partyMember).getAttacks();
-        ArrayList<Skill> skills = gameStatus.getParty().getPartyMember(partyMember).getSkills();
+        ArrayList<Item> items = gameStatus.getPlayerParty().getPartyMember(partyMember).getItems();
+        ArrayList<Attack> attacks = gameStatus.getPlayerParty().getPartyMember(partyMember).getAttacks();
+        ArrayList<Skill> skills = gameStatus.getPlayerParty().getPartyMember(partyMember).getSkills();
 
         this.idCharacter=3;
-        this.name=gameStatus.getParty().getPartyMember(partyMember).getName();
-        this.level=gameStatus.getParty().getPartyMember(partyMember).getLevel();
-        this.coins=gameStatus.getParty().getPartyMember(partyMember).getCoins();
+        this.name=gameStatus.getPlayerParty().getPartyMember(partyMember).getName();
+        this.level=gameStatus.getPlayerParty().getPartyMember(partyMember).getLevel();
+        this.coins=gameStatus.getPlayerParty().getPartyMember(partyMember).getCoins();
         this.characterClass = proxyDataManager.getCharacterClass("Mage");
-        this.experiencePoints = ((PlayableCharacter)gameStatus.getParty().getPartyMember(partyMember)).getExperiencePoints();
+        this.experiencePoints = ((PlayableCharacter)gameStatus.getPlayerParty().getPartyMember(partyMember)).getExperiencePoints();
 
-        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getParty().getPartyMember(partyMember).getMagicPoints(), characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
-        builder.setCharacterAttributes(gameStatus.getParty().getPartyMember(partyMember).getStrength(),gameStatus.getParty().getPartyMember(partyMember).getSpeed(),gameStatus.getParty().getPartyMember(partyMember).getMagic(),gameStatus.getParty().getPartyMember(partyMember).getResistance(),gameStatus.getParty().getPartyMember(partyMember).getLuck());
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),gameStatus.getPlayerParty().getPartyMember(partyMember).getPosition(),this.level,gameStatus.getPlayerParty().getPartyMember(partyMember).getHealthPoints(),gameStatus.getPlayerParty().getPartyMember(partyMember).getMagicPoints(), characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterAttributes(gameStatus.getPlayerParty().getPartyMember(partyMember).getStrength(),gameStatus.getPlayerParty().getPartyMember(partyMember).getSpeed(),gameStatus.getPlayerParty().getPartyMember(partyMember).getMagic(),gameStatus.getPlayerParty().getPartyMember(partyMember).getResistance(),gameStatus.getPlayerParty().getPartyMember(partyMember).getLuck());
         builder.setPlayableCharacterInfo(this.experiencePoints);
         builder.setCharacterClass(this.characterClass);
         builder.setItems(items);

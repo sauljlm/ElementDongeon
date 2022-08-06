@@ -4,7 +4,6 @@ import com.avengers.rpgame.ai.Interfaces.Observer;
 import com.avengers.rpgame.data.dataStorage.ProxyDataManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.graphics.dialog.DialogManager;
-import com.avengers.rpgame.graphics.screens.CreditScreen;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -52,7 +51,7 @@ public class KingObserver  implements Observer {
     }
 
     private void deleteTalisman(String talisman) {
-        AbstractCharacter character = GameStatus.getInstance().getParty().getActivePartyMember();
+        AbstractCharacter character = GameStatus.getInstance().getPlayerParty().getActivePartyMember();
         int idToDelete = 0;
         for (Item itemFound: character.getItems()){
             if (itemFound.getDescription().equals(talisman)) {
@@ -80,23 +79,23 @@ public class KingObserver  implements Observer {
         }
         for (Item item: dataItems){
             if (item.getDescription().equals("Llave tierra") && talisman.equals("Talisman inicial")){
-                GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
                 deleteTalisman(talisman);
                 this.keyName = "Aqui tienes la llave del calabozo de tierra.";
             } else if (item.getDescription().equals("Llave agua") && talisman.equals("Talisman tierra")){
-                GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
                 deleteTalisman(talisman);
                 this.keyName = "Aqui tienes la llave del calabozo de agua.";
             } else if (item.getDescription().equals("Llave viento") && talisman.equals("Talisman agua")){
-                GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
                 deleteTalisman(talisman);
                 this.keyName = "Aqui tienes la llave del calabozo de viento.";
             } else if (item.getDescription().equals("Llave fuego") && talisman.equals("Talisman viento")){
-                GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
                 deleteTalisman(talisman);
                 this.keyName = "Aqui tienes la llave del calabozo de fuego.";
             } else if (item.getDescription().equals("Llave elemental") && talisman.equals("Talisman fuego")){
-                GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
                 deleteTalisman(talisman);
                 this.keyName = "Ya tenemos los cuatro talismanes. ¡El reino está a salvo! Presiona la tecla 'F' para finalizar la partida.";
             }

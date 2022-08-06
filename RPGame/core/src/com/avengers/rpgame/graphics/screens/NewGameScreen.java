@@ -8,35 +8,30 @@ import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
-
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
 import static com.avengers.rpgame.utils.Resources.*;
 
 
 public class NewGameScreen implements Screen {
     final RPGame game;
     private final GameConfig config;
-    private final Music backgroundMusic;
     private final Texture backgroundImage;
     private final ArrayList<Text> story;
 
     private MyInputProcessor input;
 
-    public NewGameScreen(final RPGame game) {
-        this.game = game;
+    public NewGameScreen() {
+        this.game = RPGame.getInstance();
 
         input = new MyInputProcessor();
         config = GameConfig.getInstance();
 
-        backgroundImage = new Texture(Gdx.files.internal(resourceElementBackground));
-
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(resourceThemeMusic));
-        backgroundMusic.setLooping(true);
+        backgroundImage = loadTexture(resourceElementBackground);
 
         story = new ArrayList<Text>();
     }
@@ -44,8 +39,6 @@ public class NewGameScreen implements Screen {
     @Override
     public void show() {
         generateStory();
-
-        backgroundMusic.play();
         Gdx.input.setInputProcessor(input);
     }
 
@@ -64,7 +57,7 @@ public class NewGameScreen implements Screen {
 
         if(this.input.isEnter() || this.input.isClickTouch()){
             GameStatus.getInstance().setStatus("newGame");
-            game.setScreen(new OverworldScreen(game));
+            ScreeenManager.getInstance().changeScreen("OverworldScreen");
             dispose();
         }
     }
@@ -91,8 +84,6 @@ public class NewGameScreen implements Screen {
 
     @Override
     public void dispose() {
-        backgroundMusic.dispose();
-        backgroundImage.dispose();
     }
 
     private void generateStory(){

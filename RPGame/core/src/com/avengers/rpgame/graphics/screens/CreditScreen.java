@@ -15,12 +15,12 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
 import static com.avengers.rpgame.utils.Resources.*;
 
 public class CreditScreen implements Screen {
     final RPGame game;
     private final GameConfig config;
-    private final Music backgroundMusic;
     private final Texture backgroundImage;
 
     private final float ScreenWidth;
@@ -30,8 +30,8 @@ public class CreditScreen implements Screen {
     private final ArrayList<Text> credits;
     private MyInputProcessor input;
 
-    public CreditScreen(final RPGame game) {
-        this.game = game;
+    public CreditScreen() {
+        this.game = RPGame.getInstance();
 
         input = new MyInputProcessor();
         config = GameConfig.getInstance();
@@ -39,10 +39,7 @@ public class CreditScreen implements Screen {
         ScreenWidth = config.getResolutionHorizontal();
         ScreenHeight = config.getResolutionVertical();
 
-        backgroundImage = new Texture(Gdx.files.internal(resourceFireworksBackground));
-
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(resourceThemeMusic));
-        backgroundMusic.setLooping(true);
+        backgroundImage = loadTexture(resourceFireworksBackground);
 
         screenTitle = new ArrayList<Text>();
         credits = new ArrayList<Text>();
@@ -52,8 +49,6 @@ public class CreditScreen implements Screen {
     public void show() {
         generateTitle();
         generateCredits();
-
-        backgroundMusic.play();
         Gdx.input.setInputProcessor(input);
     }
 
@@ -72,7 +67,7 @@ public class CreditScreen implements Screen {
         game.batch.end();
 
         if(this.input.isEnter() || this.input.isClickTouch()){
-            game.setScreen(new MainMenuScreen(game));
+            ScreeenManager.getInstance().changeScreen("MainMenuScreen");
             dispose();
         }
     }
@@ -99,8 +94,7 @@ public class CreditScreen implements Screen {
 
     @Override
     public void dispose() {
-        backgroundMusic.dispose();
-        backgroundImage.dispose();
+
     }
 
     private void generateTitle(){

@@ -43,29 +43,29 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                     "VALUES("+
                     gameStatus.getSaveSlot()+","+
                     partyMember+",'"+
-                    gameStatus.getParty().getPartyMember(partyMember).getIdCharacter()+"','"+
-                    gameStatus.getParty().getPartyMember(partyMember).getName()+"','"+
-                    gameStatus.getParty().getPartyMember(partyMember).getDescription()+"',"+
-                    gameStatus.getParty().getPartyMember(partyMember).getPosition().x+","+
-                    gameStatus.getParty().getPartyMember(partyMember).getPosition().y+","+
-                    gameStatus.getParty().getPartyMember(partyMember).getLevel()+","+
-                    gameStatus.getParty().getPartyMember(partyMember).getHealthPoints()+","+
-                    gameStatus.getParty().getPartyMember(partyMember).getMagicPoints()+","+
-                    gameStatus.getParty().getPartyMember(partyMember).getHealthPointsMax()+","+
-                    gameStatus.getParty().getPartyMember(partyMember).getMagicPointsMax()+","+
-                    gameStatus.getParty().getPartyMember(partyMember).getStrength()+","+
-                    gameStatus.getParty().getPartyMember(partyMember).getSpeed()+","+
-                    gameStatus.getParty().getPartyMember(partyMember).getMagic()+","+
-                    gameStatus.getParty().getPartyMember(partyMember).getResistance()+","+
-                    gameStatus.getParty().getPartyMember(partyMember).getLuck()+","+
-                    gameStatus.getParty().getPartyMember(partyMember).getCoins()+","+
-                    gameStatus.getParty().getPartyMember(partyMember).getCharacterClass().getIdCharacterClass()+","+
-                    ((PlayableCharacter)gameStatus.getParty().getPartyMember(partyMember)).getExperiencePoints()+","+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getIdCharacter()+"','"+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getName()+"','"+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getDescription()+"',"+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getPosition().x+","+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getPosition().y+","+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getLevel()+","+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getHealthPoints()+","+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getMagicPoints()+","+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getHealthPointsMax()+","+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getMagicPointsMax()+","+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getStrength()+","+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getSpeed()+","+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getMagic()+","+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getResistance()+","+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getLuck()+","+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getCoins()+","+
+                    gameStatus.getPlayerParty().getPartyMember(partyMember).getCharacterClass().getIdCharacterClass()+","+
+                    ((PlayableCharacter)gameStatus.getPlayerParty().getPartyMember(partyMember)).getExperiencePoints()+","+
                     timeStamp+
                     ")";
             querys.add(sqlQuery);
 
-            for (Attack attack : gameStatus.getParty().getPartyMember(partyMember).getAttacks()){
+            for (Attack attack : gameStatus.getPlayerParty().getPartyMember(partyMember).getAttacks()){
                 sqlQuery = "INSERT INTO Attack "+
                         "(saveSlot,partyMember,name,description,unlockLevel,mPCost,HPEffect,timeStamp)" +
                         "VALUES("+
@@ -80,7 +80,7 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                         ")";
                         querys.add(sqlQuery);
             }
-            for (Item item : gameStatus.getParty().getPartyMember(partyMember).getItems()){
+            for (Item item : gameStatus.getPlayerParty().getPartyMember(partyMember).getItems()){
                 sqlQuery = "INSERT INTO Item "+
                         "(saveSlot,partyMember,id,name,description,price,unlockLevel,imagePath,itemType,strengthEffect,speedEffect,magicEffect,resistanceEffect,luckEffect,mPEffect,hPEffect,timeStamp)" +
                         "VALUES("+
@@ -104,7 +104,7 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                         ")";
                 querys.add(sqlQuery);
             }
-            for (Skill skill : gameStatus.getParty().getPartyMember(partyMember).getSkills()){
+            for (Skill skill : gameStatus.getPlayerParty().getPartyMember(partyMember).getSkills()){
                 sqlQuery = "INSERT INTO Skill "+
                         "(saveSlot,partyMember,name,description,price,unlockLevel,mPCost,strengthEffect,speedEffect,magicEffect,resistanceEffect,luckEffect,mPEffect,hPEffect,type,timeStamp)" +
                         "VALUES("+
@@ -164,7 +164,7 @@ public class BDGameStatusDAO implements IGameStatusDAO{
     @Override
     public GameStatus loadGameStatus(int saveSlot) {
         GameStatus gameStatus = GameStatus.getInstance();
-        Party party = gameStatus.getParty();
+        Party party = gameStatus.getPlayerParty();
         ResultSet resultSet = null;
         AbstractCharacter character = party.getActivePartyMember();
 

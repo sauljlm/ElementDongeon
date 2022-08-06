@@ -80,8 +80,7 @@ public class MapManager extends iGraphicManager {
         mapRenderer.render();
     }
     public void dispose(){
-        mapRenderer.dispose();
-        game.dispose();
         map.dispose();
+        mapRenderer.dispose();
     }
 }

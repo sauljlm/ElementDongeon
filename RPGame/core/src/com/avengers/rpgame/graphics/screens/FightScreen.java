@@ -44,7 +44,6 @@ public class FightScreen implements Screen {
     private final Timer timer;
 
     private final GameConfig config;
-    private final Music backgroundMusic;
     private IOManager ioManager;
     private Texture backgroundImage;
     private RefereeBattleAI refereeBattleAI;
@@ -106,16 +105,16 @@ public class FightScreen implements Screen {
     private String messageString;
     private ArrayList<String> messageStringList;
 
-    public FightScreen(final RPGame game, final Party enemyParty) {
-        this.game = game;
+    public FightScreen() {
+        this.game = RPGame.getInstance();
         this.config = GameConfig.getInstance();
         this.gameStatus = GameStatus.getInstance();
         this.timer = new Timer();
-        this.playerParty = gameStatus.getParty();
-        this.enemyParty = enemyParty;
+        this.playerParty = gameStatus.getPlayerParty();
+        this.enemyParty = gameStatus.getEnemyParty();
         messageStringList = new ArrayList<String>();
         aiManager = AIManager.getInstance();
-        ioManager = new IOManager(game);
+        ioManager = IOManager.getInstance();
         director = new EntitiesBuilderDirector();
         characterBuilder = new CharacterBuilder();
         hudPlayer = new BattleHUD(0, playerParty);
@@ -141,8 +140,6 @@ public class FightScreen implements Screen {
         enemy.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/4f/16*3, config.getResolutionVertical()/3*1.35f/16));
         enemy.getAnimatedCharacter().setAction("runningLeft");
 
-        backgroundMusic = loadMusic(resourceFightMusic);;
-        backgroundMusic.setLooping(true);
         backgroundImage = loadTexture(resourceFightBackgroundForest);
 
         refereeBattleAI = new RefereeBattleAI(game);
@@ -417,7 +414,6 @@ public class FightScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        backgroundMusic.play();
     }
 
     //This method holds the game logic
@@ -425,7 +421,7 @@ public class FightScreen implements Screen {
         String result = refereeBattleAI.manageBattle(playerParty, enemyParty);
         if(result.equals("EnemyWins")){
             this.dispose();
-            game.setScreen(new GameOverScreen());
+            ScreeenManager.getInstance().changeScreen("GameOverScreen");
         }
         if(result.equals("PlayerWins")){
             gameStatus.getWorld().destroyBody(((DynamicAnimatedCharacter)enemyParty.getActivePartyMember().getAnimatedCharacter()).getPlayer());
@@ -433,23 +429,23 @@ public class FightScreen implements Screen {
             AReward reward = rewardFactory.createReward(enemyParty.getActivePartyMember());
             IVisitor visitor = new EndFightVisitor(reward);
 
-            GameStatus.getInstance().getParty().getPartyMember(1).accept(visitor);
-            GameStatus.getInstance().getParty().getPartyMember(2).accept(visitor);
-            GameStatus.getInstance().getParty().getPartyMember(3).accept(visitor);
+            GameStatus.getInstance().getPlayerParty().getPartyMember(1).accept(visitor);
+            GameStatus.getInstance().getPlayerParty().getPartyMember(2).accept(visitor);
+            GameStatus.getInstance().getPlayerParty().getPartyMember(3).accept(visitor);
 
             IVisitor visitor2 = new HealVisitor();
-            GameStatus.getInstance().getParty().getPartyMember(1).accept(visitor2);
-            GameStatus.getInstance().getParty().getPartyMember(2).accept(visitor2);
-            GameStatus.getInstance().getParty().getPartyMember(3).accept(visitor2);
+            GameStatus.getInstance().getPlayerParty().getPartyMember(1).accept(visitor2);
+            GameStatus.getInstance().getPlayerParty().getPartyMember(2).accept(visitor2);
+            GameStatus.getInstance().getPlayerParty().getPartyMember(3).accept(visitor2);
 
             IVisitor visitor3 = new UpdateLevelVisitor();
-            GameStatus.getInstance().getParty().getPartyMember(1).accept(visitor3);
-            GameStatus.getInstance().getParty().getPartyMember(2).accept(visitor3);
-            GameStatus.getInstance().getParty().getPartyMember(3).accept(visitor3);
+            GameStatus.getInstance().getPlayerParty().getPartyMember(1).accept(visitor3);
+            GameStatus.getInstance().getPlayerParty().getPartyMember(2).accept(visitor3);
+            GameStatus.getInstance().getPlayerParty().getPartyMember(3).accept(visitor3);
 
             GameStatus.getInstance().setStatus("gameInProgress");
             this.dispose();
-            game.setScreen(new OverworldScreen(game));
+            ScreeenManager.getInstance().changeScreen("OverworldScreen");
         }
         fillTimer(playerTimer, 1);
         fillTimer(enemyTimer, 2);
@@ -493,19 +489,15 @@ public class FightScreen implements Screen {
 
     @Override
     public void resume() {
-        backgroundMusic.play();
     }
 
     @Override
     public void hide() {
-        backgroundMusic.pause();
     }
 
     @Override
     public void dispose() {
         hudPlayer.dispose();
         hudEnemy.dispose();
-        backgroundMusic.dispose();
-        backgroundImage.dispose();
     }
 }

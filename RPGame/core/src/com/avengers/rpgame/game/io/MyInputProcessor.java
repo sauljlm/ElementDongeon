@@ -131,7 +131,9 @@ public class MyInputProcessor implements InputProcessor {
         return moveRightMenu;
     }
 
-    public boolean isStoreOpened() { return storeOpened; }
+    public boolean isStoreOpened() {
+        return storeOpened;
+    }
 
     public boolean isBuyItem() { return buyItem; }
 

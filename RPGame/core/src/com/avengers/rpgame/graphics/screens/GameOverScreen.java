@@ -1,29 +1,28 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.audio.SoundEffectsManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.MyInputProcessor;
+import com.avengers.rpgame.graphics.assetManager.MyAssetManager;
 import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.utils.Resources;
+import com.avengers.rpgame.utils.Utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
-
-import static com.avengers.rpgame.utils.FileManager.loadMusic;
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
 import static com.avengers.rpgame.utils.Resources.*;
-import static com.avengers.rpgame.utils.Resources.resourceThemeMusic;
 
 public class GameOverScreen implements Screen {
         private RPGame game;
         private GameStatus gameStatus;
         private GameConfig config;
-        private final Music backgroundMusic;
         private final Texture backgroundImage;
 
         private final float ScreenWidth;
@@ -34,19 +33,20 @@ public class GameOverScreen implements Screen {
         private final ArrayList<Text> gameTitle;
 
         private MyInputProcessor input;
+        private MyAssetManager assetManager;
+
+        private int selectionMemento;
 
         public GameOverScreen() {
             game = RPGame.getInstance();
             config = GameConfig.getInstance();
             gameStatus = GameStatus.getInstance();
+            assetManager = MyAssetManager.getInstance();
             input = new MyInputProcessor();
 
             ScreenWidth = config.getResolutionHorizontal();
             ScreenHeight = config.getResolutionVertical();
-            backgroundImage = new Texture(Gdx.files.internal(resourceBlackWhiteBackground));
-
-            backgroundMusic = loadMusic(resourceGameOverMusic);
-            backgroundMusic.setLooping(true);
+            backgroundImage = loadTexture(resourceBlackWhiteBackground);
 
             menuOptions = new ArrayList<Text>();
             gameTitle = new ArrayList<Text>();
@@ -57,8 +57,6 @@ public class GameOverScreen implements Screen {
         public void show() {
             generateGameTitle();
             generateMenu();
-
-            backgroundMusic.play();
             Gdx.input.setInputProcessor(input);
         }
 
@@ -105,9 +103,6 @@ public class GameOverScreen implements Screen {
 
         @Override
         public void dispose() {
-            backgroundMusic.dispose();
-            backgroundImage.dispose();
-
         }
 
 
@@ -148,6 +143,7 @@ public class GameOverScreen implements Screen {
 
 
         private void changeOptionColor(int pId){
+            playSelectionSound();
             for (Text mTemp: this.menuOptions)
                 mTemp.setColor(Color.WHITE);
             if(pId>=0)
@@ -156,28 +152,22 @@ public class GameOverScreen implements Screen {
         }
 
         private void validateKeys() {
-            try{
-                int mTime = (int) (config.getFrameRate()*3.5);
-                //int mTime = 180;
-                if(this.input.isMoveDown()){
-                    this.actualSelection++;
-                    if(this.actualSelection >3)
-                        this.actualSelection =0;
-                    Thread.sleep(mTime);
-                    changeOptionColor(this.actualSelection);
-                }
-                if(this.input.isMoveUp()){
-                    this.actualSelection--;
-                    if(this.actualSelection <0)
-                        this.actualSelection =3;
-                    Thread.sleep(mTime);
-                    changeOptionColor(this.actualSelection);
-                }
-                if(this.input.isEnter()){
-                    executeAction();
-                }
-            } catch (InterruptedException e){
-                game.print(e.toString());
+            int mTime = (int) (config.getFrameRate()*3.5);
+            //int mTime = 180;
+            if(this.input.isMoveDown() && Utils.getInstance().skipFrames()){
+                this.actualSelection++;
+                if(this.actualSelection >3)
+                    this.actualSelection =0;
+                changeOptionColor(this.actualSelection);
+            }
+            if(this.input.isMoveUp() && Utils.getInstance().skipFrames()){
+                this.actualSelection--;
+                if(this.actualSelection <0)
+                    this.actualSelection =3;
+                changeOptionColor(this.actualSelection);
+            }
+            if(this.input.isEnter()){
+                executeAction();
             }
         }
 
@@ -193,17 +183,24 @@ public class GameOverScreen implements Screen {
                     }
             }
         }
+    private void playSelectionSound(){
+        if(actualSelection != selectionMemento){
+            SoundEffectsManager.getInstance().play(menuSoundEffect, false);
+            selectionMemento = actualSelection;
+        }
+    }
 
         private void executeAction() {
+            playSelectionSound();
             switch (this.actualSelection){
                 case 0:
                     gameStatus.loadFromDB(GameStatus.getInstance().getSaveSlot());
                     gameStatus.setStatus("defeated");
-                    game.setScreen(new OverworldScreen(game));
+                    ScreeenManager.getInstance().changeScreen("OverworldScreen");
                     dispose();
                     break;
                 case 1:
-                    game.setScreen(new MainMenuScreen(game));
+                    ScreeenManager.getInstance().changeScreen("MainMenuScreen");
                     break;
             }
         }

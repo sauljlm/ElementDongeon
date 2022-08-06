@@ -1,40 +1,30 @@
 package com.avengers.rpgame.game.io;
 
 import com.avengers.rpgame.RPGame;
-import com.avengers.rpgame.data.gameStatus.GameStatus;
+import com.avengers.rpgame.audio.SoundEffectsManager;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.screens.*;
-import com.avengers.rpgame.logic.entities.EntitiesBuilderDirector;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.Party;
-import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
-import com.avengers.rpgame.logic.entities.character.builder.CharacterBuilder;
 import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.math.Vector2;
+
+import static com.avengers.rpgame.utils.Resources.menuSoundEffect;
+import static com.avengers.rpgame.utils.Resources.steps;
 
 //TODO Improve this and create different controls for different screens
 public class IOManager {
-    private MyInputProcessor inputProcessor;
+    private static IOManager instance;
+    private static MyInputProcessor inputProcessor;
     private GameConfig config;
     private RPGame game;
-    private Music backgroundMusic;
 
-    public IOManager(RPGame game, Music backgroundMusic) {
+    private IOManager() {
         inputProcessor = new MyInputProcessor();
         Gdx.input.setInputProcessor(inputProcessor);
         config = GameConfig.getInstance();
-        this.game = game;
-        this.backgroundMusic = backgroundMusic;
-    }
-
-    public IOManager(RPGame game) {
-        inputProcessor = new MyInputProcessor();
-        Gdx.input.setInputProcessor(inputProcessor);
-        config = GameConfig.getInstance();
-        this.game = game;
+        this.game = RPGame.getInstance();
     }
 
     //the idea for this method is to process different request of IO processInput differently acording to the screen
@@ -85,9 +75,17 @@ public class IOManager {
             horizontalForce = 0;
         }
         if(inputProcessor.isStoreOpened()){
-            game.setScreen(new StoreScreen(game, playerParty));
-            this.backgroundMusic.dispose();
+            ScreeenManager.getInstance().changeScreen("StoreScreen");
         }
+
+        if(horizontalForce != 0 || verticalForce != 0){
+            SoundEffectsManager.getInstance().play(steps, true);
+        } else{
+            SoundEffectsManager.getInstance().stop(steps);
+        }
+//        if(velocity.x == 0 || velocity.y == 0){
+//            SoundEffectsManager.getInstance().stop(menuSoundEffect);
+//        }
 
         velocity.x = horizontalForce * 5;
         velocity.y = verticalForce * 5;
@@ -97,14 +95,13 @@ public class IOManager {
         if(inputProcessor.isCreditMode()) {
             for (Item itemFound: playerParty.getActivePartyMember().getItems()) {
                 if (itemFound.getDescription().equals("Llave elemental")) {
-                    game.setScreen(new CreditScreen(game));
+                    ScreeenManager.getInstance().changeScreen("CreditScreen");
                 }
             }
         }
 
         if(inputProcessor.isPause()){
-            game.setScreen(new PauseScreen(game, playerParty));
-            this.backgroundMusic.dispose();
+            ScreeenManager.getInstance().changeScreen("PauseScreen");
         }
     }
 
@@ -147,7 +144,14 @@ public class IOManager {
     }
 
     public void dispose(){
+    }
 
+    public static IOManager getInstance() {
+        //There's a bug with Input processor
+//        if (instance == null) {
+            instance = new IOManager();
+//        }
+        return instance;
     }
 
 }

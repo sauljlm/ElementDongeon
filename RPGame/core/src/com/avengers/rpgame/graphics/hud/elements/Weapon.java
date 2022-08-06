@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
 import static com.avengers.rpgame.utils.Resources.*;
 
 public class Weapon {
@@ -134,7 +135,7 @@ public class Weapon {
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
         Vector2 ofset =  new Vector2(resolution.x*0.8f, resolution.y*0.08f);
         Vector2 position = new Vector2(resolution.x -ofset.x, resolution.y-ofset.y);
-        this.set_texture(new Texture(Gdx.files.internal(this.getWeaponPath())));
+        this.set_texture(loadTexture(this.getWeaponPath()));
         this.set_sprite(new Sprite(this.get_texture()));
         this.setPotionX((int)position.x);
         this.setPotionY((int)position.y);
@@ -142,7 +143,7 @@ public class Weapon {
     }
 
     public void dispose(){
-        _texture.dispose();
-        _sprite.getTexture().dispose();
+//        _texture.dispose();
+//        _sprite.getTexture().dispose();
     }
 }

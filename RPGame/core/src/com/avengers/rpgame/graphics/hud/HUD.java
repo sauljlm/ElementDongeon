@@ -17,7 +17,6 @@ import com.avengers.rpgame.utils.Resources;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -48,8 +47,8 @@ public class HUD {
         lvlFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.levelHUDFontSize, Color.WHITE, false, Color.BLACK);
         gameFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
         characterCoinsFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
-        maxPoints = ((PlayableCharacter)GameStatus.getInstance().getParty().getActivePartyMember()).getExperiencePointsMax();
-        character = gameStatus.getParty().getActivePartyMember();
+        maxPoints = ((PlayableCharacter)GameStatus.getInstance().getPlayerParty().getActivePartyMember()).getExperiencePointsMax();
+        character = gameStatus.getPlayerParty().getActivePartyMember();
         weapon = new Weapon((int) this.character.getLevel(), this.character.getCharacterClass().getIdCharacterClass());
         createHearts();
     }
@@ -76,7 +75,7 @@ public class HUD {
     }
 
     public void update () {
-        Party party = GameStatus.getInstance().getParty();
+        Party party = GameStatus.getInstance().getPlayerParty();
         this.character.setHealthPoints(party.getActivePartyMember().getHealthPoints());
         this.character.setLevel(party.getActivePartyMember().getLevel());
         this.character.setMagicPoints(party.getActivePartyMember().getMagicPoints());

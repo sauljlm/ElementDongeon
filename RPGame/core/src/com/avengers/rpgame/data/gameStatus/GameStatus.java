@@ -4,7 +4,6 @@ import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
 import com.avengers.rpgame.logic.entities.character.concrete.PlayableCharacter;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.ArrayList;
@@ -12,7 +11,8 @@ import java.util.HashMap;
 
 public class GameStatus {
     private static GameStatus instance;
-    private Party party;
+    private Party playerParty;
+    private Party enemyParty;
     private int saveSlot = 0;
     private String status;
     private World world;
@@ -24,23 +24,27 @@ public class GameStatus {
 
     private GameStatus() {
         bdGameStatusDAO = new BDGameStatusDAO();
-        party = new Party();
-        party.setPartyMember1(new PlayableCharacter()); //Just to avoid null
-        party.setPartyMember2(new PlayableCharacter()); //Just to avoid null
-        party.setPartyMember3(new PlayableCharacter()); //Just to avoid null
+        playerParty = new Party();
+        playerParty.setPartyMember1(new PlayableCharacter()); //Just to avoid null
+        playerParty.setPartyMember2(new PlayableCharacter()); //Just to avoid null
+        playerParty.setPartyMember3(new PlayableCharacter()); //Just to avoid null
+        enemyParty = new Party();
+        enemyParty.setPartyMember1(new PlayableCharacter()); //Just to avoid null
+        enemyParty.setPartyMember2(new PlayableCharacter()); //Just to avoid null
+        enemyParty.setPartyMember3(new PlayableCharacter()); //Just to avoid null
         status = "newGame"; //default value to let all other components know this is a new game, otherwise game loader needs to set this to other state
     }
 
     private GameStatus(Party party) {
-        this.party = party;
+        this.playerParty = party;
     }
 
-    public Party getParty() {
-        return party;
+    public Party getPlayerParty() {
+        return playerParty;
     }
 
-    public void setParty(Party party) {
-        this.party = party;
+    public void setPlayerParty(Party playerParty) {
+        this.playerParty = playerParty;
     }
 
     public int getSaveSlot() {
@@ -67,6 +71,14 @@ public class GameStatus {
         this.world = world;
     }
 
+    public Party getEnemyParty() {
+        return enemyParty;
+    }
+
+    public void setEnemyParty(Party enemyParty) {
+        this.enemyParty = enemyParty;
+    }
+
     public ArrayList<AbstractCharacter> getEnemies() {
         return enemies;
     }
@@ -84,7 +96,7 @@ public class GameStatus {
     }
 
     public void updateLocation(){
-        party.getActivePartyMember().setPosition(((DynamicAnimatedCharacter)party.getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition());
+        playerParty.getActivePartyMember().setPosition(((DynamicAnimatedCharacter) playerParty.getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition());
     }
 
     public void saveOnDB() {

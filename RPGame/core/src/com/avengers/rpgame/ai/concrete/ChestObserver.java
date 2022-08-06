@@ -45,13 +45,13 @@ public class ChestObserver implements Observer {
 
         for (Item item: dataItems){
             if (item.getDescription().equals("Talisman tierra") && currentMapObject.contains("earth") && talisman.equals("")) {
-                GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
             } else if (item.getDescription().equals("Talisman agua") && currentMapObject.contains("water") && talisman.equals("")) {
-                GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
             } else if (item.getDescription().equals("Talisman viento") && currentMapObject.contains("wind") && talisman.equals("")) {
-                GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
             } else if (item.getDescription().equals("Talisman fuego") && currentMapObject.contains("fire") && talisman.equals("")) {
-                GameStatus.getInstance().getParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
             }
         }
     }

@@ -1,17 +1,22 @@
 package com.avengers.rpgame.graphics.dialog;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.audio.SoundEffectsManager;
 import com.avengers.rpgame.game.GameConfig;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 
+import static com.avengers.rpgame.utils.Resources.*;
+
 public class DialogManager {
     private static DialogManager instance;
     private Dialog dialog;
     private GameConfig gameConfig;
     private RPGame rpGame;
+
+    private String messageMemento;
 
     private boolean active;
 
@@ -23,10 +28,13 @@ public class DialogManager {
     }
 
     public void updateDialog(String message) {
-        if(dialog.getDialogMessage().isEmpty()){
+        if(!message.equals("")){
             dialog.setDialogMessage(message);
+            if(!message.equals(messageMemento)){
+                SoundEffectsManager.getInstance().play(popUp, false);
+                messageMemento = message;
+            }
         }
-
     }
 
     public void updateSpeaker(String name) {
@@ -58,6 +66,8 @@ public class DialogManager {
             dialog.getDialogFont().draw(rpGame.batch, dialog.getDialogSpeaker(), resolution.x*0.11f, resolution.y*0.21f);
             GlyphLayout text = new GlyphLayout(dialog.getDialogFont(), dialog.getDialogMessage(), Color.BROWN, 600, Align.left, true);
             dialog.getDialogFont().draw(rpGame.batch, text, resolution.x*0.07f, resolution.y*0.17f);
+        } else {
+            messageMemento = "";
         }
     }
 

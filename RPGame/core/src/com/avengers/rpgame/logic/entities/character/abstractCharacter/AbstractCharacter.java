@@ -1,5 +1,6 @@
 package com.avengers.rpgame.logic.entities.character.abstractCharacter;
 
+import com.avengers.rpgame.audio.SoundEffectsManager;
 import com.avengers.rpgame.logic.entities.Attack;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.Skill;
@@ -10,6 +11,8 @@ import com.avengers.rpgame.logic.entities.character.components.animatedCharacter
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
+
+import static com.avengers.rpgame.utils.Resources.resourceSwordAttackSound;
 
 //Abstract Father class for all types of characters
 public abstract class AbstractCharacter implements BattleActions {
@@ -247,6 +250,7 @@ public abstract class AbstractCharacter implements BattleActions {
 
     //Receive attack
     public String receiveAttack(int hpDamage) {
+        SoundEffectsManager.getInstance().play(resourceSwordAttackSound, false);
         this.setHealthPoints(this.getHealthPoints()-(hpDamage-(hpDamage/4*this.resistance/100)));
         return String.valueOf(hpDamage-(hpDamage/4*this.resistance/100));
     }

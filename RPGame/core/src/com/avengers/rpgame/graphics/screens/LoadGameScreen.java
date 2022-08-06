@@ -1,29 +1,26 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.audio.SoundEffectsManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.MyInputProcessor;
 import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.utils.Resources;
+import com.avengers.rpgame.utils.Utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
-
 import java.util.ArrayList;
-
-import static com.avengers.rpgame.utils.FileManager.loadMusic;
-import static com.avengers.rpgame.utils.Resources.resourceBlurBackground;
-import static com.avengers.rpgame.utils.Resources.resourceThemeMusic;
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
+import static com.avengers.rpgame.utils.Resources.*;
 
 public class LoadGameScreen implements Screen {
     final RPGame game;
     private GameStatus gameStatus;
     private final GameConfig config;
-    private final Music backgroundMusic;
     private final Texture backgroundImage;
 
     private final ArrayList<Text> loadOptions;
@@ -31,20 +28,18 @@ public class LoadGameScreen implements Screen {
     private final float ScreenWidth;
     private final float ScreenHeight;
     private Text inputTitle;
+
+    private int selectionMemento;
     private MyInputProcessor input;
 
-    public LoadGameScreen(final RPGame game) {
-        this.game = game;
+    public LoadGameScreen() {
+        this.game = RPGame.getInstance();
         input = new MyInputProcessor();
         config = GameConfig.getInstance();
 
         ScreenWidth = config.getResolutionHorizontal();
         ScreenHeight = config.getResolutionVertical();
-        backgroundImage = new Texture(Gdx.files.internal(resourceBlurBackground));
-
-        backgroundMusic = loadMusic(resourceThemeMusic);
-        backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(config.getMusicVolume());
+        backgroundImage = loadTexture(resourceBlurBackground);
 
         loadOptions = new ArrayList<Text>();
         this.inputTitle = new Text(Resources.resourceMainFont, Resources.screenTitleFontSize,"Juegos guardados",true);
@@ -54,7 +49,6 @@ public class LoadGameScreen implements Screen {
     @Override
     public void show() {
         generateLoadGames();
-        backgroundMusic.play();
         Gdx.input.setInputProcessor(input);
     }
 
@@ -96,8 +90,6 @@ public class LoadGameScreen implements Screen {
 
     @Override
     public void dispose() {
-        backgroundMusic.dispose();
-        backgroundImage.dispose();
     }
 
     private void generateLoadGames(){
@@ -124,6 +116,7 @@ public class LoadGameScreen implements Screen {
     }
 
     private void changeOptionColor(int pId){
+        playSelectionSound();
         for (Text mTemp: this.loadOptions)
             mTemp.setColor(Color.WHITE);
         if(pId>=0)
@@ -132,27 +125,21 @@ public class LoadGameScreen implements Screen {
     }
 
     private void validateKeys() {
-        try{
-            int mTime = (int) (config.getFrameRate()*3.5);
-            if(this.input.isMoveDown()){
-                this.actualSelection++;
-                if(this.actualSelection >3)
-                    this.actualSelection =0;
-                Thread.sleep(mTime);
-                changeOptionColor(this.actualSelection);
-            }
-            if(this.input.isMoveUp()){
-                this.actualSelection--;
-                if(this.actualSelection <0)
-                    this.actualSelection =3;
-                Thread.sleep(mTime);
-                changeOptionColor(this.actualSelection);
-            }
-            if(this.input.isEnter()){
-                executeAction();
-            }
-        } catch (InterruptedException e){
-            game.print(e.toString());
+        int mTime = (int) (config.getFrameRate()*3.5);
+        if(this.input.isMoveDown() && Utils.getInstance().skipFrames()){
+            this.actualSelection++;
+            if(this.actualSelection >3)
+                this.actualSelection =0;
+            changeOptionColor(this.actualSelection);
+        }
+        if(this.input.isMoveUp() && Utils.getInstance().skipFrames()){
+            this.actualSelection--;
+            if(this.actualSelection <0)
+                this.actualSelection =3;
+            changeOptionColor(this.actualSelection);
+        }
+        if(this.input.isEnter()){
+            executeAction();
         }
     }
 
@@ -169,36 +156,39 @@ public class LoadGameScreen implements Screen {
         }
     }
 
+    private void playSelectionSound(){
+        if(actualSelection != selectionMemento){
+            SoundEffectsManager.getInstance().play(menuSoundEffect, false);
+            selectionMemento = actualSelection;
+        }
+    }
+
     private void executeAction() {
+        playSelectionSound();
         GameStatus.getInstance().setStatus("loadedGame");
         try {
             switch (this.actualSelection) {
                 case 0:
                     GameStatus.getInstance().loadFromDB(1);
                     GameStatus.getInstance().setStatus("loadedGame");
-                    game.setScreen(new OverworldScreen(game));
-                    dispose();
+                    ScreeenManager.getInstance().changeScreen("OverworldScreen");
                     break;
                 case 1:
                     GameStatus.getInstance().loadFromDB(2);
                     GameStatus.getInstance().setStatus("loadedGame");
-                    game.setScreen(new OverworldScreen(game));
-                    dispose();
+                    ScreeenManager.getInstance().changeScreen("OverworldScreen");
                     break;
                 case 2:
                     GameStatus.getInstance().loadFromDB(3);
                     GameStatus.getInstance().setStatus("loadedGame");
-                    game.setScreen(new OverworldScreen(game));
-                    dispose();
+                    ScreeenManager.getInstance().changeScreen("OverworldScreen");
                     break;
                 case 3:
-                    game.setScreen(new MainMenuScreen(game));
-                    dispose();
+                    ScreeenManager.getInstance().changeScreen("MainMenuScreen");
                     break;
             }
         } catch (Exception e){
-            game.setScreen(new MainMenuScreen(game));
-            dispose();
+            ScreeenManager.getInstance().changeScreen("MainMenuScreen");
         }
     }
 

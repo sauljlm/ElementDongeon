@@ -1,18 +1,24 @@
 package com.avengers.rpgame.graphics.store;
 
 import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.graphics.assetManager.MyAssetManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
 import static com.avengers.rpgame.utils.Resources.coin;
 
 public class Coin {
+    private MyAssetManager assetManager;
+    private GameConfig gameConfig;
     private Texture _texture;
     private Sprite _sprite;
 
     public Coin(int width, int height, float positionX, float positionY) {
+        gameConfig = GameConfig.getInstance();
+        assetManager = MyAssetManager.getInstance();
         createCoin(width, height, positionX, positionY);
     }
 
@@ -61,11 +67,10 @@ public class Coin {
     }
 
     private void createCoin(int width, int height, float positionX, float positionY) {
-        GameConfig gameConfig = GameConfig.getInstance();
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
         Vector2 ofset =  new Vector2(resolution.x*positionX, resolution.y*positionY);
         Vector2 position = new Vector2(resolution.x -ofset.x, resolution.y-ofset.y);
-        this.set_texture(new Texture(Gdx.files.internal(coin)));
+        this.set_texture(loadTexture(coin));
         this.set_sprite(new Sprite(this.get_texture()));
         this.setCoinX((int)position.x);
         this.setCoinY((int)position.y);

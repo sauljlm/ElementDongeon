@@ -9,13 +9,12 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import static com.avengers.rpgame.utils.Resources.resourceOverworldMap;
 
-public class Mediador implements iMediador{
-
+public class GraphicMediator implements iMediador{
     private CameraManager cameraManager;
     private MapManager mapManager;
     private PhysicsManager physicsManager;
 
-    public Mediador(RPGame game) {
+    public GraphicMediator(RPGame game) {
         inicializeGraphicManagers(game);
     }
 
@@ -42,9 +41,9 @@ public class Mediador implements iMediador{
     }
 
     public void dispose(){
+//        cameraManager.dispose();
         mapManager.dispose();
-        physicsManager.dispose();
-        cameraManager.dispose();
+//        physicsManager.dispose();
     }
 
 }

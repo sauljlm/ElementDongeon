@@ -1,10 +1,13 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.audio.MusicManager;
+import com.avengers.rpgame.audio.SoundEffectsManager;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.MyInputProcessor;
 import com.avengers.rpgame.graphics.text.Text;
 import com.avengers.rpgame.utils.Resources;
+import com.avengers.rpgame.utils.Utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -18,15 +21,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
-import static com.avengers.rpgame.utils.FileManager.loadMusic;
-import static com.avengers.rpgame.utils.FileManager.loadUISkin;
+import static com.avengers.rpgame.utils.FileManager.*;
 import static com.avengers.rpgame.utils.Resources.*;
 
 public class SoundOptionScreen implements Screen {
     final RPGame game;
 
     private final GameConfig gameConfig;
-    private final Music backgroundMusic;
     private final Music soundEffectsMusic;
     private final Texture backgroundImage;
 
@@ -41,22 +42,20 @@ public class SoundOptionScreen implements Screen {
     private Slider musicVolumeSlider;
     private Slider soundEffectsSlider;
 
-    public SoundOptionScreen(final RPGame game) {
-        this.game = game;
+    private int selectionMemento;
+
+    public SoundOptionScreen() {
+        this.game = RPGame.getInstance();
         gameConfig = GameConfig.getInstance();
         input = new MyInputProcessor();
 
         ScreenWidth = gameConfig.getResolutionHorizontal();
         ScreenHeight = gameConfig.getResolutionVertical();
-        backgroundImage = new Texture(Gdx.files.internal(resourceBlurBackground));
+        backgroundImage = loadTexture(resourceBlurBackground);
 
         menuOptions = new ArrayList<Text>();
         this.screenTitle = new Text(Resources.resourceMainFont, 100,"Opciones de sonido",true);
         this.screenTitle.centerTextScreenInX( ScreenHeight-150);
-
-        backgroundMusic = loadMusic(resourceFightMusic);;
-        backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(gameConfig.getMusicVolume());
 
         soundEffectsMusic = loadMusic(resourceSwordAttackSound);
         soundEffectsMusic.play();
@@ -68,7 +67,8 @@ public class SoundOptionScreen implements Screen {
 
         musicVolumeSlider.setSize(350f, 100f);
         musicVolumeSlider.setPosition(gameConfig.getResolutionHorizontal()-1200, gameConfig.getResolutionVertical()-800);
-        musicVolumeSlider.setValue(backgroundMusic.getVolume());
+
+        musicVolumeSlider.setValue(gameConfig.getMusicVolume());
         musicVolumeSlider.addListener(new EventListener() {
             public boolean handle(Event event) {
                 gameConfig.setMusicVolume(musicVolumeSlider.getValue());
@@ -112,6 +112,7 @@ public class SoundOptionScreen implements Screen {
     }
 
     private void changeOptionColor(int pId){
+        playSelectionSound();
         for (Text mTemp: this.menuOptions)
             mTemp.setColor(Color.WHITE);
         if(pId>=0)
@@ -122,8 +123,6 @@ public class SoundOptionScreen implements Screen {
     @Override
     public void show() {
         generateMenu();
-
-        backgroundMusic.play();
         soundEffectsMusic.play();
         Gdx.input.setInputProcessor(input);
     }
@@ -168,84 +167,71 @@ public class SoundOptionScreen implements Screen {
 
     @Override
     public void dispose() {
-        backgroundMusic.dispose();
-        soundEffectsMusic.dispose();
-        backgroundImage.dispose();
+//        backgroundMusic.dispose();
+//        soundEffectsMusic.dispose();
+//        backgroundImage.dispose();
     }
 
 
     public void adjustVolume(String option){
-        try{
-            float volumen;
-            int mTime = (int) (gameConfig.getFrameRate()*3.5);
+        float volume;
+        int mTime = (int) (gameConfig.getFrameRate()*3.5);
 
-            if(option.equalsIgnoreCase("music")){
-                volumen = gameConfig.getMusicVolume();
-                if(this.input.isMoveRight() && volumen<1) {
-                    volumen = backgroundMusic.getVolume() + 0.1f;
-                }
-                if(this.input.isMoveLeft() && volumen>0.01) {
-                    volumen = backgroundMusic.getVolume() - 0.1f;
-                }
-                if(volumen<0.01){
-                    volumen=0;
-                }
-                backgroundMusic.setVolume(volumen);
-                gameConfig.setMusicVolume(volumen);
-                musicVolumeSlider.setValue(volumen);
-                Thread.sleep(mTime);
+        if(option.equalsIgnoreCase("music") && Utils.getInstance().skipFrames()){
+            volume = gameConfig.getMusicVolume();
+            if(this.input.isMoveRight() && volume<1) {
+                volume = volume + 0.1f;
             }
-            else if (option.equalsIgnoreCase("soundEffect")){
-                volumen = gameConfig.getSoundEffectsVolume();
-                if(this.input.isMoveRight() && volumen<1) {
-                    volumen = soundEffectsMusic.getVolume() + 0.1f;
-                }
-                if(this.input.isMoveLeft() && volumen>0.01) {
-                    volumen = soundEffectsMusic.getVolume() - 0.1f;
-                }
-                if(volumen<0.01){
-                    volumen=0;
-                }
-                soundEffectsMusic.setVolume(volumen);
-                gameConfig.setMusicVolume(volumen);
-                soundEffectsSlider.setValue(volumen);
-                soundEffectsMusic.play();
-                Thread.sleep(mTime);
+            if(this.input.isMoveLeft() && volume>0.01) {
+                volume = volume - 0.1f;
             }
-
-        } catch (InterruptedException e){
-            game.print(e.toString());
+            if(volume<0.01){
+                volume=0;
+            }
+            MusicManager.getInstance().updateVolume(volume);
+            gameConfig.setMusicVolume(volume);
+            musicVolumeSlider.setValue(volume);
+        }
+        else if (option.equalsIgnoreCase("soundEffect") && Utils.getInstance().skipFrames()){
+            volume = gameConfig.getSoundEffectsVolume();
+            if(this.input.isMoveRight() && volume<1) {
+                volume = soundEffectsMusic.getVolume() + 0.1f;
+            }
+            if(this.input.isMoveLeft() && volume>0.01) {
+                volume = soundEffectsMusic.getVolume() - 0.1f;
+            }
+            if(volume<0.01){
+                volume=0;
+            }
+            soundEffectsMusic.setVolume(volume);
+            gameConfig.setSoundEffectsVolume(volume);
+            soundEffectsSlider.setValue(volume);
+            soundEffectsMusic.play();
         }
     }
 
     private void validateKeys() {
-        try{
-            int mTime = (int) (gameConfig.getFrameRate()*3.5);
-            if(this.input.isMoveDown()){
-                this.actualSelection++;
-                if(this.actualSelection >2)
-                    this.actualSelection =0;
-                Thread.sleep(mTime);
-                changeOptionColor(this.actualSelection);
-            }
-            if(this.input.isMoveUp()){
-                this.actualSelection--;
-                if(this.actualSelection <0)
-                    this.actualSelection = 2;
-                Thread.sleep(mTime);
-                changeOptionColor(this.actualSelection);
-            }
-            if(this.input.isEnter()){
-                executeAction();
-            }
-            if(this.input.isMoveRight()){
-                executeAction();
-            }
-            if(this.input.isMoveLeft()){
-                executeAction();
-            }
-        } catch (InterruptedException e){
-            game.print(e.toString());
+        int mTime = (int) (gameConfig.getFrameRate()*3.5);
+        if(this.input.isMoveDown() && Utils.getInstance().skipFrames()){
+            this.actualSelection++;
+            if(this.actualSelection >2)
+                this.actualSelection =0;
+            changeOptionColor(this.actualSelection);
+        }
+        if(this.input.isMoveUp() && Utils.getInstance().skipFrames()){
+            this.actualSelection--;
+            if(this.actualSelection <0)
+                this.actualSelection = 2;
+            changeOptionColor(this.actualSelection);
+        }
+        if(this.input.isEnter()){
+            executeAction();
+        }
+        if(this.input.isMoveRight()){
+            executeAction();
+        }
+        if(this.input.isMoveLeft()){
+            executeAction();
         }
     }
 
@@ -262,7 +248,15 @@ public class SoundOptionScreen implements Screen {
         }
     }
 
+    private void playSelectionSound(){
+        if(actualSelection != selectionMemento){
+            SoundEffectsManager.getInstance().play(menuSoundEffect, false);
+            selectionMemento = actualSelection;
+        }
+    }
+
     private void executeAction() {
+        playSelectionSound();
         switch (this.actualSelection){
             case 0:
                 adjustVolume("music");
@@ -271,7 +265,7 @@ public class SoundOptionScreen implements Screen {
                 adjustVolume("soundEffect");
                 break;
             case 2:
-                game.setScreen(new MainMenuScreen(game));
+                ScreeenManager.getInstance().changeScreen("MainMenuScreen");
                 dispose();
                 break;
         }

@@ -3,6 +3,7 @@ package com.avengers.rpgame.graphics.cutScenes;
 import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.screens.MainMenuScreen;
+import com.avengers.rpgame.graphics.screens.ScreeenManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -52,14 +53,13 @@ public class GameIntroCutScene implements ICutScene{
 
         //When company logo has been loaded and after a sintetic delay, redirect to main screen
         if (loaded && _wait > 3) {
-            game.setScreen(new MainMenuScreen(game));
+            ScreeenManager.getInstance().changeScreen("MainMenuScreen");
             dispose();
         }
     }
 
     @Override
     public void dispose() {
-        introSound.dispose();
     }
 
     private void fadeIn(){

@@ -1,18 +1,18 @@
 package com.avengers.rpgame.graphics.screens;
 
 import com.avengers.rpgame.RPGame;
+import com.avengers.rpgame.audio.SoundEffectsManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.MyInputProcessor;
 import com.avengers.rpgame.graphics.store.Store;
 import com.avengers.rpgame.graphics.text.FontFactory;
 import com.avengers.rpgame.graphics.text.Text;
-import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.utils.Resources;
+import com.avengers.rpgame.utils.Utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -22,15 +22,14 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.util.ArrayList;
 
-import static com.avengers.rpgame.utils.FileManager.loadMusic;
-import static com.avengers.rpgame.utils.Resources.resourceStoreScreen;
-import static com.avengers.rpgame.utils.Resources.resourceStoreThemeMusic;
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
+import static com.avengers.rpgame.utils.Resources.*;
 
 public class StoreScreen implements Screen {
     final RPGame game;
     private Store storeElements;
     private GameConfig config;
-    private final Music backgroundMusic;
+    private GameStatus gameStatus;
     private final Texture backgroundImage;
     private BitmapFont gameFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
     private final float ScreenWidth;
@@ -43,25 +42,23 @@ public class StoreScreen implements Screen {
     private int itemSelected = 0;
     private MyInputProcessor input;
     private AbstractCharacter character;
+    private int selectionMemento;
 
     ShapeRenderer _Border;
 
-    public StoreScreen(final RPGame game, Party playerParty) {
-        this.game = game;
+    public StoreScreen() {
+        this.game = RPGame.getInstance();
         this.config = GameConfig.getInstance();
+        gameStatus = GameStatus.getInstance();
         input = new MyInputProcessor();
-        config = GameConfig.getInstance();
-        this.character = playerParty.getPartyMember1();
+        this.character = gameStatus.getPlayerParty().getActivePartyMember();
         storeElements = new Store(this.character);
 
         ScreenWidth = config.getResolutionHorizontal();
         ScreenHeight = config.getResolutionVertical();
         this.resolution = new Vector2(ScreenWidth, ScreenHeight);
 
-        backgroundImage = new Texture(Gdx.files.internal(resourceStoreScreen));
-
-        backgroundMusic = loadMusic(resourceStoreThemeMusic);
-        backgroundMusic.setLooping(true);
+        backgroundImage = loadTexture(resourceStoreScreen);
 
         menuOptions = new ArrayList<Text>();
     }
@@ -69,8 +66,6 @@ public class StoreScreen implements Screen {
     @Override
     public void show() {
         generateMenu();
-
-        backgroundMusic.play();
         Gdx.input.setInputProcessor(input);
     }
 
@@ -113,8 +108,6 @@ public class StoreScreen implements Screen {
 
     @Override
     public void dispose() {
-        backgroundMusic.dispose();
-        backgroundImage.dispose();
     }
 
     private void generateMenu(){
@@ -147,6 +140,7 @@ public class StoreScreen implements Screen {
     }
 
     private void changeOptionColor(int pId){
+        playSelectionSound();
         for (Text mTemp: this.menuOptions)
             mTemp.setColor(Color.WHITE);
         if(pId>=0)
@@ -154,94 +148,90 @@ public class StoreScreen implements Screen {
     }
 
     private void validateKeys() {
-        try{
-            int mTime = 300;
-            if(this.input.isMoveRight()){
-                this.itemSelected++;
-                if (this.itemSelected > storeElements.getItemsSelected().size) {
-                    this.itemSelected = 1;
-                }
-                storeElements.updateItemSelected(this.itemSelected);
-                storeElements.changeCoinsColor();
-                Thread.sleep(mTime);
+        int mTime = 300;
+        if(this.input.isMoveRight() && Utils.getInstance().skipFrames()){
+            this.itemSelected++;
+            if (this.itemSelected > storeElements.getItemsSelected().size) {
+                this.itemSelected = 1;
             }
-            if(this.input.isMoveLeft()){
-                this.itemSelected--;
-                if (this.itemSelected < 1) {
-                    this.itemSelected = storeElements.getItemsSelected().size;
-                }
-                storeElements.updateItemSelected(this.itemSelected);
-                storeElements.changeCoinsColor();
-                Thread.sleep(mTime);
+            storeElements.updateItemSelected(this.itemSelected);
+            storeElements.changeCoinsColor();
+        }
+        if(this.input.isMoveLeft() && Utils.getInstance().skipFrames()){
+            this.itemSelected--;
+            if (this.itemSelected < 1) {
+                this.itemSelected = storeElements.getItemsSelected().size;
             }
-            if(this.input.isMoveDown()){
-                if(!this.actionSelected) {
-                    this.actionOption++;
-                    if(this.actionOption >2)
-                        this.actionOption = 0;
-                    changeOptionColor(this.actionOption);
-                } else {
-                    this.itemType++;
-                    if(this.itemType >4)
-                        this.itemType =0;
-                    changeOptionColor(this.itemType);
-                }
-                Thread.sleep(mTime);
+            storeElements.updateItemSelected(this.itemSelected);
+            storeElements.changeCoinsColor();
+        }
+        if(this.input.isMoveDown() && Utils.getInstance().skipFrames()){
+            if(!this.actionSelected) {
+                this.actionOption++;
+                if(this.actionOption >2)
+                    this.actionOption = 0;
+                changeOptionColor(this.actionOption);
+            } else {
+                this.itemType++;
+                if(this.itemType >4)
+                    this.itemType =0;
+                changeOptionColor(this.itemType);
             }
-            if(this.input.isMoveUp()){
-                if(!this.actionSelected) {
-                    this.actionOption--;
-                    if(this.actionOption < 0)
-                        this.actionOption = 2;
-                    changeOptionColor(this.actionOption);
-                } else  {
-                    this.itemType--;
-                    if(this.itemType < 0)
-                        this.itemType = 4;
-                    changeOptionColor(this.itemType);
-                }
-                Thread.sleep(mTime);
+        }
+        if(this.input.isMoveUp() && Utils.getInstance().skipFrames()){
+            if(!this.actionSelected) {
+                this.actionOption--;
+                if(this.actionOption < 0)
+                    this.actionOption = 2;
+                changeOptionColor(this.actionOption);
+            } else  {
+                this.itemType--;
+                if(this.itemType < 0)
+                    this.itemType = 4;
+                changeOptionColor(this.itemType);
             }
-            if(this.input.isEnter()){
-                if(!this.actionSelected) {
-                    executeAction();
-                } else {
-                    executeBuyActions();
-                }
-                Thread.sleep(mTime);
+        }
+        if(this.input.isEnter() && Utils.getInstance().skipFrames()){
+            if(!this.actionSelected) {
+                executeAction();
+            } else {
+                executeBuyActions();
             }
-            if(this.input.isBuyItem()) {
-                storeElements.cleanMessage();
-                if (this.itemSelected != 0 && this.actionOption == 0) {
-                    if (storeElements.checkPurchase()) {
-                        if (storeElements.buyItem()) {
-                            storeElements.setConfirmationMessage(true);
-                        } else {
-                            storeElements.setConfirmationMessage(false);
-                        }
-                    } else {
-                        storeElements.setConfirmationMessage(false);
-                    }
-                }
-                Thread.sleep(mTime);
-            }
-            if(this.input.isSellItem()) {
-                storeElements.cleanMessage();
-                if (this.itemSelected != 0 && this.actionOption == 1) {
-                    if (storeElements.sellItem()) {
+        }
+        if(this.input.isBuyItem() && Utils.getInstance().skipFrames()) {
+            storeElements.cleanMessage();
+            if (this.itemSelected != 0 && this.actionOption == 0) {
+                if (storeElements.checkPurchase()) {
+                    if (storeElements.buyItem()) {
                         storeElements.setConfirmationMessage(true);
                     } else {
                         storeElements.setConfirmationMessage(false);
                     }
+                } else {
+                    storeElements.setConfirmationMessage(false);
                 }
-                Thread.sleep(mTime);
             }
-        } catch (InterruptedException e){
-            game.print(e.toString());
+        }
+        if(this.input.isSellItem() && Utils.getInstance().skipFrames()) {
+            storeElements.cleanMessage();
+            if (this.itemSelected != 0 && this.actionOption == 1) {
+                if (storeElements.sellItem()) {
+                    storeElements.setConfirmationMessage(true);
+                } else {
+                    storeElements.setConfirmationMessage(false);
+                }
+            }
+        }
+    }
+    private void playSelectionSound(){
+        if(actionOption != selectionMemento){
+            SoundEffectsManager.getInstance().play(menuSoundEffect, false);
+            selectionMemento = actionOption;
         }
     }
 
     private void executeAction() {
+        playSelectionSound();
         switch (this.actionOption){
             case 0:
                 this.itemType = 0;
@@ -258,13 +248,14 @@ public class StoreScreen implements Screen {
             case 2:
                 GameStatus.getInstance().setStatus("gameInProgress");
                 this.actionSelected = false;
-                game.setScreen(new OverworldScreen(game));
+                ScreeenManager.getInstance().changeScreen("OverworldScreen");
                 dispose();
                 break;
         }
     }
 
     private void executeBuyActions() {
+        SoundEffectsManager.getInstance().play(coinSound, false);
         if (this.itemType == 4) {
             menuOptions = new ArrayList<Text>();
             this.itemSelected = 0;

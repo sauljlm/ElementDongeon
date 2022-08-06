@@ -6,41 +6,33 @@ import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.IOManager;
 import com.avengers.rpgame.graphics.dialog.DialogManager;
-import com.avengers.rpgame.graphics.graphicManagerMediador.Mediador;
+import com.avengers.rpgame.graphics.graphicManagerMediador.GraphicMediator;
 import com.avengers.rpgame.graphics.hud.HUD;
 import com.avengers.rpgame.graphics.npc.EnemiesManager;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.factory.CharacterFactory;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
-
 import java.util.ArrayList;
-
-import static com.avengers.rpgame.utils.FileManager.loadMusic;
-import static com.avengers.rpgame.utils.Resources.resourceAndTheJourneyBeginsMusic;
+import static com.avengers.rpgame.utils.FileManager.loadTexture;
 import static com.avengers.rpgame.utils.Resources.resourcePortalTexture;
 
 public class OverworldScreen implements Screen {
     final RPGame game;
     private GameStatus gameStatus;
     private GameConfig config;
-    private Music backgroundMusic;
-
     private DialogManager dialogManager;
-
     private IOManager ioManager;
     private AIManager aiManager;
     private Party playerParty;
     private CharacterFactory characterFactory;
 
     //Graphic manager mediator
-    Mediador graphicMediator;
+    GraphicMediator graphicMediator;
 
-    // End HUD values
     private HUD hudElements;
 
     //Interactive map objects
@@ -50,26 +42,21 @@ public class OverworldScreen implements Screen {
     //Monsters
     EnemiesManager enemiesManager;
 
-    public OverworldScreen(final RPGame game) {
-        this.game = game;
+    public OverworldScreen() {
+        game = RPGame.getInstance();
         gameStatus = GameStatus.getInstance();
         config = GameConfig.getInstance();
-
-        backgroundMusic = loadMusic(resourceAndTheJourneyBeginsMusic);
-
-        ioManager = new IOManager(game, backgroundMusic);
+        ioManager = IOManager.getInstance();
         aiManager = AIManager.getInstance();
+        dialogManager = DialogManager.getInstance();
+        graphicMediator = new GraphicMediator(game);
 
-        //Graphic manager mediator
-        graphicMediator = new Mediador(game);
+        playerParty = GameStatus.getInstance().getPlayerParty();
 
-        playerParty = GameStatus.getInstance().getParty();
         characterFactory = new CharacterFactory(graphicMediator.getWorld(), game);
         characterFactory.createParty();
 
         hudElements = new HUD();
-
-        dialogManager = DialogManager.getInstance();
 
         // Monsters
         enemiesManager = new EnemiesManager();
@@ -80,15 +67,13 @@ public class OverworldScreen implements Screen {
 
         interactiveObjVectors = aiManager.getInteractiveObjectsV();
 
-        this.accessPortal = new Sprite(new Texture(resourcePortalTexture));
+        this.accessPortal = new Sprite(loadTexture(resourcePortalTexture));
         accessPortal.setCenter(interactiveObjVectors.get(0).x,interactiveObjVectors.get(0).y);
         gameStatus.saveOnDB();
     }
 
     @Override
     public void show() {
-        backgroundMusic.play();
-        backgroundMusic.setVolume(config.getMusicVolume());
     }
 
     //This method holds the game logic
@@ -144,20 +129,19 @@ public class OverworldScreen implements Screen {
 
     @Override
     public void resume() {
-        backgroundMusic.play();
+
     }
 
     @Override
     public void hide() {
-        backgroundMusic.pause();
+
     }
 
     @Override
     public void dispose() {
-        game.dispose();
-        graphicMediator.dispose();
-        backgroundMusic.dispose();
+
         ioManager.dispose();
+        graphicMediator.dispose();
         hudElements.dispose();
     }
 }

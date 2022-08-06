@@ -81,15 +81,18 @@ public class StartingPositionsReducer {
             worldPosition = getPosition("startPlayer");
         }
         if (GameStatus.getInstance().getStatus().equals("loadedGame")){
-            worldPosition.x =GameStatus.getInstance().getParty().getPartyMember(1).getPosition().x*gameConfig.getPPM();
-            worldPosition.y = GameStatus.getInstance().getParty().getPartyMember(1).getPosition().y*gameConfig.getPPM();
+            worldPosition.x =GameStatus.getInstance().getPlayerParty().getPartyMember(1).getPosition().x*gameConfig.getPPM();
+            worldPosition.y = GameStatus.getInstance().getPlayerParty().getPartyMember(1).getPosition().y*gameConfig.getPPM();
+        }
+        if (GameStatus.getInstance().getStatus().equals("defeated")){
+            worldPosition = getPosition("startPlayer");
         }
         if (GameStatus.getInstance().getStatus().equals("defeated")){
             worldPosition = getPosition("startPlayer");
         }
         if (GameStatus.getInstance().getStatus().equals("gameInProgress")){
-            worldPosition.x =GameStatus.getInstance().getParty().getPartyMember(1).getPosition().x*gameConfig.getPPM();
-            worldPosition.y = GameStatus.getInstance().getParty().getPartyMember(1).getPosition().y*gameConfig.getPPM();
+            worldPosition.x =GameStatus.getInstance().getPlayerParty().getPartyMember(1).getPosition().x*gameConfig.getPPM();
+            worldPosition.y = GameStatus.getInstance().getPlayerParty().getPartyMember(1).getPosition().y*gameConfig.getPPM();
         }
         return worldPosition;
     }
