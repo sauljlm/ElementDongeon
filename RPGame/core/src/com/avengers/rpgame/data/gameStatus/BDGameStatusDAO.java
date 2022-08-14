@@ -67,12 +67,13 @@ public class BDGameStatusDAO implements IGameStatusDAO{
 
             for (Attack attack : gameStatus.getPlayerParty().getPartyMember(partyMember).getAttacks()){
                 sqlQuery = "INSERT INTO Attack "+
-                        "(saveSlot,partyMember,name,description,unlockLevel,mPCost,HPEffect,timeStamp)" +
+                        "(saveSlot,partyMember,name,description,price,unlockLevel,mPCost,HPEffect,timeStamp)" +
                         "VALUES("+
                         gameStatus.getSaveSlot()+","+
                         partyMember+",'"+
                         attack.getName()+"','"+
                         attack.getDescription()+"',"+
+                        attack.getPrice()+","+
                         attack.getUnlockLevel()+","+
                         attack.getmPCost()+","+
                         attack.getHPEffect()+","+
@@ -210,6 +211,7 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                 Attack attack = new Attack();
                 attack.setName(resultSet.getString("name"));
                 attack.setDescription(resultSet.getString("description"));
+                attack.setPrice(Integer.parseInt(resultSet.getString("price")));
                 attack.setUnlockLevel(Integer.parseInt(resultSet.getString("unlockLevel")));
                 attack.setmPCost(Integer.parseInt(resultSet.getString("mPCost")));
                 attack.setHPEffect(Integer.parseInt(resultSet.getString("HPEffect")));

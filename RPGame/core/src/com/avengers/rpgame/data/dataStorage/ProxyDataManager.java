@@ -25,8 +25,8 @@ public class ProxyDataManager {
         return result;
     }
 
-    public ArrayList<Attack> getAttacksList(String pName, int pLevel) {
-        ArrayList<Attack> result = new ArrayList<>();
+    public ArrayList<Attack> getAttacksList(String pName, double pLevel) {
+        ArrayList<Attack> result = new ArrayList<Attack>();
         for (Attack temp: dataStorageProxy.getAttacksList()){
             if (temp.getName().contains(pName) && temp.getUnlockLevel()<=pLevel){
                 result.add(temp);
@@ -35,8 +35,8 @@ public class ProxyDataManager {
         return result;
     }
 
-    public ArrayList<Skill> getSkillsList(String pName, int pLevel) {
-        ArrayList<Skill> result = new ArrayList<>();
+    public ArrayList<Skill> getSkillsList(String pName, double pLevel) {
+        ArrayList<Skill> result = new ArrayList<Skill>();
         for (Skill temp: dataStorageProxy.getSkillsList()){
             if (temp.getName().contains(pName) && temp.getUnlockLevel()<=pLevel){
                 result.add(temp);

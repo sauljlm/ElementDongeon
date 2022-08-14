@@ -25,7 +25,7 @@ public class DataStorageProxy implements IDataStorage {
     public ArrayList<Attack> getAttacksList() {
         ArrayList<Attack> result = dataStorage.getAttacksList();
         if (result.isEmpty()){
-            Attack basic = new Attack("Knight/Archer/Mage", "Ataque basico", 1, 0, 10);
+            Attack basic = new Attack(1,"Knight/Archer/Mage", "Ataque basico", 0, 1,Resources.ironSword, 3, 0, 10);
             result.add(basic);
         }
         return result;
@@ -35,7 +35,7 @@ public class DataStorageProxy implements IDataStorage {
     public ArrayList<Skill> getSkillsList() {
         ArrayList<Skill> result = dataStorage.getSkillsList();
         if (result.isEmpty()){
-            Skill basic = new Skill("Knight/Archer/Mage", "Habilidad basica", 1200, 12, 0, 0,0,0,0,0,0,20,"external");
+            Skill basic = new Skill(1,"Knight/Archer/Mage", "Habilidad basica", 1200, 12, Resources.elementalSword, 2, 0, 0,0,0,0,0,0,20,"external");
             result.add(basic);
         }
         return result;
@@ -45,7 +45,7 @@ public class DataStorageProxy implements IDataStorage {
     public ArrayList<Item> getSpecialItemsList() {
         ArrayList<Item> result = dataStorage.getSpecialItemsList();
         if (result.isEmpty()){
-            Item basic = new Item("Knight/Mage/Archer", "Talisman/Llave", 0, 1, 0, 0, 0, 0, 0, 0, 0);
+            Item basic = new Item(1,"Knight/Mage/Archer", "Talisman/Llave",0 ,0, Resources.talismanEarth, 0, 0, 0, 0, 0, 0, 0, 0);
             result.add(basic);
         }
         return result;
@@ -65,7 +65,7 @@ public class DataStorageProxy implements IDataStorage {
     public ArrayList<Item> getWearableItemsList() {
         ArrayList<Item> result = dataStorage.getWearableItemsList();
         if (result.isEmpty()){
-            Wearable basic = new Wearable("Knight/Mage/Archer", "Armadura basica", 500, 6, 30, 0, 0, 30, 0, 0, 10);
+            Wearable basic = new Wearable(1,"Knight/Mage/Archer", "Armadura basica", 500, 6,Resources.potion,1, 30, 0, 0, 30, 0, 0, 10);
             result.add(basic);
         }
         return result;
@@ -85,7 +85,7 @@ public class DataStorageProxy implements IDataStorage {
     public ArrayList<Attack> getEnemyAttacksList() {
         ArrayList<Attack> result = dataStorage.getEnemyAttacksList();
         if (result.isEmpty()){
-            Attack basic = new Attack("EarthSkeleton/WaterSkeleton/WindSkeleton/FireSkeleton/EarthChief/WaterChief/WindChief/FireChief", "Ataque basico", 1, 0, 10);
+            Attack basic = new Attack(1, "EarthSkeleton/WaterSkeleton/WindSkeleton/FireSkeleton/EarthChief/WaterChief/WindChief/FireChief", "Ataque basico", 0, 1, Resources.ironSword, 3, 0, 10);
             result.add(basic);
         }
         return result;
@@ -95,7 +95,7 @@ public class DataStorageProxy implements IDataStorage {
     public ArrayList<Item> getEnemyItemsList() {
         ArrayList<Item> result = dataStorage.getEnemyItemsList();
         if (result.isEmpty()){
-            Item basic = new Item ("EarthSkeleton/WaterSkeleton/WindSkeleton/FireSkeleton/EarthChief/WaterChief/WindChief/FireChief","Escudo basico", 0, 1, 0,0,0,20,0,0,5);
+            Item basic = new Item (1,"EarthSkeleton/WaterSkeleton/WindSkeleton/FireSkeleton/EarthChief/WaterChief/WindChief/FireChief","Escudo basico", 0, 1, Resources.skeletonShield, 0, 0,0,0,20,0,0,5);
             result.add(basic);
         }
         return result;

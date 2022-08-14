@@ -1,10 +1,13 @@
 package com.avengers.rpgame.logic.entities;
 
 public class Skill {
+    private int id;
     private String name;
     private String description;
     private int price;
     private int unlockLevel;
+    private String imagePath;
+    private int itemType;
     private int mPCost; //MP cost of using this skill
     //ALL effects must be created as 10 for a 10% increase, -50 for 50% decrease.
     private int strengthEffect; //Effects can be positives for Buff or negative for Nerf/Debuff
@@ -19,11 +22,14 @@ public class Skill {
     public Skill() {
     }
 
-    public Skill(String name, String description, int price, int unlockLevel, int mPCost, int strengthEffect, int speedEffect, int magicEffect, int resistanceEffect, int luckEffect, int mPEffect, int hPEffect, String type) {
+    public Skill(int id, String name, String description, int price, int unlockLevel, String imagePath, int itemType, int mPCost, int strengthEffect, int speedEffect, int magicEffect, int resistanceEffect, int luckEffect, int mPEffect, int hPEffect, String type) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.unlockLevel = unlockLevel;
+        this.imagePath = imagePath;//new
+        this.itemType = itemType;//new
         this.mPCost = mPCost;
         this.strengthEffect = strengthEffect;
         this.speedEffect = speedEffect;
@@ -33,6 +39,30 @@ public class Skill {
         this.mPEffect = mPEffect;
         this.hPEffect = hPEffect;
         this.type = type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public int getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
     }
 
     public String getName() {

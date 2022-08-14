@@ -10,6 +10,7 @@ import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
 import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.AAnimatedCharacter;
 import com.badlogic.gdx.math.Vector2;
 
+import java.nio.channels.SelectionKey;
 import java.util.ArrayList;
 
 import static com.avengers.rpgame.utils.Resources.resourceSwordAttackSound;
@@ -222,13 +223,47 @@ public abstract class AbstractCharacter implements BattleActions {
     }
 
     public void addNewItem (Item item) {
-//        System.out.println(item);
         this.items.add(item);
     }
 
     public void deleteItem (int id) {
-        this.items.remove(id);
+        int idItem = 0;
+        for (int i = 0; i < this.items.size(); i++) {
+            if (this.items.get(i).getId() == id) {
+                idItem = i;
+            }
+        }
+        this.items.remove(idItem);
     }
+
+    public void addNewAttack (Attack attack) {
+        this.attacks.add(attack);
+    }
+
+    public void deleteAttack (int id) {
+        int idItem = 0;
+        for (int i = 0; i < this.attacks.size(); i++) {
+            if (this.attacks.get(i).getId() == id) {
+                idItem = i;
+            }
+        }
+        this.attacks.remove(idItem);
+    }
+
+    public void addNewSkill (Skill skill) {
+        this.skills.add(skill);
+    }
+
+    public void deleteSkill (int id) {
+        int idItem = 0;
+        for (int i = 0; i < this.skills.size(); i++) {
+            if (this.skills.get(i).getId() == id) {
+                idItem = i;
+            }
+        }
+        this.skills.remove(idItem);
+    }
+
 
     //BattleSystem Rewards Visitor pattern
     public abstract void accept(IVisitor visitor);

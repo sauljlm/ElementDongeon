@@ -1,21 +1,38 @@
 package com.avengers.rpgame.logic.entities;
 
 public class Attack {
+
+    private int id;
     private String name;
     private String description;
+    private int price;
     private int unlockLevel;
+    private String imagePath;
+    private int itemType;
     private int mPCost; //MP cost of using this attack
     private int HPEffect;
 
     public Attack() {
     }
 
-    public Attack(String name, String description, int unlockLevel, int mPCost, int HPEffect) {
+    public Attack(int id, String name, String description, int price, int unlockLevel, String imagePath, int itemType, int HPEffect , int mPCost) {
+        this.id = id;
         this.name = name;
         this.description = description;
+        this.price = price;
         this.unlockLevel = unlockLevel;
+        this.imagePath = imagePath;
+        this.itemType = itemType;
         this.mPCost = mPCost;
         this.HPEffect = HPEffect;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -34,6 +51,14 @@ public class Attack {
         this.description = description;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
     public int getUnlockLevel() {
         return unlockLevel;
     }
@@ -42,12 +67,20 @@ public class Attack {
         this.unlockLevel = unlockLevel;
     }
 
-    public int getmPCost() {
-        return mPCost;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setmPCost(int mPCost) {
-        this.mPCost = mPCost;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public int getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
     }
 
     public int getHPEffect() {
@@ -58,12 +91,22 @@ public class Attack {
         this.HPEffect = HPEffect;
     }
 
-    @Override
+    public int getmPCost() {
+        return mPCost;
+    }
+
+    public void setmPCost(int mPCost) {
+        this.mPCost = mPCost;
+    }
+
     public String toString() {
         return "Attack{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", unlockLevel=" + unlockLevel +
+                ", imagePath='" + imagePath + '\'' +
+                ", itemType=" + itemType +
                 ", mPCost=" + mPCost +
                 ", HPEffect=" + HPEffect +
                 '}';

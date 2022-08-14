@@ -25,6 +25,8 @@ public class ScreenItem {
     }
 
     public ScreenItem(Item item, double itemX, double itemY, int size) {
+        gameConfig = GameConfig.getInstance();
+        assetManager = MyAssetManager.getInstance();
         this.setItem(item);
         createScreenItem((float) itemX, (float) itemY, size);
     }

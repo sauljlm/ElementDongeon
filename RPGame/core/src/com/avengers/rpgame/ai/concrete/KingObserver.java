@@ -15,7 +15,6 @@ public class KingObserver  implements Observer {
 
     private String observerName;
     private String keyName;
-
     private ArrayList<Item> dataItems;
     private ProxyDataManager proxyDataManager;
     private DialogManager dialogManager;

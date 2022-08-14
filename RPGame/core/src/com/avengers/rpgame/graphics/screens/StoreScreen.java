@@ -120,10 +120,9 @@ public class StoreScreen implements Screen {
             this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Vender",true));
             this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Regresar al mapa",true));
         } else {
-            this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Armaduras",true));
-            this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Joyeria Magica",true));
-            this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Armas",true));
-            this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Pociones",true));
+            this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Ataques",true));
+            this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Habilidades",true));
+            this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Usables",true));
             this.menuOptions.add(new Text(Resources.resourceMainFont,mFontSize, "Regresar al menu",true));
         }
 
@@ -173,7 +172,7 @@ public class StoreScreen implements Screen {
                 changeOptionColor(this.actionOption);
             } else {
                 this.itemType++;
-                if(this.itemType >4)
+                if(this.itemType >3)
                     this.itemType =0;
                 changeOptionColor(this.itemType);
             }
@@ -187,7 +186,7 @@ public class StoreScreen implements Screen {
             } else  {
                 this.itemType--;
                 if(this.itemType < 0)
-                    this.itemType = 4;
+                    this.itemType = 3;
                 changeOptionColor(this.itemType);
             }
         }
@@ -204,6 +203,7 @@ public class StoreScreen implements Screen {
                 if (storeElements.checkPurchase()) {
                     if (storeElements.buyItem()) {
                         storeElements.setConfirmationMessage(true);
+                        SoundEffectsManager.getInstance().play(coinSound, false);
                     } else {
                         storeElements.setConfirmationMessage(false);
                     }
@@ -217,6 +217,7 @@ public class StoreScreen implements Screen {
             if (this.itemSelected != 0 && this.actionOption == 1) {
                 if (storeElements.sellItem()) {
                     storeElements.setConfirmationMessage(true);
+                    SoundEffectsManager.getInstance().play(coinSound, false);
                 } else {
                     storeElements.setConfirmationMessage(false);
                 }
@@ -242,6 +243,7 @@ public class StoreScreen implements Screen {
                 this.generateMenu();
                 break;
             case 1:
+                this.itemSelected = 1;
                 this.actionSelected = false;
                 storeElements.update(itemType, actionOption, itemSelected);
                 break;
@@ -255,8 +257,7 @@ public class StoreScreen implements Screen {
     }
 
     private void executeBuyActions() {
-        SoundEffectsManager.getInstance().play(coinSound, false);
-        if (this.itemType == 4) {
+        if (this.itemType == 3) {
             menuOptions = new ArrayList<Text>();
             this.itemSelected = 0;
             this.itemType = 0;

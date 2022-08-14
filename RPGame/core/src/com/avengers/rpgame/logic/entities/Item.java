@@ -20,20 +20,6 @@ public class Item {
     public Item() {
     }
 
-    public Item(String name, String description, int price, int unlockLevel, int strengthEffect, int speedEffect, int magicEffect, int resistanceEffect, int luckEffect, int mPEffect, int hPEffect) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.unlockLevel = unlockLevel;
-        this.strengthEffect = strengthEffect;
-        this.speedEffect = speedEffect;
-        this.magicEffect = magicEffect;
-        this.resistanceEffect = resistanceEffect;
-        this.luckEffect = luckEffect;
-        this.mPEffect = mPEffect;
-        this.hPEffect = hPEffect;
-    }
-
     public Item(int id, String name, String description, int price, int unlockLevel, String imagePath, int itemType, int strengthEffect, int speedEffect, int magicEffect, int resistanceEffect, int luckEffect, int mPEffect, int hPEffect) {
         this.id = id;
         this.name = name;
@@ -48,6 +34,20 @@ public class Item {
         this.resistanceEffect = resistanceEffect;
         this.luckEffect = luckEffect;
         this.mPEffect = mPEffect;
+        this.hPEffect = hPEffect;
+    }
+
+    /*
+    This item is used as a dummy item to show the items in the store
+     */
+    public Item(int id, String name, String description, int price, int unlockLevel, String imagePath, int itemType, int hPEffect) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.unlockLevel = unlockLevel;
+        this.imagePath = imagePath;
+        this.itemType = itemType;
         this.hPEffect = hPEffect;
     }
 
@@ -154,7 +154,8 @@ public class Item {
     @Override
     public String toString() {
         return "Item{" +
-                "name='" + name + '\'' +
+                "id= " + id + '\'' +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", unlockLevel=" + unlockLevel +
