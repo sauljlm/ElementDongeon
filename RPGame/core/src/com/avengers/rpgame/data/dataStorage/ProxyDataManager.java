@@ -45,6 +45,16 @@ public class ProxyDataManager {
         return result;
     }
 
+    public ArrayList<Item> getConsumableItemsList(String pName, int pLevel) {
+        ArrayList<Item> result = new ArrayList<>();
+        for (Item temp: dataStorageProxy.getConsumableItemsList()){
+            if (temp.getName().contains(pName) && temp.getUnlockLevel()<=pLevel){
+                result.add(temp);
+            }
+        }
+        return result;
+    }
+
     public ArrayList<Item> getSpecialItemsList() {
         return dataStorageProxy.getSpecialItemsList();
     }

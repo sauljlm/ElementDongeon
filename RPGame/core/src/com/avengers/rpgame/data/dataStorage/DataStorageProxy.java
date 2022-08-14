@@ -55,7 +55,7 @@ public class DataStorageProxy implements IDataStorage {
     public ArrayList<Item> getConsumableItemsList() {
         ArrayList<Item> result = dataStorage.getConsumableItemsList();
         if (result.isEmpty()){
-            Consumable basic = new Consumable(1,"Knight/Mage/Archer", "Pocion organica", 800, 1, Resources.potion, 3, 0, 0, 0, 0, 0, 0, 50);
+            Consumable basic = new Consumable("Knight/Mage/Archer", "Pocion organica", 800, 1, 0, 0, 0, 0, 0, 0, 50);
             result.add(basic);
         }
         return result;

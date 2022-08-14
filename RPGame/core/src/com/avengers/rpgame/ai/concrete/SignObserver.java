@@ -36,6 +36,18 @@ public class SignObserver implements Observer {
         } else if (currentMapObject.contains("House")) {
             dialogManager.updateSpeaker("Hogar");
             message = "Objetivo: Recuperar los talismanes y llevarlos donde el Rey. ¡Grandes aventuras te esperan!";
+        } else if (currentMapObject.contains("Store")) {
+            dialogManager.updateSpeaker("Tienda");
+            message = "Tienda oficial del Reino Camlot. Presiona la tecla 'T' en tu teclado para ingresar.";
+        } else if (currentMapObject.contains("Walk")) {
+            dialogManager.updateSpeaker("Importante");
+            message = "Para desplazarte en el mapa puedes usar las teclas 'AWSD' o las flechas en tu teclado.";
+        } else if (currentMapObject.contains("Pause")) {
+            dialogManager.updateSpeaker("Importante");
+            message = "Para pausar o guardar la partida presiona la tecla 'ESC' en tu teclado.";
+        } else if (currentMapObject.contains("Battle")) {
+            dialogManager.updateSpeaker("Importante");
+            message = "Durante una batalla usa el ratón para hacer clic y elegir el ataque, habilidad o item deseado.";
         }
         dialogManager.updateDialog(message);
     }

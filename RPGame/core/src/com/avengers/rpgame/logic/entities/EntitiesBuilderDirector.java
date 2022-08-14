@@ -57,7 +57,8 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         this.characterClass = proxyDataManager.getCharacterClass("Knight");
         this.experiencePoints = 0;
 
-        ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Knight");
+        ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Knight",1);
+ //       items.add(proxyDataManager.getSpecialItem("Talisman inicial"));
         items.add(proxyDataManager.getSpecialItem("Talisman fuego"));
         if(true){ //Keys for debug
 //        if(gameConfig.isGodMode()){ //Keys for debug
@@ -91,7 +92,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         this.characterClass = proxyDataManager.getCharacterClass("Archer");
         this.experiencePoints = 0;
 
-        ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Archer");
+        ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Archer",1);
         items.add(proxyDataManager.getSpecialItem("Talisman inicial"));
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Archer",1);
         ArrayList<Skill> skills = proxyDataManager.getSkillsList("Archer",1);
@@ -118,8 +119,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         this.characterClass = proxyDataManager.getCharacterClass("Mage");
         this.experiencePoints = 0;
 
-        ArrayList<Item> items = new ArrayList<>();
-        items.add(proxyDataManager.getConsumableItemsList("Mage").get(0));
+        ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Mage",1);
         items.add(proxyDataManager.getSpecialItem("Talisman inicial"));
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Mage",1);
         ArrayList<Skill> skills = proxyDataManager.getSkillsList("Mage",1);
