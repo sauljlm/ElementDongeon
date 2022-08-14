@@ -74,13 +74,13 @@ public class MonsterBattleAI {
         int member = MathUtils.random(2);
         switch (member){
             case 0:
-                return npcParty.getPartyMember1();
+                return npcParty.getPartyMember(1);
             case 1:
-                return npcParty.getPartyMember2();
+                return npcParty.getPartyMember(2);
             case 2:
-                return npcParty.getPartyMember3();
+                return npcParty.getPartyMember(3);
             default:
-                return npcParty.getPartyMember1();
+                return npcParty.getPartyMember(1);
         }
     }
 }

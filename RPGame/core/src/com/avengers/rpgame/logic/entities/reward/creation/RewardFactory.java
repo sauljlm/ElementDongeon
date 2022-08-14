@@ -12,6 +12,11 @@ public class RewardFactory implements IRewardFactory{
         if(true) {
 //        if(monster instanceof NPCharacter) {
             String monsterName = monster.getCharacterClass().getName();
+            //Overworld Skeletons
+            if (monsterName.equals("overworldSkeleton")) {
+                reward.setCoins(10);
+                reward.setExperiencePoints(1);
+            }
             //Earth
             if (monsterName.equals("EarthSkeleton")) {
                 reward.setCoins(100);

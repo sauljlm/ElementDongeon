@@ -18,16 +18,12 @@ public class PlayableCharacter extends AbstractCharacter {
     private int[] experienceProgression;
     private int experiencePointsMax;
 
-    public PlayableCharacter(int experiencePoints) {
-        this.experiencePoints = experiencePoints;
-    }
-
     public PlayableCharacter() {
-        super.setAttacks(new ArrayList<Attack>());
-        super.setItems(new ArrayList<Item>());
-        super.setSkills(new ArrayList<Skill>());
-        experienceProgression = new int[]{0,2,4,6,8,10,50,100,150,200,250,300,2000,3500,5000,6500,8000,9500,40000,70000,100000,130000,160000, 100000000};
-        experiencePointsMax = experienceProgression[((int) getLevel())];
+//        super.setAttacks(new ArrayList<Attack>());
+//        super.setItems(new ArrayList<Item>());
+//        super.setSkills(new ArrayList<Skill>());
+//        experienceProgression = new int[]{0,2,4,6,8,10,50,100,150,200,250,300,2000,3500,5000,6500,8000,9500,40000,70000,100000,130000,160000, 100000000};
+//        experiencePointsMax = experienceProgression[((int) getLevel())];
     }
 
     public PlayableCharacter(int idCharacter, String name, String description, Vector2 position, double level, int healthPoints, int magicPoints, int healthPointsMax, int magicPointsMax, int strength, int speed, int magic, int resistance, int luck, int coins, CharacterClass characterClass, AAnimatedCharacter animatedEntity, ArrayList<Item> items, ArrayList<Attack> attacks, ArrayList<Skill> skills, int experiencePoints) {

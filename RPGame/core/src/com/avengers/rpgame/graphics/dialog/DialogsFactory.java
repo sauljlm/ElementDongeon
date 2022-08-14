@@ -3,6 +3,8 @@ package com.avengers.rpgame.graphics.dialog;
 import com.avengers.rpgame.graphics.dialog.RandomDialogs.ARandomDialogHelper;
 import com.avengers.rpgame.graphics.dialog.RandomDialogs.MonsterDefeatedDialog;
 import com.avengers.rpgame.graphics.dialog.RandomDialogs.MonsterFightDialog;
+import com.avengers.rpgame.graphics.dialog.RandomDialogs.OneForAllDialog;
+
 import java.util.HashMap;
 
 public class DialogsFactory {
@@ -20,5 +22,6 @@ public class DialogsFactory {
     private void createDialogs() {
         randomDialogHelperHashMap.put("monsterFight", new MonsterFightDialog());
         randomDialogHelperHashMap.put("monsterDefeated", new MonsterDefeatedDialog());
+        randomDialogHelperHashMap.put("stickTogether", new OneForAllDialog());
     }
 }

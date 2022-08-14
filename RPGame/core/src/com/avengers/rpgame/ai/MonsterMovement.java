@@ -101,9 +101,9 @@ public class MonsterMovement {
     private void enterBattleMode(AbstractCharacter enemy){
         gameStatus.saveOnDB();
         Party enemyParty = gameStatus.getEnemyParty();
-        enemyParty.setPartyMember1(enemy);
-        enemyParty.setPartyMember2(enemy);
-        enemyParty.setPartyMember3(enemy);
+        enemyParty.setPartyMember(1,enemy);
+        enemyParty.setPartyMember(2,enemy);
+        enemyParty.setPartyMember(3,enemy);
         ScreeenManager.getInstance().changeScreen("FightScreen");
     }
 }

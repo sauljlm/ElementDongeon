@@ -16,23 +16,24 @@ public class GameStatus {
     private int saveSlot = 0;
     private String status;
     private World world;
-
+    private String currentLocation;
     private BDGameStatusDAO bdGameStatusDAO;
-
     private ArrayList<AbstractCharacter> enemies = new ArrayList<>();
     private HashMap<String, Integer> enemiesHealth = new HashMap<>();
+    private String damageStatus;
 
     private GameStatus() {
         bdGameStatusDAO = new BDGameStatusDAO();
         playerParty = new Party();
-        playerParty.setPartyMember1(new PlayableCharacter()); //Just to avoid null
-        playerParty.setPartyMember2(new PlayableCharacter()); //Just to avoid null
-        playerParty.setPartyMember3(new PlayableCharacter()); //Just to avoid null
+        playerParty.setPartyMember(1,new PlayableCharacter()); //Just to avoid null
+        playerParty.setPartyMember(2,new PlayableCharacter()); //Just to avoid null
+        playerParty.setPartyMember(3,new PlayableCharacter()); //Just to avoid null
         enemyParty = new Party();
-        enemyParty.setPartyMember1(new PlayableCharacter()); //Just to avoid null
-        enemyParty.setPartyMember2(new PlayableCharacter()); //Just to avoid null
-        enemyParty.setPartyMember3(new PlayableCharacter()); //Just to avoid null
+        enemyParty.setPartyMember(1,new PlayableCharacter()); //Just to avoid null
+        enemyParty.setPartyMember(2,new PlayableCharacter()); //Just to avoid null
+        enemyParty.setPartyMember(3,new PlayableCharacter()); //Just to avoid null
         status = "newGame"; //default value to let all other components know this is a new game, otherwise game loader needs to set this to other state
+        damageStatus = "ok";
     }
 
     private GameStatus(Party party) {
@@ -93,6 +94,22 @@ public class GameStatus {
 
     public void setEnemiesHealth(HashMap<String, Integer> enemiesHealth) {
         this.enemiesHealth = enemiesHealth;
+    }
+
+    public String getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(String currentLocation) {
+        this.currentLocation = currentLocation;
+    }
+
+    public String getDamageStatus() {
+        return damageStatus;
+    }
+
+    public void setDamageStatus(String damageStatus) {
+        this.damageStatus = damageStatus;
     }
 
     public void updateLocation(){

@@ -143,14 +143,14 @@ public class SaveSlotSelectionScreen implements Screen {
         int mTime = (int) (config.getFrameRate()*3.5);
         if(this.input.isMoveDown() && Utils.getInstance().skipFrames()){
             this.actualSelection++;
-            if(this.actualSelection >4)
+            if(this.actualSelection >3)
                 this.actualSelection =0;
             changeOptionColor(this.actualSelection);
         }
         if(this.input.isMoveUp() && Utils.getInstance().skipFrames()){
             this.actualSelection--;
             if(this.actualSelection <0)
-                this.actualSelection =4;
+                this.actualSelection =3;
             changeOptionColor(this.actualSelection);
         }
         if(this.input.isEnter()){

@@ -29,17 +29,34 @@ public class HUD {
     private Weapon weapon;
     private BitmapFont gameFont;
     private BitmapFont lvlFont;
-    private final int maxPoints;
+    private int maxPoints;
     private GameConfig gameConfig;
     private AbstractCharacter character;
-
     private Coin coin;
     private BitmapFont characterCoinsFont;
+    private int lastActivePartyMember;
 
     public HUD () {
         rpGame = RPGame.getInstance();
         gameConfig = GameConfig.getInstance();
         gameStatus = GameStatus.getInstance();
+        initializeHud();
+    }
+
+    private void initializeHud(){
+        character = gameStatus.getPlayerParty().getActivePartyMember();
+        if(magicPower !=null){
+            magicPower.dispose();
+        }
+        if(levelIcon != null){
+            levelIcon.dispose();
+        }
+        if(heartsHB !=null){
+            heartsHB.clear();
+        }
+        if(coin != null){
+            coin.dispose();
+        }
         magicPower = new MP();
         levelIcon = new UserLevel();
         heartsHB = new Array<Heart>();
@@ -48,9 +65,9 @@ public class HUD {
         gameFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
         characterCoinsFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.generalHUDFontSize, Color.WHITE, false, Color.BLACK);
         maxPoints = ((PlayableCharacter)GameStatus.getInstance().getPlayerParty().getActivePartyMember()).getExperiencePointsMax();
-        character = gameStatus.getPlayerParty().getActivePartyMember();
-        weapon = new Weapon((int) this.character.getLevel(), this.character.getCharacterClass().getIdCharacterClass());
         createHearts();
+        weapon = new Weapon((int) this.character.getLevel(), this.character.getCharacterClass().getIdCharacterClass());
+        lastActivePartyMember = gameStatus.getPlayerParty().getActivePartyMemberId();
     }
 
     public Array<Heart> getHeartsHB() {
@@ -75,12 +92,17 @@ public class HUD {
     }
 
     public void update () {
-        Party party = GameStatus.getInstance().getPlayerParty();
+        Party party = gameStatus.getPlayerParty();
+
+        //Checks if the active party member changed and we need to re initialize the HUD
+        if(party.getActivePartyMemberId() != lastActivePartyMember){
+            initializeHud();
+        }
         this.character.setHealthPoints(party.getActivePartyMember().getHealthPoints());
         this.character.setLevel(party.getActivePartyMember().getLevel());
         this.character.setMagicPoints(party.getActivePartyMember().getMagicPoints());
 //        this.character.(((PlayableCharacter)party.getActivePartyMember()).getExperiencePoints());
-//        this.createHearts();
+        this.createHearts();
     }
 
     public void draw () {
@@ -110,6 +132,7 @@ public class HUD {
         for (Heart heart:heartsHB) {
             heart.dispose();
         }
+        heartsHB.clear();
         int health = this.convertValue(this.character.getHealthPoints());
         double lastValue = 0.06;
         for(int i=0; i < health; i++) {

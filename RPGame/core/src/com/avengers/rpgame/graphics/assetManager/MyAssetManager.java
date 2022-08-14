@@ -34,6 +34,14 @@ public class MyAssetManager extends AssetManager{
         load(resourceBlackWhiteBackground, textureClass);
         load(resourceFireworksBackground, textureClass);
         load(resourceFightBackgroundForest, textureClass);
+
+        load(resourceFightBackgroundEarthDungeon, textureClass);
+        load(resourceFightBackgroundWindDungeon, textureClass);
+        load(resourceFightBackgroundWaterDungeon, textureClass);
+        load(resourceFightBackgroundFireDungeon, textureClass);
+
+
+
         load(resourceStoreScreen, textureClass);
     }
 

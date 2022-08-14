@@ -35,17 +35,17 @@ public class BattleHUD {
 
     public BattleHUD(float type, Party party) {
         gameConfig = GameConfig.getInstance();
-        this.setUserHealth(party.getPartyMember1().getHealthPoints());
+        this.setUserHealth(party.getActivePartyMember().getHealthPoints());
         this.levelIcon = new UserLevel(type);
-        this.setPlayerLevel((int)(party.getPartyMember1().getLevel()));
+        this.setPlayerLevel((int)(party.getActivePartyMember().getLevel()));
         this.setMagicLevel(String.valueOf(magicLevel));
         this.setCharacterClass(1);
         heartsHB = new Array<Heart>();
         //        this.setCharacterClass(party.getPartyMember1().getCharacterClass());
-        this.setExperiencePoints(((PlayableCharacter)party.getPartyMember1()).getExperiencePoints());
+        this.setExperiencePoints(((PlayableCharacter)party.getActivePartyMember()).getExperiencePoints());
         this.type = type;
         createHearts(type);
-        weapon = new Weapon((int)(party.getPartyMember1().getLevel()), this.characterClass);
+        weapon = new Weapon((int)(party.getActivePartyMember().getLevel()), this.characterClass);
     }
 
     public Array<Heart> getHeartsHB() {
@@ -110,8 +110,8 @@ public class BattleHUD {
     }
 
     public void update (Party party) {
-        this.setUserHealth(party.getPartyMember1().getHealthPoints());
-        this.setPlayerLevel((int)party.getPartyMember1().getLevel());
+        this.setUserHealth(party.getActivePartyMember().getHealthPoints());
+        this.setPlayerLevel((int)party.getActivePartyMember().getLevel());
         this.setMagicLevel("HelloCat");
         this.setCharacterClass(characterClass);
         this.setExperiencePoints(experiencePoints);

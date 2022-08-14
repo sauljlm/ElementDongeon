@@ -76,4 +76,9 @@ public class Coin {
         this.setCoinY((int)position.y);
         this.setSize(width, height);
     }
+
+    public void dispose(){
+//        _texture.dispose();
+//        _sprite.getTexture().dispose();
+    }
 }

@@ -25,27 +25,23 @@ public class Party {
         this.activePartyMemberId = activePartyMemberId;
     }
 
-    public AbstractCharacter getPartyMember1() {
-        return partyMember1;
-    }
-
-    public void setPartyMember1(AbstractCharacter partyMember1) {
+    private void setPartyMember1(AbstractCharacter partyMember1) {
         this.partyMember1 = partyMember1;
     }
 
-    public AbstractCharacter getPartyMember2() {
+    private AbstractCharacter getPartyMember2() {
         return partyMember2;
     }
 
-    public void setPartyMember2(AbstractCharacter partyMember2) {
+    private void setPartyMember2(AbstractCharacter partyMember2) {
         this.partyMember2 = partyMember2;
     }
 
-    public AbstractCharacter getPartyMember3() {
+    private AbstractCharacter getPartyMember3() {
         return partyMember3;
     }
 
-    public void setPartyMember3(AbstractCharacter partyMember3) {
+    private void setPartyMember3(AbstractCharacter partyMember3) {
         this.partyMember3 = partyMember3;
     }
 

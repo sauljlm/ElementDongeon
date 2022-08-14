@@ -33,6 +33,8 @@ public class MyInputProcessor implements InputProcessor {
     private boolean buyItem;
     private boolean sellItem;
 
+    private boolean tab;
+
     private int _MouseX, _MouseY;
     private final GameConfig config = GameConfig.getInstance();
 
@@ -68,7 +70,7 @@ public class MyInputProcessor implements InputProcessor {
         return action1;
     }
     public boolean isAction2() {
-        return action1;
+        return action2;
     }
 
     public boolean isSelect1() {
@@ -113,6 +115,9 @@ public class MyInputProcessor implements InputProcessor {
 
     public boolean isEnter() {
         return enter;
+    }
+    public boolean isTab() {
+        return tab;
     }
 
     public boolean isMoveUpMenu() {
@@ -186,6 +191,9 @@ public class MyInputProcessor implements InputProcessor {
         }
         if(keycode == Input.Keys.ENTER){
             enter = true;
+        }
+        if(keycode == Input.Keys.TAB){
+            tab = true;
         }
         if(keycode == Input.Keys.UP){
             moveUpMenu = true;
@@ -262,6 +270,9 @@ public class MyInputProcessor implements InputProcessor {
         }
         if(keycode == Input.Keys.ENTER){
             enter = false;
+        }
+        if(keycode == Input.Keys.TAB){
+            tab = false;
         }
         if(keycode == Input.Keys.UP){
             moveUpMenu = false;

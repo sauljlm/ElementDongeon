@@ -54,18 +54,19 @@ public class RefereeBattleAI {
         boolean partyMember2 = true;
         boolean partyMember3 = true;
 
-        if(!checkAlive(party.getPartyMember1())){ //If not alive set it as inactive/death
+        if(!checkAlive(party.getActivePartyMember())){ //If not alive set it as inactive/death
             party.setPartyMember1Status(false);
             partyMember1 =false;
         }
-        if(!checkAlive(party.getPartyMember2())){ //If not alive set it as inactive/death
-            party.setPartyMember2Status(false);
-            partyMember2 =false;
-        }
-        if(!checkAlive(party.getPartyMember3())){ //If not alive set it as inactive/death
-            party.setPartyMember3Status(false);
-            partyMember3 =false;
-        }
+        //Code commented because only active party member fights
+//        if(!checkAlive(party.getPartyMember(2))){ //If not alive set it as inactive/death
+//            party.setPartyMember2Status(false);
+//            partyMember2 =false;
+//        }
+//        if(!checkAlive(party.getPartyMember(3))){ //If not alive set it as inactive/death
+//            party.setPartyMember3Status(false);
+//            partyMember3 =false;
+//        }
         return partyMember1; //returns false for death party, true if any member is still alive
 //        return partyMember1 || partyMember2 || partyMember3; //returns false for death party, true if any member is still alive
     }

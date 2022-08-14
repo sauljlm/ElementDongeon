@@ -139,8 +139,26 @@ public class FightScreen implements Screen {
         enemy = characterBuilder.getResult();
         enemy.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/4f/16*3, config.getResolutionVertical()/3*1.35f/16));
         enemy.getAnimatedCharacter().setAction("runningLeft");
-
-        backgroundImage = loadTexture(resourceFightBackgroundForest);
+        String location = gameStatus.getCurrentLocation();
+        String dungeonBackgroundTexture = "";
+        switch (location){
+            case "earthDungeon":
+                dungeonBackgroundTexture = resourceFightBackgroundEarthDungeon;
+                break;
+            case "windDungeon":
+                dungeonBackgroundTexture = resourceFightBackgroundWindDungeon;
+                break;
+            case "waterDungeon":
+                dungeonBackgroundTexture = resourceFightBackgroundWaterDungeon;
+                break;
+            case "fireDungeon":
+                dungeonBackgroundTexture = resourceFightBackgroundFireDungeon;
+                break;
+            default:
+                dungeonBackgroundTexture = resourceFightBackgroundForest;
+                break;
+        }
+        backgroundImage = loadTexture(dungeonBackgroundTexture);
 
         refereeBattleAI = new RefereeBattleAI(game);
         skin = loadUISkin(resourceSkin3);

@@ -23,7 +23,11 @@ public class Resources {
     public static final String resourceElementBackground = "graphics/backgrounds/elementBackground.jpg";
     public static final String resourceBlackWhiteBackground = "graphics/backgrounds/blackWhiteBackground.jpg";
     public static final String resourceFireworksBackground = "graphics/backgrounds/fireworksBackground.jpg";
-    public static final String resourceFightBackgroundForest = "graphics/backgrounds/fightForestBackground.jpg";
+    public static final String resourceFightBackgroundForest = "graphics/backgrounds/fightForestBackground.png";
+    public static final String resourceFightBackgroundEarthDungeon = "graphics/backgrounds/FightEarthBackground.png";
+    public static final String resourceFightBackgroundWindDungeon = "graphics/backgrounds/fightWindBackground.png";
+    public static final String resourceFightBackgroundWaterDungeon = "graphics/backgrounds/fightWaterBackground.png";
+    public static final String resourceFightBackgroundFireDungeon = "graphics/backgrounds/fightFireBackground.png";
     public static final String resourceStoreScreen = "graphics/backgrounds/backgroundStore.jpg";
 
     //UI Skins
@@ -183,6 +187,7 @@ public class Resources {
     public static final int generalDialogFontSize = 36;
 
     // HUD assets
+    public static final String activePartyMemberResource = "graphics/sprites/actors/HUD/activePartyMember.png";
     public static final String HUDHeart = "graphics/sprites/actors/HUD/heart.png";
     public static final String HUDPotion = "graphics/sprites/actors/HUD/MP.png";
     public static final String HUDShield = "graphics/sprites/actors/HUD/shield.png";
@@ -250,4 +255,10 @@ public class Resources {
     public static final String lightHealth = "graphics/icons/store/health50.png";
     public static final String midHealth = "graphics/icons/store/health75.png";
     public static final String totalHealth = "graphics/icons/store/health100.png";
+
+
+    //Effects
+
+    public static final String dungeonEarthOverlayResource = "graphics/effects/dungeonOverlay.png";
+    public static final String damageOverlayResource = "graphics/effects/damageOverlay.png";
 }
