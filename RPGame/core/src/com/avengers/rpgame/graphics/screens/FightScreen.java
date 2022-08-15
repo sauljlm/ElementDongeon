@@ -124,20 +124,20 @@ public class FightScreen implements Screen {
 
         director.buildBattleDummy(characterBuilder, game, playerParty.getPartyMember(1));
         partyMemberAnimated1 = characterBuilder.getResult();
-        partyMemberAnimated1.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/9.5f/16, config.getResolutionVertical()/3*1.32f/16));
+        partyMemberAnimated1.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/9.5f/16, config.getResolutionVertical()/3*1.22f/16));
 
         director.buildBattleDummy(characterBuilder, game, playerParty.getPartyMember(2));
         partyMemberAnimated2 = characterBuilder.getResult();
-        partyMemberAnimated2.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/9.5f/16*2, config.getResolutionVertical()/3*1.3f/16));
+        partyMemberAnimated2.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/9.5f/16*2, config.getResolutionVertical()/3*1.2f/16));
 
         director.buildBattleDummy(characterBuilder, game, playerParty.getPartyMember(3));
         partyMemberAnimated3 = characterBuilder.getResult();
-        partyMemberAnimated3.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/9.5f/16*3, config.getResolutionVertical()/3*1.3f/16));
+        partyMemberAnimated3.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/9.5f/16*3, config.getResolutionVertical()/3*1.2f/16));
 
         director.buildBattleDummy(characterBuilder, game, enemyParty.getActivePartyMember());
 
         enemy = characterBuilder.getResult();
-        enemy.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/4f/16*3, config.getResolutionVertical()/3*1.35f/16));
+        enemy.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/4f/16*3, config.getResolutionVertical()/3*1.23f/16));
         enemy.getAnimatedCharacter().setAction("runningLeft");
         String location = gameStatus.getCurrentLocation();
         String dungeonBackgroundTexture = "";

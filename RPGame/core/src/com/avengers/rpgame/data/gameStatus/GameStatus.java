@@ -18,8 +18,8 @@ public class GameStatus {
     private World world;
     private String currentLocation;
     private BDGameStatusDAO bdGameStatusDAO;
-    private ArrayList<AbstractCharacter> enemies = new ArrayList<>();
-    private HashMap<String, Integer> enemiesHealth = new HashMap<>();
+    private ArrayList<AbstractCharacter> enemies;
+    private HashMap<String, Integer> enemiesHealth;
     private String damageStatus;
 
     private GameStatus() {
@@ -29,6 +29,8 @@ public class GameStatus {
         playerParty.setPartyMember(2,new PlayableCharacter()); //Just to avoid null
         playerParty.setPartyMember(3,new PlayableCharacter()); //Just to avoid null
         enemyParty = new Party();
+        enemies = new ArrayList<>();
+        enemiesHealth = new HashMap<>();
         enemyParty.setPartyMember(1,new PlayableCharacter()); //Just to avoid null
         enemyParty.setPartyMember(2,new PlayableCharacter()); //Just to avoid null
         enemyParty.setPartyMember(3,new PlayableCharacter()); //Just to avoid null
@@ -113,7 +115,9 @@ public class GameStatus {
     }
 
     public void updateLocation(){
-        playerParty.getActivePartyMember().setPosition(((DynamicAnimatedCharacter) playerParty.getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition());
+        playerParty.getPartyMember(1).setPosition(((DynamicAnimatedCharacter) playerParty.getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition());
+        playerParty.getPartyMember(2).setPosition(((DynamicAnimatedCharacter) playerParty.getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition());
+        playerParty.getPartyMember(3).setPosition(((DynamicAnimatedCharacter) playerParty.getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition());
     }
 
     public void saveOnDB() {

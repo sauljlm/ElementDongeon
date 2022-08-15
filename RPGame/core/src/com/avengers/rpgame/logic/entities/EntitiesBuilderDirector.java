@@ -24,9 +24,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     private GameConfig gameConfig = GameConfig.getInstance();
     private GameStatus gameStatus = GameStatus.getInstance();
     private ProxyDataManager proxyDataManager = new ProxyDataManager();
-
     private StartingPositionsReducer startingPositionsReducer = new StartingPositionsReducer();
-
     ISkinFactory skinFactory;
     int idCharacter;
     String name;
@@ -59,16 +57,6 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
 
         ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Knight",1);
         items.add(proxyDataManager.getSpecialItem("Talisman inicial"));
-
-//        items.add(proxyDataManager.getSpecialItem("Talisman fuego"));
-//        if(true){ //Keys for debug
-////        if(gameConfig.isGodMode()){ //Keys for debug
-//            items.add(proxyDataManager.getSpecialItem("Llave tierra"));
-//            items.add(proxyDataManager.getSpecialItem("Llave agua"));
-//            items.add(proxyDataManager.getSpecialItem("Llave viento"));
-//            items.add(proxyDataManager.getSpecialItem("Llave fuego"));
-//        }
-
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Knight",1);
         ArrayList<Skill> skills = proxyDataManager.getSkillsList("Knight",1);
 
@@ -219,7 +207,31 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     }
 
     //Enemies
-     public void buildEarthSkeleton(ICharacterBuilder builder, World world, RPGame rpGame, String id){
+    //Random Skeleton is used for overworld's scary forests
+    public void buildRandomSkeleton(ICharacterBuilder builder, World world, RPGame rpGame, String id){
+        position = startingPositionsReducer.getPosition(id);
+        skinFactory = new RandomSkeletonSkinFactory();
+        ISkin skin = skinFactory.createSkin();
+        AAnimatedCharacter animatedCharacter = new DynamicAnimatedCharacter(skin, rpGame, position);
+        builder.setAnimatedCharacter(animatedCharacter);
+
+        this.idCharacter=4;
+        this.level=1;
+        this.characterClass = proxyDataManager.getEnemyClass("EarthSkeleton");
+        this.name= id;
+
+        ArrayList<Item> items = proxyDataManager.getEnemyItemsList("EarthSkeleton");
+        ArrayList<Attack> attacks = proxyDataManager.getEnemyAttacksList("EarthSkeleton");
+        ArrayList<Skill> skills = new ArrayList<>();
+
+        builder.setCharacterBasicInfo(this.idCharacter,this.name,characterClass.getDescription(),position,this.level,characterClass.getInitialHealthPoints(),characterClass.getInitialMagicPoints(),characterClass.getInitialHealthPoints(), characterClass.getInitialMagicPoints(), this.coins);
+        builder.setCharacterAttributes(characterClass.getInitialStrength(),characterClass.getInitialSpeed(),characterClass.getInitialMagic(),characterClass.getInitialResistance(),characterClass.getInitialLuck());
+        builder.setCharacterClass(this.characterClass);
+        builder.setItems(items);
+        builder.setAttacks(attacks);
+        builder.setSkills(skills);
+    }
+    public void buildEarthSkeleton(ICharacterBuilder builder, World world, RPGame rpGame, String id){
         position = startingPositionsReducer.getPosition(id);
         skinFactory = new EarthSkeletonSkinFactory();
         ISkin skin = skinFactory.createSkin();

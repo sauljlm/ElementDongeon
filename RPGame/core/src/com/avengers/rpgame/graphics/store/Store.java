@@ -146,7 +146,7 @@ public class Store {
                 }
             }
             for(Attack characterAttack : proxyDataManager.getAttacksList(this.character.getCharacterClass().getName(), this.character.getLevel())) {
-                if (characterAttack.getId() == itemId) {
+                if (characterAttack.getId() == itemId && !bought) {
                     this.character.addNewAttack(characterAttack);
                 }
             }
@@ -158,7 +158,7 @@ public class Store {
                 }
             }
             for(Skill characterSkill : proxyDataManager.getSkillsList(this.character.getCharacterClass().getName(), this.character.getLevel())) {
-                if (characterSkill.getId() == itemId) {
+                if (characterSkill.getId() == itemId && !bought) {
                     this.character.addNewSkill(characterSkill);
                 }
             }
@@ -184,7 +184,7 @@ public class Store {
                     bought = true;
                 }
             }
-            if (found) {
+            if (found && !bought) {
                 this.character.addNewItem(itemFound);
             }
         }
@@ -285,11 +285,11 @@ public class Store {
             if (done) {
                 this.message = "Compra realizada con exito";
             } else {
-                this.message = "La compra no se realizo";
+                this.message = "Esto ya lo tienes, revisa tu inventario";
             }
         } else if (this.actionType == 2) {
             if (done) {
-                this.message = "Venta realizada con exito";
+                this.message = "Venta realizada con éxito";
             } else {
                 this.message = "La venta no se realizo";
             }

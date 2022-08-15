@@ -3,19 +3,24 @@ package com.avengers.rpgame.utils;
 
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.HashMap;
+import java.util.Random;
 
 public class StartingPositionsReducer {
     private GameConfig gameConfig;
     private GameStatus gameStatus;
     private String characterId;
     private HashMap<String, Vector2> positions;
+    private Random random;
 
     public StartingPositionsReducer() {
         gameConfig = GameConfig.getInstance();
         gameStatus = GameStatus.getInstance();
+        random = new Random();
+
         characterId = "start";
         positions = new HashMap<String, Vector2>();
         setPositions();
@@ -101,9 +106,45 @@ public class StartingPositionsReducer {
         if(id.equals("player")){
             return determinePosition();
         }
+        if(id.contains("randomMonster")){
+            return getRandomMonsterCoordinates();
+//            return new Vector2(280*gameConfig.getPPM(),64*gameConfig.getPPM());
+        }
         if(positions.get(id) == null){
             return new Vector2(0,0);
         }
         return positions.get(id);
+    }
+
+    public int getRandom(int min, int max) {
+        return random.nextInt(max - min) + min;
+    }
+
+    //Returns a random location for monsters, forest have 4x time probability to respawn
+    private Vector2 getRandomMonsterCoordinates(){
+        int area = random.nextInt(11);
+        int x = 0, y=0;
+
+        //Forest left corner
+        if(area<4) {
+            x = getRandom(47,140);
+            y = getRandom(37,90);
+        }
+        //forest right corner
+        if(area<8 && area>=4) {
+            x = getRandom(257,361);
+            y = getRandom(176,234);
+        }
+        //Front Castle
+        if(area == 8) {
+            x = getRandom(147,256);
+            y = getRandom(97,106);
+        }
+        //Behind Castle
+        if(area==9) {
+            x = getRandom(155,260);
+            y = getRandom(164,174);
+        }
+        return new Vector2(x*gameConfig.getPPM(),y*gameConfig.getPPM());
     }
 }

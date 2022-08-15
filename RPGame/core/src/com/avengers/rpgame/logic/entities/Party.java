@@ -132,10 +132,13 @@ public class Party {
         switch (memberId){
             case 1:
                 setPartyMember1(member);
+                break;
             case 2:
                 setPartyMember2(member);
+                break;
             case 3:
                 setPartyMember3(member);
+                break;
             default:
         }
     }

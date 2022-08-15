@@ -43,6 +43,10 @@ public class EnemiesManager {
         enemiesList.addAll(Arrays.asList(fireEnemiesIds));
         String[] bossesEnemiesIds = {"EarthBossMonster", "WaterBossMonster", "WindBossMonster", "FireBossMonster"};
         enemiesList.addAll(Arrays.asList(bossesEnemiesIds));
+        String monsterName = "randomMonster";
+        for(int i = 0; i<40; i++){
+            enemiesList.add(monsterName+i);
+        }
     }
 
     public void createEnemies(){
@@ -99,6 +103,9 @@ public class EnemiesManager {
             }
             if(id.contains("FireBossMonster")) {
                 entitiesBuilderDirector.buildChiefFire(characterBuilder, GameStatus.getInstance().getWorld(), rpGame, id);
+            }
+            if(id.contains("randomMonster")) {
+                entitiesBuilderDirector.buildRandomSkeleton(characterBuilder, GameStatus.getInstance().getWorld(), rpGame, id);
             }
             AbstractCharacter enemy = characterBuilder.getResult();
             enemies.add(enemy);

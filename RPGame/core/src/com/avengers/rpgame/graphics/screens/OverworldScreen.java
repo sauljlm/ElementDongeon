@@ -3,6 +3,7 @@ package com.avengers.rpgame.graphics.screens;
 import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.ai.AIManager;
 import com.avengers.rpgame.ai.OneForAllAI;
+import com.avengers.rpgame.audio.SoundEffectsManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.game.io.IOManager;
@@ -158,7 +159,7 @@ public class OverworldScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        SoundEffectsManager.getInstance().stop(steps);
         ioManager.dispose();
         graphicMediator.dispose();
         hudElements.dispose();

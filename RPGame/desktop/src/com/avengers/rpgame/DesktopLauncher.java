@@ -20,8 +20,8 @@ public class DesktopLauncher {
 		config.setForegroundFPS(Lwjgl3ApplicationConfiguration.getDisplayMode().refreshRate);
 		if(gameConfig.isFullScreen()) {
 			config.setFullscreenMode(Lwjgl3ApplicationConfiguration.getDisplayMode());
-			gameConfig.setResolutionHorizontal(Lwjgl3ApplicationConfiguration.getDisplayMode().width);
-			gameConfig.setResolutionVertical(Lwjgl3ApplicationConfiguration.getDisplayMode().height);
+//			gameConfig.setResolutionHorizontal(Lwjgl3ApplicationConfiguration.getDisplayMode().width);
+//			gameConfig.setResolutionVertical(Lwjgl3ApplicationConfiguration.getDisplayMode().height);
 		}
 		new Lwjgl3Application(RPGame.getInstance(), config);
 	}
@@ -36,13 +36,13 @@ public class DesktopLauncher {
 		gameConfig.setFullScreen(true);
 		gameConfig.setResolutionHorizontal(1920); //If full screen is true resolution is got automatically from monitor/openGl stuff
 		gameConfig.setResolutionVertical(1080);
-		gameConfig.setGodMode(true);
-		gameConfig.setSkipIntro(true);
+		gameConfig.setGodMode(false); //God Mode true makes Party move master for debugging
+		gameConfig.setSkipIntro(false);
 		gameConfig.setMapTileSize(16);
 		gameConfig.setMusicVolume(0.1f);
 		gameConfig.setSoundEffectsVolume(0.3f);
 		gameConfig.setFrameTime(1 / 15f);//Value based on docs
-		gameConfig.setDebugPhysics(true);
+		gameConfig.setDebugPhysics(false);
 		return gameConfig;
 	}
 }

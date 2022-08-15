@@ -2,7 +2,7 @@ package com.avengers.rpgame.logic.entities.character.components.animatedCharacte
 
 import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.game.GameConfig;
-import com.avengers.rpgame.logic.entities.character.components.skin.ISkin;
+import com.avengers.rpgame.logic.entities.character.components.skin.*;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Vector2;
@@ -29,13 +29,30 @@ public abstract class AAnimatedCharacter extends Sprite {
         this.rpGame = rpGame;
         this.gameConfig = GameConfig.getInstance();
         this.skin = skin;
-        this.action = "runningUp";
+        setRandomAction();
         this.currentAnimationAtlas = skin.getUp().getAnimationAtlas();
         this.currentTexture = skin.getUp().getTexture();
         this.currentAnimation = new Animation<>(gameConfig.getFrameTime(), currentAnimationAtlas.findRegions(skin.getUp().getAnimationName()));
         this.currentAnimation.setFrameDuration(gameConfig.getFrameTime());
         this.sizeX = 50;
         this.sizeY = 50;
+    }
+    public void setRandomAction(){
+        int random = (int) ((Math.random() * (4 - 1)) + 1);
+        switch (random){
+            case 1:
+                this.action = "runningUp";
+                break;
+            case 2:
+                this.action = "runningDown";
+                break;
+            case 3:
+                this.action = "runningLeft";
+                break;
+            case 4:
+                this.action = "runningRight";
+                break;
+        }
     }
 
     public Vector2 getTextureScreenLocation() {

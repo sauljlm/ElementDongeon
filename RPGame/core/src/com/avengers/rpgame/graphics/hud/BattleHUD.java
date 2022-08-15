@@ -46,6 +46,7 @@ public class BattleHUD {
         this.type = type;
         createHearts(type);
         weapon = new Weapon((int)(party.getActivePartyMember().getLevel()), this.characterClass);
+        magicPower.get_sprite().setCenterX((float)gameConfig.getResolutionHorizontal()*0.18f);
     }
 
     public Array<Heart> getHeartsHB() {
@@ -112,7 +113,7 @@ public class BattleHUD {
     public void update (Party party) {
         this.setUserHealth(party.getActivePartyMember().getHealthPoints());
         this.setPlayerLevel((int)party.getActivePartyMember().getLevel());
-        this.setMagicLevel("HelloCat");
+        this.setMagicLevel(String.valueOf(party.getActivePartyMember().getMagicPoints()));
         this.setCharacterClass(characterClass);
         this.setExperiencePoints(experiencePoints);
         this.createHearts(type);
@@ -130,11 +131,10 @@ public class BattleHUD {
         for(Heart heart: heartsHB) {
             heart.get_sprite().draw(batch);
         }
-//        if (this.characterClass == 3) {
-//        if (true) {
-////            magicPower.get_sprite().draw(batch);
-//            gameFont.draw(batch, magicLevel, resolution.x-resolution.x*0.235f, resolution.y*0.96f);
-//        }
+        if (GameStatus.getInstance().getPlayerParty().getActivePartyMember().getCharacterClass().getIdCharacterClass() == 3) {
+            magicPower.get_sprite().draw(batch);
+            gameFont.draw(batch, String.valueOf(GameStatus.getInstance().getPlayerParty().getActivePartyMember().getMagicPoints()), resolution.x*0.2f, resolution.y*0.96f);
+        }
 
         levelIcon.get_sprite().draw(batch);
         if(type == 0){

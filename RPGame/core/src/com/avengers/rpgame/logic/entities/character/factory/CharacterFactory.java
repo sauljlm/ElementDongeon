@@ -69,30 +69,21 @@ public class CharacterFactory implements ICharacterFactory{
 
     private void loadParty() {
         System.out.println("loading party");
-//        GameStatus.getInstance().updateLocation();
-        if(gameStatus.getPlayerParty().getPartyMember(1).getCharacterClass().getIdCharacterClass()==1){
-            director.buildKnightFromDB(characterBuilder, world, rpGame, 1);
-            gameStatus.getPlayerParty().setPartyMember(1,characterBuilder.getResult());
-            director.buildMageFromDB(characterBuilder, world, rpGame, 2);
-            gameStatus.getPlayerParty().setPartyMember(2,characterBuilder.getResult());
-            director.buildArcherFromDB(characterBuilder, world, rpGame, 3);
-            gameStatus.getPlayerParty().setPartyMember(3,characterBuilder.getResult());
-        }
-        if(gameStatus.getPlayerParty().getPartyMember(1).getCharacterClass().getIdCharacterClass()==2){
-            director.buildArcherFromDB(characterBuilder, world, rpGame, 1);
-            gameStatus.getPlayerParty().setPartyMember(1,characterBuilder.getResult());
-            director.buildKnightFromDB(characterBuilder, world, rpGame, 2);
-            gameStatus.getPlayerParty().setPartyMember(2,characterBuilder.getResult());
-            director.buildMageFromDB(characterBuilder, world, rpGame, 3);
-            gameStatus.getPlayerParty().setPartyMember(3,characterBuilder.getResult());
-        }
-        if(gameStatus.getPlayerParty().getPartyMember(1).getCharacterClass().getIdCharacterClass()==3){
-            director.buildMageFromDB(characterBuilder, world, rpGame, 1);
-            gameStatus.getPlayerParty().setPartyMember(1,characterBuilder.getResult());
-            director.buildKnightFromDB(characterBuilder, world, rpGame, 2);
-            gameStatus.getPlayerParty().setPartyMember(2,characterBuilder.getResult());
-            director.buildArcherFromDB(characterBuilder, world, rpGame, 3);
-            gameStatus.getPlayerParty().setPartyMember(3,characterBuilder.getResult());
+        int partyMember = 3;
+        while (partyMember>0) {
+            if (gameStatus.getPlayerParty().getPartyMember(partyMember).getCharacterClass().getIdCharacterClass() == 1) {
+                director.buildKnightFromDB(characterBuilder, world, rpGame, partyMember);
+                gameStatus.getPlayerParty().setPartyMember(partyMember, characterBuilder.getResult());
+            }
+            if (gameStatus.getPlayerParty().getPartyMember(partyMember).getCharacterClass().getIdCharacterClass() == 2) {
+                director.buildArcherFromDB(characterBuilder, world, rpGame, partyMember);
+                gameStatus.getPlayerParty().setPartyMember(partyMember, characterBuilder.getResult());
+            }
+            if (gameStatus.getPlayerParty().getPartyMember(partyMember).getCharacterClass().getIdCharacterClass() == 3) {
+                director.buildMageFromDB(characterBuilder, world, rpGame, partyMember);
+                gameStatus.getPlayerParty().setPartyMember(partyMember, characterBuilder.getResult());
+            }
+            partyMember--;
         }
     }
 

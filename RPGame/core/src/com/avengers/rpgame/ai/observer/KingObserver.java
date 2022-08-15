@@ -42,9 +42,9 @@ public class KingObserver  implements Observer {
             }
         }
 
-        if (playerCharacter.getLevel() >= 1) {
-            access = true;
-        }
+//        if (playerCharacter.getLevel() >= 1) {
+//            access = true;
+//        }
 
         return access;
     }
