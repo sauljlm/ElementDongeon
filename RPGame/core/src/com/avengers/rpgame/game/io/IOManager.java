@@ -5,6 +5,7 @@ import com.avengers.rpgame.audio.SoundEffectsManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.dialog.DialogManager;
+import com.avengers.rpgame.graphics.inventary.Inventary;
 import com.avengers.rpgame.graphics.screens.*;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.Party;
@@ -21,6 +22,7 @@ public class IOManager {
     private static MyInputProcessor inputProcessor;
     private GameConfig config;
     private RPGame game;
+    private Inventary inventary;
     private DialogManager dialogManager;
 
     private GameStatus gameStatus;
@@ -32,6 +34,7 @@ public class IOManager {
         game = RPGame.getInstance();
         gameStatus = GameStatus.getInstance();
         dialogManager = DialogManager.getInstance();
+        inventary = Inventary.getInstance();
     }
 
     //the idea for this method is to process different request of IO processInput differently acording to the screen
@@ -117,7 +120,6 @@ public class IOManager {
             verticalForce = -movementSpeed;
             horizontalForce = 0;
         }
-
         if(inputProcessor.isStoreOpened()){
             if (dialogManager.getDialogSpeaker().equalsIgnoreCase("Tienda")){
                 ScreeenManager.getInstance().changeScreen("StoreScreen");
@@ -128,6 +130,10 @@ public class IOManager {
             switchPartyMember();
         }
 
+        if(inputProcessor.isShowInventary() && Utils.getInstance().skipFrames()){
+            inventary.switchInventory();
+//            inventary.setShowInventary(!inventary.getShowInventary());
+        }
         if(horizontalForce != 0 || verticalForce != 0){
             SoundEffectsManager.getInstance().play(steps, true);
         } else{
@@ -150,7 +156,6 @@ public class IOManager {
         if(inputProcessor.isPause()){
             ScreeenManager.getInstance().changeScreen("PauseScreen");
         }
-
     }
 
     //Process input for overworld gameplay

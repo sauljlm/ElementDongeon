@@ -476,8 +476,6 @@ public class FightScreen implements Screen {
         ScreenUtils.clear(0, 0, 0, 1);
 
         ioManager.processInput("battle", delta, playerParty);
-
-//        cameraManager.action(delta, playerParty.getPartyMember1());
         hudPlayer.update(playerParty);
         hudEnemy.update(enemyParty);
         game.batch.begin();

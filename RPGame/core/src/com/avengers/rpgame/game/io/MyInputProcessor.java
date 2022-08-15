@@ -32,6 +32,7 @@ public class MyInputProcessor implements InputProcessor {
     private boolean storeOpened;
     private boolean buyItem;
     private boolean sellItem;
+    private boolean showInventary;
 
     private boolean tab;
 
@@ -143,6 +144,7 @@ public class MyInputProcessor implements InputProcessor {
     public boolean isBuyItem() { return buyItem; }
 
     public boolean isSellItem() { return sellItem; }
+    public boolean isShowInventary() { return showInventary; }
 
     public int getMouseX() {
         return _MouseX;
@@ -182,6 +184,9 @@ public class MyInputProcessor implements InputProcessor {
         }
         if(keycode == Input.Keys.V) {
             sellItem = true;
+        }
+        if(keycode == Input.Keys.I) {
+            showInventary = true;
         }
         if(keycode == Input.Keys.SPACE){
             action1 = true;
@@ -261,6 +266,9 @@ public class MyInputProcessor implements InputProcessor {
         }
         if(keycode == Input.Keys.V) {
             sellItem = false;
+        }
+        if(keycode == Input.Keys.I) {
+            showInventary = false;
         }
         if(keycode == Input.Keys.SPACE){
             action1 = false;

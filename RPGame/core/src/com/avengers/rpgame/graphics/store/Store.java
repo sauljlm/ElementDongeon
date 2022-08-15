@@ -102,7 +102,7 @@ public class Store {
         if (actionType != 0) {
             for(ScreenItem item: screenItems) {
                 item.get_sprite().draw(batch);
-                priceFont.draw(batch, String.valueOf(item.getItem().getPrice()), item.getItemX()+30, item.getItemY());
+                priceFont.draw(batch, String.valueOf(item.getPrice()), item.getItemX()+30, item.getItemY());
             }
         }
 
@@ -358,9 +358,9 @@ public class Store {
             Item tItem = currentItems.get(i);
             ScreenItem item;
             if (this.itemSelected == i + 1) {
-                item = new ScreenItem(tItem, lastValueX, lastValueY, 100);
+                item = new ScreenItem(tItem.getImagePath(), tItem.getPrice(), lastValueX, lastValueY, 100);
             } else {
-                item = new ScreenItem(tItem, lastValueX, lastValueY);
+                item = new ScreenItem(tItem.getImagePath(), tItem.getPrice(), lastValueX, lastValueY);
             }
             screenItems.add(item);
             lastValueX -= 0.055;

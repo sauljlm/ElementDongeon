@@ -67,14 +67,17 @@ public class BDGameStatusDAO implements IGameStatusDAO{
 
             for (Attack attack : gameStatus.getPlayerParty().getPartyMember(partyMember).getAttacks()){
                 sqlQuery = "INSERT INTO Attack "+
-                        "(saveSlot,partyMember,name,description,price,unlockLevel,mPCost,HPEffect,timeStamp)" +
+                        "(saveSlot,partyMember,id,name,description,price,unlockLevel,imagePath,itemType,mPCost,HPEffect,timeStamp)" +
                         "VALUES("+
                         gameStatus.getSaveSlot()+","+
-                        partyMember+",'"+
+                        partyMember+","+
+                        attack.getId()+",'"+
                         attack.getName()+"','"+
                         attack.getDescription()+"',"+
                         attack.getPrice()+","+
-                        attack.getUnlockLevel()+","+
+                        attack.getUnlockLevel()+",'"+
+                        attack.getImagePath()+"',"+
+                        attack.getItemType()+","+
                         attack.getmPCost()+","+
                         attack.getHPEffect()+","+
                         timeStamp+
@@ -86,8 +89,8 @@ public class BDGameStatusDAO implements IGameStatusDAO{
                         "(saveSlot,partyMember,id,name,description,price,unlockLevel,imagePath,itemType,strengthEffect,speedEffect,magicEffect,resistanceEffect,luckEffect,mPEffect,hPEffect,timeStamp)" +
                         "VALUES("+
                         gameStatus.getSaveSlot()+","+
-                        partyMember+",'"+
-                        item.getId()+"','"+
+                        partyMember+","+
+                        item.getId()+",'"+
                         item.getName()+"','"+
                         item.getDescription()+"',"+
                         item.getPrice()+","+
@@ -107,15 +110,18 @@ public class BDGameStatusDAO implements IGameStatusDAO{
             }
             for (Skill skill : gameStatus.getPlayerParty().getPartyMember(partyMember).getSkills()){
                 sqlQuery = "INSERT INTO Skill "+
-                        "(saveSlot,partyMember,name,description,price,unlockLevel,mPCost,strengthEffect,speedEffect,magicEffect,resistanceEffect,luckEffect,mPEffect,hPEffect,type,timeStamp)" +
+                        "(saveSlot,partyMember,id,name,description,price,unlockLevel,imagePath,itemType,mPCost,strengthEffect,speedEffect,magicEffect,resistanceEffect,luckEffect,mPEffect,hPEffect,type,timeStamp)" +
                         "VALUES("+
                         gameStatus.getSaveSlot()+","+
-                        partyMember+",'"+
+                        partyMember+","+
+                        skill.getId()+",'"+
                         skill.getName()+"','"+
                         skill.getDescription()+"',"+
                         skill.getPrice()+","+
                         skill.getUnlockLevel()+",'"+
-                        skill.getmPCost()+"',"+
+                        skill.getImagePath()+"',"+
+                        skill.getItemType()+","+
+                        skill.getmPCost()+","+
                         skill.getStrengthEffect()+","+
                         skill.getSpeedEffect()+","+
                         skill.getMagicEffect()+","+
@@ -209,10 +215,13 @@ public class BDGameStatusDAO implements IGameStatusDAO{
             while(resultSet.next()){ //Sets info of all party, query should always return 3 rows (1/ party member)
                 character = party.getPartyMember(Integer.parseInt(resultSet.getString("partyMember")));
                 Attack attack = new Attack();
+                attack.setId(Integer.parseInt(resultSet.getString("id")));
                 attack.setName(resultSet.getString("name"));
                 attack.setDescription(resultSet.getString("description"));
                 attack.setPrice(Integer.parseInt(resultSet.getString("price")));
                 attack.setUnlockLevel(Integer.parseInt(resultSet.getString("unlockLevel")));
+                attack.setImagePath(resultSet.getString("imagePath"));
+                attack.setItemType(Integer.parseInt(resultSet.getString("itemType")));
                 attack.setmPCost(Integer.parseInt(resultSet.getString("mPCost")));
                 attack.setHPEffect(Integer.parseInt(resultSet.getString("HPEffect")));
                 character.getAttacks().add(attack);
@@ -222,6 +231,7 @@ public class BDGameStatusDAO implements IGameStatusDAO{
             while(resultSet.next()){ //Sets info of all party, query should always return 3 rows (1/ party member)
                 character = party.getPartyMember(Integer.parseInt(resultSet.getString("partyMember")));
                 Item item = new Item();
+                item.setId(Integer.parseInt(resultSet.getString("id")));
                 item.setName(resultSet.getString("name"));
                 item.setDescription(resultSet.getString("description"));
                 item.setUnlockLevel(Integer.parseInt(resultSet.getString("unlockLevel")));
@@ -241,10 +251,13 @@ public class BDGameStatusDAO implements IGameStatusDAO{
             while(resultSet.next()){ //Sets info of all party, query should always return 3 rows (1/ party member)
                 character = party.getPartyMember(Integer.parseInt(resultSet.getString("partyMember")));
                 Skill skill = new Skill();
+                skill.setId(Integer.parseInt(resultSet.getString("id")));
                 skill.setName(resultSet.getString("name"));
                 skill.setDescription(resultSet.getString("description"));
                 skill.setPrice(Integer.parseInt(resultSet.getString("price")));
                 skill.setUnlockLevel(Integer.parseInt(resultSet.getString("unlockLevel")));
+                skill.setImagePath(resultSet.getString("imagePath"));
+                skill.setItemType(Integer.parseInt(resultSet.getString("itemType")));
                 skill.setmPCost(Integer.parseInt(resultSet.getString("mPCost")));
                 skill.setStrengthEffect(Integer.parseInt(resultSet.getString("strengthEffect")));
                 skill.setSpeedEffect(Integer.parseInt(resultSet.getString("speedEffect")));

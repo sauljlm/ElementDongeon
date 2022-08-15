@@ -29,6 +29,7 @@ public class Resources {
     public static final String resourceFightBackgroundWaterDungeon = "graphics/backgrounds/fightWaterBackground.png";
     public static final String resourceFightBackgroundFireDungeon = "graphics/backgrounds/fightFireBackground.png";
     public static final String resourceStoreScreen = "graphics/backgrounds/backgroundStore.jpg";
+    public static final String resourceInventaryBackground = "graphics/backgrounds/inventario.png";
 
     //UI Skins
     public static final String resourceSkin = "graphics/textures/skin/glassy-ui.json";
@@ -185,6 +186,9 @@ public class Resources {
     public static final int generalHUDFontSize = 36;
     public static final int levelHUDFontSize = 20;
     public static final int generalDialogFontSize = 36;
+    public static final int inventaryTittleFontSize = 36;
+    public static final int inventaryNameFontSize = 16;
+
 
     // HUD assets
     public static final String activePartyMemberResource = "graphics/sprites/actors/HUD/activePartyMember.png";

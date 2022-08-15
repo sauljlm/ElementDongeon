@@ -12,6 +12,7 @@ import com.avengers.rpgame.graphics.graphicManagerMediador.GraphicMediator;
 import com.avengers.rpgame.graphics.hud.DamageOverlay;
 import com.avengers.rpgame.graphics.hud.DungeonOverlay;
 import com.avengers.rpgame.graphics.hud.HUD;
+import com.avengers.rpgame.graphics.inventary.Inventary;
 import com.avengers.rpgame.graphics.npc.EnemiesManager;
 import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
@@ -38,6 +39,7 @@ public class OverworldScreen implements Screen {
     GraphicMediator graphicMediator;
 
     private HUD hudElements;
+    private Inventary inventary;
 
     private DungeonOverlay dungeonOverlay;
 
@@ -70,6 +72,7 @@ public class OverworldScreen implements Screen {
         characterFactory.createParty();
 
         hudElements = new HUD();
+        inventary = Inventary.getInstance();
 
         // Monsters
         enemiesManager = new EnemiesManager();
@@ -127,13 +130,14 @@ public class OverworldScreen implements Screen {
         }
 
         game.batch.end();
-        // hudElements.update(this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints);
+
         graphicMediator.changeProjectionMatrix();
         game.batch.begin();//We can stop render, do something and start again
         dungeonOverlay.draw();
         damageOverlay.draw();
         hudElements.draw();
         dialogManager.draw();
+        inventary.draw(game.batch);
         game.batch.end();
     }
 
