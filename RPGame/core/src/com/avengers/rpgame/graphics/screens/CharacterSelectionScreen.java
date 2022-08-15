@@ -317,7 +317,7 @@ public class CharacterSelectionScreen implements Screen {
                     }
 
                     if(txtUsername.getText().isEmpty()){
-                        gameStatus.getPlayerParty().getPartyMember(1).setName("HeroeElemental");
+                        gameStatus.getPlayerParty().getPartyMember(1).setName("Heroe");
                     }else{
                         gameStatus.getPlayerParty().getPartyMember(1).setName(txtUsername.getText());
                     }

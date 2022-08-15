@@ -1,8 +1,8 @@
-package com.avengers.rpgame.ai.concrete;
+package com.avengers.rpgame.ai.observer;
 
-import com.avengers.rpgame.ai.Interfaces.Observer;
 import com.avengers.rpgame.graphics.dialog.DialogManager;
 import com.avengers.rpgame.logic.entities.Item;
+import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -56,14 +56,14 @@ public class PortalObserver implements Observer {
     }
 
     @Override
-    public void actionTrigger(AbstractCharacter playerCharacter, Body currentBody, String currentMapObject) {
+    public void actionTrigger(Party playerParty, Body currentBody, String currentMapObject) {
 
         dialogManager.updateSpeaker("Portal");
-        if (verifyAccess(playerCharacter, currentMapObject)) {
+        if (verifyAccess(playerParty.getActivePartyMember(), currentMapObject)) {
             destroyPortal(currentBody);
-            dialogManager.updateDialog("portal abierto");
+            dialogManager.updateDialog("Portal abierto");
         } else {
-            dialogManager.updateDialog("portal cerrado, ocupas la llave");
+            dialogManager.updateDialog("Portal cerrado, ocupas la llave");
         }
     }
 }

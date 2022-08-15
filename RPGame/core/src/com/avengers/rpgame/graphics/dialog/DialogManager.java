@@ -43,7 +43,12 @@ public class DialogManager {
         }
     }
 
+    public String getDialogSpeaker() {
+        return dialog.getDialogSpeaker();
+    }
+
     public void clean(){
+        dialog.setDialogSpeaker("");
         dialog.setDialogMessage("");
     }
 

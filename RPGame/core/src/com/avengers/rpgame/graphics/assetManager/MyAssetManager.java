@@ -24,6 +24,8 @@ public class MyAssetManager extends AssetManager{
         load(resourceThemeMusic, musicClass);
         load(resourceGameOverMusic, musicClass);
         load(menuSoundEffect, musicClass);
+        load(resourceAndTheJourneyBeginsMusic, musicClass);
+        load(resourceStoreThemeMusic, musicClass);
     }
 
     public void loadBackgrounds(){
@@ -117,6 +119,48 @@ public class MyAssetManager extends AssetManager{
         load(coin, textureClass);
         load(potion, textureClass);
         load(sword, textureClass);
+        load(keyEarth, textureClass);
+        load(keyWind, textureClass);
+        load(keyFire, textureClass);
+        load(keyWater, textureClass);
+        load(keyElemental, textureClass);
+        load(talismanEarth, textureClass);
+        load(talismanWind, textureClass);
+        load(talismanFire, textureClass);
+        load(talismanWater, textureClass);
+        load(skeletonShield, textureClass);
+        load(skeletonMegaShield, textureClass);
+        load(armor, textureClass);
+        load(jewelers, textureClass);
+        load(arrow, textureClass);
+        load(axe, textureClass);
+        load(bombArrow, textureClass);
+        load(doubleArrow, textureClass);
+        load(doubleHandSword, textureClass);
+        load(ironSword, textureClass);
+        load(silverSword, textureClass);
+        load(tripleArrow, textureClass);
+        load(mindBlow, textureClass);
+        load(elementalSword, textureClass);
+        load(elementalAxe, textureClass);
+        load(goldSwordAxe, textureClass);
+        load(rainArrows, textureClass);
+        load(fireArrow, textureClass);
+        load(windWaterArrow, textureClass);
+        load(peaceMind, textureClass);
+        load(health5, textureClass);
+        load(blowIce, textureClass);
+        load(throwFlames, textureClass);
+        load(sharpBranch, textureClass);
+        load(ciclon, textureClass);
+        load(health20, textureClass);
+        load(mentalClarity, textureClass);
+        load(groupVitality, textureClass);
+        load(iceBomb, textureClass);
+        load(melt, textureClass);
+        load(lightHealth, textureClass);
+        load(midHealth, textureClass);
+        load(totalHealth, textureClass);
     }
 
     private void loadSoundEffects(){

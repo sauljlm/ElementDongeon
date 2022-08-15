@@ -1,10 +1,10 @@
-package com.avengers.rpgame.ai.concrete;
+package com.avengers.rpgame.ai.observer;
 
-import com.avengers.rpgame.ai.Interfaces.Observer;
 import com.avengers.rpgame.data.dataStorage.ProxyDataManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.graphics.dialog.DialogManager;
 import com.avengers.rpgame.logic.entities.Item;
+import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -53,9 +53,9 @@ public class ChestObserver implements Observer {
         return "";
     }
 
-    private void provideTalisman(AbstractCharacter playerCharacter, String currentMapObject) {
+    private void provideTalisman(Party playerParty, String currentMapObject) {
         String talisman = "";
-        for (Item itemFound: playerCharacter.getItems()){
+        for (Item itemFound: playerParty.getActivePartyMember().getItems()){
             if (itemFound.getDescription().equals("Talisman inicial")){
                 talisman = itemFound.getDescription();
             } else if (itemFound.getDescription().equals("Talisman tierra")) {
@@ -71,13 +71,25 @@ public class ChestObserver implements Observer {
 
         for (Item item: dataItems){
             if (item.getDescription().equals("Talisman tierra") && currentMapObject.contains("earth") && talisman.equals("")) {
-                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
+
             } else if (item.getDescription().equals("Talisman agua") && currentMapObject.contains("water") && talisman.equals("")) {
-                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
+
             } else if (item.getDescription().equals("Talisman viento") && currentMapObject.contains("wind") && talisman.equals("")) {
-                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
+
             } else if (item.getDescription().equals("Talisman fuego") && currentMapObject.contains("fire") && talisman.equals("")) {
-                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
+
             }
         }
     }
@@ -88,10 +100,10 @@ public class ChestObserver implements Observer {
     }
 
     @Override
-    public void actionTrigger(AbstractCharacter playerCharacter, Body currentBody, String currentMapObject) {
+    public void actionTrigger(Party playerParty, Body currentBody, String currentMapObject) {
         dialogManager.updateSpeaker("Cofre");
-        if (verifyAccess(playerCharacter, currentMapObject)) {
-            provideTalisman(playerCharacter, currentMapObject);
+        if (verifyAccess(playerParty.getActivePartyMember(), currentMapObject)) {
+            provideTalisman(playerParty, currentMapObject);
             dialogManager.updateDialog("Has obtenido un talisman, ve donde el Rey.");
         } else {
             dialogManager.updateDialog("Debes vencer al jefe para abrir el cofre.");

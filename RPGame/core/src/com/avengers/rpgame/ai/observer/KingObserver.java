@@ -1,10 +1,10 @@
-package com.avengers.rpgame.ai.concrete;
+package com.avengers.rpgame.ai.observer;
 
-import com.avengers.rpgame.ai.Interfaces.Observer;
 import com.avengers.rpgame.data.dataStorage.ProxyDataManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.graphics.dialog.DialogManager;
 import com.avengers.rpgame.logic.entities.Item;
+import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -50,20 +50,37 @@ public class KingObserver  implements Observer {
     }
 
     private void deleteTalisman(String talisman) {
-        AbstractCharacter character = GameStatus.getInstance().getPlayerParty().getActivePartyMember();
+        AbstractCharacter character1 = GameStatus.getInstance().getPlayerParty().getPartyMember(1);
+        AbstractCharacter character2 = GameStatus.getInstance().getPlayerParty().getPartyMember(2);
+        AbstractCharacter character3 = GameStatus.getInstance().getPlayerParty().getPartyMember(3);
+
         int idToDelete = 0;
-        for (Item itemFound: character.getItems()){
+        for (Item itemFound: character1.getItems()){
             if (itemFound.getDescription().equals(talisman)) {
                 idToDelete = itemFound.getId();
             }
         }
-        character.deleteItem(idToDelete);
+        character1.deleteItem(idToDelete);
+
+        for (Item itemFound: character2.getItems()){
+            if (itemFound.getDescription().equals(talisman)) {
+                idToDelete = itemFound.getId();
+            }
+        }
+        character2.deleteItem(idToDelete);
+
+        for (Item itemFound: character3.getItems()){
+            if (itemFound.getDescription().equals(talisman)) {
+                idToDelete = itemFound.getId();
+            }
+        }
+        character3.deleteItem(idToDelete);
     }
 
-    private void provideKey(AbstractCharacter playerCharacter) {
+    private void provideKey(Party playerParty) {
         String talisman = "";
 
-        for (Item itemFound: playerCharacter.getItems()){
+        for (Item itemFound: playerParty.getActivePartyMember().getItems()){
             if (itemFound.getDescription().equals("Talisman inicial")){
                 talisman = itemFound.getDescription();
             } else if (itemFound.getDescription().equals("Talisman tierra")) {
@@ -78,23 +95,33 @@ public class KingObserver  implements Observer {
         }
         for (Item item: dataItems){
             if (item.getDescription().equals("Llave tierra") && talisman.equals("Talisman inicial")){
-                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
                 deleteTalisman(talisman);
                 this.keyName = "¡Les deseo éxito en su aventura! Aquí tienes la llave del calabozo de tierra. Tráeme el talisman.";
             } else if (item.getDescription().equals("Llave agua") && talisman.equals("Talisman tierra")){
-                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
                 deleteTalisman(talisman);
                 this.keyName = "¡Excelente trabajo! Aquí tienes la llave del calabozo de agua. Tráeme el talisman.";
             } else if (item.getDescription().equals("Llave viento") && talisman.equals("Talisman agua")){
-                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
                 deleteTalisman(talisman);
                 this.keyName = "¡Gracias por la ayuda! Aquí tienes la llave del calabozo de viento. Tráeme el talisman.";
             } else if (item.getDescription().equals("Llave fuego") && talisman.equals("Talisman viento")){
-                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
                 deleteTalisman(talisman);
                 this.keyName = "¡Estupendo, solo falta un talisman! Aquí tienes la llave del calabozo de fuego. Tráeme el talisman.";
             } else if (item.getDescription().equals("Llave elemental") && talisman.equals("Talisman fuego")){
-                GameStatus.getInstance().getPlayerParty().getActivePartyMember().addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
+                GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
                 deleteTalisman(talisman);
                 this.keyName = "Ya tenemos los cuatro talismanes. ¡El reino está a salvo! Presiona la tecla 'F' para finalizar la partida.";
             }
@@ -108,10 +135,10 @@ public class KingObserver  implements Observer {
     }
 
     @Override
-    public void actionTrigger(AbstractCharacter playerCharacter, Body currentBody, String currentMapObject) {
+    public void actionTrigger(Party playerParty, Body currentBody, String currentMapObject) {
         dialogManager.updateSpeaker("Rey");
-        if (verifyAccess(playerCharacter)) {
-            provideKey(playerCharacter);
+        if (verifyAccess(playerParty.getActivePartyMember())) {
+            provideKey(playerParty);
             dialogManager.updateDialog(keyName);
         } else {
             dialogManager.updateDialog("Necesitas traerme el talisman del cofre para entregarte la siguiente llave.");

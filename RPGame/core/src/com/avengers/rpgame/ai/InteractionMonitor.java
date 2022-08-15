@@ -1,9 +1,9 @@
 package com.avengers.rpgame.ai;
 
-import com.avengers.rpgame.ai.Interfaces.Observer;
-import com.avengers.rpgame.ai.Interfaces.Subject;
+import com.avengers.rpgame.ai.observer.Observer;
+import com.avengers.rpgame.ai.observer.Subject;
 import com.avengers.rpgame.game.GameConfig;
-import com.avengers.rpgame.graphics.dialog.DialogManager;
+import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
 import com.badlogic.gdx.maps.MapObject;
@@ -40,14 +40,14 @@ public class InteractionMonitor implements Subject {
         return interactiveMapObjects;
     }
 
-    public void monitorSurroundings(AbstractCharacter playerCharacter) {
-        Vector2 characterC = new Vector2(((DynamicAnimatedCharacter)playerCharacter.getAnimatedCharacter()).getPlayer().getPosition());
+    public void monitorSurroundings(Party playerParty) {
+        Vector2 characterC = new Vector2(((DynamicAnimatedCharacter)playerParty.getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition());
         boolean objectFound;
         int index=0;
         for(Vector2 object : interactiveObjectsV) {
             objectFound=itIsClose(characterC, object, maxDistance);
             if (objectFound){
-                notifyObservers(index,playerCharacter);
+                notifyObservers(index,playerParty);
             }
             index++;
         }
@@ -84,27 +84,51 @@ public class InteractionMonitor implements Subject {
 
     //As part of performance improvements observers was refactored into a hashmap and a for cycle was eliminated
     @Override
-    public void notifyObservers(int index, AbstractCharacter playerCharacter) {
-            currentBody = interactiveObjects.get(index);
-            String currentMapObject = interactiveMapObjects.get(index).getName();
-            if (currentMapObject.contains("Portal")) {
-                observers.get("portal").actionTrigger(playerCharacter, currentBody, currentMapObject);
-                return;
-            }
-            if (currentMapObject.contains("kingNPC")) {
-                observers.get("kingNPC").actionTrigger(playerCharacter, currentBody, currentMapObject);
-                return;
-            }
-            if (currentMapObject.contains("npcCharacter")) {
-                observers.get("randomNPC").actionTrigger(playerCharacter, currentBody, currentMapObject);
-                return;
-            }
-            if (currentMapObject.contains("Treasure")) {
-                observers.get("chest").actionTrigger(playerCharacter, currentBody, currentMapObject);
-                return;
-            }
-            if (currentMapObject.contains("msg")) {
-                observers.get("sign").actionTrigger(playerCharacter, currentBody, currentMapObject);
-            }
+    public void notifyObservers(int index, Party playerParty) {
+        currentBody = interactiveObjects.get(index);
+        String currentMapObject = interactiveMapObjects.get(index).getName();
+        if (currentMapObject.contains("Portal")) {
+            observers.get("portal").actionTrigger(playerParty, currentBody, currentMapObject);
+            return;
+        }
+        if (currentMapObject.contains("kingNPC")) {
+            observers.get("kingNPC").actionTrigger(playerParty, currentBody, currentMapObject);
+            return;
+        }
+        if (currentMapObject.contains("npcCharacter")) {
+            observers.get("randomNPC").actionTrigger(playerParty, currentBody, currentMapObject);
+            return;
+        }
+        if (currentMapObject.contains("Treasure")) {
+            observers.get("chest").actionTrigger(playerParty, currentBody, currentMapObject);
+            return;
+        }
+        if (currentMapObject.contains("msg")) {
+            observers.get("sign").actionTrigger(playerParty, currentBody, currentMapObject);
+        }
     }
+
+//    public void notifyObservers(int index, AbstractCharacter playerCharacter) {
+//            currentBody = interactiveObjects.get(index);
+//            String currentMapObject = interactiveMapObjects.get(index).getName();
+//            if (currentMapObject.contains("Portal")) {
+//                observers.get("portal").actionTrigger(playerCharacter, currentBody, currentMapObject);
+//                return;
+//            }
+//            if (currentMapObject.contains("kingNPC")) {
+//                observers.get("kingNPC").actionTrigger(playerCharacter, currentBody, currentMapObject);
+//                return;
+//            }
+//            if (currentMapObject.contains("npcCharacter")) {
+//                observers.get("randomNPC").actionTrigger(playerCharacter, currentBody, currentMapObject);
+//                return;
+//            }
+//            if (currentMapObject.contains("Treasure")) {
+//                observers.get("chest").actionTrigger(playerCharacter, currentBody, currentMapObject);
+//                return;
+//            }
+//            if (currentMapObject.contains("msg")) {
+//                observers.get("sign").actionTrigger(playerCharacter, currentBody, currentMapObject);
+//            }
+//    }
 }

@@ -1,6 +1,7 @@
 package com.avengers.rpgame.ai;
 
-import com.avengers.rpgame.ai.concrete.*;
+import com.avengers.rpgame.ai.observer.*;
+import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
@@ -31,8 +32,8 @@ public class AIManager {
         allysMovement.setAllyPosition(playerCharacter, ally1Character, partyDistance );
     }
 
-    public void monitorSurroundings(AbstractCharacter playerCharacter){
-        interactionMonitor.monitorSurroundings(playerCharacter);
+    public void monitorSurroundings(Party playerParty){
+        interactionMonitor.monitorSurroundings(playerParty);
     }
 
     public void addInteractiveObjectV(Vector2 object){

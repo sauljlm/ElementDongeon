@@ -208,7 +208,7 @@ public class DataStorage {
         specialItemsList.add(elementKey);
 
         Wearable armor = new Wearable(16,"Knight/Mage/Archer", "Armadura", 500, 6, Resources.armor,3, 30, 0, 0, 30, 0, 0, 10);
-        Wearable magicJewelry = new Wearable(17,"Knight/Mage/Archer", "Joyeria magica", 1000, 12, Resources.jewelers,3, 0, 0, 30, 5, 0, 10, 0);
+        Wearable magicJewelry = new Wearable(17,"Knight/Mage/Archer", "Joyeria magica", 1000, 12, Resources.jewelers,3, 0, 0, 30, 5, 5, 10, 0);
         wearableItemsList.add(armor);
         wearableItemsList.add(magicJewelry);
 

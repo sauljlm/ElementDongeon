@@ -4,6 +4,7 @@ import com.avengers.rpgame.RPGame;
 import com.avengers.rpgame.audio.SoundEffectsManager;
 import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
+import com.avengers.rpgame.graphics.dialog.DialogManager;
 import com.avengers.rpgame.graphics.screens.*;
 import com.avengers.rpgame.logic.entities.Item;
 import com.avengers.rpgame.logic.entities.Party;
@@ -20,6 +21,7 @@ public class IOManager {
     private static MyInputProcessor inputProcessor;
     private GameConfig config;
     private RPGame game;
+    private DialogManager dialogManager;
 
     private GameStatus gameStatus;
 
@@ -29,6 +31,7 @@ public class IOManager {
         config = GameConfig.getInstance();
         game = RPGame.getInstance();
         gameStatus = GameStatus.getInstance();
+        dialogManager = DialogManager.getInstance();
     }
 
     //the idea for this method is to process different request of IO processInput differently acording to the screen
@@ -114,9 +117,13 @@ public class IOManager {
             verticalForce = -movementSpeed;
             horizontalForce = 0;
         }
+
         if(inputProcessor.isStoreOpened()){
-            ScreeenManager.getInstance().changeScreen("StoreScreen");
+            if (dialogManager.getDialogSpeaker().equalsIgnoreCase("Tienda")){
+                ScreeenManager.getInstance().changeScreen("StoreScreen");
+            }
         }
+
         if(inputProcessor.isTab()&& Utils.getInstance().skipFrames()){
             switchPartyMember();
         }
@@ -126,9 +133,6 @@ public class IOManager {
         } else{
             SoundEffectsManager.getInstance().stop(steps);
         }
-//        if(velocity.x == 0 || velocity.y == 0){
-//            SoundEffectsManager.getInstance().stop(menuSoundEffect);
-//        }
 
         velocity.x = horizontalForce * 5;
         velocity.y = verticalForce * 5;

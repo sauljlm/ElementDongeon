@@ -76,9 +76,7 @@ public class OverworldScreen implements Screen {
 
         //Interactive objects
         interactiveObjVectors = new ArrayList<Vector2>();
-
         interactiveObjVectors = aiManager.getInteractiveObjectsV();
-
         this.accessPortal = new Sprite(loadTexture(resourcePortalTexture));
         accessPortal.setCenter(interactiveObjVectors.get(0).x,interactiveObjVectors.get(0).y);
 
@@ -101,7 +99,7 @@ public class OverworldScreen implements Screen {
         //Move allies closer to active party member
         aiManager.moveAllies(playerParty.getActivePartyMember(), playerParty.getInactivePartyMember(1), 1);
         aiManager.moveAllies(playerParty.getInactivePartyMember(1), playerParty.getInactivePartyMember(2), 1);
-        aiManager.monitorSurroundings(playerParty.getActivePartyMember());
+        aiManager.monitorSurroundings(playerParty);
         //Process input to move character normally
         ioManager.processInput("overworld", delta, playerParty);
         oneForAllAI.areFriendsClose();

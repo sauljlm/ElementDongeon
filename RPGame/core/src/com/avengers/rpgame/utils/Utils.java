@@ -10,7 +10,7 @@ public class Utils {
     //This method allows to skip executing an action everyFrame, returns a boolean. Just wrap the action you want to skip on a if(skipFrames()){do something}
     public boolean skipFrames(){
         frameSkipperCounter = frameSkipperCounter+ Gdx.graphics.getDeltaTime();
-        if(frameSkipperCounter >= Gdx.graphics.getDeltaTime()*20){
+        if(frameSkipperCounter >= Gdx.graphics.getDeltaTime()*15){
             frameSkipperCounter = 0;
             return true;
         }

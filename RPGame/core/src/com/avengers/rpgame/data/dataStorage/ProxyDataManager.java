@@ -45,9 +45,33 @@ public class ProxyDataManager {
         return result;
     }
 
-    public ArrayList<Item> getConsumableItemsList(String pName, int pLevel) {
+    public ArrayList<Item> getConsumableItemsList(String pName, double pLevel) {
         ArrayList<Item> result = new ArrayList<>();
         for (Item temp: dataStorageProxy.getConsumableItemsList()){
+            if (temp.getName().contains(pName) && temp.getUnlockLevel()<=pLevel){
+                result.add(temp);
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Item> getConsumableItemsList(String pName) {
+        ArrayList<Item> result = new ArrayList<>();
+        for (Item temp: dataStorageProxy.getConsumableItemsList()){
+            if (temp.getName().contains(pName)){
+                result.add(temp);
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Item> getWearableItemsList() {
+        return dataStorageProxy.getWearableItemsList();
+    }
+
+    public ArrayList<Item> getWearableItemsList(String pName, double pLevel) {
+        ArrayList<Item> result = new ArrayList<>();
+        for (Item temp: dataStorageProxy.getWearableItemsList()){
             if (temp.getName().contains(pName) && temp.getUnlockLevel()<=pLevel){
                 result.add(temp);
             }
@@ -67,20 +91,6 @@ public class ProxyDataManager {
             }
         }
         return itemFound;
-    }
-
-    public ArrayList<Item> getConsumableItemsList(String pName) {
-        ArrayList<Item> result = new ArrayList<>();
-        for (Item temp: dataStorageProxy.getConsumableItemsList()){
-            if (temp.getName().contains(pName)){
-                result.add(temp);
-            }
-        }
-        return result;
-    }
-
-    public ArrayList<Item> getWearableItemsList() {
-        return dataStorageProxy.getWearableItemsList();
     }
 
     public CharacterClass getEnemyClass(String pName) {

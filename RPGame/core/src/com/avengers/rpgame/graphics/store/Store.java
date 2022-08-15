@@ -246,13 +246,13 @@ public class Store {
                 completed = false;
             }
         } else {
-            System.out.println("ItemsSelecte d vacio");
+            System.out.println("ItemsSelected vacio");
         }
         return completed;
     }
 
     public void changeCoinsColor() {
-        if (this.actionType == 1) {
+        if (this.actionType == 1 && this.itemsSelected.size >= 1) {
             if (checkPurchase()) {
                 this.characterCoinsFont.setColor(Color.WHITE);
             } else {
@@ -304,23 +304,23 @@ public class Store {
         this.itemsSelected = new Array<Item>();
         if(this.actionType == 1) {
             if (this.itemsType == 0) {
-                this.sourceAttaks = proxyDataManager.getAttacksList(this.character.getCharacterClass().getName(), 50);
+                this.sourceAttaks = proxyDataManager.getAttacksList(this.character.getCharacterClass().getName(), this.character.getLevel());
                 for(Attack tItem : sourceAttaks){
                     Item newItem = new Item(tItem.getId(),tItem.getName(), tItem.getDescription(), tItem.getPrice(), tItem.getUnlockLevel() ,tItem.getImagePath(), tItem.getItemType(), tItem.getHPEffect());
                     this.itemsSelected.add(newItem);
                 }
             } else if (this.itemsType == 1) {
-                this.sourceSkills = proxyDataManager.getSkillsList(this.character.getCharacterClass().getName(), 50);
+                this.sourceSkills = proxyDataManager.getSkillsList(this.character.getCharacterClass().getName(), this.character.getLevel());
                 for(Skill tItem : sourceSkills){
                     Item newItem = new Item(tItem.getId(),tItem.getName(), tItem.getDescription(), tItem.getPrice(),tItem.getUnlockLevel() ,tItem.getImagePath(), tItem.getItemType(), tItem.getStrengthEffect(), tItem.getSpeedEffect(), tItem.getMagicEffect(), tItem.getResistanceEffect(), tItem.getLuckEffect(), tItem.getmPEffect(), tItem.gethPEffect());
                     this.itemsSelected.add(newItem);
                 }
             } else if (this.itemsType == 2) {
-                this.sourceItems = proxyDataManager.getWearableItemsList();
+                this.sourceItems = proxyDataManager.getWearableItemsList(this.character.getCharacterClass().getName(), this.character.getLevel());
                 for(Item tItem : sourceItems){
                     this.itemsSelected.add(tItem);
                 }
-                this.sourceItems = proxyDataManager.getConsumableItemsList(this.character.getCharacterClass().getName());
+                this.sourceItems = proxyDataManager.getConsumableItemsList(this.character.getCharacterClass().getName(), this.character.getLevel());
                 for(Item tItem : sourceItems){
                     this.itemsSelected.add(tItem);
                 }

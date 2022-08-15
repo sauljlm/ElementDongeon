@@ -289,6 +289,9 @@ public class MyInputProcessor implements InputProcessor {
         if(keycode == Input.Keys.F){
             enterCreditMode = false;
         }
+        if(keycode == Input.Keys.T) {
+            storeOpened = false;
+        }
         if(keycode == Input.Keys.NUM_1){
             select1 = false;
         }

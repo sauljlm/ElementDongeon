@@ -58,15 +58,17 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         this.experiencePoints = 0;
 
         ArrayList<Item> items = proxyDataManager.getConsumableItemsList("Knight",1);
- //       items.add(proxyDataManager.getSpecialItem("Talisman inicial"));
-        items.add(proxyDataManager.getSpecialItem("Talisman fuego"));
-        if(true){ //Keys for debug
-//        if(gameConfig.isGodMode()){ //Keys for debug
-            items.add(proxyDataManager.getSpecialItem("Llave tierra"));
-            items.add(proxyDataManager.getSpecialItem("Llave agua"));
-            items.add(proxyDataManager.getSpecialItem("Llave viento"));
-            items.add(proxyDataManager.getSpecialItem("Llave fuego"));
-        }
+        items.add(proxyDataManager.getSpecialItem("Talisman inicial"));
+
+//        items.add(proxyDataManager.getSpecialItem("Talisman fuego"));
+//        if(true){ //Keys for debug
+////        if(gameConfig.isGodMode()){ //Keys for debug
+//            items.add(proxyDataManager.getSpecialItem("Llave tierra"));
+//            items.add(proxyDataManager.getSpecialItem("Llave agua"));
+//            items.add(proxyDataManager.getSpecialItem("Llave viento"));
+//            items.add(proxyDataManager.getSpecialItem("Llave fuego"));
+//        }
+
         ArrayList<Attack> attacks = proxyDataManager.getAttacksList("Knight",1);
         ArrayList<Skill> skills = proxyDataManager.getSkillsList("Knight",1);
 

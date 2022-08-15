@@ -1,7 +1,7 @@
-package com.avengers.rpgame.ai.concrete;
+package com.avengers.rpgame.ai.observer;
 
-import com.avengers.rpgame.ai.Interfaces.Observer;
 import com.avengers.rpgame.graphics.dialog.DialogManager;
+import com.avengers.rpgame.logic.entities.Party;
 import com.avengers.rpgame.logic.entities.character.abstractCharacter.AbstractCharacter;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -21,7 +21,7 @@ public class SignObserver implements Observer {
     }
 
     @Override
-    public void actionTrigger(AbstractCharacter playerCharacter, Body currentBody, String currentMapObject) {
+    public void actionTrigger(Party playerParty, Body currentBody, String currentMapObject) {
         dialogManager.updateSpeaker("Calabozo");
         if (currentMapObject.contains("Earth")) {
             message = "Bienvenido al calabozo de tierra, vence al Jefe de Tierra y recupera el talisman de su cofre.";
@@ -47,7 +47,10 @@ public class SignObserver implements Observer {
             message = "Para pausar o guardar la partida presiona la tecla 'ESC' en tu teclado.";
         } else if (currentMapObject.contains("Battle")) {
             dialogManager.updateSpeaker("Importante");
-            message = "Durante una batalla usa el ratón para hacer clic y elegir el ataque, habilidad o item deseado.";
+            message = "Durante una batalla usa el ratón para hacer clic en el ataque, habilidad o item para usarlo.";
+        } else if (currentMapObject.contains("Rotate")) {
+            dialogManager.updateSpeaker("Importante");
+            message = "Mantén a tus compañeros cerca, presiona la tecla 'TAB' para cambiar de personaje.";
         }
         dialogManager.updateDialog(message);
     }
