@@ -1,7 +1,7 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	font: {
-		file: font-export.fnt
+		file: newFont.fnt
 	}
 	giygas: {
 		file: giygas-export.fnt
@@ -18,25 +18,25 @@ com.badlogic.gdx.graphics.Color: {
 		r: 0
 		g: 0
 		b: 0
-		a: 0.8
+		a: 0
 	}
 	color: {
-		r: 0.41960785
-		g: 0.827451
-		b: 0.7411765
-		a: 0.8
+		r: 0.5
+		g: 0.5
+		b: 0.5
+		a: 1
 	}
 	selection: {
 		r: 0.7733333
 		g: 0.7733333
 		b: 0.7733333
-		a: 0.8
+		a: 0
 	}
 	white: {
 		r: 1
 		g: 1
 		b: 1
-		a: 0.8
+		a: 1
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
@@ -45,8 +45,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		color: selection
 	}
 	window-c: {
-		name: window
-		color: color
+		name: window,
+		color: black
 	}
 	window-player-c: {
 		name: window-player

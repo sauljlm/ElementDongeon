@@ -19,15 +19,16 @@ import com.avengers.rpgame.logic.entities.reward.AReward;
 import com.avengers.rpgame.logic.entities.reward.creation.RewardFactory;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 
@@ -105,6 +106,10 @@ public class FightScreen implements Screen {
     private String messageString;
     private ArrayList<String> messageStringList;
 
+    private Sprite backgroundOverlay;
+
+    private ArrayList<Disposable> disponsables;
+
     public FightScreen() {
         this.game = RPGame.getInstance();
         this.config = GameConfig.getInstance();
@@ -112,6 +117,7 @@ public class FightScreen implements Screen {
         this.timer = new Timer();
         this.playerParty = gameStatus.getPlayerParty();
         this.enemyParty = gameStatus.getEnemyParty();
+        disponsables =new ArrayList<>();
         messageStringList = new ArrayList<String>();
         aiManager = AIManager.getInstance();
         ioManager = IOManager.getInstance();
@@ -119,6 +125,8 @@ public class FightScreen implements Screen {
         characterBuilder = new CharacterBuilder();
         hudPlayer = new BattleHUD(0, playerParty);
         hudEnemy = new BattleHUD(1, enemyParty);
+        backgroundOverlay = new Sprite(loadTexture(battleBackgroundOverlay));
+        backgroundOverlay.setAlpha(0.91f);
 //        hudEnemy = new BattleHUD(1, this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);
         rewardFactory = new RewardFactory();
 
@@ -170,7 +178,6 @@ public class FightScreen implements Screen {
         table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
-        table.debug();
 
         // Widgets
         fightStage = new Table();
@@ -187,17 +194,17 @@ public class FightScreen implements Screen {
         playerTimerLabel = new Label("Cargando . . .",skin);
         enemyTimerLabel = new Label("Cargando . . .",skin);
 
-        uiWindow = new Window("", skin, "window-player");
+        uiWindow = new Window("", skin);
         uiTable = new Table();
 
         selectorTable = new Table();
-        buttonsTable = new Table();
+        buttonsTable = new Table(skin);
         buttonsScroll = new ScrollPane(buttonsTable);
         buttonsScroll.setLayoutEnabled(true);
         buttonsScroll.layout();
 
         selector1 = new TextButton("Ataques", skin);
-        selector2 = new TextButton("Poderes", skin);
+        selector2 = new TextButton("Habilidades", skin);
         selector3 = new TextButton("Items", skin);
 
         selector1W = new Window("", skin);
@@ -205,7 +212,7 @@ public class FightScreen implements Screen {
         selector3W = new Window("", skin);
 
         messagesWindow = new Window("", skin);
-        messageString = "Que empiece la batalla a muerte de los heroes contra los monstruos elementales que atentan contra la paz de la isla oculta entre la neblina";
+        messageString = "\n"+"\n"+"Que empiece la batalla a muerte de los heroes contra los monstruos elementales que atentan contra la paz de la isla oculta entre la neblina";
         messageText = new TextArea(messageString, skin);
 
         //Hierarchy
@@ -232,13 +239,9 @@ public class FightScreen implements Screen {
         bottomTable.add(uiWindow).fill().expand();
 
         //Bottom left side
-
         uiWindow.add(uiTable).fill().expand();
         uiTable.add(selectorTable).expandY().fill().left().width(config.getResolutionHorizontal()/10);
 
-        selectorTable.debug();
-        selector1W.debug();
-        selector1.debug();
         selectorTable.add(selector1W).fill().expand().left();
         selector1W.add(selector1).fill().expand();
 
@@ -260,7 +263,7 @@ public class FightScreen implements Screen {
         bottomTable.add(messagesWindow).width(config.getResolutionHorizontal()/5*2).expandY().fill();
         messageText.setColor(new Color(0,255,0, 1));
         messageText.setAlignment(1);
-        messagesWindow.add(messageText).fill().expand().center().pad(100).padTop(config.getResolutionVertical()/3*1/3);
+        messagesWindow.add(messageText).fill().expand().center().pad(10).padTop(10);
 
         //Controls
         selector1.setBounds(0, 0, selector1.getWidth(), selector1.getHeight());
@@ -302,12 +305,12 @@ public class FightScreen implements Screen {
     //Custom methods
     private void changeMessageBoard(String text){
         messageStringList.add(text);
-        if(messageStringList.size() >=5){
+        if(messageStringList.size() >=7){
             messageStringList.remove(0);
         }
         messageString = "";
-        for (String message: messageStringList) {
-            messageString =messageString+"\n"+message;
+        for(int i = messageStringList.size()-1;i>=0;i--){
+            messageString = messageString+"\n"+"\n"+messageStringList.get(i);
         }
         this.messageText.setText(messageString);
     }
@@ -334,11 +337,15 @@ public class FightScreen implements Screen {
         int index = 0;
         buttonsTable.clear();
         for (final Attack attack:playerParty.getActivePartyMember().getAttacks()) {
-            Table buttonW = new Table();
+            Table buttonW = new Table(skin);
+            buttonW.setBackground("window-player");
             TextButton buttonA = new TextButton("Ataque "+index, skin);
+            Image attackTexture = new Image(loadTexture(attack.getImagePath()));
+//            disponsables.add(attackTexture);
             buttonsTable.row();
-            buttonsTable.add(buttonW).fillX().expandX().height(100);
-            buttonW.add(buttonA);
+            buttonsTable.add(buttonW).fillX().expandX().height(90).pad(2).padLeft(50).padRight(150);
+            buttonW.add(attackTexture).height(80).width(80);
+            buttonW.add(buttonA).fill().expandX().align(1);
             buttonA.setText(attack.getDescription());
             index++;
 
@@ -363,11 +370,14 @@ public class FightScreen implements Screen {
         int index = 0;
         buttonsTable.clear();
         for (final Skill skill:playerParty.getActivePartyMember().getSkills()) {
-            Table buttonW = new Table();
+            Table buttonW = new Table(skin);
+            buttonW.setBackground("window-player");
             TextButton buttonA = new TextButton("Poder "+index, skin);
+            Image skillTexture = new Image(loadTexture(skill.getImagePath()));
             buttonsTable.row();
-            buttonsTable.add(buttonW).fillX().expandX().height(100);
-            buttonW.add(buttonA);
+            buttonsTable.add(buttonW).fillX().expandX().height(90).pad(2).padLeft(50).padRight(150);
+            buttonW.add(skillTexture).height(80).width(80);
+            buttonW.add(buttonA).fill().expandX().align(1);
             buttonA.setText(skill.getDescription());
             index++;
 
@@ -392,11 +402,14 @@ public class FightScreen implements Screen {
         int index = 0;
         buttonsTable.clear();
         for (final Item item:playerParty.getActivePartyMember().getItems()) {
-            Table buttonW = new Table();
+            Table buttonW = new Table(skin);
+            buttonW.setBackground("window-player");
             TextButton buttonA = new TextButton("Item "+index, skin);
+            Image itemTexture = new Image(loadTexture(item.getImagePath()));
             buttonsTable.row();
-            buttonsTable.add(buttonW).fillX().expandX().height(100);
-            buttonW.add(buttonA);
+            buttonsTable.add(buttonW).fillX().expandX().height(90).pad(2).padLeft(50).padRight(150);
+            buttonW.add(itemTexture).height(80).width(80);
+            buttonW.add(buttonA).fill().expandX().align(1);
             buttonA.setText(item.getDescription());
             index++;
 
@@ -480,6 +493,7 @@ public class FightScreen implements Screen {
         hudEnemy.update(enemyParty);
         game.batch.begin();
         game.batch.draw(backgroundImage, 0, 0);
+        backgroundOverlay.draw(game.batch);
         partyMemberAnimated1.getAnimatedCharacter().draw(delta/2f);
         partyMemberAnimated2.getAnimatedCharacter().draw(delta/2f);
         partyMemberAnimated3.getAnimatedCharacter().draw(delta/2f);
@@ -513,6 +527,9 @@ public class FightScreen implements Screen {
 
     @Override
     public void dispose() {
+        for (Disposable disposable:disponsables) {
+            disposable.dispose();
+        }
         hudPlayer.dispose();
         hudEnemy.dispose();
     }

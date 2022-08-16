@@ -265,4 +265,6 @@ public class Resources {
 
     public static final String dungeonEarthOverlayResource = "graphics/effects/dungeonOverlay.png";
     public static final String damageOverlayResource = "graphics/effects/damageOverlay.png";
+    public static final String battleBackgroundOverlay = "graphics/backgrounds/battleBackground.png";
+
 }

@@ -154,12 +154,12 @@ public class DataStorage {
         skillsList.add(a3);
 
         Skill m0 = new Skill(24,"Mage", "Paz mental", 0, 1, Resources.peaceMind, 2, 0, 0,0,10,0,0,50,0,"internal");
-        Skill m1 = new Skill(25,"Mage", "Recuperacion 5%", 300, 3, Resources.health5, 2, 0, 0,0,2,0,0,5,5,"internal");
+        Skill m1 = new Skill(25,"Mage", "Recuperación 5%", 300, 3, Resources.health5, 2, 0, 0,0,2,0,0,5,5,"internal");
         Skill m2 = new Skill(26,"Mage", "Soplo de hielo", 700, 7, Resources.blowIce, 2, 15, 0,0,2,0,0,5,20,"external");
         Skill m3 = new Skill(27,"Mage", "Lanzallamas", 700, 7, Resources.throwFlames, 2, 15, 0,0,2,0,0,7,22,"external");
         Skill m4 = new Skill(28,"Mage", "Rama afilada", 900, 9, Resources.sharpBranch, 2, 20, 0,0,2,0,0,12,25,"external");
-        Skill m5 = new Skill(29,"Mage", "Ciclon", 1100, 11, Resources.ciclon, 2, 30, 0,0,2,0,0,16,30,"external");
-        Skill m6 = new Skill(30,"Mage", "Recuperacion 20%", 1200, 12, Resources.health20, 2, 45, 0,0,2,0,0,20,35,"internal");
+        Skill m5 = new Skill(29,"Mage", "Ciclón", 1100, 11, Resources.ciclon, 2, 30, 0,0,2,0,0,16,30,"external");
+        Skill m6 = new Skill(30,"Mage", "Recuperación 20%", 1200, 12, Resources.health20, 2, 45, 0,0,2,0,0,20,35,"internal");
         Skill m7 = new Skill(31,"Mage", "Claridad mental", 1500, 15, Resources.mentalClarity, 2, 50, 0,0,2,0,0,25,35,"internal");
         Skill m8 = new Skill(32,"Mage", "Vitalidad Grupal", 1900, 19, Resources.groupVitality, 2, 50, 0,0,2,0,0,28,35,"internal");
         Skill m9 = new Skill(33,"Mage", "Bomba de hielo", 2200, 22, Resources.iceBomb, 2, 55, 0,0,2,0,0,32,40,"external");
@@ -178,18 +178,18 @@ public class DataStorage {
     }
 
     private void generateItemList() {
-        Consumable p1 = new Consumable(6,"Knight/Mage/Archer", "Pocion ligera", 600, 1, Resources.lightHealth, 3, 0, 0, 0, 0, 0, 50, 50);
-        Consumable p2 = new Consumable(7,"Mage", "Pocion media", 900, 7, Resources.midHealth,3, 0, 0, 0, 0, 0, 75, 75);
-        Consumable p3 = new Consumable(8,"Mage", "Pocion total", 1200,12,Resources.totalHealth, 3, 0, 0, 0, 0, 0, 100, 100);
+        Consumable p1 = new Consumable(6,"Knight/Mage/Archer", "Poción ligera", 600, 1, Resources.lightHealth, 3, 0, 0, 0, 0, 0, 50, 50);
+        Consumable p2 = new Consumable(7,"Mage", "Poción media", 900, 7, Resources.midHealth,3, 0, 0, 0, 0, 0, 75, 75);
+        Consumable p3 = new Consumable(8,"Mage", "Poción total", 1200,12,Resources.totalHealth, 3, 0, 0, 0, 0, 0, 100, 100);
         consumableItemsList.add(p1);
         consumableItemsList.add(p2);
         consumableItemsList.add(p3);
 
-        Item initialTalisman = new Item(1,"Knight/Mage/Archer", "Talisman inicial",0 ,0, Resources.talismanEarth, 0, 0, 0, 0, 0, 0, 0, 0);
-        Item earthTalisman = new Item(2,"Knight/Mage/Archer", "Talisman tierra", 0 ,0, Resources.talismanEarth, 0, 0, 0, 0, 0, 0, 0, 0);
-        Item waterTalisman = new Item(3,"Knight/Mage/Archer", "Talisman agua", 0 ,0, Resources.talismanWater, 0, 0, 0, 0, 0, 0, 0, 0);
-        Item windTalisman = new Item(4,"Knight/Mage/Archer", "Talisman viento", 0 ,0, Resources.talismanWind, 0, 0, 0, 0, 0, 0, 0, 0);
-        Item fireTalisman = new Item(5,"Knight/Mage/Archer", "Talisman fuego", 0 ,0, Resources.talismanFire, 0, 0, 0, 0, 0, 0, 0, 0);
+        Item initialTalisman = new Item(1,"Knight/Mage/Archer", "Talismán inicial",0 ,0, Resources.talismanEarth, 0, 0, 0, 0, 0, 0, 0, 0);
+        Item earthTalisman = new Item(2,"Knight/Mage/Archer", "Talismán tierra", 0 ,0, Resources.talismanEarth, 0, 0, 0, 0, 0, 0, 0, 0);
+        Item waterTalisman = new Item(3,"Knight/Mage/Archer", "Talismán agua", 0 ,0, Resources.talismanWater, 0, 0, 0, 0, 0, 0, 0, 0);
+        Item windTalisman = new Item(4,"Knight/Mage/Archer", "Talismán viento", 0 ,0, Resources.talismanWind, 0, 0, 0, 0, 0, 0, 0, 0);
+        Item fireTalisman = new Item(5,"Knight/Mage/Archer", "Talismán fuego", 0 ,0, Resources.talismanFire, 0, 0, 0, 0, 0, 0, 0, 0);
         specialItemsList.add(initialTalisman);
         specialItemsList.add(earthTalisman);
         specialItemsList.add(waterTalisman);
@@ -208,7 +208,7 @@ public class DataStorage {
         specialItemsList.add(elementKey);
 
         Wearable armor = new Wearable(16,"Knight/Mage/Archer", "Armadura", 500, 6, Resources.armor,3, 30, 0, 0, 30, 0, 0, 10);
-        Wearable magicJewelry = new Wearable(17,"Knight/Mage/Archer", "Joyeria magica", 1000, 12, Resources.jewelers,3, 0, 0, 30, 5, 5, 10, 0);
+        Wearable magicJewelry = new Wearable(17,"Knight/Mage/Archer", "Joyería mágica", 1000, 12, Resources.jewelers,3, 0, 0, 30, 5, 5, 10, 0);
         wearableItemsList.add(armor);
         wearableItemsList.add(magicJewelry);
 

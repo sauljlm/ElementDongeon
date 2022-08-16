@@ -24,13 +24,13 @@ public class SignObserver implements Observer {
     public void actionTrigger(Party playerParty, Body currentBody, String currentMapObject) {
         dialogManager.updateSpeaker("Calabozo");
         if (currentMapObject.contains("Earth")) {
-            message = "Bienvenido al calabozo de tierra, vence al Jefe de Tierra y recupera el talisman de su cofre.";
+            message = "Bienvenido al calabozo de tierra, vence al Jefe de Tierra y recupera el talismán de su cofre.";
         } else if (currentMapObject.contains("Water")) {
-            message = "Bienvenido al calabozo de agua, vence al Jefe de Agua y recupera el talisman de su cofre.";
+            message = "Bienvenido al calabozo de agua, vence al Jefe de Agua y recupera el talismán de su cofre.";
         } else if (currentMapObject.contains("Wind")) {
-            message = "Bienvenido al calabozo de viento, vence al Jefe de Viento y recupera el talisman de su cofre.";
+            message = "Bienvenido al calabozo de viento, vence al Jefe de Viento y recupera el talismán de su cofre.";
         } else if (currentMapObject.contains("Fire")) {
-            message = "Bienvenido al calabozo de fuego, vence al Jefe de Fuego y recupera el talisman de su cofre.";
+            message = "Bienvenido al calabozo de fuego, vence al Jefe de Fuego y recupera el talismán de su cofre.";
         } else if (currentMapObject.contains("Capital")) {
             message = "Bienvenido a la Ciudad Central del reino Camlot.";
         } else if (currentMapObject.contains("House")) {

@@ -56,36 +56,36 @@ public class ChestObserver implements Observer {
     private void provideTalisman(Party playerParty, String currentMapObject) {
         String talisman = "";
         for (Item itemFound: playerParty.getActivePartyMember().getItems()){
-            if (itemFound.getDescription().equals("Talisman inicial")){
+            if (itemFound.getDescription().equals("Talismán inicial")){
                 talisman = itemFound.getDescription();
-            } else if (itemFound.getDescription().equals("Talisman tierra")) {
+            } else if (itemFound.getDescription().equals("Talismán tierra")) {
                 talisman = itemFound.getDescription();
-            } else if (itemFound.getDescription().equals("Talisman agua")) {
+            } else if (itemFound.getDescription().equals("Talismán agua")) {
                 talisman = itemFound.getDescription();
-            } else if (itemFound.getDescription().equals("Talisman viento")) {
+            } else if (itemFound.getDescription().equals("Talismán viento")) {
                 talisman = itemFound.getDescription();
-            } else if (itemFound.getDescription().equals("Talisman fuego")) {
+            } else if (itemFound.getDescription().equals("Talismán fuego")) {
                 talisman = itemFound.getDescription();
             }
         }
 
         for (Item item: dataItems){
-            if (item.getDescription().equals("Talisman tierra") && currentMapObject.contains("earth") && talisman.equals("")) {
+            if (item.getDescription().equals("Talismán tierra") && currentMapObject.contains("earth") && talisman.equals("")) {
                 GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
 
-            } else if (item.getDescription().equals("Talisman agua") && currentMapObject.contains("water") && talisman.equals("")) {
+            } else if (item.getDescription().equals("Talismán agua") && currentMapObject.contains("water") && talisman.equals("")) {
                 GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
 
-            } else if (item.getDescription().equals("Talisman viento") && currentMapObject.contains("wind") && talisman.equals("")) {
+            } else if (item.getDescription().equals("Talismán viento") && currentMapObject.contains("wind") && talisman.equals("")) {
                 GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
 
-            } else if (item.getDescription().equals("Talisman fuego") && currentMapObject.contains("fire") && talisman.equals("")) {
+            } else if (item.getDescription().equals("Talismán fuego") && currentMapObject.contains("fire") && talisman.equals("")) {
                 GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
@@ -104,7 +104,7 @@ public class ChestObserver implements Observer {
         dialogManager.updateSpeaker("Cofre");
         if (verifyAccess(playerParty.getActivePartyMember(), currentMapObject)) {
             provideTalisman(playerParty, currentMapObject);
-            dialogManager.updateDialog("Has obtenido un talisman, ve donde el Rey.");
+            dialogManager.updateDialog("Has obtenido un talismán, ve donde el Rey.");
         } else {
             dialogManager.updateDialog("Debes vencer al jefe para abrir el cofre.");
         }

@@ -336,7 +336,7 @@ public abstract class AbstractCharacter implements BattleActions {
         this.setHealthPoints(this.getHealthPoints()+this.getHealthPointsMax()*item.gethPEffect()/100);
         if(healthPoints>healthPointsMax)healthPoints=healthPointsMax;
         if(magicPoints>magicPointsMax)magicPoints=magicPointsMax;
-        if(item.getDescription().contains("Pocion")){
+        if(item.getDescription().contains("Poción")){
             items.remove(items.indexOf(item));
         }
     }

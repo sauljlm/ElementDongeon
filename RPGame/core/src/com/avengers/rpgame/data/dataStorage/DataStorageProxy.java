@@ -45,7 +45,7 @@ public class DataStorageProxy implements IDataStorage {
     public ArrayList<Item> getSpecialItemsList() {
         ArrayList<Item> result = dataStorage.getSpecialItemsList();
         if (result.isEmpty()){
-            Item basic = new Item(1,"Knight/Mage/Archer", "Talisman/Llave",0 ,0, Resources.talismanEarth, 0, 0, 0, 0, 0, 0, 0, 0);
+            Item basic = new Item(1,"Knight/Mage/Archer", "Talismán/Llave",0 ,0, Resources.talismanEarth, 0, 0, 0, 0, 0, 0, 0, 0);
             result.add(basic);
         }
         return result;
@@ -55,7 +55,7 @@ public class DataStorageProxy implements IDataStorage {
     public ArrayList<Item> getConsumableItemsList() {
         ArrayList<Item> result = dataStorage.getConsumableItemsList();
         if (result.isEmpty()){
-            Consumable basic = new Consumable(1,"Knight/Mage/Archer", "Pocion ligera", 600, 1, Resources.lightHealth, 3, 0, 0, 0, 0, 0, 50, 50);
+            Consumable basic = new Consumable(1,"Knight/Mage/Archer", "Poción ligera", 600, 1, Resources.lightHealth, 3, 0, 0, 0, 0, 0, 50, 50);
             result.add(basic);
         }
         return result;

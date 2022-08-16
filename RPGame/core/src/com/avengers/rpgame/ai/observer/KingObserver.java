@@ -18,7 +18,6 @@ public class KingObserver  implements Observer {
     private ArrayList<Item> dataItems;
     private ProxyDataManager proxyDataManager;
     private DialogManager dialogManager;
-
     public KingObserver() {
         dialogManager = DialogManager.getInstance();
         proxyDataManager = new ProxyDataManager();
@@ -30,15 +29,15 @@ public class KingObserver  implements Observer {
         boolean access = false;
 
         for (Item itemFound: playerCharacter.getItems()){
-            if (itemFound.getDescription().equals("Talisman inicial")){
+            if (itemFound.getDescription().equals("Talismán inicial")){
                 access = true;
-            } else if (itemFound.getDescription().equals("Talisman tierra")) {
+            } else if (itemFound.getDescription().equals("Talismán tierra")) {
                 access = true;
-            } else if (itemFound.getDescription().equals("Talisman agua")) {
+            } else if (itemFound.getDescription().equals("Talismán agua")) {
                 access = true;
-            } else if (itemFound.getDescription().equals("Talisman viento")) {
+            } else if (itemFound.getDescription().equals("Talismán viento")) {
                 access = true;
-            } else if (itemFound.getDescription().equals("Talisman fuego")) {
+            } else if (itemFound.getDescription().equals("Talismán fuego")) {
                 access = true;
             }
         }
@@ -78,48 +77,44 @@ public class KingObserver  implements Observer {
         String talisman = "";
 
         for (Item itemFound: playerParty.getActivePartyMember().getItems()){
-            if (itemFound.getDescription().equals("Talisman inicial")){
+            if (itemFound.getDescription().equals("Talismán inicial")){
                 talisman = itemFound.getDescription();
-            } else if (itemFound.getDescription().equals("Talisman tierra")) {
+            } else if (itemFound.getDescription().equals("Talismán tierra")) {
                 talisman = itemFound.getDescription();
-            } else if (itemFound.getDescription().equals("Talisman agua")) {
+            } else if (itemFound.getDescription().equals("Talismán agua")) {
                 talisman = itemFound.getDescription();
-            } else if (itemFound.getDescription().equals("Talisman viento")) {
+            } else if (itemFound.getDescription().equals("Talismán viento")) {
                 talisman = itemFound.getDescription();
-            } else if (itemFound.getDescription().equals("Talisman fuego")) {
+            } else if (itemFound.getDescription().equals("Talismán fuego")) {
                 talisman = itemFound.getDescription();
             }
         }
         for (Item item: dataItems){
-            if (item.getDescription().equals("Llave tierra") && talisman.equals("Talisman inicial")){
+            if (item.getDescription().equals("Llave tierra") && talisman.equals("Talismán inicial")){
                 GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
                 deleteTalisman(talisman);
-                this.keyName = "¡Les deseo éxito en su aventura! Aquí tienes la llave del calabozo de tierra. Tráeme el talisman.";
-
-            } else if (item.getDescription().equals("Llave agua") && talisman.equals("Talisman tierra")){
+                this.keyName = "¡Les deseo éxito en su aventura! Aquí tienes la llave del calabozo de tierra. Tráeme el talismán.";
+            } else if (item.getDescription().equals("Llave agua") && talisman.equals("Talismán tierra")){
                 GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
                 deleteTalisman(talisman);
-                this.keyName = "¡Excelente trabajo! Aquí tienes la llave del calabozo de agua. Tráeme el talisman.";
-
-            } else if (item.getDescription().equals("Llave viento") && talisman.equals("Talisman agua")){
+                this.keyName = "¡Excelente trabajo! Aquí tienes la llave del calabozo de agua. Tráeme el talismán.";
+            } else if (item.getDescription().equals("Llave viento") && talisman.equals("Talismán agua")){
                 GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
                 deleteTalisman(talisman);
-                this.keyName = "¡Gracias por la ayuda! Aquí tienes la llave del calabozo de viento. Tráeme el talisman.";
-
-            } else if (item.getDescription().equals("Llave fuego") && talisman.equals("Talisman viento")){
+                this.keyName = "¡Gracias por la ayuda! Aquí tienes la llave del calabozo de viento. Tráeme el talismán.";
+            } else if (item.getDescription().equals("Llave fuego") && talisman.equals("Talismán viento")){
                 GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
                 deleteTalisman(talisman);
-                this.keyName = "¡Estupendo, solo falta un talisman! Aquí tienes la llave del calabozo de fuego. Tráeme el talisman.";
-
-            } else if (item.getDescription().equals("Llave elemental") && talisman.equals("Talisman fuego")){
+                this.keyName = "¡Estupendo, solo falta un talismán! Aquí tienes la llave del calabozo de fuego. Tráeme el talismán.";
+            } else if (item.getDescription().equals("Llave elemental") && talisman.equals("Talismán fuego")){
                 GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);

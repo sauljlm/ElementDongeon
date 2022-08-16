@@ -46,7 +46,8 @@ public class BattleHUD {
         this.type = type;
         createHearts(type);
         weapon = new Weapon((int)(party.getActivePartyMember().getLevel()), this.characterClass);
-        magicPower.get_sprite().setCenterX((float)gameConfig.getResolutionHorizontal()*0.18f);
+        magicPower.get_sprite().setCenterX((float)gameConfig.getResolutionHorizontal()*0.09f);
+        magicPower.get_sprite().setCenterY((float)gameConfig.getResolutionVertical()*0.91f);
     }
 
     public Array<Heart> getHeartsHB() {
@@ -133,7 +134,7 @@ public class BattleHUD {
         }
         if (GameStatus.getInstance().getPlayerParty().getActivePartyMember().getCharacterClass().getIdCharacterClass() == 3) {
             magicPower.get_sprite().draw(batch);
-            gameFont.draw(batch, String.valueOf(GameStatus.getInstance().getPlayerParty().getActivePartyMember().getMagicPoints()), resolution.x*0.2f, resolution.y*0.96f);
+            gameFont.draw(batch, String.valueOf(GameStatus.getInstance().getPlayerParty().getActivePartyMember().getMagicPoints()), resolution.x*0.12f, resolution.y*0.915f);
         }
 
         levelIcon.get_sprite().draw(batch);
@@ -146,7 +147,7 @@ public class BattleHUD {
         if(type == 1){
             gameFont.draw(batch, String.valueOf(this.playerLevel), resolution.x-resolution.x*0.230f, resolution.y*0.945f);
             lvlFont.draw(batch, "Nivel", resolution.x-resolution.x*0.235f, resolution.y*0.965f);
-            gameFont.draw(batch, "Esqueleto de tierra", resolution.x-resolution.x*0.190f, resolution.y*0.96f);
+            gameFont.draw(batch,GameStatus.getInstance().getEnemyParty().getPartyMember(1).getDescription(), resolution.x-resolution.x*0.190f, resolution.y*0.96f);
         }
 
     }
