@@ -58,6 +58,7 @@ public class RefereeBattleAI {
             party.setPartyMember1Status(false);
             partyMember1 =false;
         }
+
         //Code commented because only active party member fights
 //        if(!checkAlive(party.getPartyMember(2))){ //If not alive set it as inactive/death
 //            party.setPartyMember2Status(false);
@@ -67,6 +68,7 @@ public class RefereeBattleAI {
 //            party.setPartyMember3Status(false);
 //            partyMember3 =false;
 //        }
+
         return partyMember1; //returns false for death party, true if any member is still alive
 //        return partyMember1 || partyMember2 || partyMember3; //returns false for death party, true if any member is still alive
     }

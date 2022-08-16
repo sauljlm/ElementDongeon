@@ -15,6 +15,10 @@ import com.avengers.rpgame.logic.entities.character.components.animatedCharacter
 import com.avengers.rpgame.utils.Utils;
 import com.badlogic.gdx.math.Vector2;
 
+/*******************************************************************************
+ *This class contains AI logic for all related to detecting and consequences
+ * when the party members are not close
+ *******************************************************************************/
 public class OneForAllAI {
     private GameConfig gameConfig;
     private GameStatus gameStatus;

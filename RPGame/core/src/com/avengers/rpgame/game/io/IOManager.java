@@ -37,7 +37,9 @@ public class IOManager {
         inventary = Inventary.getInstance();
     }
 
-    //the idea for this method is to process different request of IO processInput differently acording to the screen
+    /*******************************************************************************
+     *method is to process different request of IO processInput differently according to the screen
+     *******************************************************************************/
     public void processInput(String type, float delta, Party playerParty){
 //        playerParty.getPartyMember1().setPosition(playerParty.getPartyMember1().getAnimatedCharacter().getPlayer().getPosition());
         if(type.equals("overworld")){
@@ -200,7 +202,7 @@ public class IOManager {
     }
 
     public static IOManager getInstance() {
-        //There's a bug with Input processor
+        //There's a bug with Input processor to use as a Singleton Pattern
 //        if (instance == null) {
             instance = new IOManager();
 //        }

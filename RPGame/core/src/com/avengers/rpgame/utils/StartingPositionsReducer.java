@@ -9,6 +9,9 @@ import com.badlogic.gdx.math.Vector2;
 import java.util.HashMap;
 import java.util.Random;
 
+/*******************************************************************************
+ *Provides initial positions to game characters
+ *******************************************************************************/
 public class StartingPositionsReducer {
     private GameConfig gameConfig;
     private GameStatus gameStatus;

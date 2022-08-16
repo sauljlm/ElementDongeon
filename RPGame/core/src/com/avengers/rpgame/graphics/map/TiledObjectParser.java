@@ -13,7 +13,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 
-//This class is going to receive all the objects coming from the tiled map layer and parse them by type/class
+/*******************************************************************************
+ *This class is going to receive all the objects coming from the tiled map
+ * layer and parse them by type/class
+ *******************************************************************************/
 //The other way to do this is by assigning properties to every object created on tiled (to much work..) this is faster for dev, maybe more CPU consuming though
 public class TiledObjectParser {
     private static GameConfig gameConfig = GameConfig.getInstance();

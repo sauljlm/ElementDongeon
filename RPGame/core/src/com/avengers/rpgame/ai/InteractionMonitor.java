@@ -40,6 +40,9 @@ public class InteractionMonitor implements Subject {
         return interactiveMapObjects;
     }
 
+    /*******************************************************************************
+     *Monitors surroundings of interactive objects in map and notifies observers
+     *******************************************************************************/
     public void monitorSurroundings(Party playerParty) {
         Vector2 characterC = new Vector2(((DynamicAnimatedCharacter)playerParty.getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition());
         boolean objectFound;

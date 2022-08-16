@@ -13,8 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 import java.io.IOError;
 
-
-//Patron facade?
+/*******************************************************************************
+ *Class to load assets, internally it uses de asset manager.
+ * This prevents loading every assets more than once.
+ *******************************************************************************/
 public class FileManager {
     private static GameConfig config = GameConfig.getInstance();
     private static MyAssetManager assetManager = MyAssetManager.getInstance();

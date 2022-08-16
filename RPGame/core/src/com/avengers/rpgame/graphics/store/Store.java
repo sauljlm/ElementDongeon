@@ -274,24 +274,24 @@ public class Store {
 
     public void setActionMessage() {
         if (this.actionType == 1) {
-            this.message = "Presione C para comprar";
+            this.message = "Presione 'C' para comprar";
         } else if (this.actionType == 2){
-            this.message = "Presione V para vender";
+            this.message = "Presione 'V' para vender";
         }
     }
 
     public void setConfirmationMessage(boolean done) {
         if (this.actionType == 1) {
             if (done) {
-                this.message = "Compra realizada con exito";
+                this.message = "Compra realizada con éxito.";
             } else {
-                this.message = "Esto ya lo tienes, revisa tu inventario";
+                this.message = "Esto ya lo tienes, revisa tu inventario.";
             }
         } else if (this.actionType == 2) {
             if (done) {
-                this.message = "Venta realizada con éxito";
+                this.message = "Venta realizada con éxito.";
             } else {
-                this.message = "La venta no se realizo";
+                this.message = "La venta no se realizó.";
             }
         }
     }

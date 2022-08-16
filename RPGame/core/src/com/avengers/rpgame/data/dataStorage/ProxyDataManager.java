@@ -7,6 +7,10 @@ import com.avengers.rpgame.logic.entities.character.components.CharacterClass;
 
 import java.util.ArrayList;
 
+/*******************************************************************************
+ *Manager to access all game data such as attacks, items, character class, etc
+ * using Proxy Pattern
+ *******************************************************************************/
 public class ProxyDataManager {
 
     IDataStorage dataStorageProxy;

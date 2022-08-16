@@ -34,14 +34,19 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
     int coins = 1000;
     int experiencePoints;
 
-    //This method builds a Dummy from any complete character. A dummy only contains the animatedCharacter data for it to render on the game. This is used on battle screen /Character selection screen.
+    /*******************************************************************************
+     *This method builds a Dummy from any complete character. A dummy only contains the
+     * animatedCharacter data for it to render on the game. This is used on battle screen /Character selection screen.
+     *******************************************************************************/
     public void buildBattleDummy(ICharacterBuilder builder, RPGame rpGame, AbstractCharacter baseCharacter){
         ISkin skin = baseCharacter.getAnimatedCharacter().getSkin();
         AAnimatedCharacter animatedCharacter = new StaticAnimatedCharacter(skin, rpGame, new Vector2(0,0));
         builder.setAnimatedCharacter(animatedCharacter);
     }
 
-    // Playable characters
+    /*******************************************************************************
+     *Playable characters
+     *******************************************************************************/
     public void buildKnight(ICharacterBuilder builder, World world, RPGame rpGame, String playerName){
         position = startingPositionsReducer.getPosition("player");
         skinFactory = new KnighSkinFactory();
@@ -124,7 +129,9 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setSkills(skills);
     }
 
-    //Playable characters from DB
+    /*******************************************************************************
+     *Playable characters from DB
+     *******************************************************************************/
     public void buildKnightFromDB(ICharacterBuilder builder, World world, RPGame rpGame, int partyMember){
         position = startingPositionsReducer.getPosition("player");
         skinFactory = new KnighSkinFactory();
@@ -206,7 +213,10 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setSkills(skills);
     }
 
-    //Enemies
+
+    /*******************************************************************************
+     *Enemies
+     *******************************************************************************/
     //Random Skeleton is used for overworld's scary forests
     public void buildRandomSkeleton(ICharacterBuilder builder, World world, RPGame rpGame, String id){
         position = startingPositionsReducer.getPosition(id);
@@ -231,6 +241,7 @@ public class EntitiesBuilderDirector implements ICharacterDirector {
         builder.setAttacks(attacks);
         builder.setSkills(skills);
     }
+
     public void buildEarthSkeleton(ICharacterBuilder builder, World world, RPGame rpGame, String id){
         position = startingPositionsReducer.getPosition(id);
         skinFactory = new EarthSkeletonSkinFactory();

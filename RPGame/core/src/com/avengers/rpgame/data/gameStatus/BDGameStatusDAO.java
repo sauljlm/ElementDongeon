@@ -18,7 +18,6 @@ public class BDGameStatusDAO implements IGameStatusDAO{
     public BDGameStatusDAO() {
     }
 
-    //TODO for future me, refactor this into stored procedures
     @Override
     public void saveGameStatus() {
         GameStatus gameStatus = GameStatus.getInstance();

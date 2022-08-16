@@ -15,7 +15,9 @@ import java.util.ArrayList;
 
 import static com.avengers.rpgame.utils.Resources.resourceSwordAttackSound;
 
-//Abstract Father class for all types of characters
+/*******************************************************************************
+ *Abstract Father class for all types of characters
+ *******************************************************************************/
 public abstract class AbstractCharacter implements BattleActions {
     private int idCharacter;
     private String name; //Example: King Jorge 9th
