@@ -73,6 +73,6 @@ public class InventaryBG {
         this.set_sprite(new Sprite(this.get_texture()));
         this.setItemX((int)position.x);
         this.setItemY((int)position.y);
-        this.setSize(580, 800);
+        this.setSize(580, 900);
     }
 }

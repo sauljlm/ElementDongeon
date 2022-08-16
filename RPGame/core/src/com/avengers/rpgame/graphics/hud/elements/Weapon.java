@@ -133,7 +133,7 @@ public class Weapon {
     private void createWeapon() {
         GameConfig gameConfig = GameConfig.getInstance();
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
-        Vector2 ofset =  new Vector2(resolution.x*0.8f, resolution.y*0.08f);
+        Vector2 ofset =  new Vector2(resolution.x*0.975f, resolution.y*0.18f);
         Vector2 position = new Vector2(resolution.x -ofset.x, resolution.y-ofset.y);
         this.set_texture(loadTexture(this.getWeaponPath()));
         this.set_sprite(new Sprite(this.get_texture()));

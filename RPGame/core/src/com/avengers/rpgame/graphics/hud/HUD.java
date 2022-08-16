@@ -116,7 +116,7 @@ public class HUD {
         }
         if (this.character.getCharacterClass().getIdCharacterClass() == 3) {
             magicPower.get_sprite().draw(rpGame.batch);
-            gameFont.draw(rpGame.batch, String.valueOf(this.character.getMagicPoints()), resolution.x*0.3f, resolution.y*0.96f);
+            gameFont.draw(rpGame.batch, String.valueOf(this.character.getMagicPoints()), resolution.x*0.11f, resolution.y*0.855f);
         }
 
         levelIcon.get_sprite().draw(rpGame.batch);

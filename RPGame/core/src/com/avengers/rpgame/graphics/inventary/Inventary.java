@@ -30,7 +30,7 @@ public class Inventary {
     private ArrayList<Item>sourceItems = new ArrayList<Item>();
     private ProxyDataManager proxyDataManager;
     private AbstractCharacter character;
-    private InventaryBG inventary = new InventaryBG(0.64f, 0.85f);
+    private InventaryBG inventary = new InventaryBG(0.64f, 0.9f);
     private BitmapFont gameFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.inventaryTittleFontSize, Color.WHITE, false, Color.BLACK);
     private BitmapFont nameFont = FontFactory.createBitMapFont(Gdx.files.internal(Resources.resourceMainFont), Resources.inventaryNameFontSize, Color.WHITE, false, Color.BLACK);
     private GameConfig gameConfig;
@@ -79,15 +79,15 @@ public class Inventary {
         this.updateInventaryItems();
         if (this.getShowInventary()) {
             inventary.get_sprite().draw(batch);
-            gameFont.draw(batch, "Inventario", resolution.x*0.465f, resolution.y*0.86f);
+            gameFont.draw(batch, "Inventario", resolution.x*0.472f, resolution.y*0.905f);
             for(ScreenItem item: screenItems) {
                 item.get_sprite().draw(batch);
-                GlyphLayout description = new GlyphLayout(nameFont, item.getDescription(), Color.WHITE, 90, Align.left, true);
-                nameFont.draw(batch, description, item.getItemX(), item.getItemY()-10);
+                GlyphLayout description = new GlyphLayout(nameFont, item.getDescription(), Color.WHITE, 95, Align.left, true);
+                nameFont.draw(batch, description, item.getItemX()-5, item.getItemY()-10);
             }
-            gameFont.draw(batch, "Ataques", resolution.x*0.38f, resolution.y*0.78f);
-            gameFont.draw(batch, "Habilidades", resolution.x*0.38f, resolution.y*0.6f);
-            gameFont.draw(batch, "Items", resolution.x*0.38f, resolution.y*0.42f);
+            gameFont.draw(batch, "Ataques", resolution.x*0.375f, resolution.y*0.825f);
+            gameFont.draw(batch, "Habilidades", resolution.x*0.375f, resolution.y*0.675f);
+            gameFont.draw(batch, "Items", resolution.x*0.375f, resolution.y*0.385f);
         }
     }
 
@@ -120,11 +120,11 @@ public class Inventary {
     private void createItems() {
         this.screenItems = new Array<ScreenItem>();
         double lastValueX = 0.62;
-        double lastValueY = 0.35;
+        double lastValueY = 0.28;
         int lastItem = 0;
 
         for (Attack tItem : this.sourceAttaks) {
-            ScreenItem item = new ScreenItem(tItem.getImagePath(), tItem.getPrice(), tItem.getDescription(), lastValueX, lastValueY, 100);
+            ScreenItem item = new ScreenItem(tItem.getImagePath(), tItem.getPrice(), tItem.getDescription(), lastValueX, lastValueY, 80);
             screenItems.add(item);
             lastValueX -= 0.055;
             lastItem++;
@@ -135,10 +135,10 @@ public class Inventary {
             }
         }
         lastValueX = 0.62;
-        lastValueY += 0.18;
+        lastValueY = 0.44;
         lastItem = 0;
         for (Skill tItem : this.sourceSkills) {
-            ScreenItem item = new ScreenItem(tItem.getImagePath(), tItem.getPrice(), tItem.getDescription(), lastValueX, lastValueY, 100);
+            ScreenItem item = new ScreenItem(tItem.getImagePath(), tItem.getPrice(), tItem.getDescription(), lastValueX, lastValueY, 80);
             screenItems.add(item);
             lastValueX -= 0.055;
             lastItem++;
@@ -149,10 +149,10 @@ public class Inventary {
             }
         }
         lastValueX = 0.62;
-        lastValueY += 0.18;
+        lastValueY = 0.728;
         lastItem = 0;
         for (Item tItem : this.sourceItems) {
-            ScreenItem item = new ScreenItem(tItem.getImagePath(), tItem.getPrice(), tItem.getDescription(), lastValueX, lastValueY, 100);
+            ScreenItem item = new ScreenItem(tItem.getImagePath(), tItem.getPrice(), tItem.getDescription(), lastValueX, lastValueY, 80);
             screenItems.add(item);
             lastValueX -= 0.055;
             lastItem++;

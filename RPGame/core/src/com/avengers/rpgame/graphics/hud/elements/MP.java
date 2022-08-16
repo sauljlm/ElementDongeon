@@ -64,7 +64,7 @@ public class MP {
     private void createMagicPower () {
         GameConfig gameConfig = GameConfig.getInstance();
         Vector2 resolution = new Vector2((float)gameConfig.getResolutionHorizontal(), (float)gameConfig.getResolutionVertical());
-        Vector2 ofset =  new Vector2(resolution.x*0.74f, resolution.y*0.07f);
+        Vector2 ofset =  new Vector2(resolution.x*0.925f, resolution.y*0.175f);
         Vector2 position = new Vector2(resolution.x -ofset.x, resolution.y-ofset.y);
         this.set_texture(loadTexture(HUDPotion));
         this.set_sprite(new Sprite(this.get_texture()));

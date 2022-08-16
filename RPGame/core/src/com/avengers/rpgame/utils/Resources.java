@@ -186,7 +186,7 @@ public class Resources {
     public static final int generalHUDFontSize = 36;
     public static final int levelHUDFontSize = 20;
     public static final int generalDialogFontSize = 36;
-    public static final int inventaryTittleFontSize = 36;
+    public static final int inventaryTittleFontSize = 30;
     public static final int inventaryNameFontSize = 16;
 
 
