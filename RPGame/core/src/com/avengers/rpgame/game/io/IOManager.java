@@ -63,7 +63,7 @@ public class IOManager {
             gameStatus.setCurrentLocation("earthDungeon");
         }
         //WindDungeon
-        if (262 < pos.x && pos.x < 370 && 100 < pos.y && pos.y < 172) {
+        if (262 < pos.x && pos.x < 400 && 100 < pos.y && pos.y < 172) {
             gameStatus.setCurrentLocation("windDungeon");
         }
         //WaterDungeon

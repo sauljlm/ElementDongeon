@@ -41,16 +41,19 @@ public class SignObserver implements Observer {
             message = "Tienda oficial del Reino Camlot. Presiona la tecla 'T' en tu teclado para ingresar.";
         } else if (currentMapObject.contains("Walk")) {
             dialogManager.updateSpeaker("Importante");
-            message = "Para desplazarte en el mapa puedes usar las teclas 'AWSD' o las flechas en tu teclado.";
+            message = "Presiona las teclas 'AWSD' o las flechas en tu teclado para desplazarte en el mapa.";
         } else if (currentMapObject.contains("Pause")) {
             dialogManager.updateSpeaker("Importante");
-            message = "Para pausar o guardar la partida presiona la tecla 'ESC' en tu teclado.";
+            message = "Presiona la tecla 'ESC' en tu teclado para pausar o guardar la partida.";
         } else if (currentMapObject.contains("Battle")) {
             dialogManager.updateSpeaker("Importante");
             message = "Durante una batalla usa el ratón para hacer clic en el ataque, habilidad o item para usarlo.";
         } else if (currentMapObject.contains("Rotate")) {
             dialogManager.updateSpeaker("Importante");
             message = "Mantén a tus compañeros cerca, presiona la tecla 'TAB' para cambiar de personaje.";
+        } else if (currentMapObject.contains("Inventory")) {
+            dialogManager.updateSpeaker("Importante");
+            message = "Presiona la tecla 'I' en tu teclado para ver y ocultar el inventario.";
         }
         dialogManager.updateDialog(message);
     }

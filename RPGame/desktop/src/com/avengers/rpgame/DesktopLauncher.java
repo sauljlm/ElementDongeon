@@ -36,8 +36,8 @@ public class DesktopLauncher {
 		gameConfig.setFullScreen(false);
 		gameConfig.setResolutionHorizontal(1920); //If full screen is true resolution is got automatically from monitor/openGl stuff
 		gameConfig.setResolutionVertical(1080);
-		gameConfig.setGodMode(false); //God Mode true makes Party move master for debugging
-		gameConfig.setSkipIntro(false);
+		gameConfig.setGodMode(true); //God Mode true makes Party move faster
+		gameConfig.setSkipIntro(true);
 		gameConfig.setMapTileSize(16);
 		gameConfig.setMusicVolume(0.1f);
 		gameConfig.setSoundEffectsVolume(0.3f);

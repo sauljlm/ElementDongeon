@@ -18,6 +18,7 @@ public class KingObserver  implements Observer {
     private ArrayList<Item> dataItems;
     private ProxyDataManager proxyDataManager;
     private DialogManager dialogManager;
+
     public KingObserver() {
         dialogManager = DialogManager.getInstance();
         proxyDataManager = new ProxyDataManager();
@@ -41,10 +42,6 @@ public class KingObserver  implements Observer {
                 access = true;
             }
         }
-
-//        if (playerCharacter.getLevel() >= 1) {
-//            access = true;
-//        }
 
         return access;
     }
@@ -100,24 +97,28 @@ public class KingObserver  implements Observer {
                 GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
                 deleteTalisman(talisman);
                 this.keyName = "¡Les deseo éxito en su aventura! Aquí tienes la llave del calabozo de tierra. Tráeme el talisman.";
+
             } else if (item.getDescription().equals("Llave agua") && talisman.equals("Talisman tierra")){
                 GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
                 deleteTalisman(talisman);
                 this.keyName = "¡Excelente trabajo! Aquí tienes la llave del calabozo de agua. Tráeme el talisman.";
+
             } else if (item.getDescription().equals("Llave viento") && talisman.equals("Talisman agua")){
                 GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
                 deleteTalisman(talisman);
                 this.keyName = "¡Gracias por la ayuda! Aquí tienes la llave del calabozo de viento. Tráeme el talisman.";
+
             } else if (item.getDescription().equals("Llave fuego") && talisman.equals("Talisman viento")){
                 GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(3).addNewItem(item);
                 deleteTalisman(talisman);
                 this.keyName = "¡Estupendo, solo falta un talisman! Aquí tienes la llave del calabozo de fuego. Tráeme el talisman.";
+
             } else if (item.getDescription().equals("Llave elemental") && talisman.equals("Talisman fuego")){
                 GameStatus.getInstance().getPlayerParty().getPartyMember(1).addNewItem(item);
                 GameStatus.getInstance().getPlayerParty().getPartyMember(2).addNewItem(item);
@@ -137,11 +138,7 @@ public class KingObserver  implements Observer {
     @Override
     public void actionTrigger(Party playerParty, Body currentBody, String currentMapObject) {
         dialogManager.updateSpeaker("Rey");
-        if (verifyAccess(playerParty.getActivePartyMember())) {
-            provideKey(playerParty);
-            dialogManager.updateDialog(keyName);
-        } else {
-            dialogManager.updateDialog("Necesitas traerme el talisman del cofre para entregarte la siguiente llave.");
-        }
+        provideKey(playerParty);
+        dialogManager.updateDialog(keyName);
     }
 }
