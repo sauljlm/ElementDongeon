@@ -59,6 +59,8 @@ public class FightScreen implements Screen {
     private AbstractCharacter enemy;
     private RewardFactory rewardFactory;
 
+    private Sprite activePartyMemberIcon;
+
     //HUD default values
     private int userHealth = 100;
     private int playerLevel = 94;
@@ -117,6 +119,8 @@ public class FightScreen implements Screen {
         this.timer = new Timer();
         this.playerParty = gameStatus.getPlayerParty();
         this.enemyParty = gameStatus.getEnemyParty();
+        activePartyMemberIcon = new Sprite(loadTexture(activePartyMemberResource));
+        activePartyMemberIcon.setCenter(((DynamicAnimatedCharacter)gameStatus.getPlayerParty().getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition().x,((DynamicAnimatedCharacter)gameStatus.getPlayerParty().getActivePartyMember().getAnimatedCharacter()).getPlayer().getPosition().y);
         disponsables =new ArrayList<>();
         messageStringList = new ArrayList<String>();
         aiManager = AIManager.getInstance();
@@ -130,15 +134,15 @@ public class FightScreen implements Screen {
 //        hudEnemy = new BattleHUD(1, this.userHealth, this.playerLevel, this.magicLevel, this.experiencePoints,this.characterClass);
         rewardFactory = new RewardFactory();
 
-        director.buildBattleDummy(characterBuilder, game, playerParty.getPartyMember(1));
+        director.buildBattleDummy(characterBuilder, game, playerParty.getInactivePartyMember(1));
         partyMemberAnimated1 = characterBuilder.getResult();
         partyMemberAnimated1.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/9.5f/16, config.getResolutionVertical()/3*1.22f/16));
 
-        director.buildBattleDummy(characterBuilder, game, playerParty.getPartyMember(2));
+        director.buildBattleDummy(characterBuilder, game, playerParty.getInactivePartyMember(2));
         partyMemberAnimated2 = characterBuilder.getResult();
         partyMemberAnimated2.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/9.5f/16*2, config.getResolutionVertical()/3*1.2f/16));
 
-        director.buildBattleDummy(characterBuilder, game, playerParty.getPartyMember(3));
+        director.buildBattleDummy(characterBuilder, game, playerParty.getActivePartyMember());
         partyMemberAnimated3 = characterBuilder.getResult();
         partyMemberAnimated3.getAnimatedCharacter().setTextureScreenLocation(new Vector2(config.getResolutionHorizontal()/9.5f/16*3, config.getResolutionVertical()/3*1.2f/16));
 
@@ -483,6 +487,14 @@ public class FightScreen implements Screen {
         enemyPartyAction();
     }
 
+    private void renderSelectorIcon(){
+        Vector2 position = new Vector2();
+            position.x =config.getResolutionHorizontal()/8.3f/16*3;
+            position.y = config.getResolutionVertical()/3f*1.8f/16;
+
+        game.batch.draw(activePartyMemberIcon, (position.x*GameConfig.getInstance().getPPM()), position.y*GameConfig.getInstance().getPPM(),50,50);
+    }
+
     @Override
     public void render(float delta) {
         logic(delta);// Separate the game logic from rendering for clarity
@@ -494,16 +506,17 @@ public class FightScreen implements Screen {
         game.batch.begin();
         game.batch.draw(backgroundImage, 0, 0);
         backgroundOverlay.draw(game.batch);
-        partyMemberAnimated1.getAnimatedCharacter().draw(delta/2f);
-        partyMemberAnimated2.getAnimatedCharacter().draw(delta/2f);
-        partyMemberAnimated3.getAnimatedCharacter().draw(delta/2f);
-        enemy.getAnimatedCharacter().draw(delta/2f);
+        partyMemberAnimated1.getAnimatedCharacter().draw(delta/1.5f);
+        partyMemberAnimated2.getAnimatedCharacter().draw(delta/1.5f);
+        partyMemberAnimated3.getAnimatedCharacter().draw(delta/1.5f);
+        enemy.getAnimatedCharacter().draw(delta/1.5f);
         game.batch.end();
         stage.act(delta);
         stage.draw();
         game.batch.begin();
         hudPlayer.draw(game.batch);
         hudEnemy.draw(game.batch);
+        renderSelectorIcon();
         game.batch.end();
     }
 
