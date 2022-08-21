@@ -19,6 +19,8 @@ public class GameConfig {
     private float soundEffectsVolume;
     private int mapTileSize;
     private float frameTime;
+
+    private boolean cameraMode;
 //    private int cameraHeight;
 
     private GameConfig() {
@@ -146,6 +148,14 @@ public class GameConfig {
 
     public void setMapTileSize(int mapTileSize) {
         this.mapTileSize = mapTileSize;
+    }
+
+    public boolean isCameraMode() {
+        return cameraMode;
+    }
+
+    public void setCameraMode(boolean cameraMode) {
+        this.cameraMode = cameraMode;
     }
 
     //PATRON Singleton

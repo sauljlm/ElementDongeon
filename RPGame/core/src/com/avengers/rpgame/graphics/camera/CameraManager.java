@@ -5,6 +5,7 @@ import com.avengers.rpgame.data.gameStatus.GameStatus;
 import com.avengers.rpgame.game.GameConfig;
 import com.avengers.rpgame.graphics.graphicManagerMediador.iGraphicManager;
 import com.avengers.rpgame.logic.entities.character.components.animatedCharacter.DynamicAnimatedCharacter;
+import com.avengers.rpgame.utils.StartingPositionsReducer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
@@ -63,7 +64,9 @@ public class CameraManager extends iGraphicManager {
         }
         position.x = position.x * gameConfig.getPPM();
         position.y = position.y * gameConfig.getPPM();
-//        position.z = camera.position.z;
+        if (gameConfig.isCameraMode()){
+            position = new Vector3(gameStatus.getCameraPosition().x* gameConfig.getPPM(), gameStatus.getCameraPosition().y* gameConfig.getPPM(), 0);
+        }
         camera.position.set(position);
         camera.update();
     }

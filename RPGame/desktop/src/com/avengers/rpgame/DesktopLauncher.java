@@ -33,16 +33,17 @@ public class DesktopLauncher {
 		gameConfig.setPPM(16); //Sets the size of items for box2D physics simulation
 		gameConfig.setScale(2.0f); //Sets the scale of items for box2D physics simulation
 		gameConfig.setvSync(true);
-		gameConfig.setFullScreen(true);
+		gameConfig.setFullScreen(false);
 		gameConfig.setResolutionHorizontal(1920); //If full screen is true resolution is got automatically from monitor/openGl stuff
 		gameConfig.setResolutionVertical(1080);
 		gameConfig.setGodMode(false); //God Mode true makes Party move master for debugging
 		gameConfig.setSkipIntro(false);
 		gameConfig.setMapTileSize(16);
-		gameConfig.setMusicVolume(0.1f);
-		gameConfig.setSoundEffectsVolume(0.3f);
+		gameConfig.setMusicVolume(0.04f);
+		gameConfig.setSoundEffectsVolume(0.2f);
 		gameConfig.setFrameTime(1 / 15f);//Value based on docs
 		gameConfig.setDebugPhysics(false);
+		gameConfig.setCameraMode(false);
 		return gameConfig;
 	}
 }

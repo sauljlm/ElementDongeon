@@ -95,6 +95,10 @@ public class IOManager {
 
     //Process input for overworld gameplay
     private void overworldUpdate(float delta, Party playerParty) {
+        if(GameConfig.getInstance().isCameraMode()){
+            cameraMode();
+            return;
+        }
         float horizontalForce = 0;
         float verticalForce = 0;
         float movementSpeed = 1.5f;
@@ -158,6 +162,25 @@ public class IOManager {
         if(inputProcessor.isPause()){
             ScreeenManager.getInstance().changeScreen("PauseScreen");
         }
+    }
+
+    private void cameraMode(){
+        Vector2 position = gameStatus.getCameraPosition();
+        float delta= 0.06f;
+        if(inputProcessor.isMoveLeft()) {
+            position.x = position.x - delta;
+        }
+        if(inputProcessor.isMoveRight()){
+            position.x = position.x + delta;
+        }
+        if(inputProcessor.isMoveUp()) {
+            position.y = position.y + delta;
+        }
+
+        if(inputProcessor.isMoveDown()){
+            position.y = position.y - delta;
+        }
+        gameStatus.setCameraPosition(position);
     }
 
     //Process input for overworld gameplay

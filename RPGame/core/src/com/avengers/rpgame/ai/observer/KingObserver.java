@@ -23,6 +23,7 @@ public class KingObserver  implements Observer {
         proxyDataManager = new ProxyDataManager();
         dataItems = proxyDataManager.getSpecialItemsList();
         observerName="king";
+        keyName="Necesitamos tu ayuda, traeme el talizman";
     }
 
     private boolean verifyAccess(AbstractCharacter playerCharacter) {
