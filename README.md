@@ -6,6 +6,19 @@ RPGame es un juego RPG escrito en Java que utiliza [libGDX](https://libgdx.com/)
 
 
 ## Como iniciar
+El juego requiere el la instalación de Java 17 o superior para poder utilizarlo
+
+Al tener instalado Java, debe descargar el .Zip ubicado en el siguiente enlace 
+[lement Dungeon](https://drive.google.com/file/d/1dDcEUp64zHsMMDzq4Zdp5EuUf79HFlu2/view?usp=sharing)
+
+Al descomrpimir el archivo, dentro encontrará un documento .Readme dónde encontrarás las siguientes instrucciones
+
+Open this folder on the terminal and enter the following
+ejecutar.sh → for macOS/Linux
+ejecutar.bat → for Windows
+
+
+## Como iniciar con el código
 
 El Dev Env se creo utilizando el tool oficial de libGDX
 [SetUp guide](https://libgdx.com/wiki/start/project-generation)
